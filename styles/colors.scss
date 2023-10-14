@@ -1,0 +1,86 @@
+$e-xx-dark: #001414;
+$e-x-dark: #003b3b;
+$e-dark: #007474;
+$e-bright: #01adc4;
+$e-light: rgba(196, 237, 237, 0.95);
+$e-x-light: rgba(226, 250, 250, 0.95);
+
+$n-xx-dark: #001a00;
+$n-x-dark: #003a00;
+$n-dark: #007000;
+$n-bright: #00b600;
+$n-light: rgba(206, 245, 206, 0.95);
+$n-x-light: rgba(227, 251, 227, 0.95);
+
+$h-xx-dark: #211b00;
+$h-x-dark: #423900;
+$h-dark: #8c7400;
+$h-bright: #c2a200;
+$h-light: rgba(248, 236, 176, 0.95);
+$h-x-light: rgba(253, 249, 229, 0.95);
+
+$ex-xx-dark: #210000;
+$ex-x-dark: #420000;
+$ex-dark: #8c0000;
+$ex-bright: #d90505;
+$ex-light: rgba(248, 209, 209, 0.95);
+$ex-x-light: rgba(249, 230, 230, 0.95);
+
+$diff-color-map: (
+  xx-dark: (
+    e: $e-xx-dark,
+    n: $n-xx-dark,
+    h: $h-xx-dark,
+    ex: $ex-xx-dark,
+  ),
+  x-dark: (
+    e: $e-x-dark,
+    n: $n-x-dark,
+    h: $h-x-dark,
+    ex: $ex-x-dark,
+  ),
+  dark: (
+    e: $e-dark,
+    n: $n-dark,
+    h: $h-dark,
+    ex: $ex-dark,
+  ),
+  bright: (
+    e: $e-bright,
+    n: $n-bright,
+    h: $h-bright,
+    ex: $ex-bright,
+  ),
+  light: (
+    e: $e-light,
+    n: $n-light,
+    h: $h-light,
+    ex: $ex-light,
+  ),
+  x-light: (
+    e: $e-x-light,
+    n: $n-x-light,
+    h: $h-x-light,
+    ex: $ex-x-light,
+  ),
+);
+
+@function diff-color($diff, $shade) {
+  @return map-get(map-get($diff-color-map, $shade), $diff);
+}
+
+@mixin diff-border-colors($shade) {
+  @each $diff in e, n, h, ex {
+    &.#{$diff} {
+      border-color: diff-color($diff, $shade);
+    }
+  }
+}
+
+@mixin diff-bg-colors($shade) {
+  @each $diff in e, n, h, ex {
+    &.#{$diff} {
+      background-color: diff-color($diff, $shade);
+    }
+  }
+}
