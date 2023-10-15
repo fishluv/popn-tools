@@ -6,15 +6,31 @@
   text-align: left;
   padding: 1rem;
   width: 300px;
+  border: 1px solid grey;
+  border-radius: 3rem;
 
   .title {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: bold;
   }
 
   &.red {
-    border: 1px solid $ex-dark;
-    border-radius: 3rem;
+    border-color: $ex-dark;
     background-color: $ex-light;
+  }
+
+  &.yellow {
+    border-color: $h-dark;
+    background-color: $h-light;
+  }
+
+  &.green {
+    border-color: $n-dark;
+    background-color: $n-light;
+  }
+
+  &.blue {
+    border-color: $e-dark;
+    background-color: $e-light;
   }
 }

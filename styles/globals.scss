@@ -2,6 +2,15 @@
 // https://getbootstrap.com/docs/5.1/content/reboot/
 @import "~bootstrap/scss/bootstrap-reboot";
 
+body {
+  background-color: #fdfdfd;
+  color: #222;
+}
+
+a {
+  color: rgba(0, 0, 0, 0.8);
+}
+
 p {
   margin: 0;
 }
