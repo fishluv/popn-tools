@@ -1,3 +1,7 @@
 // Load Bootstrap from node packages
 // https://getbootstrap.com/docs/5.1/content/reboot/
 @import "~bootstrap/scss/bootstrap-reboot";
+
+p {
+  margin: 0;
+}
