@@ -1,0 +1,25 @@
+@import "../styles/colors";
+
+.Card {
+  display: inline-block;
+  font-family: "M PLUS 1", "Arial", sans-serif;
+  text-align: left;
+  padding: 1rem;
+  width: 300px;
+
+  .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .subtitle {
+    font-size: 0.75rem;
+    font-style: italic;
+  }
+
+  &.red {
+    border: 1px solid $ex-dark;
+    border-radius: 2px;
+    background-color: $ex-light;
+  }
+}
