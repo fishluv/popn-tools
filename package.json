@@ -2,14 +2,16 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
-    "start": "next start",
+    "dev": "next dev -p 3001",
+    "prod": "next start -p 3001",
     "lint": "next lint"
   },
   "dependencies": {
     "next": "latest",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "swr": "^2.2.4",
+    "url-join": "^5.0.0"
   },
   "engines": {
     "node": ">=18"
