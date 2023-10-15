@@ -15,11 +15,11 @@ function SongSearchResults({ query }: { query: string }) {
   }
 
   return (
-    <>
+    <div className={styles.SongSearchResults}>
       {results.map((song, index) => (
         <SongResult key={index} song={song} />
       ))}
-    </>
+    </div>
   )
 }
 

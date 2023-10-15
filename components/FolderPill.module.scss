@@ -1,0 +1,146 @@
+@import "../styles/components";
+
+.FolderPill {
+  @include pill;
+
+  &.cs {
+    border-color: #048833;
+    background-color: #e6ec70;
+    color: #048833;
+  }
+  &.ac01 {
+    border-color: #00b0f9;
+    background-color: #ffee00;
+    color: #002288;
+  }
+  &.ac02 {
+    border-color: #002288;
+    background-color: white;
+    color: #002288;
+  }
+  &.ac03 {
+    border-color: #f79500;
+    background-color: #ffe0fb;
+    color: #e01300;
+  }
+  &.ac04 {
+    border-color: #048833;
+    background-color: #6cbc12;
+    color: #ffee00;
+  }
+  &.ac05 {
+    border-color: #6c1e1e;
+    background-color: #ebb68b;
+    color: #48725a;
+  }
+  &.ac06 {
+    border-color: #b1d17b;
+    background-color: #fdfdb4;
+    color: #f600b2;
+  }
+  &.ac07 {
+    border-color: #079cb4;
+    background-color: #d3f4fb;
+    color: #de0029;
+  }
+  &.ac08 {
+    border-color: #a95b2a;
+    background-color: #b7d356;
+    color: #580d00;
+  }
+  &.ac09 {
+    border-color: #7f3124;
+    background-color: #f96d08;
+    color: white;
+  }
+  &.ac10 {
+    border-color: #9b1a79;
+    background-color: #ed47a5;
+    color: white;
+  }
+  &.ac11 {
+    border-color: #26b3d1;
+    background-color: #eaeaea;
+    color: #0053b5;
+  }
+  &.ac12 {
+    border-color: #ffcec6;
+    background-color: #fd341a;
+    color: white;
+  }
+  &.ac13 {
+    border-color: #bbab48;
+    background-color: #fbef87;
+    color: #d71539;
+  }
+  &.ac14 {
+    border-color: #6dc41f;
+    background-color: #c4ef3d;
+    color: #ff51b0;
+  }
+  &.ac15 {
+    border-color: #00662c;
+    background-color: #fde77e;
+    color: #fd3200;
+  }
+  &.ac16 {
+    border-color: #ee0000;
+    background-color: #ffe600;
+    color: #22bbee;
+  }
+  &.ac17 {
+    border-color: #83cef2;
+    background-color: #1f46aa;
+    color: #fff000;
+  }
+  &.ac18 {
+    border-color: #189738;
+    background-color: #ffa143;
+    color: #520003;
+  }
+  &.ac19 {
+    border-color: #2c8dd4;
+    background-color: #eaeaea;
+    color: #f15d12;
+  }
+  &.ac20 {
+    border-color: #73aacc;
+    background-color: #4c4398;
+    color: #c7c0e1;
+  }
+  &.ac21 {
+    border-color: #1ca135;
+    background-color: #e6ec70;
+    color: #158e2e;
+  }
+  &.ac22 {
+    border-color: #cae9fa;
+    background-color: #0074c1;
+    color: #cae9fa;
+  }
+  &.ac23 {
+    border-color: #f8cca9;
+    background-color: #fef6b8;
+    color: #1e98c8;
+  }
+  &.ac24 {
+    border-color: #f5eda8;
+    background-color: #8b4e4a;
+    color: #f5eda8;
+  }
+  &.ac25 {
+    border-color: #f68f30;
+    background-color: #ffff00;
+    color: #dd2200;
+  }
+  &.ac26 {
+    border-color: #cc2211;
+    background-color: #f1d0d7;
+    color: #963320;
+  }
+  &.ac27 {
+    border-color: #51b1bc;
+    background-color: #cceefd;
+    color: #51b1bc;
+  }
+}

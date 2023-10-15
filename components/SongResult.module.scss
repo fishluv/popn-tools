@@ -1,5 +1,29 @@
+@import "../styles/colors";
+@import "../styles/components";
+
+.diffLevel {
+  @include pill;
+  @include diff-bg-colors(bright);
+  @include diff-border-colors(dark);
+  color: white;
+}
+
 .SongResult {
+  display: inline-block;
+  width: 240px;
   font-family: "M PLUS 1", "Arial", sans-serif;
-  text-align: left;
-  padding: 0.5rem;
+  margin-top: 1rem;
+
+  .banner {
+    height: 60px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .folderLevels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem; // For line height.
+  }
 }
