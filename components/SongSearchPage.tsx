@@ -4,7 +4,7 @@ import { useSearchSong } from "../lib/fetch"
 import SongResult from "./SongResult"
 
 function SongSearchResults({ query }: { query: string }) {
-  const { data: results, error, isLoading } = useSearchSong(query, 10)
+  const { data: results, error, isLoading } = useSearchSong(query, 9)
 
   if (error) {
     console.error(`Error searching for songs: ${JSON.stringify(error.data)}`)
