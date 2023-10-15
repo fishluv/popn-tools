@@ -12,14 +12,9 @@
     font-weight: bold;
   }
 
-  .subtitle {
-    font-size: 0.75rem;
-    font-style: italic;
-  }
-
   &.red {
     border: 1px solid $ex-dark;
-    border-radius: 2px;
+    border-radius: 3rem;
     background-color: $ex-light;
   }
 }
