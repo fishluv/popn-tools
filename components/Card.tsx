@@ -2,7 +2,8 @@ import React from "react"
 import styles from "./Card.module.scss"
 import cx from "classnames"
 
-type Color = "red"
+type Color = "red" | "yellow" | "green" | "blue"
+
 interface CardProps {
   title: string
   color: Color
