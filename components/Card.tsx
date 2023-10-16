@@ -2,11 +2,9 @@ import React from "react"
 import styles from "./Card.module.scss"
 import cx from "classnames"
 
-type Color = "red" | "yellow" | "green" | "blue"
-
 interface CardProps {
   title: string
-  color: Color
+  color: "red" | "yellow" | "green" | "blue"
 }
 
 export default function Card({ title, color }: CardProps) {
