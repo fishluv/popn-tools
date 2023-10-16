@@ -5,7 +5,7 @@ import SongResultCard from "./SongResultCard"
 import { SongResult } from "./Song"
 
 function SongSearchResultsList({ query }: { query: string }) {
-  const { data: results, error, isLoading } = useSearchSong({ query, limit: 9 })
+  const { data, error, isLoading } = useSearchSong({ query, limit: 9 })
 
   if (error) {
     console.error(`Error searching for songs: ${JSON.stringify(error.data)}`)
@@ -17,9 +17,10 @@ function SongSearchResultsList({ query }: { query: string }) {
 
   return (
     <div className={styles.SongSearchResultsList}>
-      {results.map((song: SongResult, index: number) => (
-        <SongResultCard key={index} song={song} />
-      ))}
+      {data &&
+        data.map((song: SongResult, index: number) => (
+          <SongResultCard key={index} song={song} />
+        ))}
     </div>
   )
 }

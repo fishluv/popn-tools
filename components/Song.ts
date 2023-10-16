@@ -1,4 +1,4 @@
-export interface Song {
+export interface SongResult {
   id: number
   artist: string
   genre_romantrans: string
@@ -10,3 +10,5 @@ export interface Song {
   ex_diff?: number
   folder: string
 }
+
+export type SongResultsData = SongResult[]

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import useSWR from "swr"
 import urlJoin from "url-join"
+import { SongResultsData } from "../components/Song"
 
 function getSearchApiUrl(...parts: string[]) {
   return urlJoin(process.env.NEXT_PUBLIC_SEARCH_API_URL!, ...parts)
@@ -35,7 +36,7 @@ export function useSearchSong({
   query: string
   limit: number
 }) {
-  return useSWR(
+  return useSWR<SongResultsData>(
     getSearchApiUrl("/songs", `?q=${query}&limit=${limit}`),
     urlFetcher,
   )
