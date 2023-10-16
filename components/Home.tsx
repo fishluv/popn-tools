@@ -13,10 +13,10 @@ export default function Home() {
         href="/randomizer"
       />
 
-      <BigPill title="🔎&nbsp;&nbsp;Song search" color="yellow" href="/songs" />
+      <BigPill title="🎵&nbsp;&nbsp;Song search" color="yellow" href="/songs" />
 
       <BigPill
-        title="🔎&nbsp;&nbsp;Chart search"
+        title="🎼&nbsp;&nbsp;Chart search"
         color="yellow"
         href="/charts"
       />
