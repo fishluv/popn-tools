@@ -3,8 +3,9 @@
   text-align: center;
   padding: 3rem 2rem 1rem;
 
-  :not(:first-child) {
-    margin-top: 2rem;
+  > a {
+    display: block;
+    margin: 2rem auto 0;
   }
 
   .header {
