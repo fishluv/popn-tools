@@ -11,7 +11,7 @@ export default function SongResultCard({ song }: { song: SongResult }) {
   }
 
   return (
-    <div className={styles.SongResultCard}>
+    <button className={styles.SongResultCard}>
       <div className={styles.title}>{song.remywiki_title}</div>
       <div className={styles.banner} style={bannerStyle} />
       <div className={styles.folderLevels}>
@@ -41,6 +41,7 @@ export default function SongResultCard({ song }: { song: SongResult }) {
           )}
         </div>
       </div>
-    </div>
+      <div className={styles.overlay} />
+    </button>
   )
 }

@@ -9,11 +9,13 @@
 }
 
 .SongResultCard {
-  display: inline-block;
+  display: inline-flex;
   width: 240px;
   height: 60px;
   font-family: "M PLUS 1", "Arial", sans-serif;
   margin-top: 1rem;
+  padding: 0;
+  border: 0;
   position: relative;
   background-color: #ddd;
 
@@ -44,5 +46,21 @@
 
     display: flex;
     justify-content: space-between;
+  }
+
+  &:focus {
+    outline: #07c solid 3px;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  &:active {
+    .overlay {
+      position: absolute;
+      z-index: 4;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.75);
+    }
   }
 }
