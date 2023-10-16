@@ -8,7 +8,7 @@ export default function SongResultCard({
   onClick,
 }: {
   song: SongResult
-  onClick(): void
+  onClick(song: SongResult): void
 }) {
   const paddedId = `000${song.id}`.slice(-4)
   const bannerUrl = `https://popn-assets.surge.sh/kc_${paddedId}.png`
@@ -17,7 +17,7 @@ export default function SongResultCard({
   }
 
   return (
-    <button className={styles.SongResultCard} onClick={onClick}>
+    <button className={styles.SongResultCard} onClick={() => onClick(song)}>
       <div className={styles.title}>{song.remywiki_title}</div>
       <div className={styles.banner} style={bannerStyle} />
       <div className={styles.folderLevels}>

@@ -3,11 +3,16 @@ import Modal from "react-modal"
 import styles from "./SongSearchPage.module.scss"
 import SongSearchResultsList from "./SongSearchResultsList"
 import { useDebounce } from "../lib/debounce"
+import { SongResult } from "../lib/fetch"
+import FolderPill from "./FolderPill"
 
 Modal.setAppElement("#app")
 
 export default function SongSearchPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [openedSong, setOpenedSong] = useState<SongResult | undefined>(
+    undefined,
+  )
   const [pendingQuery, setPendingQuery] = useState("")
   const [query, setQuery] = useState("")
   const debouncedQuery = useDebounce(query, 125)
@@ -36,7 +41,10 @@ export default function SongSearchPage() {
 
       <SongSearchResultsList
         query={debouncedQuery}
-        onSongClick={() => setIsModalOpen(true)}
+        onSongClick={(song: SongResult) => {
+          setOpenedSong(song)
+          setIsModalOpen(true)
+        }}
       />
 
       <Modal
@@ -45,17 +53,27 @@ export default function SongSearchPage() {
         onRequestClose={() => setIsModalOpen(false)}
         style={{
           overlay: { zIndex: 10 },
-          content: { inset: "6rem 2rem", padding: "1rem" },
+          content: {
+            width: "320px",
+            height: "480px",
+            left: "calc(50% - 160px)",
+            top: "10%",
+            padding: "1rem",
+          },
         }}
       >
-        {/* <button
-          className={styles.closeMoreControlsButton}
-          type="button"
-          onClick={closeModal}
-        >
-          Close
-        </button> */}
-        hello
+        <button onClick={() => setIsModalOpen(false)}>Close</button>
+        {openedSong && (
+          <div className={styles.songInfo}>
+            <FolderPill songFolder={openedSong.folder} />
+            <a
+              href={`https://remywiki.com/${openedSong.remywiki_url_path}`}
+              target="_blank"
+            >
+              {openedSong.remywiki_title}
+            </a>
+          </div>
+        )}
       </Modal>
     </div>
   )

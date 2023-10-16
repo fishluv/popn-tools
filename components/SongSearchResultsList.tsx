@@ -7,7 +7,7 @@ export default function SongSearchResultsList({
   onSongClick,
 }: {
   query: string
-  onSongClick(): void
+  onSongClick(song: SongResult): void
 }) {
   const { data, error, isLoading } = useSearchSong({ query, limit: 9 })
 
