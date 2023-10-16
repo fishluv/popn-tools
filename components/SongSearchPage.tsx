@@ -2,9 +2,9 @@ import React, { useState } from "react"
 import styles from "./SongSearchPage.module.scss"
 import { useSearchSong } from "../lib/fetch"
 import SongResultCard from "./SongResultCard"
-import { Song } from "./Song"
+import { SongResult } from "./Song"
 
-function SongSearchResults({ query }: { query: string }) {
+function SongSearchResultsList({ query }: { query: string }) {
   const { data: results, error, isLoading } = useSearchSong({ query, limit: 9 })
 
   if (error) {
@@ -16,8 +16,8 @@ function SongSearchResults({ query }: { query: string }) {
   }
 
   return (
-    <div className={styles.SongSearchResults}>
-      {results.map((song: Song, index: number) => (
+    <div className={styles.SongSearchResultsList}>
+      {results.map((song: SongResult, index: number) => (
         <SongResultCard key={index} song={song} />
       ))}
     </div>
@@ -49,7 +49,7 @@ export default function SongSearchPage() {
         value={pendingQuery}
         onChange={onInputChange}
       />
-      <SongSearchResults query={query} />
+      <SongSearchResultsList query={query} />
     </div>
   )
 }
