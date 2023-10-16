@@ -28,7 +28,13 @@ async function urlFetcher(url: string) {
   return res.json()
 }
 
-export function useSearchSong(query: string, limit: number) {
+export function useSearchSong({
+  query,
+  limit,
+}: {
+  query: string
+  limit: number
+}) {
   return useSWR(
     getSearchApiUrl("/songs", `?q=${query}&limit=${limit}`),
     urlFetcher,

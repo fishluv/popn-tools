@@ -5,7 +5,7 @@ import SongResultCard from "./SongResultCard"
 import { Song } from "./Song"
 
 function SongSearchResults({ query }: { query: string }) {
-  const { data: results, error, isLoading } = useSearchSong(query, 9)
+  const { data: results, error, isLoading } = useSearchSong({ query, limit: 9 })
 
   if (error) {
     console.error(`Error searching for songs: ${JSON.stringify(error.data)}`)
