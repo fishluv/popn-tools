@@ -2,7 +2,13 @@ import styles from "./SongSearchResultsList.module.scss"
 import { SongResult, useSearchSong } from "../lib/fetch"
 import SongResultCard from "./SongResultCard"
 
-export default function SongSearchResultsList({ query }: { query: string }) {
+export default function SongSearchResultsList({
+  query,
+  onSongClick,
+}: {
+  query: string
+  onSongClick(): void
+}) {
   const { data, error, isLoading } = useSearchSong({ query, limit: 9 })
 
   if (error) {
@@ -17,7 +23,7 @@ export default function SongSearchResultsList({ query }: { query: string }) {
     <div className={styles.SongSearchResultsList}>
       {data &&
         data.map((song: SongResult, index: number) => (
-          <SongResultCard key={index} song={song} />
+          <SongResultCard key={index} song={song} onClick={onSongClick} />
         ))}
     </div>
   )

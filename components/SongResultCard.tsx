@@ -3,7 +3,13 @@ import FolderPill from "./FolderPill"
 import styles from "./SongResultCard.module.scss"
 import { SongResult } from "../lib/fetch"
 
-export default function SongResultCard({ song }: { song: SongResult }) {
+export default function SongResultCard({
+  song,
+  onClick,
+}: {
+  song: SongResult
+  onClick(): void
+}) {
   const paddedId = `000${song.id}`.slice(-4)
   const bannerUrl = `https://popn-assets.surge.sh/kc_${paddedId}.png`
   const bannerStyle = {
@@ -11,7 +17,7 @@ export default function SongResultCard({ song }: { song: SongResult }) {
   }
 
   return (
-    <button className={styles.SongResultCard}>
+    <button className={styles.SongResultCard} onClick={onClick}>
       <div className={styles.title}>{song.remywiki_title}</div>
       <div className={styles.banner} style={bannerStyle} />
       <div className={styles.folderLevels}>
