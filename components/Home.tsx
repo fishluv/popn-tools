@@ -1,6 +1,5 @@
 import React from "react"
 import styles from "./Home.module.scss"
-import Link from "next/link"
 import BigPill from "./BigPill"
 
 export default function Home() {
@@ -8,35 +7,31 @@ export default function Home() {
     <div className={styles.Home}>
       <p className={styles.header}>pop&apos;n tools</p>
 
-      <div>
-        <Link href="/randomizer">
-          <BigPill title="🎲&nbsp;&nbsp;Randomizer" color="red" />
-        </Link>
-      </div>
+      <BigPill
+        title="🎲&nbsp;&nbsp;Randomizer"
+        color="red"
+        href="/randomizer"
+      />
 
-      <div>
-        <Link href="/songs">
-          <BigPill title="🔎&nbsp;&nbsp;Song search" color="yellow" />
-        </Link>
-      </div>
+      <BigPill title="🔎&nbsp;&nbsp;Song search" color="yellow" href="/songs" />
 
-      <div>
-        <Link href="/charts">
-          <BigPill title="🔎&nbsp;&nbsp;Chart search" color="yellow" />
-        </Link>
-      </div>
+      <BigPill
+        title="🔎&nbsp;&nbsp;Chart search"
+        color="yellow"
+        href="/charts"
+      />
 
-      <div>
-        <Link href="/listmaker">
-          <BigPill title="📓&nbsp;&nbsp;List maker" color="green" />
-        </Link>
-      </div>
+      <BigPill
+        title="📓&nbsp;&nbsp;List maker"
+        color="green"
+        href="/listmaker"
+      />
 
-      <div>
-        <Link href="/tiermaker">
-          <BigPill title="📶&nbsp;&nbsp;Tier maker" color="blue" />
-        </Link>
-      </div>
+      <BigPill
+        title="📶&nbsp;&nbsp;Tier maker"
+        color="blue"
+        href="/tiermaker"
+      />
     </div>
   )
 }

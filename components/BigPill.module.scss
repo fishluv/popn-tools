@@ -6,8 +6,9 @@
   text-align: left;
   padding: 1rem;
   width: 300px;
-  border: 1px solid grey;
+  border: 2px solid grey;
   border-radius: 3rem;
+  text-decoration: none;
 
   .title {
     font-size: 1.25rem;
@@ -32,5 +33,10 @@
   &.blue {
     border-color: $e-dark;
     background-color: $e-light;
+  }
+
+  &.clickable:active {
+    border-color: grey;
+    background-color: white;
   }
 }
