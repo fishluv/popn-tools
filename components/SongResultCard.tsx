@@ -1,6 +1,6 @@
 import cx from "classnames"
 import FolderPill from "./FolderPill"
-import styles from "./SongResult.module.scss"
+import styles from "./SongResultCard.module.scss"
 import { SongResult } from "../lib/fetch"
 
 export default function SongResultCard({ song }: { song: SongResult }) {
@@ -11,7 +11,7 @@ export default function SongResultCard({ song }: { song: SongResult }) {
   }
 
   return (
-    <div className={styles.SongResult}>
+    <div className={styles.SongResultCard}>
       <div className={styles.banner} style={bannerStyle} />
       <div className={styles.folderLevels}>
         <div className={styles.folder}>
