@@ -1,10 +1,12 @@
 import React, { useState } from "react"
 import styles from "./SongSearchPage.module.scss"
 import SongSearchResultsList from "./SongSearchResultsList"
+import { useDebounce } from "../lib/debounce"
 
 export default function SongSearchPage() {
   const [pendingQuery, setPendingQuery] = useState("")
   const [query, setQuery] = useState("")
+  const debouncedQuery = useDebounce(query, 125)
 
   function onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { value } = event.target
@@ -27,7 +29,7 @@ export default function SongSearchPage() {
         value={pendingQuery}
         onChange={onInputChange}
       />
-      <SongSearchResultsList query={query} />
+      <SongSearchResultsList query={debouncedQuery} />
     </div>
   )
 }
