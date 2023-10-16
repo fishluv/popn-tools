@@ -12,6 +12,7 @@ export default function SongResultCard({ song }: { song: SongResult }) {
 
   return (
     <div className={styles.SongResultCard}>
+      <div className={styles.title}>{song.remywiki_title}</div>
       <div className={styles.banner} style={bannerStyle} />
       <div className={styles.folderLevels}>
         <div className={styles.folder}>
