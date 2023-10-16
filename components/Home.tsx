@@ -1,7 +1,7 @@
 import React from "react"
 import styles from "./Home.module.scss"
 import Link from "next/link"
-import BigPillLink from "./BigPillLink"
+import BigPill from "./BigPill"
 
 export default function Home() {
   return (
@@ -10,31 +10,31 @@ export default function Home() {
 
       <div>
         <Link href="/randomizer">
-          <BigPillLink title="🎲&nbsp;&nbsp;Randomizer" color="red" />
+          <BigPill title="🎲&nbsp;&nbsp;Randomizer" color="red" />
         </Link>
       </div>
 
       <div>
         <Link href="/songs">
-          <BigPillLink title="🔎&nbsp;&nbsp;Song search" color="yellow" />
+          <BigPill title="🔎&nbsp;&nbsp;Song search" color="yellow" />
         </Link>
       </div>
 
       <div>
         <Link href="/charts">
-          <BigPillLink title="🔎&nbsp;&nbsp;Chart search" color="yellow" />
+          <BigPill title="🔎&nbsp;&nbsp;Chart search" color="yellow" />
         </Link>
       </div>
 
       <div>
         <Link href="/listmaker">
-          <BigPillLink title="📓&nbsp;&nbsp;List maker" color="green" />
+          <BigPill title="📓&nbsp;&nbsp;List maker" color="green" />
         </Link>
       </div>
 
       <div>
         <Link href="/tiermaker">
-          <BigPillLink title="📶&nbsp;&nbsp;Tier maker" color="blue" />
+          <BigPill title="📶&nbsp;&nbsp;Tier maker" color="blue" />
         </Link>
       </div>
     </div>
