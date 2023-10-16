@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import styles from "./SongSearchPage.module.scss"
 import { useSearchSong } from "../lib/fetch"
-import SongResult from "./SongResult"
+import SongResultCard from "./SongResultCard"
 import { Song } from "./Song"
 
 function SongSearchResults({ query }: { query: string }) {
@@ -18,7 +18,7 @@ function SongSearchResults({ query }: { query: string }) {
   return (
     <div className={styles.SongSearchResults}>
       {results.map((song: Song, index: number) => (
-        <SongResult key={index} song={song} />
+        <SongResultCard key={index} song={song} />
       ))}
     </div>
   )

@@ -3,7 +3,7 @@ import FolderPill from "./FolderPill"
 import styles from "./SongResult.module.scss"
 import { Song } from "./Song"
 
-export default function SongResult({ song }: { song: Song }) {
+export default function SongResultCard({ song }: { song: Song }) {
   const paddedId = `000${song.id}`.slice(-4)
   const bannerUrl = `https://popn-assets.surge.sh/kc_${paddedId}.png`
   const bannerStyle = {
