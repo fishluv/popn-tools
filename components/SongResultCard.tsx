@@ -1,7 +1,7 @@
 import cx from "classnames"
 import FolderPill from "./FolderPill"
 import styles from "./SongResult.module.scss"
-import { SongResult } from "./Song"
+import { SongResult } from "../lib/fetch"
 
 export default function SongResultCard({ song }: { song: SongResult }) {
   const paddedId = `000${song.id}`.slice(-4)

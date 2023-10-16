@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import useSWR from "swr"
 import urlJoin from "url-join"
-import { SongResultsData } from "../components/Song"
 
 function getSearchApiUrl(...parts: string[]) {
   return urlJoin(process.env.NEXT_PUBLIC_SEARCH_API_URL!, ...parts)
@@ -28,6 +27,21 @@ async function urlFetcher(url: string) {
 
   return res.json()
 }
+
+export interface SongResult {
+  id: number
+  artist: string
+  genre_romantrans: string
+  remywiki_title: string
+  remywiki_url_path: string
+  easy_diff?: number
+  normal_diff?: number
+  hyper_diff?: number
+  ex_diff?: number
+  folder: string
+}
+
+export type SongResultsData = SongResult[]
 
 export function useSearchSong({
   query,

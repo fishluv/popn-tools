@@ -1,8 +1,7 @@
 import React, { useState } from "react"
 import styles from "./SongSearchPage.module.scss"
-import { useSearchSong } from "../lib/fetch"
+import { SongResult, useSearchSong } from "../lib/fetch"
 import SongResultCard from "./SongResultCard"
-import { SongResult } from "./Song"
 
 function SongSearchResultsList({ query }: { query: string }) {
   const { data, error, isLoading } = useSearchSong({ query, limit: 9 })
