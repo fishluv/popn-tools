@@ -1,5 +1,5 @@
 import React from "react"
-import styles from "./Card.module.scss"
+import styles from "./BigPill.module.scss"
 import cx from "classnames"
 
 interface BigPillProps {
@@ -9,7 +9,7 @@ interface BigPillProps {
 
 export default function BigPill({ title, color }: BigPillProps) {
   return (
-    <div className={cx(styles.Card, styles[color])}>
+    <div className={cx(styles.BigPill, styles[color])}>
       <p className={styles.title}>{title}</p>
     </div>
   )
