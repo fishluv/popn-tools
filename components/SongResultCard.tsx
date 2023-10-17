@@ -1,8 +1,8 @@
-import cx from "classnames"
 import FolderPill from "./FolderPill"
 import styles from "./SongResultCard.module.scss"
 import Song from "../models/Song"
 import SongBanner from "./SongBanner"
+import LevelPill from "./LevelPill"
 
 export default function SongResultCard({
   song,
@@ -21,24 +21,20 @@ export default function SongResultCard({
         </div>
         <div className={styles.levels}>
           {song.easyLevel && (
-            <span className={cx(styles.diffLevel, styles.e, styles.compact)}>
-              e {song.easyLevel}
-            </span>
+            <LevelPill difficulty="e" level={song.easyLevel} style="compact" />
           )}
           {song.normalLevel && (
-            <span className={cx(styles.diffLevel, styles.n, styles.compact)}>
-              n {song.normalLevel}
-            </span>
+            <LevelPill
+              difficulty="n"
+              level={song.normalLevel}
+              style="compact"
+            />
           )}
           {song.hyperLevel && (
-            <span className={cx(styles.diffLevel, styles.h, styles.compact)}>
-              h {song.hyperLevel}
-            </span>
+            <LevelPill difficulty="h" level={song.hyperLevel} style="compact" />
           )}
           {song.exLevel && (
-            <span className={cx(styles.diffLevel, styles.ex, styles.compact)}>
-              ex {song.exLevel}
-            </span>
+            <LevelPill difficulty="ex" level={song.exLevel} style="compact" />
           )}
         </div>
       </div>
