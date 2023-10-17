@@ -105,9 +105,4 @@ export default class Song {
     this.remywikiTitle = remywikiTitle
     this.genreRomanTrans = genreRomanTrans
   }
-
-  bannerUrl() {
-    const paddedId = `000${this.id}`.slice(-4)
-    return `https://popn-assets.surge.sh/kc_${paddedId}.png`
-  }
 }

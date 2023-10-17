@@ -1,0 +1,9 @@
+.SongBanner {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  // Meant to be overridden by parent component.
+  width: 240px;
+  height: 60px;
+}
