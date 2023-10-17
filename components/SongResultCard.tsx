@@ -20,7 +20,7 @@ export default function SongResultCard({
       <div className={styles.banner} style={bannerStyle} />
       <div className={styles.folderLevels}>
         <div className={styles.folder}>
-          <FolderPill folder={song.folder} />
+          <FolderPill folder={song.folder} style="compact" />
         </div>
         <div className={styles.levels}>
           {song.easyLevel && (

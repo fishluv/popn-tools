@@ -63,7 +63,7 @@ export default function SongSearchPage() {
         <button onClick={() => setIsModalOpen(false)}>Close</button>
         {openedSong && (
           <div className={styles.songInfo}>
-            <FolderPill folder={openedSong.folder} />
+            <FolderPill folder={openedSong.folder} style="full" />
             <a
               href={`https://remywiki.com/${openedSong.remywikiUrlPath}`}
               target="_blank"
