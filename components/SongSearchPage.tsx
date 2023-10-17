@@ -5,6 +5,8 @@ import SongSearchResultsList from "./SongSearchResultsList"
 import { useDebounce } from "../lib/debounce"
 import FolderPill from "./FolderPill"
 import Song from "../models/Song"
+import SongBanner from "./SongBanner"
+import SongLevelPills from "./SongLevelPills"
 
 Modal.setAppElement("#app")
 
@@ -70,6 +72,8 @@ export default function SongSearchPage() {
         {openedSong && (
           <div className={styles.songInfo}>
             <FolderPill folder={openedSong.folder} style="full" />
+            <SongBanner songId={openedSong.id} />
+            <SongLevelPills song={openedSong} style="full" />
             <a
               href={`https://remywiki.com/${openedSong.remywikiUrlPath}`}
               target="_blank"

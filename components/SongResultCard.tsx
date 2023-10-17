@@ -2,7 +2,7 @@ import FolderPill from "./FolderPill"
 import styles from "./SongResultCard.module.scss"
 import Song from "../models/Song"
 import SongBanner from "./SongBanner"
-import LevelPill from "./LevelPill"
+import SongLevelPills from "./SongLevelPills"
 
 export default function SongResultCard({
   song,
@@ -20,22 +20,7 @@ export default function SongResultCard({
           <FolderPill folder={song.folder} style="compact" />
         </div>
         <div className={styles.levels}>
-          {song.easyLevel && (
-            <LevelPill difficulty="e" level={song.easyLevel} style="compact" />
-          )}
-          {song.normalLevel && (
-            <LevelPill
-              difficulty="n"
-              level={song.normalLevel}
-              style="compact"
-            />
-          )}
-          {song.hyperLevel && (
-            <LevelPill difficulty="h" level={song.hyperLevel} style="compact" />
-          )}
-          {song.exLevel && (
-            <LevelPill difficulty="ex" level={song.exLevel} style="compact" />
-          )}
+          <SongLevelPills song={song} style="compact" />
         </div>
       </div>
       <div className={styles.overlay} />
