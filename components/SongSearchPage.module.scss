@@ -16,3 +16,14 @@
     border-radius: 3rem;
   }
 }
+
+.modalCloseButton {
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 1.25rem;
+  border-style: solid;
+  z-index: 11;
+}

@@ -57,10 +57,16 @@ export default function SongSearchPage() {
             left: "calc(50% - 160px)",
             top: "10%",
             padding: "1rem",
+            overflow: "visible",
           },
         }}
       >
-        <button onClick={() => setIsModalOpen(false)}>Close</button>
+        <button
+          className={styles.modalCloseButton}
+          onClick={() => setIsModalOpen(false)}
+        >
+          ❌
+        </button>
         {openedSong && (
           <div className={styles.songInfo}>
             <FolderPill folder={openedSong.folder} style="full" />
