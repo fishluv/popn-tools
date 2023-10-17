@@ -1,48 +1,46 @@
 import cx from "classnames"
 import FolderPill from "./FolderPill"
 import styles from "./SongResultCard.module.scss"
-import { SongResult } from "../lib/fetch"
+import Song from "../models/Song"
 
 export default function SongResultCard({
   song,
   onClick,
 }: {
-  song: SongResult
-  onClick(song: SongResult): void
+  song: Song
+  onClick(song: Song): void
 }) {
-  const paddedId = `000${song.id}`.slice(-4)
-  const bannerUrl = `https://popn-assets.surge.sh/kc_${paddedId}.png`
   const bannerStyle = {
-    backgroundImage: `url("${bannerUrl}")`,
+    backgroundImage: `url("${song.bannerUrl()}")`,
   }
 
   return (
     <button className={styles.SongResultCard} onClick={() => onClick(song)}>
-      <div className={styles.title}>{song.remywiki_title}</div>
+      <div className={styles.title}>{song.title}</div>
       <div className={styles.banner} style={bannerStyle} />
       <div className={styles.folderLevels}>
         <div className={styles.folder}>
-          <FolderPill songFolder={song.folder} />
+          <FolderPill folder={song.folder} />
         </div>
         <div className={styles.levels}>
-          {song.easy_diff && (
+          {song.easyLevel && (
             <span className={cx(styles.diffLevel, styles.e, styles.compact)}>
-              e {song.easy_diff}
+              e {song.easyLevel}
             </span>
           )}
-          {song.normal_diff && (
+          {song.normalLevel && (
             <span className={cx(styles.diffLevel, styles.n, styles.compact)}>
-              n {song.normal_diff}
+              n {song.normalLevel}
             </span>
           )}
-          {song.hyper_diff && (
+          {song.hyperLevel && (
             <span className={cx(styles.diffLevel, styles.h, styles.compact)}>
-              h {song.hyper_diff}
+              h {song.hyperLevel}
             </span>
           )}
-          {song.ex_diff && (
+          {song.exLevel && (
             <span className={cx(styles.diffLevel, styles.ex, styles.compact)}>
-              ex {song.ex_diff}
+              ex {song.exLevel}
             </span>
           )}
         </div>

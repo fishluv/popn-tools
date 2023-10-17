@@ -1,15 +1,20 @@
 import styles from "./SongSearchResultsList.module.scss"
-import { SongResult, useSearchSong } from "../lib/fetch"
+import { useSearchSong } from "../lib/fetch"
 import SongResultCard from "./SongResultCard"
+import Song from "../models/Song"
 
 export default function SongSearchResultsList({
   query,
   onSongClick,
 }: {
   query: string
-  onSongClick(song: SongResult): void
+  onSongClick(song: Song): void
 }) {
-  const { data, error, isLoading } = useSearchSong({ query, limit: 9 })
+  const {
+    data: songResults,
+    error,
+    isLoading,
+  } = useSearchSong({ query, limit: 9 })
 
   if (error) {
     console.error(`Error searching for songs: ${JSON.stringify(error.data)}`)
@@ -21,9 +26,9 @@ export default function SongSearchResultsList({
 
   return (
     <div className={styles.SongSearchResultsList}>
-      {data &&
-        data.map((song: SongResult, index: number) => (
-          <SongResultCard key={index} song={song} onClick={onSongClick} />
+      {songResults &&
+        songResults.map((songResult: Song, index: number) => (
+          <SongResultCard key={index} song={songResult} onClick={onSongClick} />
         ))}
     </div>
   )

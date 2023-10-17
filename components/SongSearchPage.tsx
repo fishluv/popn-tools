@@ -3,16 +3,14 @@ import Modal from "react-modal"
 import styles from "./SongSearchPage.module.scss"
 import SongSearchResultsList from "./SongSearchResultsList"
 import { useDebounce } from "../lib/debounce"
-import { SongResult } from "../lib/fetch"
 import FolderPill from "./FolderPill"
+import Song from "../models/Song"
 
 Modal.setAppElement("#app")
 
 export default function SongSearchPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [openedSong, setOpenedSong] = useState<SongResult | undefined>(
-    undefined,
-  )
+  const [openedSong, setOpenedSong] = useState<Song | undefined>(undefined)
   const [pendingQuery, setPendingQuery] = useState("")
   const [query, setQuery] = useState("")
   const debouncedQuery = useDebounce(query, 125)
@@ -41,7 +39,7 @@ export default function SongSearchPage() {
 
       <SongSearchResultsList
         query={debouncedQuery}
-        onSongClick={(song: SongResult) => {
+        onSongClick={(song: Song) => {
           setOpenedSong(song)
           setIsModalOpen(true)
         }}
@@ -65,12 +63,12 @@ export default function SongSearchPage() {
         <button onClick={() => setIsModalOpen(false)}>Close</button>
         {openedSong && (
           <div className={styles.songInfo}>
-            <FolderPill songFolder={openedSong.folder} />
+            <FolderPill folder={openedSong.folder} />
             <a
-              href={`https://remywiki.com/${openedSong.remywiki_url_path}`}
+              href={`https://remywiki.com/${openedSong.remywikiUrlPath}`}
               target="_blank"
             >
-              {openedSong.remywiki_title}
+              {openedSong.title}
             </a>
           </div>
         )}
