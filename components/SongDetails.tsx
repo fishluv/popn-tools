@@ -10,15 +10,20 @@ function Detail({
   className,
   field,
   value,
+  children,
 }: {
   className?: string
   field: string
-  value: string
+  value?: string
+  children?: React.ReactNode
 }) {
   return (
     <div className={cx(className, styles.Detail)}>
       <span className={styles.field}>{field}</span>
-      <span className={styles.value}>{value}</span>
+      <span className={styles.value}>
+        {value}
+        {children}
+      </span>
     </div>
   )
 }
@@ -31,7 +36,7 @@ function areEquivalent(a: string, b: string) {
 }
 
 export default function SongDetails({ song }: { song: Song }) {
-  const { title, genre, genreRomanTrans, remywikiTitle } = song
+  const { title, genre, genreRomanTrans, remywikiTitle, artist } = song
   return (
     <div className={styles.SongDetails}>
       <SongBanner className={styles.banner} songId={song.id} />
@@ -65,16 +70,24 @@ export default function SongDetails({ song }: { song: Song }) {
         </>
       )}
 
-      <div className={styles.folder}>
-        <FolderPill folder={song.folder} style="full" />
-      </div>
-      <div className={styles.levels}>
-        <SongLevelPills song={song} style="compact" />
-      </div>
+      <Detail field="artist" value={artist} />
 
-      <a href={`https://remywiki.com/${song.remywikiUrlPath}`} target="_blank">
-        {song.title}
-      </a>
+      <Detail field="from">
+        <FolderPill folder={song.folder} style="full" />
+      </Detail>
+
+      <Detail field="charts">
+        <SongLevelPills song={song} style="full" />
+      </Detail>
+
+      <Detail field="links">
+        <a
+          href={`https://remywiki.com/${song.remywikiUrlPath}`}
+          target="_blank"
+        >
+          RemyWiki
+        </a>
+      </Detail>
     </div>
   )
 }
