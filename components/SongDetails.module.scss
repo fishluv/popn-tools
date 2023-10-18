@@ -1,4 +1,6 @@
 .SongDetails {
+  font-family: "M PLUS 1", "Arial", sans-serif;
+
   .folder {
     display: flex;
     justify-content: center;
@@ -10,6 +12,34 @@
     width: 280px;
     height: 70px;
     border-radius: 4px;
+  }
+
+  .Detail {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+
+    &.romanized {
+      margin-top: 0;
+      font-size: 0.75rem;
+      font-style: italic;
+      line-height: 1;
+    }
+
+    .field {
+      display: inline-block;
+      width: 25%;
+      font-size: 0.75rem;
+      font-weight: bold;
+      text-align: right;
+      vertical-align: top;
+      padding-top: 0.125rem;
+    }
+
+    .value {
+      display: inline-block;
+      max-width: 72%;
+      margin-left: 0.5rem;
+    }
   }
 
   .levels {
