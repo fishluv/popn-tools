@@ -53,7 +53,7 @@ export default function SongSearchPage() {
           overlay: { zIndex: 10 },
           content: {
             width: "320px",
-            height: "480px",
+            minHeight: "fit-content",
             left: "calc(50% - 160px)",
             top: "10%",
             padding: "0",
