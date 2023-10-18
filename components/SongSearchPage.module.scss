@@ -22,12 +22,16 @@
 
   .closeButton {
     position: absolute;
-    top: -1rem;
-    right: -1rem;
+    top: -2.5rem;
+    right: 0;
     width: 2.5rem;
     height: 2.5rem;
-    border-radius: 1.25rem;
     border-style: solid;
     z-index: 11;
+    opacity: 0;
+
+    &:focus {
+      opacity: 1;
+    }
   }
 }
