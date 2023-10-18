@@ -3,10 +3,8 @@ import Modal from "react-modal"
 import styles from "./SongSearchPage.module.scss"
 import SongSearchResultsList from "./SongSearchResultsList"
 import { useDebounce } from "../lib/debounce"
-import FolderPill from "./FolderPill"
 import Song from "../models/Song"
-import SongBanner from "./SongBanner"
-import SongLevelPills from "./SongLevelPills"
+import SongDetails from "./SongDetails"
 
 Modal.setAppElement("#app")
 
@@ -70,23 +68,7 @@ export default function SongSearchPage() {
           >
             ❌
           </button>
-          {openedSong && (
-            <div className={styles.songInfo}>
-              <SongBanner className={styles.banner} songId={openedSong.id} />
-              <div className={styles.folder}>
-                <FolderPill folder={openedSong.folder} style="full" />
-              </div>
-              <div className={styles.levels}>
-                <SongLevelPills song={openedSong} style="compact" />
-              </div>
-              <a
-                href={`https://remywiki.com/${openedSong.remywikiUrlPath}`}
-                target="_blank"
-              >
-                {openedSong.title}
-              </a>
-            </div>
-          )}
+          {openedSong && <SongDetails song={openedSong} />}
         </div>
       </Modal>
     </div>
