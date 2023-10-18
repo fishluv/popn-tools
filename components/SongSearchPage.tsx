@@ -58,30 +58,36 @@ export default function SongSearchPage() {
             height: "480px",
             left: "calc(50% - 160px)",
             top: "10%",
-            padding: "1rem",
+            padding: "0",
             overflow: "visible",
           },
         }}
       >
-        <button
-          className={styles.modalCloseButton}
-          onClick={() => setIsModalOpen(false)}
-        >
-          ❌
-        </button>
-        {openedSong && (
-          <div className={styles.songInfo}>
-            <FolderPill folder={openedSong.folder} style="full" />
-            <SongBanner songId={openedSong.id} />
-            <SongLevelPills song={openedSong} style="full" />
-            <a
-              href={`https://remywiki.com/${openedSong.remywikiUrlPath}`}
-              target="_blank"
-            >
-              {openedSong.title}
-            </a>
-          </div>
-        )}
+        <div className={styles.modal}>
+          <button
+            className={styles.closeButton}
+            onClick={() => setIsModalOpen(false)}
+          >
+            ❌
+          </button>
+          {openedSong && (
+            <div className={styles.songInfo}>
+              <SongBanner className={styles.banner} songId={openedSong.id} />
+              <div className={styles.folder}>
+                <FolderPill folder={openedSong.folder} style="full" />
+              </div>
+              <div className={styles.levels}>
+                <SongLevelPills song={openedSong} style="compact" />
+              </div>
+              <a
+                href={`https://remywiki.com/${openedSong.remywikiUrlPath}`}
+                target="_blank"
+              >
+                {openedSong.title}
+              </a>
+            </div>
+          )}
+        </div>
       </Modal>
     </div>
   )
