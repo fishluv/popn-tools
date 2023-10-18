@@ -23,16 +23,23 @@ function Detail({
   )
 }
 
+function areEquivalent(a: string, b: string) {
+  function norm(s: string) {
+    return s.toLowerCase().replaceAll("？", "?").replaceAll("！", "!")
+  }
+  return norm(a) === norm(b)
+}
+
 export default function SongDetails({ song }: { song: Song }) {
   const { title, genre, genreRomanTrans, remywikiTitle } = song
   return (
     <div className={styles.SongDetails}>
       <SongBanner className={styles.banner} songId={song.id} />
 
-      {title === genre ? (
+      {areEquivalent(title, genre) ? (
         <>
           <Detail className={styles.title} field="title/genre" value={title} />
-          {title !== remywikiTitle && (
+          {!areEquivalent(title, remywikiTitle) && (
             <Detail
               className={styles.romanized}
               field=""
@@ -43,7 +50,7 @@ export default function SongDetails({ song }: { song: Song }) {
       ) : (
         <>
           <Detail className={styles.title} field="title" value={title} />
-          {title !== remywikiTitle && (
+          {!areEquivalent(title, remywikiTitle) && (
             <Detail
               className={styles.romanized}
               field=""
