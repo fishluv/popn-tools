@@ -36,14 +36,20 @@ function areEquivalent(a: string, b: string) {
 }
 
 export default function SongDetails({ song }: { song: Song }) {
-  const { title, genre, genreRomanTrans, remywikiTitle, artist } = song
+  const { title, genre, genreRomanTrans, remywikiTitle, artist, labels } = song
+  const maybeUpperSuffix = labels.includes("upper") ? " (UPPER)" : ""
+
   return (
     <div className={styles.SongDetails}>
       <SongBanner className={styles.banner} songId={song.id} />
 
       {areEquivalent(title, genre) ? (
         <>
-          <Detail className={styles.title} field="title/genre" value={title} />
+          <Detail
+            className={styles.title}
+            field="title/genre"
+            value={`${title}${maybeUpperSuffix}`}
+          />
           {!areEquivalent(title, remywikiTitle) && (
             <Detail
               className={styles.romanized}
@@ -54,7 +60,11 @@ export default function SongDetails({ song }: { song: Song }) {
         </>
       ) : (
         <>
-          <Detail className={styles.title} field="title" value={title} />
+          <Detail
+            className={styles.title}
+            field="title"
+            value={`${title}${maybeUpperSuffix}`}
+          />
           {!areEquivalent(title, remywikiTitle) && (
             <Detail
               className={styles.romanized}

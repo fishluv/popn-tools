@@ -58,4 +58,5 @@ export interface SearchApiSongResult {
   remywiki_url_path: string
   remywiki_title: string
   genre_romantrans: string
+  labels: string[]
 }

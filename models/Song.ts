@@ -17,6 +17,7 @@ interface SongContructorProps {
   remywikiUrlPath: string
   remywikiTitle: string
   genreRomanTrans: string
+  labels: string[]
 }
 
 export default class Song {
@@ -36,6 +37,7 @@ export default class Song {
     remywiki_url_path,
     remywiki_title,
     genre_romantrans,
+    labels,
   }: SearchApiSongResult) {
     return new Song({
       id,
@@ -53,6 +55,7 @@ export default class Song {
       remywikiUrlPath: remywiki_url_path,
       remywikiTitle: remywiki_title,
       genreRomanTrans: genre_romantrans,
+      labels,
     })
   }
 
@@ -71,6 +74,7 @@ export default class Song {
   readonly remywikiUrlPath: string
   readonly remywikiTitle: string
   readonly genreRomanTrans: string
+  readonly labels: string[]
 
   constructor({
     id,
@@ -88,6 +92,7 @@ export default class Song {
     remywikiUrlPath,
     remywikiTitle,
     genreRomanTrans,
+    labels,
   }: SongContructorProps) {
     this.id = id
     this.title = title
@@ -104,5 +109,6 @@ export default class Song {
     this.remywikiUrlPath = remywikiUrlPath
     this.remywikiTitle = remywikiTitle
     this.genreRomanTrans = genreRomanTrans
+    this.labels = labels
   }
 }
