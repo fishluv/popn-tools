@@ -35,6 +35,11 @@
     background-color: $e-light;
   }
 
+  &.purple {
+    border-color: $pu-dark;
+    background-color: $pu-light;
+  }
+
   &.clickable:active {
     border-color: grey;
     background-color: white;

@@ -1,12 +1,18 @@
 // Load Bootstrap from node packages
 // https://getbootstrap.com/docs/5.1/content/reboot/
 @import "~bootstrap/scss/bootstrap-reboot";
+@import "./colors.scss";
 
 body {
   background-color: #fdfdfd;
   background-image: linear-gradient(#fdfdfd, #e2e2e2);
   min-height: 100vh;
   color: #222;
+
+  &.SongSearchPage {
+    background-color: $pu-x-light;
+    background-image: linear-gradient($pu-x-light, $pu-light);
+  }
 }
 
 a {

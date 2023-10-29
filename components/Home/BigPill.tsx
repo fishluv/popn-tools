@@ -5,7 +5,7 @@ import Link from "next/link"
 
 interface BigPillProps {
   title: string
-  color: "red" | "yellow" | "green" | "blue"
+  color: "red" | "yellow" | "green" | "blue" | "purple"
   href?: string
 }
 

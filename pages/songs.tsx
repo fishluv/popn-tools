@@ -1,6 +1,10 @@
 import Head from "next/head"
 import SongSearchPage from "../components/SongSearchPage"
 
+export async function getStaticProps() {
+  return { props: { bodyClassName: "SongSearchPage" } }
+}
+
 export default function Songs() {
   return (
     <>
