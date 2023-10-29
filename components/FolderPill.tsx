@@ -4,7 +4,7 @@ import styles from "./FolderPill.module.scss"
 import Folder from "../models/Folder"
 
 interface FolderPillProps {
-  extraClass?: string
+  className?: string
   folder: Folder
   style: "full" | "compact"
 }
@@ -14,13 +14,13 @@ interface FolderPillProps {
  */
 export default class FolderPill extends React.Component<FolderPillProps> {
   render() {
-    const { extraClass, folder, style } = this.props
+    const { className, folder, style } = this.props
 
     const folderClass = /^\d/.test(folder.norm)
       ? `ac${folder.norm}`
       : folder.norm
     const rootClassName = cx(
-      extraClass,
+      className,
       styles.FolderPill,
       styles[folderClass],
       {
