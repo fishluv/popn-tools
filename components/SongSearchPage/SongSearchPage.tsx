@@ -38,6 +38,7 @@ export default function SongSearchPage() {
           placeholder="Search for songs"
           value={pendingQuery}
           onChange={onInputChange}
+          autoFocus
         />
 
         <span className={styles.musicalNote}>🎵</span>
