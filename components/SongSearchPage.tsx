@@ -5,10 +5,8 @@ import SongSearchResultsList from "./SongSearchResultsList"
 import { useDebounce } from "../lib/debounce"
 import Song from "../models/Song"
 import SongDetails from "./SongDetails"
-import { useRouter } from "next/navigation"
 
 export default function SongSearchPage() {
-  const router = useRouter()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [openedSong, setOpenedSong] = useState<Song | undefined>(undefined)
   const [pendingQuery, setPendingQuery] = useState("")
@@ -30,9 +28,9 @@ export default function SongSearchPage() {
   return (
     <div id="app" className={styles.SongSearchPage}>
       <div className={styles.top}>
-        <button className={styles.button} onClick={() => router.push("..")}>
+        {/* <button className={styles.button} onClick={() => router.push("..")}>
           ↩️
-        </button>
+        </button> */}
 
         <input
           className={styles.input}
