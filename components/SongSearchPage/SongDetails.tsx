@@ -32,7 +32,7 @@ function areEquivalent(a: string, b: string) {
   function norm(s: string) {
     return s.toLowerCase().replaceAll("？", "?").replaceAll("！", "!")
   }
-  return norm(a) === norm(b)
+  return norm(a).includes(norm(b)) || norm(b).includes(norm(a))
 }
 
 function getMinorTitleDisplay({ remywikiTitle, titleSortChar }: Song) {
