@@ -87,7 +87,11 @@ export default function SongDetails({ song }: { song: Song }) {
       </Detail>
 
       <Detail field="charts">
-        <SongLevelPills song={song} style="full" />
+        <SongLevelPills
+          pillClassName={styles.levelPill}
+          song={song}
+          style="full"
+        />
       </Detail>
 
       <Detail field="links">
