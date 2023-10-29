@@ -35,6 +35,50 @@ function areEquivalent(a: string, b: string) {
   return norm(a) === norm(b)
 }
 
+function getMinorTitleDisplay({ remywikiTitle, titleSortChar }: Song) {
+  return (
+    <Detail
+      className={styles.minor}
+      field=""
+      value={`${maybeDisplaySortChar(
+        titleSortChar,
+        remywikiTitle,
+      )}${remywikiTitle}`}
+    />
+  )
+}
+
+function getMinorGenreDisplay({ genre, genreSortChar }: Song) {
+  return (
+    <Detail
+      className={styles.minor}
+      field=""
+      value={`${maybeDisplaySortChar(genreSortChar, genre)}${genre}`}
+    />
+  )
+}
+
+// https://stackoverflow.com/a/20488304
+function toAscii(fw: string) {
+  return fw.replace(/[！-～]/g, (ch: string) =>
+    String.fromCharCode(ch.charCodeAt(0) - 0xfee0),
+  )
+}
+
+function maybeDisplaySortChar(
+  titleOrGenreSortChar: string,
+  titleOrGenre: string,
+) {
+  if (
+    toAscii(titleOrGenreSortChar).toLowerCase() ===
+    titleOrGenre.charAt(0).toLowerCase()
+  ) {
+    return ""
+  } else {
+    return `[${titleOrGenreSortChar}] `
+  }
+}
+
 export default function SongDetails({ song }: { song: Song }) {
   const { title, genre, genreRomanTrans, remywikiTitle, artist, labels } = song
   const maybeUpperSuffix = labels.includes("upper") ? " (UPPER)" : ""
@@ -50,13 +94,7 @@ export default function SongDetails({ song }: { song: Song }) {
             field="title/genre"
             value={`${title}${maybeUpperSuffix}`}
           />
-          {!areEquivalent(title, remywikiTitle) && (
-            <Detail
-              className={styles.romanized}
-              field=""
-              value={remywikiTitle}
-            />
-          )}
+          {!areEquivalent(title, remywikiTitle) && getMinorTitleDisplay(song)}
         </>
       ) : (
         <>
@@ -65,18 +103,13 @@ export default function SongDetails({ song }: { song: Song }) {
             field="title"
             value={`${title}${maybeUpperSuffix}`}
           />
-          {!areEquivalent(title, remywikiTitle) && (
-            <Detail
-              className={styles.romanized}
-              field=""
-              value={remywikiTitle}
-            />
-          )}
+          {!areEquivalent(title, remywikiTitle) && getMinorTitleDisplay(song)}
           <Detail
             className={styles.genre}
             field="genre"
             value={genreRomanTrans}
           />
+          {getMinorGenreDisplay(song)}
         </>
       )}
 
