@@ -7,6 +7,7 @@
 
   .top {
     display: flex;
+    gap: 0.5rem;
 
     .button {
       align-self: center;
@@ -23,7 +24,6 @@
     }
 
     .input {
-      margin: 0 0.5rem;
       padding: 1rem;
       flex-grow: 1;
       border-radius: 3rem;
