@@ -35,10 +35,12 @@ export default function SongSearchPage() {
         <input
           className={styles.input}
           type="text"
-          placeholder="🎵 Search for songs"
+          placeholder="Search for songs"
           value={pendingQuery}
           onChange={onInputChange}
         />
+
+        <span className={styles.musicalNote}>🎵</span>
 
         {/* <button className={styles.button}>⚙️</button> */}
       </div>
