@@ -1,8 +1,8 @@
-import FolderPill from "./FolderPill"
+import FolderPill from "../FolderPill"
 import styles from "./SongResultCard.module.scss"
-import Song from "../models/Song"
-import SongBanner from "./SongBanner"
-import SongLevelPills from "./SongLevelPills"
+import Song from "../../models/Song"
+import SongBanner from "../SongBanner"
+import SongLevelPills from "../SongLevelPills"
 
 export default function SongResultCard({
   song,

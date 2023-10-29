@@ -2,8 +2,8 @@ import React, { useState } from "react"
 import Modal from "react-modal"
 import styles from "./SongSearchPage.module.scss"
 import SongSearchResultsList from "./SongSearchResultsList"
-import { useDebounce } from "../lib/debounce"
-import Song from "../models/Song"
+import { useDebounce } from "../../lib/debounce"
+import Song from "../../models/Song"
 import SongDetails from "./SongDetails"
 
 export default function SongSearchPage() {

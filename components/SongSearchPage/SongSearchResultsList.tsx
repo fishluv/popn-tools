@@ -1,7 +1,7 @@
 import styles from "./SongSearchResultsList.module.scss"
-import { useSearchSong } from "../lib/fetch"
+import { useSearchSong } from "../../lib/fetch"
 import SongResultCard from "./SongResultCard"
-import Song from "../models/Song"
+import Song from "../../models/Song"
 
 export default function SongSearchResultsList({
   query,

@@ -1,10 +1,10 @@
 import cx from "classnames"
 import React from "react"
 import styles from "./SongDetails.module.scss"
-import FolderPill from "./FolderPill"
-import Song from "../models/Song"
-import SongBanner from "./SongBanner"
-import SongLevelPills from "./SongLevelPills"
+import FolderPill from "../FolderPill"
+import Song from "../../models/Song"
+import SongBanner from "../SongBanner"
+import SongLevelPills from "../SongLevelPills"
 
 function Detail({
   className,
