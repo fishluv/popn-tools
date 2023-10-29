@@ -5,15 +5,29 @@
   padding: 1rem;
   max-width: 800px;
 
-  .header {
-    font-size: 1rem;
-    margin-bottom: 1rem;
-  }
+  .top {
+    display: flex;
 
-  .input {
-    padding: 1rem;
-    width: 100%;
-    border-radius: 3rem;
+    .button {
+      align-self: center;
+      line-height: 1;
+      width: 2.5rem;
+      height: 2.5rem;
+      font-size: 1.25rem;
+      border-radius: 2rem;
+      border-style: solid;
+
+      a {
+        text-decoration: none;
+      }
+    }
+
+    .input {
+      margin: 0 0.5rem;
+      padding: 1rem;
+      flex-grow: 1;
+      border-radius: 3rem;
+    }
   }
 }
 
