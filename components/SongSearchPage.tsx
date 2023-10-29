@@ -6,8 +6,6 @@ import { useDebounce } from "../lib/debounce"
 import Song from "../models/Song"
 import SongDetails from "./SongDetails"
 
-Modal.setAppElement("#app")
-
 export default function SongSearchPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [openedSong, setOpenedSong] = useState<Song | undefined>(undefined)
@@ -40,6 +38,7 @@ export default function SongSearchPage() {
       <SongSearchResultsList
         query={debouncedQuery}
         onSongClick={(song: Song) => {
+          Modal.setAppElement("#app")
           setOpenedSong(song)
           setIsModalOpen(true)
         }}
