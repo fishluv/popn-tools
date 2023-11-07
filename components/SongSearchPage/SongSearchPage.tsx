@@ -5,6 +5,7 @@ import SongSearchResultsList from "./SongSearchResultsList"
 import { useDebounce } from "../../lib/debounce"
 import Song from "../../models/Song"
 import SongDetails from "./SongDetails"
+import { FiMoreHorizontal, FiX } from "react-icons/fi"
 
 export default function SongSearchPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -43,7 +44,9 @@ export default function SongSearchPage() {
 
         <span className={styles.musicalNote}>🎵</span>
 
-        {/* <button className={styles.button}>⚙️</button> */}
+        <button className={styles.button}>
+          <FiMoreHorizontal />
+        </button>
       </div>
 
       <SongSearchResultsList
@@ -76,7 +79,7 @@ export default function SongSearchPage() {
             className={styles.closeButton}
             onClick={() => setIsModalOpen(false)}
           >
-            ❌
+            <FiX />
           </button>
           {openedSong && <SongDetails song={openedSong} />}
         </div>
