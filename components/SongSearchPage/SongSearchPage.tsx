@@ -1,14 +1,15 @@
 import React, { useState } from "react"
-import Modal from "react-modal"
 import styles from "./SongSearchPage.module.scss"
 import SongSearchResultsList from "./SongSearchResultsList"
 import { useDebounce } from "../../lib/debounce"
 import Song from "../../models/Song"
 import SongDetails from "./SongDetails"
-import { FiMoreHorizontal, FiX } from "react-icons/fi"
+import { FiMoreHorizontal } from "react-icons/fi"
+import CommonModal from "../CommonModal"
+import ReactModal from "react-modal"
 
 export default function SongSearchPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isSongDetailModalOpen, setIsSongDetailModalOpen] = useState(false)
   const [openedSong, setOpenedSong] = useState<Song | undefined>(undefined)
   const [pendingQuery, setPendingQuery] = useState("")
   const [query, setQuery] = useState("")
@@ -52,38 +53,18 @@ export default function SongSearchPage() {
       <SongSearchResultsList
         query={debouncedQuery}
         onSongClick={(song: Song) => {
-          Modal.setAppElement("#app")
+          ReactModal.setAppElement("#app")
           setOpenedSong(song)
-          setIsModalOpen(true)
+          setIsSongDetailModalOpen(true)
         }}
       />
 
-      <Modal
-        isOpen={isModalOpen}
-        contentLabel="Song info modal"
-        onRequestClose={() => setIsModalOpen(false)}
-        style={{
-          overlay: { zIndex: 10 },
-          content: {
-            width: "320px",
-            minHeight: "fit-content",
-            left: "calc(50% - 160px)",
-            top: "10%",
-            padding: "0",
-            overflow: "visible",
-          },
-        }}
+      <CommonModal
+        isOpen={isSongDetailModalOpen}
+        onClose={() => setIsSongDetailModalOpen(false)}
       >
-        <div className={styles.modal}>
-          <button
-            className={styles.closeButton}
-            onClick={() => setIsModalOpen(false)}
-          >
-            <FiX />
-          </button>
-          {openedSong && <SongDetails song={openedSong} />}
-        </div>
-      </Modal>
+        {openedSong && <SongDetails song={openedSong} />}
+      </CommonModal>
     </div>
   )
 }
