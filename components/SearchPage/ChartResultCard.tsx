@@ -6,17 +6,19 @@ import LevelPill from "../LevelPill"
 import cx from "classnames"
 
 export default function ChartResultCard({
+  className,
   chart,
   style,
   onClick,
 }: {
+  className?: string
   chart: Chart
   style: "full" | "compact"
   onClick(chart: Chart): void
 }) {
   return (
     <button
-      className={cx(styles.ChartResultCard, styles[style])}
+      className={cx(className, styles.ChartResultCard, styles[style])}
       onClick={() => onClick(chart)}
     >
       <div className={styles.title}>{chart.song.title}</div>

@@ -27,14 +27,26 @@ export default function ChartSearchResultsList({
   return (
     <div className={styles.ChartSearchResultsList}>
       {chartResults &&
-        chartResults.map((chartResult: Chart, index: number) => (
-          <ChartResultCard
-            key={index}
-            chart={chartResult}
-            style="full"
-            onClick={() => {}}
-          />
-        ))}
+        chartResults.map((chartResult: Chart, index: number) => {
+          let style: "full" | "compact"
+          if (index === 0) {
+            style = "full"
+          } else if (chartResult.song.id === chartResults[index - 1].song.id) {
+            style = "compact"
+          } else {
+            style = "full"
+          }
+
+          return (
+            <ChartResultCard
+              className={styles[style]}
+              key={index}
+              chart={chartResult}
+              style={style}
+              onClick={() => {}}
+            />
+          )
+        })}
     </div>
   )
 }
