@@ -69,7 +69,9 @@ export default function SongSearchPage() {
         <input
           className={styles.input}
           type="text"
-          placeholder="Search for songs"
+          placeholder={
+            searchMode === "song" ? "Search for songs" : "Search for charts"
+          }
           value={pendingQuery}
           onChange={onInputChange}
           autoFocus
