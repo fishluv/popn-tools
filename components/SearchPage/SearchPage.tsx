@@ -11,6 +11,8 @@ import Link from "next/link"
 import { BsMusicNoteBeamed } from "react-icons/bs"
 import { CgNotes } from "react-icons/cg"
 import cx from "classnames"
+import Chart from "../../models/Chart"
+import ChartSearchResultsList from "./ChartSearchResultsList"
 
 type SearchMode = "song" | "chart"
 
@@ -88,14 +90,25 @@ export default function SearchPage() {
         </button>
       </div>
 
-      <SongSearchResultsList
-        query={debouncedQuery}
-        onSongClick={(song: Song) => {
-          ReactModal.setAppElement("#app")
-          setOpenedSong(song)
-          setIsSongDetailModalOpen(true)
-        }}
-      />
+      {searchMode === "song" ? (
+        <SongSearchResultsList
+          query={debouncedQuery}
+          onSongClick={(song: Song) => {
+            ReactModal.setAppElement("#app")
+            setOpenedSong(song)
+            setIsSongDetailModalOpen(true)
+          }}
+        />
+      ) : (
+        <ChartSearchResultsList
+          query={debouncedQuery}
+          onChartClick={(chart: Chart) => {
+            // ReactModal.setAppElement("#app")
+            // setOpenedSong(song)
+            // setIsSongDetailModalOpen(true)
+          }}
+        />
+      )}
 
       <CommonModal
         isOpen={isOptionsModalOpen}

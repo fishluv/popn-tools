@@ -2,6 +2,7 @@
 import useSWR from "swr"
 import urlJoin from "url-join"
 import Song from "../models/Song"
+import Chart from "../models/Chart"
 
 export function useSearchSong({
   query,
@@ -12,23 +13,45 @@ export function useSearchSong({
 }) {
   return useSWR<Song[]>(
     getSearchApiUrl("/songs", `?q=${query}&limit=${limit}`),
-    urlFetcher,
+    async (url: string) => {
+      const res = await fetch(url)
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new HttpError(data, res.status)
+      }
+
+      return (data as SearchApiSongResult[]).map(Song.fromSearchApiSongResult)
+    },
+  )
+}
+
+export function useSearchChart({
+  query,
+  limit,
+}: {
+  query: string
+  limit: number
+}) {
+  return useSWR<Chart[]>(
+    getSearchApiUrl("/charts", `?q=${query}&limit=${limit}`),
+    async (url: string) => {
+      const res = await fetch(url)
+      const data = await res.json()
+
+      if (!res.ok) {
+        throw new HttpError(data, res.status)
+      }
+
+      return (data as SearchApiChartResult[]).map(
+        Chart.fromSearchApiChartResult,
+      )
+    },
   )
 }
 
 function getSearchApiUrl(...parts: string[]) {
   return urlJoin(process.env.NEXT_PUBLIC_SEARCH_API_URL!, ...parts)
-}
-
-async function urlFetcher(url: string) {
-  const res = await fetch(url)
-  const data = await res.json()
-
-  if (!res.ok) {
-    throw new HttpError(data, res.status)
-  }
-
-  return (data as SearchApiSongResult[]).map(Song.fromSearchApiSongResult)
 }
 
 class HttpError extends Error {
@@ -58,5 +81,20 @@ export interface SearchApiSongResult {
   remywiki_url_path: string
   remywiki_title: string
   genre_romantrans: string
+  labels: string[]
+}
+
+export interface SearchApiChartResult {
+  id: string
+  difficulty: "e" | "n" | "h" | "ex"
+  level: number
+  song: SearchApiSongResult
+  has_holds: boolean
+  category: string | null
+  bpm: string | null
+  duration: string | null
+  notes: number | null
+  rating: string | null
+  sran_level: string | null
   labels: string[]
 }
