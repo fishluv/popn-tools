@@ -4,11 +4,13 @@ import SongSearchResultsList from "./SongSearchResultsList"
 import { useDebounce } from "../../lib/debounce"
 import Song from "../../models/Song"
 import SongDetails from "./SongDetails"
-import { FiMoreHorizontal } from "react-icons/fi"
+import { FiArrowLeft, FiMoreHorizontal } from "react-icons/fi"
 import CommonModal from "../CommonModal"
 import ReactModal from "react-modal"
+import Link from "next/link"
 
 export default function SongSearchPage() {
+  const [isOptionsModalOpen, setIsOptionsModalOpen] = useState(false)
   const [isSongDetailModalOpen, setIsSongDetailModalOpen] = useState(false)
   const [openedSong, setOpenedSong] = useState<Song | undefined>(undefined)
   const [pendingQuery, setPendingQuery] = useState("")
@@ -30,10 +32,6 @@ export default function SongSearchPage() {
   return (
     <div id="app" className={styles.SongSearchPage}>
       <div className={styles.top}>
-        {/* <button className={styles.button} onClick={() => router.push("..")}>
-          ↩️
-        </button> */}
-
         <input
           className={styles.input}
           type="text"
@@ -45,7 +43,13 @@ export default function SongSearchPage() {
 
         <span className={styles.musicalNote}>🎵</span>
 
-        <button className={styles.button}>
+        <button
+          className={styles.button}
+          onClick={() => {
+            ReactModal.setAppElement("#app")
+            setIsOptionsModalOpen(true)
+          }}
+        >
           <FiMoreHorizontal />
         </button>
       </div>
@@ -58,6 +62,15 @@ export default function SongSearchPage() {
           setIsSongDetailModalOpen(true)
         }}
       />
+
+      <CommonModal
+        isOpen={isOptionsModalOpen}
+        onClose={() => setIsOptionsModalOpen(false)}
+      >
+        <Link href="..">
+          <FiArrowLeft /> {"Back to Pop'n Tools"}
+        </Link>
+      </CommonModal>
 
       <CommonModal
         isOpen={isSongDetailModalOpen}
