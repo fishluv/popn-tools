@@ -5,7 +5,7 @@ import LevelPill from "./LevelPill"
 interface SongLevelPillsProps {
   pillClassName?: string
   song: Song
-  style: "full" | "compact"
+  style: "full" | "comfortable" | "compact"
 }
 
 /**

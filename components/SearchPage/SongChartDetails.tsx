@@ -159,7 +159,7 @@ export default function SongChartDetails({
           <SongLevelPills
             pillClassName={styles.levelPill}
             song={songToUse}
-            style="full"
+            style="comfortable"
           />
         </Detail>
       )}

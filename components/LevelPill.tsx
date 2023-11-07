@@ -6,7 +6,20 @@ interface LevelPillProps {
   className?: string
   difficulty: "e" | "n" | "h" | "ex"
   level: number
-  style: "full" | "compact"
+  style: "full" | "comfortable" | "compact"
+}
+
+function getFullDifficultyName(difficulty: "e" | "n" | "h" | "ex") {
+  switch (difficulty) {
+    case "e":
+      return "easy"
+    case "n":
+      return "normal"
+    case "h":
+      return "hyper"
+    default:
+      return "ex"
+  }
 }
 
 /**
@@ -16,13 +29,18 @@ export default class LevelPill extends React.Component<LevelPillProps> {
   render() {
     const { className, difficulty, level, style } = this.props
 
-    const rootClassName = cx(className, styles.LevelPill, styles[difficulty], {
-      [styles.compact]: style === "compact",
-    })
+    const rootClassName = cx(
+      className,
+      styles.LevelPill,
+      styles[difficulty],
+      styles[style],
+    )
 
     return (
       <span className={rootClassName}>
-        {difficulty} {level}
+        {style === "full" ? getFullDifficultyName(difficulty) : difficulty}
+        &nbsp;
+        {level}
       </span>
     )
   }
