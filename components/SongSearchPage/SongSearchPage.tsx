@@ -8,8 +8,14 @@ import { FiArrowLeft, FiMoreHorizontal } from "react-icons/fi"
 import CommonModal from "../CommonModal"
 import ReactModal from "react-modal"
 import Link from "next/link"
+import { BsMusicNoteBeamed } from "react-icons/bs"
+import { CgNotes } from "react-icons/cg"
+import cx from "classnames"
+
+type SearchMode = "song" | "chart"
 
 export default function SongSearchPage() {
+  const [searchMode, setSearchMode] = useState<SearchMode>("song")
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState(false)
   const [isSongDetailModalOpen, setIsSongDetailModalOpen] = useState(false)
   const [openedSong, setOpenedSong] = useState<Song | undefined>(undefined)
@@ -32,6 +38,34 @@ export default function SongSearchPage() {
   return (
     <div id="app" className={styles.SongSearchPage}>
       <div className={styles.top}>
+        {searchMode === "song" ? (
+          <button
+            className={cx(
+              styles.button,
+              styles.searchModeSwitcher,
+              styles[searchMode],
+            )}
+            onClick={() => {
+              setSearchMode("chart")
+            }}
+          >
+            <BsMusicNoteBeamed />
+          </button>
+        ) : (
+          <button
+            className={cx(
+              styles.button,
+              styles.searchModeSwitcher,
+              styles[searchMode],
+            )}
+            onClick={() => {
+              setSearchMode("song")
+            }}
+          >
+            <CgNotes />
+          </button>
+        )}
+
         <input
           className={styles.input}
           type="text"
@@ -40,8 +74,6 @@ export default function SongSearchPage() {
           onChange={onInputChange}
           autoFocus
         />
-
-        <span className={styles.musicalNote}>🎵</span>
 
         <button
           className={styles.button}
