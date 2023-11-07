@@ -12,4 +12,16 @@
     font-size: 1.5rem;
     margin-bottom: 3rem;
   }
+
+  .BigPill {
+    display: flex;
+    gap: 0.5rem;
+
+    span {
+      flex-grow: 1;
+      font-size: 1.25rem;
+      font-weight: bold;
+      line-height: 1;
+    }
+  }
 }
