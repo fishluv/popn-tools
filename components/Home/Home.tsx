@@ -15,7 +15,7 @@ export default function Home() {
         <span>Chart randomizer</span>
       </BigPill>
 
-      <BigPill className={styles.BigPill} color="purple" href="/search">
+      <BigPill className={styles.BigPill} color="yellow" href="/search">
         <CgSearch size="1.25rem" strokeWidth={1} />
         <span>{"Song & chart search"}</span>
       </BigPill>
