@@ -5,11 +5,11 @@ export async function getStaticProps() {
   return { props: { bodyClassName: "SearchPage" } }
 }
 
-export default function Songs() {
+export default function Search() {
   return (
     <>
       <Head>
-        <title>Song search • Pop&apos;n Tools</title>
+        <title>{"Search songs & charts • Pop'n Tools"}</title>
       </Head>
       <SearchPage />
     </>
