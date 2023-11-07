@@ -101,7 +101,7 @@ export default function SearchPage() {
         isOpen={isOptionsModalOpen}
         onClose={() => setIsOptionsModalOpen(false)}
       >
-        <Link href="..">
+        <Link href="/">
           <FiArrowLeft /> {"Back to Pop'n Tools"}
         </Link>
       </CommonModal>
