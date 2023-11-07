@@ -28,7 +28,12 @@ export default function ChartSearchResultsList({
     <div className={styles.ChartSearchResultsList}>
       {chartResults &&
         chartResults.map((chartResult: Chart, index: number) => (
-          <ChartResultCard key={index} chart={chartResult} onClick={() => {}} />
+          <ChartResultCard
+            key={index}
+            chart={chartResult}
+            style="full"
+            onClick={() => {}}
+          />
         ))}
     </div>
   )
