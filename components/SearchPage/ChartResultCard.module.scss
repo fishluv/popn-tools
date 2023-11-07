@@ -1,0 +1,63 @@
+@import "../../styles/colors";
+@import "../../styles/components";
+
+.diffLevel {
+  @include pill;
+  @include diff-bg-colors(bright);
+  @include diff-border-colors(dark);
+  color: white;
+}
+
+.ChartResultCard {
+  display: inline-flex;
+  width: 240px;
+  height: 60px;
+  font-family: "M PLUS 1", "Arial", sans-serif;
+  padding: 0;
+  border: 0;
+  position: relative;
+  background-color: #ddd;
+  box-shadow: 0 1px 2px #555;
+
+  .title {
+    position: absolute;
+    z-index: 1;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 0.25rem;
+    line-height: 1;
+  }
+
+  .banner {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+  }
+
+  .folderLevels {
+    position: absolute;
+    z-index: 3;
+    bottom: 0;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &:focus {
+    outline: #07c solid 3px;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  &:active {
+    .overlay {
+      position: absolute;
+      z-index: 4;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.75);
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import styles from "./ChartSearchResultsList.module.scss"
 import { useSearchChart } from "../../lib/fetch"
-import SongResultCard from "./SongResultCard"
 import Chart from "../../models/Chart"
+import ChartResultCard from "./ChartResultCard"
 
 export default function ChartSearchResultsList({
   query,
@@ -28,11 +28,7 @@ export default function ChartSearchResultsList({
     <div className={styles.ChartSearchResultsList}>
       {chartResults &&
         chartResults.map((chartResult: Chart, index: number) => (
-          <SongResultCard
-            key={index}
-            song={chartResult.song}
-            onClick={() => {}}
-          />
+          <ChartResultCard key={index} chart={chartResult} onClick={() => {}} />
         ))}
     </div>
   )
