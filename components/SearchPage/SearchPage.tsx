@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import styles from "./SongSearchPage.module.scss"
+import styles from "./SearchPage.module.scss"
 import SongSearchResultsList from "./SongSearchResultsList"
 import { useDebounce } from "../../lib/debounce"
 import Song from "../../models/Song"
@@ -14,7 +14,7 @@ import cx from "classnames"
 
 type SearchMode = "song" | "chart"
 
-export default function SongSearchPage() {
+export default function SearchPage() {
   const [searchMode, setSearchMode] = useState<SearchMode>("song")
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState(false)
   const [isSongDetailModalOpen, setIsSongDetailModalOpen] = useState(false)
@@ -36,7 +36,7 @@ export default function SongSearchPage() {
   }
 
   return (
-    <div id="app" className={styles.SongSearchPage}>
+    <div id="app" className={styles.SearchPage}>
       <div className={styles.top}>
         {searchMode === "song" ? (
           <button

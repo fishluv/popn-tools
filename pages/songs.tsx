@@ -1,8 +1,8 @@
 import Head from "next/head"
-import SongSearchPage from "../components/SongSearchPage"
+import SearchPage from "../components/SearchPage"
 
 export async function getStaticProps() {
-  return { props: { bodyClassName: "SongSearchPage" } }
+  return { props: { bodyClassName: "SearchPage" } }
 }
 
 export default function Songs() {
@@ -11,7 +11,7 @@ export default function Songs() {
       <Head>
         <title>Song search • Pop&apos;n Tools</title>
       </Head>
-      <SongSearchPage />
+      <SearchPage />
     </>
   )
 }
