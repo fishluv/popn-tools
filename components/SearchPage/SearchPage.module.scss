@@ -29,13 +29,11 @@
       &.searchModeSwitcher {
         position: absolute;
         left: 0.625rem;
+        background-color: $h-light;
+        transition: transform 50ms linear;
 
-        &.song {
-          background-color: $pu-light;
-        }
-
-        &.chart {
-          background-color: $h-light;
+        &:active {
+          transform: perspective(3rem) translateZ(-1rem);
         }
       }
     }
