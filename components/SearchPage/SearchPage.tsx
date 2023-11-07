@@ -3,7 +3,7 @@ import styles from "./SearchPage.module.scss"
 import SongSearchResultsList from "./SongSearchResultsList"
 import { useDebounce } from "../../lib/debounce"
 import Song from "../../models/Song"
-import SongDetails from "./SongDetails"
+import SongChartDetails from "./SongChartDetails"
 import { FiArrowLeft, FiMoreHorizontal } from "react-icons/fi"
 import CommonModal from "../CommonModal"
 import ReactModal from "react-modal"
@@ -125,14 +125,14 @@ export default function SearchPage() {
         isOpen={isSongDetailModalOpen}
         onClose={() => setIsSongDetailModalOpen(false)}
       >
-        {openedSong && <SongDetails song={openedSong} />}
+        {openedSong && <SongChartDetails song={openedSong} />}
       </CommonModal>
 
       <CommonModal
         isOpen={isChartDetailModalOpen}
         onClose={() => setIsChartDetailModalOpen(false)}
       >
-        {openedChart && <SongDetails chart={openedChart} />}
+        {openedChart && <SongChartDetails chart={openedChart} />}
       </CommonModal>
     </div>
   )

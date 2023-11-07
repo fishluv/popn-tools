@@ -1,6 +1,6 @@
 import cx from "classnames"
 import React from "react"
-import styles from "./SongDetails.module.scss"
+import styles from "./SongChartDetails.module.scss"
 import FolderPill from "../FolderPill"
 import Song from "../../models/Song"
 import SongBanner from "../SongBanner"
@@ -81,7 +81,7 @@ function maybeDisplaySortChar(
   }
 }
 
-export default function SongDetails({
+export default function SongChartDetails({
   song,
   chart,
 }: {
@@ -108,7 +108,7 @@ export default function SongDetails({
   const maybeUpperSuffix = labels.includes("upper") ? " (UPPER)" : ""
 
   return (
-    <div className={styles.SongDetails}>
+    <div className={styles.SongChartDetails}>
       <SongBanner className={styles.banner} songId={songId} />
       {chart && (
         <div className={styles.chartLevelPillContainer}>
