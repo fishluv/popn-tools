@@ -19,7 +19,7 @@ export default function CommonModal({
       contentLabel="Song info modal"
       onRequestClose={onClose}
       style={{
-        overlay: { zIndex: 10 },
+        overlay: { zIndex: 100 },
         content: {
           width: "320px",
           minHeight: "fit-content",

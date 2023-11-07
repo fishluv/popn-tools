@@ -43,7 +43,7 @@ export default function ChartSearchResultsList({
               key={index}
               chart={chartResult}
               style={style}
-              onClick={() => {}}
+              onClick={onChartClick}
             />
           )
         })}

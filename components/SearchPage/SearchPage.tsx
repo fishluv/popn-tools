@@ -21,6 +21,8 @@ export default function SearchPage() {
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState(false)
   const [isSongDetailModalOpen, setIsSongDetailModalOpen] = useState(false)
   const [openedSong, setOpenedSong] = useState<Song | undefined>(undefined)
+  const [isChartDetailModalOpen, setIsChartDetailModalOpen] = useState(false)
+  const [openedChart, setOpenedChart] = useState<Chart | undefined>(undefined)
   const [pendingQuery, setPendingQuery] = useState("")
   const [query, setQuery] = useState("")
   const debouncedQuery = useDebounce(query, 125)
@@ -103,9 +105,9 @@ export default function SearchPage() {
         <ChartSearchResultsList
           query={debouncedQuery}
           onChartClick={(chart: Chart) => {
-            // ReactModal.setAppElement("#app")
-            // setOpenedSong(song)
-            // setIsSongDetailModalOpen(true)
+            ReactModal.setAppElement("#app")
+            setOpenedChart(chart)
+            setIsChartDetailModalOpen(true)
           }}
         />
       )}
@@ -124,6 +126,13 @@ export default function SearchPage() {
         onClose={() => setIsSongDetailModalOpen(false)}
       >
         {openedSong && <SongDetails song={openedSong} />}
+      </CommonModal>
+
+      <CommonModal
+        isOpen={isChartDetailModalOpen}
+        onClose={() => setIsChartDetailModalOpen(false)}
+      >
+        {openedChart && <SongDetails chart={openedChart} />}
       </CommonModal>
     </div>
   )

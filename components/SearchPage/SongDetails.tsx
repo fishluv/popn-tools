@@ -5,6 +5,8 @@ import FolderPill from "../FolderPill"
 import Song from "../../models/Song"
 import SongBanner from "../SongBanner"
 import SongLevelPills from "../SongLevelPills"
+import Chart from "../../models/Chart"
+import LevelPill from "../LevelPill"
 
 function Detail({
   className,
@@ -79,13 +81,44 @@ function maybeDisplaySortChar(
   }
 }
 
-export default function SongDetails({ song }: { song: Song }) {
-  const { title, genre, genreRomanTrans, remywikiTitle, artist, labels } = song
+export default function SongDetails({
+  song,
+  chart,
+}: {
+  song?: Song
+  chart?: Chart
+}) {
+  if (!song && !chart) {
+    throw new Error("must specify song or chart")
+  }
+
+  const songToUse = (song || chart!.song)!
+
+  const {
+    id: songId,
+    title,
+    genre,
+    genreRomanTrans,
+    remywikiTitle,
+    artist,
+    folder,
+    remywikiUrlPath,
+    labels,
+  } = songToUse
   const maybeUpperSuffix = labels.includes("upper") ? " (UPPER)" : ""
 
   return (
     <div className={styles.SongDetails}>
-      <SongBanner className={styles.banner} songId={song.id} />
+      <SongBanner className={styles.banner} songId={songId} />
+      {chart && (
+        <div className={styles.chartLevelPillContainer}>
+          <LevelPill
+            difficulty={chart.difficulty}
+            level={chart.level}
+            style="full"
+          />
+        </div>
+      )}
 
       {areEquivalent(title, genre) ? (
         <>
@@ -94,7 +127,8 @@ export default function SongDetails({ song }: { song: Song }) {
             field="title/genre"
             value={`${title}${maybeUpperSuffix}`}
           />
-          {!areEquivalent(title, remywikiTitle) && getMinorTitleDisplay(song)}
+          {!areEquivalent(title, remywikiTitle) &&
+            getMinorTitleDisplay(songToUse)}
         </>
       ) : (
         <>
@@ -103,35 +137,35 @@ export default function SongDetails({ song }: { song: Song }) {
             field="title"
             value={`${title}${maybeUpperSuffix}`}
           />
-          {!areEquivalent(title, remywikiTitle) && getMinorTitleDisplay(song)}
+          {!areEquivalent(title, remywikiTitle) &&
+            getMinorTitleDisplay(songToUse)}
           <Detail
             className={styles.genre}
             field="genre"
             value={genreRomanTrans}
           />
-          {getMinorGenreDisplay(song)}
+          {getMinorGenreDisplay(songToUse)}
         </>
       )}
 
       <Detail field="artist" value={artist} />
 
       <Detail field="from">
-        <FolderPill folder={song.folder} style="full" />
+        <FolderPill folder={folder} style="full" />
       </Detail>
 
-      <Detail field="charts">
-        <SongLevelPills
-          pillClassName={styles.levelPill}
-          song={song}
-          style="full"
-        />
-      </Detail>
+      {!chart && (
+        <Detail field="charts">
+          <SongLevelPills
+            pillClassName={styles.levelPill}
+            song={songToUse}
+            style="full"
+          />
+        </Detail>
+      )}
 
       <Detail field="links">
-        <a
-          href={`https://remywiki.com/${song.remywikiUrlPath}`}
-          target="_blank"
-        >
+        <a href={`https://remywiki.com/${remywikiUrlPath}`} target="_blank">
           RemyWiki
         </a>
       </Detail>
