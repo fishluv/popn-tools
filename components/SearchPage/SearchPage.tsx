@@ -15,16 +15,19 @@ import Chart from "../../models/Chart"
 import ChartSearchResultsList from "./ChartSearchResultsList"
 import { StringParam, useQueryParams } from "use-query-params"
 
-type SearchMode = "song" | "chart"
+export default function SearchPage({ mode }: { mode: "songs" | "charts" }) {
+  const isSongMode = mode === "songs"
 
-export default function SearchPage() {
-  const [searchMode, setSearchMode] = useState<SearchMode>("song")
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState(false)
   const [isSongDetailModalOpen, setIsSongDetailModalOpen] = useState(false)
   const [openedSong, setOpenedSong] = useState<Song | undefined>(undefined)
   const [isChartDetailModalOpen, setIsChartDetailModalOpen] = useState(false)
   const [openedChart, setOpenedChart] = useState<Chart | undefined>(undefined)
-  const [queryParams, setQueryParams] = useQueryParams({ q: StringParam })
+
+  const [queryParams, setQueryParams] = useQueryParams({
+    m: StringParam,
+    q: StringParam,
+  })
   const { q: query } = queryParams
   const debouncedQuery = useDebounce(query, 125)
 
@@ -38,28 +41,20 @@ export default function SearchPage() {
   return (
     <div id="app" className={styles.SearchPage}>
       <div className={styles.top}>
-        {searchMode === "song" ? (
+        {isSongMode ? (
           <button
-            className={cx(
-              styles.button,
-              styles.searchModeSwitcher,
-              styles[searchMode],
-            )}
+            className={cx(styles.button, styles.searchModeSwitcher)}
             onClick={() => {
-              setSearchMode("chart")
+              setQueryParams({ m: "charts" }, "replaceIn")
             }}
           >
             <BsMusicNoteBeamed />
           </button>
         ) : (
           <button
-            className={cx(
-              styles.button,
-              styles.searchModeSwitcher,
-              styles[searchMode],
-            )}
+            className={cx(styles.button, styles.searchModeSwitcher)}
             onClick={() => {
-              setSearchMode("song")
+              setQueryParams({ m: "songs" }, "replaceIn")
             }}
           >
             <CgNotes />
@@ -69,9 +64,7 @@ export default function SearchPage() {
         <input
           className={styles.input}
           type="text"
-          placeholder={
-            searchMode === "song" ? "Search for songs" : "Search for charts"
-          }
+          placeholder={isSongMode ? "Search for songs" : "Search for charts"}
           value={query ?? ""}
           onChange={onInputChange}
           autoFocus
@@ -88,7 +81,7 @@ export default function SearchPage() {
         </button>
       </div>
 
-      {searchMode === "song" ? (
+      {isSongMode ? (
         <SongSearchResultsList
           query={debouncedQuery ?? ""}
           onSongClick={(song: Song) => {
