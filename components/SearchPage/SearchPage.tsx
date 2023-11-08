@@ -18,10 +18,10 @@ import { StringParam, useQueryParams } from "use-query-params"
 export default function SearchPage({ mode }: { mode: "songs" | "charts" }) {
   const isSongMode = mode === "songs"
 
-  const [isOptionsModalOpen, setIsOptionsModalOpen] = useState(false)
-  const [isSongDetailModalOpen, setIsSongDetailModalOpen] = useState(false)
+  const [currentOpenModal, setCurrentOpenModal] = useState<
+    "options" | "songDetails" | "chartDetails" | null
+  >(null)
   const [openedSong, setOpenedSong] = useState<Song | undefined>(undefined)
-  const [isChartDetailModalOpen, setIsChartDetailModalOpen] = useState(false)
   const [openedChart, setOpenedChart] = useState<Chart | undefined>(undefined)
 
   const [queryParams, setQueryParams] = useQueryParams({
@@ -74,7 +74,7 @@ export default function SearchPage({ mode }: { mode: "songs" | "charts" }) {
           className={styles.button}
           onClick={() => {
             ReactModal.setAppElement("#app")
-            setIsOptionsModalOpen(true)
+            setCurrentOpenModal("options")
           }}
         >
           <FiMoreHorizontal />
@@ -87,7 +87,7 @@ export default function SearchPage({ mode }: { mode: "songs" | "charts" }) {
           onSongClick={(song: Song) => {
             ReactModal.setAppElement("#app")
             setOpenedSong(song)
-            setIsSongDetailModalOpen(true)
+            setCurrentOpenModal("songDetails")
           }}
         />
       ) : (
@@ -96,32 +96,28 @@ export default function SearchPage({ mode }: { mode: "songs" | "charts" }) {
           onChartClick={(chart: Chart) => {
             ReactModal.setAppElement("#app")
             setOpenedChart(chart)
-            setIsChartDetailModalOpen(true)
+            setCurrentOpenModal("chartDetails")
           }}
         />
       )}
 
       <CommonModal
-        isOpen={isOptionsModalOpen}
-        onClose={() => setIsOptionsModalOpen(false)}
+        isOpen={currentOpenModal !== null}
+        onClose={() => setCurrentOpenModal(null)}
       >
-        <Link href="/">
-          <FiArrowLeft /> {"Back to Pop'n Tools"}
-        </Link>
-      </CommonModal>
+        {currentOpenModal === "options" && (
+          <Link href="/">
+            <FiArrowLeft /> {"Back to Pop'n Tools"}
+          </Link>
+        )}
 
-      <CommonModal
-        isOpen={isSongDetailModalOpen}
-        onClose={() => setIsSongDetailModalOpen(false)}
-      >
-        {openedSong && <SongChartDetails song={openedSong} />}
-      </CommonModal>
+        {currentOpenModal === "songDetails" && openedSong && (
+          <SongChartDetails song={openedSong} />
+        )}
 
-      <CommonModal
-        isOpen={isChartDetailModalOpen}
-        onClose={() => setIsChartDetailModalOpen(false)}
-      >
-        {openedChart && <SongChartDetails chart={openedChart} />}
+        {currentOpenModal === "chartDetails" && openedChart && (
+          <SongChartDetails chart={openedChart} />
+        )}
       </CommonModal>
     </div>
   )
