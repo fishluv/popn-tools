@@ -1,6 +1,8 @@
 import { useEffect } from "react"
 import "../styles/globals.scss"
 import type { AppProps } from "next/app"
+import NextAdapterPages from "next-query-params/pages"
+import { QueryParamProvider } from "use-query-params"
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -9,7 +11,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   })
 
-  return <Component {...pageProps} />
+  return (
+    <QueryParamProvider adapter={NextAdapterPages}>
+      <Component {...pageProps} />
+    </QueryParamProvider>
+  )
 }
 
 export default MyApp

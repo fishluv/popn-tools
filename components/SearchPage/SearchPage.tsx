@@ -13,6 +13,7 @@ import { CgNotes } from "react-icons/cg"
 import cx from "classnames"
 import Chart from "../../models/Chart"
 import ChartSearchResultsList from "./ChartSearchResultsList"
+import { StringParam, useQueryParams } from "use-query-params"
 
 type SearchMode = "song" | "chart"
 
@@ -23,20 +24,15 @@ export default function SearchPage() {
   const [openedSong, setOpenedSong] = useState<Song | undefined>(undefined)
   const [isChartDetailModalOpen, setIsChartDetailModalOpen] = useState(false)
   const [openedChart, setOpenedChart] = useState<Chart | undefined>(undefined)
-  const [pendingQuery, setPendingQuery] = useState("")
-  const [query, setQuery] = useState("")
+  const [queryParams, setQueryParams] = useQueryParams({ q: StringParam })
+  const { q: query } = queryParams
   const debouncedQuery = useDebounce(query, 125)
 
   function onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { value } = event.target
     // Remove leading whitespace. Only one trailing space allowed.
     const sanitized = value.replace(/^\s+/, "").replace(/\s+$/, " ")
-    if (sanitized !== pendingQuery) {
-      setPendingQuery(sanitized)
-      if (sanitized.length >= 3) {
-        setQuery(sanitized)
-      }
-    }
+    setQueryParams({ q: sanitized }, "replaceIn")
   }
 
   return (
@@ -76,7 +72,7 @@ export default function SearchPage() {
           placeholder={
             searchMode === "song" ? "Search for songs" : "Search for charts"
           }
-          value={pendingQuery}
+          value={query ?? ""}
           onChange={onInputChange}
           autoFocus
         />
@@ -94,7 +90,7 @@ export default function SearchPage() {
 
       {searchMode === "song" ? (
         <SongSearchResultsList
-          query={debouncedQuery}
+          query={debouncedQuery ?? ""}
           onSongClick={(song: Song) => {
             ReactModal.setAppElement("#app")
             setOpenedSong(song)
@@ -103,7 +99,7 @@ export default function SearchPage() {
         />
       ) : (
         <ChartSearchResultsList
-          query={debouncedQuery}
+          query={debouncedQuery ?? ""}
           onChartClick={(chart: Chart) => {
             ReactModal.setAppElement("#app")
             setOpenedChart(chart)
