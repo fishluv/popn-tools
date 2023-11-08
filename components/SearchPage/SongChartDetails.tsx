@@ -164,10 +164,31 @@ export default function SongChartDetails({
         </Detail>
       )}
 
+      {chart && (
+        <>
+          <Detail field="bpm" value={chart.bpm || "?"} />
+          <Detail field="duration" value={chart.duration || "?"} />
+          <Detail field="notes" value={chart.notes?.toString() || "?"} />
+          <Detail field="jp rating" value={chart.rating || "?"} />
+          <Detail field="sran level" value={chart.sranLevel || "?"} />
+        </>
+      )}
+
       <Detail field="links">
         <a href={`https://remywiki.com/${remywikiUrlPath}`} target="_blank">
           RemyWiki
         </a>
+        {chart?.jpWikiPagePath && (
+          <>
+            <br />
+            <a
+              href={`https://popn.wiki/%E9%9B%A3%E6%98%93%E5%BA%A6%E8%A1%A8/${chart.jpWikiPagePath}`}
+              target="_blank"
+            >
+              JP Wiki (Hyrorre)
+            </a>
+          </>
+        )}
       </Detail>
     </div>
   )

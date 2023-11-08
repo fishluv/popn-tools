@@ -5,6 +5,7 @@ interface ChartContructorProps {
   id: string
   difficulty: "e" | "n" | "h" | "ex"
   level: number
+  jpWikiPagePath: string | null
   song: Song
   hasHolds: boolean
   category: string | null
@@ -21,6 +22,7 @@ export default class Chart {
     id,
     difficulty,
     level,
+    hyrorre_page_path,
     song,
     has_holds,
     category,
@@ -35,6 +37,7 @@ export default class Chart {
       id,
       difficulty,
       level,
+      jpWikiPagePath: hyrorre_page_path,
       song: Song.fromSearchApiSongResult(song),
       hasHolds: has_holds,
       category,
@@ -50,6 +53,7 @@ export default class Chart {
   readonly id: string
   readonly difficulty: "e" | "n" | "h" | "ex"
   readonly level: number
+  readonly jpWikiPagePath: string | null
   readonly song: Song
   readonly hasHolds: boolean
   readonly category: string | null
@@ -64,6 +68,7 @@ export default class Chart {
     id,
     difficulty,
     level,
+    jpWikiPagePath,
     song,
     hasHolds,
     category,
@@ -77,6 +82,7 @@ export default class Chart {
     this.id = id
     this.difficulty = difficulty
     this.level = level
+    this.jpWikiPagePath = jpWikiPagePath
     this.song = song
     this.hasHolds = hasHolds
     this.category = category
