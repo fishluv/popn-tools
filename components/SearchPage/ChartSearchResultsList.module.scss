@@ -1,14 +1,15 @@
 .ChartSearchResultsList {
   .ChartResultCard {
     display: flex; // Block, not inline.
-    margin: 0 auto;
+    margin: 0.75rem auto 0;
 
-    &.full:not(:first-child) {
-      margin-top: 1.5rem;
-    }
-    
     &.compact {
       margin-top: 0.5rem;
     }
+  }
+
+  // Can't nest this above for some reason...
+  .ChartResultCard.compact + .ChartResultCard.full {
+    margin-top: 1.5rem;
   }
 }
