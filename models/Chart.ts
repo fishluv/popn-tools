@@ -5,14 +5,14 @@ interface ChartContructorProps {
   id: string
   difficulty: "e" | "n" | "h" | "ex"
   level: number
-  jpWikiPagePath: string | null
   song: Song
   hasHolds: boolean
   category: string | null
   bpm: string | null
   duration: string | null
   notes: number | null
-  rating: string | null
+  jpWikiPagePath: string | null
+  jpRating: string | null
   sranLevel: string | null
   labels: string[]
 }
@@ -22,13 +22,13 @@ export default class Chart {
     id,
     difficulty,
     level,
-    hyrorre_page_path,
     song,
     has_holds,
     category,
     bpm,
     duration,
     notes,
+    hyrorre_page_path,
     rating,
     sran_level,
     labels,
@@ -37,14 +37,14 @@ export default class Chart {
       id,
       difficulty,
       level,
-      jpWikiPagePath: hyrorre_page_path,
       song: Song.fromSearchApiSongResult(song),
       hasHolds: has_holds,
       category,
       bpm,
       duration,
       notes,
-      rating,
+      jpWikiPagePath: hyrorre_page_path,
+      jpRating: rating,
       sranLevel: sran_level,
       labels,
     })
@@ -53,14 +53,14 @@ export default class Chart {
   readonly id: string
   readonly difficulty: "e" | "n" | "h" | "ex"
   readonly level: number
-  readonly jpWikiPagePath: string | null
   readonly song: Song
   readonly hasHolds: boolean
   readonly category: string | null
   readonly bpm: string | null
   readonly duration: string | null
   readonly notes: number | null
-  readonly rating: string | null
+  readonly jpWikiPagePath: string | null
+  readonly jpRating: string | null
   readonly sranLevel: string | null
   readonly labels: string[]
 
@@ -68,28 +68,28 @@ export default class Chart {
     id,
     difficulty,
     level,
-    jpWikiPagePath,
     song,
     hasHolds,
     category,
     bpm,
     duration,
     notes,
-    rating,
+    jpWikiPagePath,
+    jpRating,
     sranLevel,
     labels,
   }: ChartContructorProps) {
     this.id = id
     this.difficulty = difficulty
     this.level = level
-    this.jpWikiPagePath = jpWikiPagePath
     this.song = song
     this.hasHolds = hasHolds
     this.category = category
     this.bpm = bpm
     this.duration = duration
     this.notes = notes
-    this.rating = rating
+    this.jpWikiPagePath = jpWikiPagePath
+    this.jpRating = jpRating
     this.sranLevel = sranLevel
     this.labels = labels
   }

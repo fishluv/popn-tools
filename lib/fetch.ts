@@ -88,13 +88,13 @@ export interface SearchApiChartResult {
   id: string
   difficulty: "e" | "n" | "h" | "ex"
   level: number
-  hyrorre_page_path: string | null
   song: SearchApiSongResult
   has_holds: boolean
   category: string | null
   bpm: string | null
   duration: string | null
   notes: number | null
+  hyrorre_page_path: string | null
   rating: string | null
   sran_level: string | null
   labels: string[]

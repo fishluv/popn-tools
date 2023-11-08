@@ -169,7 +169,7 @@ export default function SongChartDetails({
           <Detail field="bpm" value={chart.bpm || "?"} />
           <Detail field="duration" value={chart.duration || "?"} />
           <Detail field="notes" value={chart.notes?.toString() || "?"} />
-          <Detail field="jp rating" value={chart.rating || "?"} />
+          <Detail field="jp rating" value={chart.jpRating || "?"} />
           <Detail field="sran level" value={chart.sranLevel || "?"} />
         </>
       )}
@@ -185,7 +185,7 @@ export default function SongChartDetails({
               href={`https://popn.wiki/%E9%9B%A3%E6%98%93%E5%BA%A6%E8%A1%A8/${chart.jpWikiPagePath}`}
               target="_blank"
             >
-              JP Wiki (Hyrorre)
+              popn.wiki (Hyrorre)
             </a>
           </>
         )}
