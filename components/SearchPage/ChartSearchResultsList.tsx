@@ -2,6 +2,7 @@ import styles from "./ChartSearchResultsList.module.scss"
 import { useSearchChart } from "../../lib/fetch"
 import Chart from "../../models/Chart"
 import ChartResultCard from "./ChartResultCard"
+import cx from "classnames"
 
 export default function ChartSearchResultsList({
   query,
@@ -14,7 +15,7 @@ export default function ChartSearchResultsList({
     data: chartResults,
     error,
     isLoading,
-  } = useSearchChart({ query, limit: 15 })
+  } = useSearchChart({ query, limit: 20 })
 
   if (error) {
     console.error(`Error searching for charts: ${JSON.stringify(error.data)}`)
@@ -39,7 +40,7 @@ export default function ChartSearchResultsList({
 
           return (
             <ChartResultCard
-              className={styles[style]}
+              className={cx(styles.ChartResultCard, styles[style])}
               key={index}
               chart={chartResult}
               style={style}

@@ -1,13 +1,14 @@
 .ChartSearchResultsList {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  .ChartResultCard {
+    display: flex; // Block, not inline.
+    margin: 0 auto;
 
-  .full:not(:first-child) {
-    margin-top: 1.5rem;
-  }
-  
-  .compact {
-    margin-top: 0.5rem;
+    &.full:not(:first-child) {
+      margin-top: 2.0rem;
+    }
+    
+    &.compact {
+      margin-top: 0.5rem;
+    }
   }
 }
