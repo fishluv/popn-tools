@@ -30,11 +30,6 @@
         position: absolute;
         left: 0.625rem;
         background-color: $h-light;
-        transition: transform 50ms linear;
-
-        &:active {
-          transform: perspective(3rem) translateZ(-1rem);
-        }
       }
     }
 
