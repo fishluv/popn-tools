@@ -17,10 +17,18 @@ export default function SongResultCard({
       <SongBanner className={styles.banner} songId={song.id} />
       <div className={styles.folderLevels}>
         <div className={styles.folder}>
-          <FolderPill folder={song.folder} style="compact" />
+          <FolderPill
+            folder={song.folder}
+            pillStyle="compact"
+            labelStyle="compact"
+          />
         </div>
         <div className={styles.levels}>
-          <SongLevelPills song={song} style="compact" />
+          <SongLevelPills
+            song={song}
+            pillStyle="compact"
+            labelStyle="compact"
+          />
         </div>
       </div>
       <div className={styles.overlay} />

@@ -5,7 +5,8 @@ import LevelPill from "./LevelPill"
 interface SongLevelPillsProps {
   pillClassName?: string
   song: Song
-  style: "full" | "comfortable" | "compact"
+  pillStyle: "full" | "compact"
+  labelStyle: "full" | "compact"
 }
 
 /**
@@ -14,7 +15,8 @@ interface SongLevelPillsProps {
 export default function SongLevelPills({
   pillClassName,
   song,
-  style,
+  pillStyle,
+  labelStyle,
 }: SongLevelPillsProps) {
   return (
     <>
@@ -23,7 +25,8 @@ export default function SongLevelPills({
           className={pillClassName}
           difficulty="e"
           level={song.easyLevel}
-          style={style}
+          pillStyle={pillStyle}
+          labelStyle={labelStyle}
         />
       )}
       {song.normalLevel && (
@@ -31,7 +34,8 @@ export default function SongLevelPills({
           className={pillClassName}
           difficulty="n"
           level={song.normalLevel}
-          style={style}
+          pillStyle={pillStyle}
+          labelStyle={labelStyle}
         />
       )}
       {song.hyperLevel && (
@@ -39,7 +43,8 @@ export default function SongLevelPills({
           className={pillClassName}
           difficulty="h"
           level={song.hyperLevel}
-          style={style}
+          pillStyle={pillStyle}
+          labelStyle={labelStyle}
         />
       )}
       {song.exLevel && (
@@ -47,7 +52,8 @@ export default function SongLevelPills({
           className={pillClassName}
           difficulty="ex"
           level={song.exLevel}
-          style={style}
+          pillStyle={pillStyle}
+          labelStyle={labelStyle}
         />
       )}
     </>

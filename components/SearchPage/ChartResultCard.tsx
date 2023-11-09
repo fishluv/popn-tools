@@ -31,14 +31,16 @@ export default function ChartResultCard({
         className={styles.LevelPill}
         difficulty={chart.difficulty}
         level={chart.level}
-        style="compact"
+        pillStyle="compact"
+        labelStyle="full"
       />
 
       {style === "full" && (
         <FolderPill
           className={styles.FolderPill}
           folder={chart.song.folder}
-          style="compact"
+          pillStyle="compact"
+          labelStyle="full"
         />
       )}
 

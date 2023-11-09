@@ -115,7 +115,8 @@ export default function SongChartDetails({
           <LevelPill
             difficulty={chart.difficulty}
             level={chart.level}
-            style="full"
+            pillStyle="full"
+            labelStyle="full"
           />
           {chart.hasHolds && <span className={styles.holdsPill}>long</span>}
         </div>
@@ -152,7 +153,7 @@ export default function SongChartDetails({
       <Detail field="artist" value={artist} />
 
       <Detail field="from">
-        <FolderPill folder={folder} style="full" />
+        <FolderPill folder={folder} pillStyle="full" labelStyle="full" />
       </Detail>
 
       {!chart && (
@@ -160,7 +161,8 @@ export default function SongChartDetails({
           <SongLevelPills
             pillClassName={styles.levelPill}
             song={songToUse}
-            style="comfortable"
+            pillStyle="full"
+            labelStyle="compact"
           />
         </Detail>
       )}

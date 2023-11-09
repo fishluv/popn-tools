@@ -6,7 +6,8 @@ import Folder from "../models/Folder"
 interface FolderPillProps {
   className?: string
   folder: Folder
-  style: "full" | "compact"
+  pillStyle: "full" | "compact"
+  labelStyle: "full" | "compact"
 }
 
 /**
@@ -14,7 +15,7 @@ interface FolderPillProps {
  */
 export default class FolderPill extends React.Component<FolderPillProps> {
   render() {
-    const { className, folder, style } = this.props
+    const { className, folder, pillStyle, labelStyle } = this.props
 
     const folderClass = /^\d/.test(folder.norm)
       ? `ac${folder.norm}`
@@ -23,14 +24,12 @@ export default class FolderPill extends React.Component<FolderPillProps> {
       className,
       styles.FolderPill,
       styles[folderClass],
-      {
-        [styles.compact]: style === "compact",
-      },
+      styles[pillStyle],
     )
 
     return (
       <span className={rootClassName}>
-        {style === "compact" ? folder.short() : folder.long()}
+        {labelStyle === "compact" ? folder.short() : folder.long()}
       </span>
     )
   }
