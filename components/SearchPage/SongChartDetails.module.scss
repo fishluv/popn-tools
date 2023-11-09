@@ -1,3 +1,5 @@
+@import "../../styles/components";
+
 .SongChartDetails {
   font-family: "M PLUS 1", "Arial", sans-serif;
 
@@ -16,6 +18,16 @@
 
   .chartLevelPillContainer {
     text-align: center;
+
+    .holdsPill {
+      margin-left: 0.25rem;
+
+      @include pill;
+      border-color: #2c8dd4;
+      background-color: #dd2200;
+      color: white;
+      padding: 0 0.375rem;
+    }
   }
 
   .Detail {

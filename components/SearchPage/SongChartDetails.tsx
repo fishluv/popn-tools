@@ -117,6 +117,7 @@ export default function SongChartDetails({
             level={chart.level}
             style="full"
           />
+          {chart.hasHolds && <span className={styles.holdsPill}>long</span>}
         </div>
       )}
 
