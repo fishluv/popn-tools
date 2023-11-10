@@ -4,22 +4,22 @@ import SongSearchResultsList from "./SongSearchResultsList"
 import { useDebounce } from "../../lib/debounce"
 import Song from "../../models/Song"
 import SongChartDetails from "./SongChartDetails"
-import { FiArrowLeft, FiMoreHorizontal } from "react-icons/fi"
+import { FiMoreHorizontal } from "react-icons/fi"
 import CommonModal from "../CommonModal"
 import ReactModal from "react-modal"
-import Link from "next/link"
 import { BsMusicNoteBeamed } from "react-icons/bs"
 import { CgNotes } from "react-icons/cg"
 import cx from "classnames"
 import Chart from "../../models/Chart"
 import ChartSearchResultsList from "./ChartSearchResultsList"
 import { StringParam, useQueryParams } from "use-query-params"
+import More from "./More"
 
 export default function SearchPage({ mode }: { mode: "songs" | "charts" }) {
   const isSongMode = mode === "songs"
 
   const [currentOpenModal, setCurrentOpenModal] = useState<
-    "options" | "songDetails" | "chartDetails" | null
+    "more" | "songDetails" | "chartDetails" | null
   >(null)
   const [openedSong, setOpenedSong] = useState<Song | undefined>(undefined)
   const [openedChart, setOpenedChart] = useState<Chart | undefined>(undefined)
@@ -74,7 +74,7 @@ export default function SearchPage({ mode }: { mode: "songs" | "charts" }) {
           className={styles.button}
           onClick={() => {
             ReactModal.setAppElement("#app")
-            setCurrentOpenModal("options")
+            setCurrentOpenModal("more")
           }}
         >
           <FiMoreHorizontal />
@@ -105,11 +105,7 @@ export default function SearchPage({ mode }: { mode: "songs" | "charts" }) {
         isOpen={currentOpenModal !== null}
         onClose={() => setCurrentOpenModal(null)}
       >
-        {currentOpenModal === "options" && (
-          <Link href="/">
-            <FiArrowLeft /> {"Back to Pop'n Tools"}
-          </Link>
-        )}
+        {currentOpenModal === "more" && <More />}
 
         {currentOpenModal === "songDetails" && openedSong && (
           <SongChartDetails song={openedSong} />
