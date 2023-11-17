@@ -1,0 +1,13 @@
+.CharacterIcon {
+  display: inline-block;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  width: 30px;
+  height: 30px;
+
+  &.zoom {
+    background-size: 150% 150%;
+  }
+}

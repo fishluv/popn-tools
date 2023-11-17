@@ -72,6 +72,7 @@ export interface SearchApiSongResult {
   genre: string
   genre_sort_char: string
   artist: string
+  character: SearchApiCharacterResult
   easy_diff?: number
   normal_diff?: number
   hyper_diff?: number
@@ -98,4 +99,13 @@ export interface SearchApiChartResult {
   rating: string | null
   sran_level: string | null
   labels: string[]
+}
+
+export interface SearchApiCharacterResult {
+  id: number
+  chara_id: string
+  icon1: string
+  disp_name: string
+  sort_char: string
+  romantrans_name: string | null
 }

@@ -7,6 +7,7 @@ import SongBanner from "../SongBanner"
 import SongLevelPills from "../SongLevelPills"
 import Chart from "../../models/Chart"
 import LevelPill from "../LevelPill"
+import CharacterIcon from "../CharacterIcon"
 
 function Detail({
   className,
@@ -37,29 +38,6 @@ function areEquivalent(a: string, b: string) {
   return norm(a).includes(norm(b)) || norm(b).includes(norm(a))
 }
 
-function getMinorTitleDisplay({ remywikiTitle, titleSortChar }: Song) {
-  return (
-    <Detail
-      className={styles.minor}
-      field=""
-      value={`${maybeDisplaySortChar(
-        titleSortChar,
-        remywikiTitle,
-      )}${remywikiTitle}`}
-    />
-  )
-}
-
-function getMinorGenreDisplay({ genre, genreSortChar }: Song) {
-  return (
-    <Detail
-      className={styles.minor}
-      field=""
-      value={`${maybeDisplaySortChar(genreSortChar, genre)}${genre}`}
-    />
-  )
-}
-
 // https://stackoverflow.com/a/20488304
 function toAscii(fw: string) {
   return fw.replace(/[！-～]/g, (ch: string) =>
@@ -67,17 +45,11 @@ function toAscii(fw: string) {
   )
 }
 
-function maybeDisplaySortChar(
-  titleOrGenreSortChar: string,
-  titleOrGenre: string,
-) {
-  if (
-    toAscii(titleOrGenreSortChar).toLowerCase() ===
-    titleOrGenre.charAt(0).toLowerCase()
-  ) {
+function maybeDisplaySortChar(sortChar: string, value: string) {
+  if (toAscii(sortChar).toLowerCase() === value.charAt(0).toLowerCase()) {
     return ""
   } else {
-    return `[${titleOrGenreSortChar}] `
+    return `[${sortChar}] `
   }
 }
 
@@ -97,14 +69,22 @@ export default function SongChartDetails({
   const {
     id: songId,
     title,
+    titleSortChar,
     genre,
     genreRomanTrans,
+    genreSortChar,
     remywikiTitle,
     artist,
+    character,
     folder,
     remywikiUrlPath,
     labels,
   } = songToUse
+  const {
+    sortChar: charaSortChar,
+    displayName: charaDisplayName,
+    romanTransName: charaRomanTransName,
+  } = character
   const maybeUpperSuffix = labels.includes("upper") ? " (UPPER)" : ""
 
   return (
@@ -129,8 +109,16 @@ export default function SongChartDetails({
             field="title/genre"
             value={`${title}${maybeUpperSuffix}`}
           />
-          {!areEquivalent(title, remywikiTitle) &&
-            getMinorTitleDisplay(songToUse)}
+          {!areEquivalent(title, remywikiTitle) && (
+            <Detail
+              className={styles.minor}
+              field=""
+              value={`${maybeDisplaySortChar(
+                titleSortChar,
+                remywikiTitle,
+              )}${remywikiTitle}`}
+            />
+          )}
         </>
       ) : (
         <>
@@ -139,18 +127,43 @@ export default function SongChartDetails({
             field="title"
             value={`${title}${maybeUpperSuffix}`}
           />
-          {!areEquivalent(title, remywikiTitle) &&
-            getMinorTitleDisplay(songToUse)}
+          {!areEquivalent(title, remywikiTitle) && (
+            <Detail
+              className={styles.minor}
+              field=""
+              value={`${maybeDisplaySortChar(
+                titleSortChar,
+                remywikiTitle,
+              )}${remywikiTitle}`}
+            />
+          )}
           <Detail
             className={styles.genre}
             field="genre"
             value={genreRomanTrans}
           />
-          {getMinorGenreDisplay(songToUse)}
+          <Detail
+            className={styles.minor}
+            field=""
+            value={`${maybeDisplaySortChar(genreSortChar, genre)}${genre}`}
+          />
         </>
       )}
 
       <Detail field="artist" value={artist} />
+
+      <Detail field="chara">
+        <CharacterIcon character={character} songFolder={folder} />
+        <span>{charaRomanTransName}</span>
+      </Detail>
+      <Detail
+        className={styles.minor}
+        field=""
+        value={`${maybeDisplaySortChar(
+          charaSortChar,
+          charaDisplayName,
+        )}${charaDisplayName}`}
+      />
 
       <Detail field="from">
         <FolderPill folder={folder} pillStyle="full" labelStyle="full" />
