@@ -5,7 +5,6 @@ interface CharacterContructorProps {
   charaId: string
   icon1: string
   displayName: string
-  sortChar: string
   sortName: string
   romanTransName: string | null
 }
@@ -16,7 +15,6 @@ export default class Character {
     chara_id,
     icon1,
     disp_name,
-    sort_char,
     sort_name,
     romantrans_name,
   }: SearchApiCharacterResult) {
@@ -25,7 +23,6 @@ export default class Character {
       charaId: chara_id,
       icon1,
       displayName: disp_name,
-      sortChar: sort_char,
       sortName: sort_name,
       romanTransName: romantrans_name,
     })
@@ -35,7 +32,6 @@ export default class Character {
   readonly charaId: string
   readonly icon1: string
   readonly displayName: string
-  readonly sortChar: string
   readonly sortName: string
   readonly romanTransName: string | null
 
@@ -44,7 +40,6 @@ export default class Character {
     charaId,
     icon1,
     displayName,
-    sortChar,
     sortName,
     romanTransName,
   }: CharacterContructorProps) {
@@ -52,7 +47,6 @@ export default class Character {
     this.charaId = charaId
     this.icon1 = icon1
     this.displayName = displayName
-    this.sortChar = sortChar
     this.sortName = sortName
     this.romanTransName = romanTransName
   }

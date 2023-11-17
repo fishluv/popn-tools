@@ -81,7 +81,6 @@ export default function SongChartDetails({
     labels,
   } = songToUse
   const {
-    sortChar: charaSortChar,
     sortName: charaSortName,
     displayName: charaDisplayName,
     romanTransName: charaRomanTransName,
@@ -172,7 +171,7 @@ export default function SongChartDetails({
             className={styles.minor}
             field=""
             value={`${maybeDisplaySortChar(
-              charaSortChar,
+              charaSortName[0],
               charaDisplayName,
             )}${charaDisplayName}`}
           />
