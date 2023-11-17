@@ -82,6 +82,7 @@ export default function SongChartDetails({
   } = songToUse
   const {
     sortChar: charaSortChar,
+    sortName: charaSortName,
     displayName: charaDisplayName,
     romanTransName: charaRomanTransName,
   } = character
@@ -161,7 +162,9 @@ export default function SongChartDetails({
         &nbsp;
         <span>{charaRomanTransName || charaDisplayName}</span>
       </Detail>
-      {/* MZD has a lot of special display names which are unnecessary to show. */}
+
+      {/* When romantrans name is present, and different from display name, show display name on second line. */}
+      {/* MZD has a lot of special display names. Ignore them. */}
       {charaRomanTransName &&
         charaRomanTransName !== charaDisplayName &&
         charaRomanTransName !== "MZD" && (
@@ -174,6 +177,11 @@ export default function SongChartDetails({
             )}${charaDisplayName}`}
           />
         )}
+
+      {/* When romantrans name is absent, and sort name and display name are different, show sort name on second line. */}
+      {!charaRomanTransName && charaSortName !== charaDisplayName && (
+        <Detail className={styles.minor} field="" value={charaSortName} />
+      )}
 
       <Detail field="from">
         <FolderPill folder={folder} pillStyle="full" labelStyle="full" />

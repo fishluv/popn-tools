@@ -107,5 +107,6 @@ export interface SearchApiCharacterResult {
   icon1: string
   disp_name: string
   sort_char: string
+  sort_name: string
   romantrans_name: string | null
 }
