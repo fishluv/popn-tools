@@ -152,18 +152,28 @@ export default function SongChartDetails({
 
       <Detail field="artist" value={artist} />
 
-      <Detail field="chara">
-        <CharacterIcon character={character} songFolder={folder} />
-        <span>{charaRomanTransName}</span>
+      <Detail className={styles.chara} field="chara">
+        <CharacterIcon
+          className={styles.CharacterIcon}
+          character={character}
+          songFolder={folder}
+        />
+        &nbsp;
+        <span>{charaRomanTransName || charaDisplayName}</span>
       </Detail>
-      <Detail
-        className={styles.minor}
-        field=""
-        value={`${maybeDisplaySortChar(
-          charaSortChar,
-          charaDisplayName,
-        )}${charaDisplayName}`}
-      />
+      {/* MZD has a lot of special display names which are unnecessary to show. */}
+      {charaRomanTransName &&
+        charaRomanTransName !== charaDisplayName &&
+        charaRomanTransName !== "MZD" && (
+          <Detail
+            className={styles.minor}
+            field=""
+            value={`${maybeDisplaySortChar(
+              charaSortChar,
+              charaDisplayName,
+            )}${charaDisplayName}`}
+          />
+        )}
 
       <Detail field="from">
         <FolderPill folder={folder} pillStyle="full" labelStyle="full" />
