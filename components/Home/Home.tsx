@@ -12,12 +12,12 @@ export default function Home() {
 
       <BigPill className={styles.BigPill} color="red" href="/randomizer">
         <CgDice3 size="1.25rem" strokeWidth={1} />
-        <span>Chart randomizer</span>
+        <span>Randomizer</span>
       </BigPill>
 
       <BigPill className={styles.BigPill} color="yellow" href="/search">
         <CgSearch size="1.25rem" strokeWidth={1} />
-        <span>{"Song & chart search"}</span>
+        <span>Quick search</span>
       </BigPill>
 
       <BigPill className={styles.BigPill} color="green" href="/listmaker">
