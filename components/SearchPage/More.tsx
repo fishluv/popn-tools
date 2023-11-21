@@ -1,5 +1,5 @@
 import styles from "./More.module.scss"
-import { BsMusicNoteBeamed } from "react-icons/bs"
+import { BsGithub, BsMusicNoteBeamed } from "react-icons/bs"
 import { CgNotes } from "react-icons/cg"
 
 export default function More() {
@@ -24,9 +24,13 @@ export default function More() {
           results are returned.
         </li>
       </ul>
-      {/* <Link href="/">
-        <FiArrowLeft /> {"Back to Pop'n Tools"}
-      </Link> */}
+
+      <div className={styles.github}>
+        <span className={styles.sha}>{process.env.GIT_SHA}</span>
+        <a href="https://github.com/fishluv/popn-tools" target="_blank">
+          <BsGithub />
+        </a>
+      </div>
     </div>
   )
 }
