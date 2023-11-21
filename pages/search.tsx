@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation"
 
 export default function Search() {
   const searchParams = useSearchParams()
-  const mode = (searchParams.get("m") ?? "songs") as "songs" | "charts"
+  const mode = (searchParams.get("m") ?? "song") as "song" | "chart"
 
   return (
     <>

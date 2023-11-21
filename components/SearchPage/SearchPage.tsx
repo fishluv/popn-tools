@@ -15,8 +15,8 @@ import ChartSearchResultsList from "./ChartSearchResultsList"
 import { StringParam, useQueryParams } from "use-query-params"
 import More from "./More"
 
-export default function SearchPage({ mode }: { mode: "songs" | "charts" }) {
-  const isSongMode = mode === "songs"
+export default function SearchPage({ mode }: { mode: "song" | "chart" }) {
+  const isSongMode = mode === "song"
 
   const [currentOpenModal, setCurrentOpenModal] = useState<
     "more" | "songDetails" | "chartDetails" | null
@@ -44,7 +44,7 @@ export default function SearchPage({ mode }: { mode: "songs" | "charts" }) {
         <button
           className={cx(styles.button, styles.searchModeSwitcher, styles[mode])}
           onClick={() => {
-            setQueryParams({ m: isSongMode ? "charts" : "songs" }, "replaceIn")
+            setQueryParams({ m: isSongMode ? "chart" : "song" }, "replaceIn")
           }}
         >
           {isSongMode ? <BsMusicNoteBeamed /> : <CgNotes />}
