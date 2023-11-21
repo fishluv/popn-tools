@@ -68,7 +68,10 @@ export default function SearchPage({ mode }: { mode: "songs" | "charts" }) {
           value={query ?? ""}
           onChange={onInputChange}
           autoFocus
+          size={1}
         />
+        {/* https://stackoverflow.com/a/29990524
+        size=1 is for super narrow browsers */}
 
         <button
           className={styles.button}
