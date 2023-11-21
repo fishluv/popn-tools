@@ -35,7 +35,7 @@ export default function SearchPage({ mode }: { mode: "songs" | "charts" }) {
     const { value } = event.target
     // Remove leading whitespace. Only one trailing space allowed.
     const sanitized = value.replace(/^\s+/, "").replace(/\s+$/, " ")
-    setQueryParams({ q: sanitized }, "replaceIn")
+    setQueryParams({ m: mode, q: sanitized }, "replaceIn")
   }
 
   return (
