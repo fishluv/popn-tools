@@ -31,11 +31,14 @@ export default function SearchPage({ mode }: { mode: "song" | "chart" }) {
   const { q: query } = queryParams
   const debouncedQuery = useDebounce(query, 125)
 
+  const [searchValue, setSearchValue] = useState("")
+
   function onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { value } = event.target
     // Remove leading whitespace. Only one trailing space allowed.
     const sanitized = value.replace(/^\s+/, "").replace(/\s+$/, " ")
     setQueryParams({ m: mode, q: sanitized }, "replaceIn")
+    setSearchValue(sanitized)
   }
 
   return (
@@ -54,7 +57,7 @@ export default function SearchPage({ mode }: { mode: "song" | "chart" }) {
           className={styles.input}
           type="text"
           placeholder={isSongMode ? "Search for songs" : "Search for charts"}
-          value={query ?? ""}
+          value={searchValue || (query ?? "")}
           onChange={onInputChange}
           autoFocus
           size={1}
