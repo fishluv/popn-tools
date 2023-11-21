@@ -1,5 +1,3 @@
-import Link from "next/link"
-import { FiArrowLeft } from "react-icons/fi"
 import styles from "./More.module.scss"
 import { BsMusicNoteBeamed } from "react-icons/bs"
 import { CgNotes } from "react-icons/cg"
@@ -26,9 +24,9 @@ export default function More() {
           results are returned.
         </li>
       </ul>
-      <Link href="/">
+      {/* <Link href="/">
         <FiArrowLeft /> {"Back to Pop'n Tools"}
-      </Link>
+      </Link> */}
     </div>
   )
 }
