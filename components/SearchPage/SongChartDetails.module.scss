@@ -1,7 +1,33 @@
+@import "../../styles/colors";
 @import "../../styles/components";
 
 .SongChartDetails {
   font-family: "M PLUS 1", "Arial", sans-serif;
+
+  .header {
+    margin: -1rem -1rem 0.5rem;
+    height: 1.25rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: bold;
+
+    &.song {
+      background-color: $h-x-light;
+
+      span {
+        // The 'g' hangs a bit low...
+        align-self: flex-start;
+      }
+    }
+
+    &.chart {
+      background-color: $ex-x-light;
+    }
+  }
 
   .folder {
     display: flex;

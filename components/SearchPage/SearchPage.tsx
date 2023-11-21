@@ -41,25 +41,14 @@ export default function SearchPage({ mode }: { mode: "songs" | "charts" }) {
   return (
     <div id="app" className={styles.SearchPage}>
       <div className={styles.top}>
-        {isSongMode ? (
-          <button
-            className={cx(styles.button, styles.searchModeSwitcher)}
-            onClick={() => {
-              setQueryParams({ m: "charts" }, "replaceIn")
-            }}
-          >
-            <BsMusicNoteBeamed />
-          </button>
-        ) : (
-          <button
-            className={cx(styles.button, styles.searchModeSwitcher)}
-            onClick={() => {
-              setQueryParams({ m: "songs" }, "replaceIn")
-            }}
-          >
-            <CgNotes />
-          </button>
-        )}
+        <button
+          className={cx(styles.button, styles.searchModeSwitcher, styles[mode])}
+          onClick={() => {
+            setQueryParams({ m: isSongMode ? "charts" : "songs" }, "replaceIn")
+          }}
+        >
+          {isSongMode ? <BsMusicNoteBeamed /> : <CgNotes />}
+        </button>
 
         <input
           className={styles.input}

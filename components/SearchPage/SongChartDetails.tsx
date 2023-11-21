@@ -8,6 +8,8 @@ import SongLevelPills from "../SongLevelPills"
 import Chart from "../../models/Chart"
 import LevelPill from "../LevelPill"
 import CharacterIcon from "../CharacterIcon"
+import { BsMusicNoteBeamed } from "react-icons/bs"
+import { CgNotes } from "react-icons/cg"
 
 function Detail({
   className,
@@ -89,7 +91,20 @@ export default function SongChartDetails({
 
   return (
     <div className={styles.SongChartDetails}>
+      <p className={cx(styles.header, song ? styles.song : styles.chart)}>
+        {song ? (
+          <>
+            <BsMusicNoteBeamed /> <span>song</span>
+          </>
+        ) : (
+          <>
+            <CgNotes /> <span>chart</span>
+          </>
+        )}
+      </p>
+
       <SongBanner className={styles.banner} songId={songId} />
+
       {chart && (
         <div className={styles.chartLevelPillContainer}>
           <LevelPill

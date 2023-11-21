@@ -29,7 +29,14 @@
       &.searchModeSwitcher {
         position: absolute;
         left: 0.625rem;
-        background-color: $h-light;
+
+        &.songs {
+          background-color: $h-light;
+        }
+
+        &.charts {
+          background-color: $ex-light;
+        }
       }
     }
 
