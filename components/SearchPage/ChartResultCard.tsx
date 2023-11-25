@@ -1,7 +1,7 @@
 import FolderPill from "../common/FolderPill"
 import styles from "./ChartResultCard.module.scss"
 import Chart from "../../models/Chart"
-import SongBanner from "../SongBanner"
+import SongBanner from "../common/SongBanner"
 import LevelPill from "../common/LevelPill"
 import cx from "classnames"
 

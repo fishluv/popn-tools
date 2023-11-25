@@ -1,7 +1,7 @@
 import cx from "classnames"
 import styles from "./CharacterIcon.module.scss"
-import Character from "../models/Character"
-import Folder from "../models/Folder"
+import Character from "../../models/Character"
+import Folder from "../../models/Folder"
 
 export default function CharacterIcon({
   className,
