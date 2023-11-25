@@ -1,8 +1,8 @@
-import FolderPill from "../FolderPill"
+import FolderPill from "../common/FolderPill"
 import styles from "./ChartResultCard.module.scss"
 import Chart from "../../models/Chart"
 import SongBanner from "../SongBanner"
-import LevelPill from "../LevelPill"
+import LevelPill from "../common/LevelPill"
 import cx from "classnames"
 
 export default function ChartResultCard({

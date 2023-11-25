@@ -1,4 +1,4 @@
-import FolderPill from "../FolderPill"
+import FolderPill from "../common/FolderPill"
 import styles from "./SongResultCard.module.scss"
 import Song from "../../models/Song"
 import SongBanner from "../SongBanner"

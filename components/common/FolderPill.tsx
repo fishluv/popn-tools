@@ -1,7 +1,7 @@
 import cx from "classnames"
 import React from "react"
 import styles from "./FolderPill.module.scss"
-import Folder from "../models/Folder"
+import Folder from "../../models/Folder"
 
 interface FolderPillProps {
   className?: string
