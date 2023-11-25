@@ -21,8 +21,7 @@ export default function ChartResultCard({
       className={cx(className, styles.ChartResultCard, styles[style])}
       onClick={() => onClick(chart)}
     >
-      <div className={styles.title}>{chart.song.title}</div>
-      <SongBanner className={styles.banner} songId={chart.song.id} />
+      <SongBanner className={styles.banner} song={chart.song} />
       <div className={styles.bannerOverlay} />
 
       <div className={cx(styles.diffStripe, styles[chart.difficulty])} />

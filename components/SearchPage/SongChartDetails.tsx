@@ -69,7 +69,6 @@ export default function SongChartDetails({
   const songToUse = (song || chart!.song)!
 
   const {
-    id: songId,
     title,
     titleSortChar,
     genre,
@@ -103,7 +102,7 @@ export default function SongChartDetails({
         )}
       </p>
 
-      <SongBanner className={styles.banner} songId={songId} />
+      <SongBanner className={styles.banner} song={songToUse} />
 
       {chart && (
         <div className={styles.chartLevelPillContainer}>

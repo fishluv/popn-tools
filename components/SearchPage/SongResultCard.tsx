@@ -13,8 +13,8 @@ export default function SongResultCard({
 }) {
   return (
     <button className={styles.SongResultCard} onClick={() => onClick(song)}>
-      <div className={styles.title}>{song.title}</div>
-      <SongBanner className={styles.banner} songId={song.id} />
+      <SongBanner className={styles.banner} song={song} />
+
       <div className={styles.folderLevels}>
         <div className={styles.folder}>
           <FolderPill
@@ -31,6 +31,7 @@ export default function SongResultCard({
           />
         </div>
       </div>
+
       <div className={styles.overlay} />
     </button>
   )
