@@ -1,6 +1,6 @@
 import React from "react"
-import Song from "../models/Song"
-import LevelPill from "./LevelPill"
+import Song from "../../models/Song"
+import LevelPill from "../LevelPill"
 
 interface SongLevelPillsProps {
   pillClassName?: string
