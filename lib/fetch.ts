@@ -95,7 +95,7 @@ export interface SearchApiChartResult {
   bpm: string | null
   duration: string | null
   notes: number | null
-  hyrorre_page_path: string | null
+  jkwiki_page_path: string | null
   rating: string | null
   sran_level: string | null
   labels: string[]

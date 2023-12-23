@@ -225,18 +225,18 @@ export default function SongChartDetails({
         </>
       )}
 
-      <Detail field="links">
+      <Detail className={styles.links} field="links">
         <a href={`https://remywiki.com/${remywikiUrlPath}`} target="_blank">
           RemyWiki
         </a>
-        {chart?.jpWikiPagePath && (
+        {chart?.jkwikiPagePath && (
           <>
             <br />
             <a
-              href={`https://popn.wiki/%E9%9B%A3%E6%98%93%E5%BA%A6%E8%A1%A8/${chart.jpWikiPagePath}`}
+              href={`https://popn.wiki/%E9%9B%A3%E6%98%93%E5%BA%A6%E8%A1%A8/${chart.jkwikiPagePath}`}
               target="_blank"
             >
-              popn.wiki (Hyrorre)
+              popn.wiki
             </a>
           </>
         )}

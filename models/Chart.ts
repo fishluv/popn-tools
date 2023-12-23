@@ -11,7 +11,7 @@ interface ChartContructorProps {
   bpm: string | null
   duration: string | null
   notes: number | null
-  jpWikiPagePath: string | null
+  jkwikiPagePath: string | null
   jpRating: string | null
   sranLevel: string | null
   labels: string[]
@@ -28,7 +28,7 @@ export default class Chart {
     bpm,
     duration,
     notes,
-    hyrorre_page_path,
+    jkwiki_page_path,
     rating,
     sran_level,
     labels,
@@ -43,7 +43,7 @@ export default class Chart {
       bpm,
       duration,
       notes,
-      jpWikiPagePath: hyrorre_page_path,
+      jkwikiPagePath: jkwiki_page_path,
       jpRating: rating,
       sranLevel: sran_level,
       labels,
@@ -59,7 +59,7 @@ export default class Chart {
   readonly bpm: string | null
   readonly duration: string | null
   readonly notes: number | null
-  readonly jpWikiPagePath: string | null
+  readonly jkwikiPagePath: string | null
   readonly jpRating: string | null
   readonly sranLevel: string | null
   readonly labels: string[]
@@ -74,7 +74,7 @@ export default class Chart {
     bpm,
     duration,
     notes,
-    jpWikiPagePath,
+    jkwikiPagePath,
     jpRating,
     sranLevel,
     labels,
@@ -88,7 +88,7 @@ export default class Chart {
     this.bpm = bpm
     this.duration = duration
     this.notes = notes
-    this.jpWikiPagePath = jpWikiPagePath
+    this.jkwikiPagePath = jkwikiPagePath
     this.jpRating = jpRating
     this.sranLevel = sranLevel
     this.labels = labels
