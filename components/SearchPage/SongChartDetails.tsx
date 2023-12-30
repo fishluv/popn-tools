@@ -79,13 +79,10 @@ export default function SongChartDetails({
     character,
     folder,
     remywikiUrlPath,
+    remywikiChara,
     labels,
   } = songToUse
-  const {
-    sortName: charaSortName,
-    displayName: charaDisplayName,
-    romanTransName: charaRomanTransName,
-  } = character
+  const { sortName: charaSortName, displayName: charaDisplayName } = character
   const maybeUpperSuffix = labels.includes("upper") ? " (UPPER)" : ""
 
   return (
@@ -173,27 +170,20 @@ export default function SongChartDetails({
           songFolder={folder}
         />
         &nbsp;
-        <span>{charaRomanTransName || charaDisplayName}</span>
+        <span>{remywikiChara}</span>
       </Detail>
 
-      {/* When romantrans name is present, and different from display name, show display name on second line. */}
+      {/* When remywiki name is different from display name, show display name on second line. */}
       {/* MZD has a lot of special display names. Ignore them. */}
-      {charaRomanTransName &&
-        charaRomanTransName !== charaDisplayName &&
-        charaRomanTransName !== "MZD" && (
-          <Detail
-            className={styles.minor}
-            field=""
-            value={`${maybeDisplaySortChar(
-              charaSortName[0],
-              charaDisplayName,
-            )}${charaDisplayName}`}
-          />
-        )}
-
-      {/* When romantrans name is absent, and sort name and display name are different, show sort name on second line. */}
-      {!charaRomanTransName && charaSortName !== charaDisplayName && (
-        <Detail className={styles.minor} field="" value={charaSortName} />
+      {remywikiChara !== charaDisplayName && remywikiChara !== "MZD" && (
+        <Detail
+          className={styles.minor}
+          field=""
+          value={`${maybeDisplaySortChar(
+            charaSortName[0],
+            charaDisplayName,
+          )}${charaDisplayName}`}
+        />
       )}
 
       <Detail field="from">

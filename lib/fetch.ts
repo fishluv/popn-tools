@@ -81,6 +81,7 @@ export interface SearchApiSongResult {
   slug: string
   remywiki_url_path: string
   remywiki_title: string
+  remywiki_chara: string
   genre_romantrans: string
   labels: string[]
 }
@@ -107,5 +108,4 @@ export interface SearchApiCharacterResult {
   icon1: string
   disp_name: string
   sort_name: string
-  romantrans_name: string | null
 }
