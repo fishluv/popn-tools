@@ -76,13 +76,14 @@ export default function SongChartDetails({
     genreSortChar,
     remywikiTitle,
     artist,
-    character,
+    character1,
     folder,
     remywikiUrlPath,
     remywikiChara,
     labels,
   } = songToUse
-  const { sortName: charaSortName, displayName: charaDisplayName } = character
+  const { sortName: chara1SortName, displayName: chara1DisplayName } =
+    character1
   const maybeUpperSuffix = labels.includes("upper") ? " (UPPER)" : ""
 
   return (
@@ -166,7 +167,7 @@ export default function SongChartDetails({
       <Detail className={styles.chara} field="chara">
         <CharacterIcon
           className={styles.CharacterIcon}
-          character={character}
+          character={character1}
           songFolder={folder}
         />
         &nbsp;
@@ -175,14 +176,14 @@ export default function SongChartDetails({
 
       {/* When remywiki name is different from display name, show display name on second line. */}
       {/* MZD has a lot of special display names. Ignore them. */}
-      {remywikiChara !== charaDisplayName && remywikiChara !== "MZD" && (
+      {remywikiChara !== chara1DisplayName && remywikiChara !== "MZD" && (
         <Detail
           className={styles.minor}
           field=""
           value={`${maybeDisplaySortChar(
-            charaSortName[0],
-            charaDisplayName,
-          )}${charaDisplayName}`}
+            chara1SortName[0],
+            chara1DisplayName,
+          )}${chara1DisplayName}`}
         />
       )}
 
