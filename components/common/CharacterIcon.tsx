@@ -12,7 +12,7 @@ export default function CharacterIcon({
   character: Character
   songFolder?: Folder
 }) {
-  const iconUrl = `https://popn-assets.surge.sh/${charaId}/${icon1}.png`
+  const iconUrl = `https://popn-assets.pages.dev/assets/${charaId}/${icon1}.png`
   const iconStyle = {
     backgroundImage: `url("${iconUrl}")`,
   }

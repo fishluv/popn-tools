@@ -10,7 +10,7 @@ export default function SongBanner({
   song: Song
 }) {
   const paddedId = `000${id}`.slice(-4)
-  const bannerUrl = `https://popn-assets.surge.sh/kc_${paddedId}.png`
+  const bannerUrl = `https://popn-assets.pages.dev/assets/kc_${paddedId}.png`
   const bannerStyle = {
     backgroundImage: `url("${bannerUrl}")`,
   }
