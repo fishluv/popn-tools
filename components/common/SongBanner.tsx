@@ -15,6 +15,7 @@ export default function SongBanner({
 }) {
   const paddedId = `000${id}`.slice(-4)
   const bannerUrl = `https://popn-assets.pages.dev/assets/kc_${paddedId}.png`
+  // TODO: When height is smaller than normal, zoom instead of squish.
 
   return (
     <div className={cx(className, styles.SongBanner)} style={{ width, height }}>
