@@ -13,7 +13,12 @@ export default function SongResultCard({
 }) {
   return (
     <button className={styles.SongResultCard} onClick={() => onClick(song)}>
-      <SongBanner className={styles.banner} song={song} />
+      <SongBanner
+        className={styles.banner}
+        song={song}
+        width={240}
+        height={60}
+      />
 
       <div className={styles.folderLevels}>
         <div className={styles.folder}>

@@ -100,7 +100,12 @@ export default function SongChartDetails({
         )}
       </p>
 
-      <SongBanner className={styles.banner} song={songToUse} />
+      <SongBanner
+        className={styles.banner}
+        song={songToUse}
+        width={280}
+        height={70}
+      />
 
       {chart && (
         <div className={styles.chartLevelPillContainer}>

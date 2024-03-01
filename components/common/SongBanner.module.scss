@@ -2,10 +2,7 @@
   display: inline-block;
   position: relative;
   text-align: left;
-
-  // Parent components can override.
-  width: 240px;
-  height: 60px;
+  overflow: hidden;
 
   .title {
     position: absolute;
@@ -20,14 +17,8 @@
     background-color: #ddd;
   }
 
-  .banner {
+  .bannerImage {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: inherit;
+    scale: 1.02 1.06;
   }
-
 }
