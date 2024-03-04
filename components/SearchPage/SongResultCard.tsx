@@ -3,6 +3,7 @@ import styles from "./SongResultCard.module.scss"
 import Song from "../../models/Song"
 import SongBanner from "../common/SongBanner"
 import SongLevelPills from "../common/SongLevelPills"
+import Folder from "../../models/Folder"
 
 export default function SongResultCard({
   song,
@@ -18,7 +19,11 @@ export default function SongResultCard({
       <div className={styles.folderLevels}>
         <div className={styles.folder}>
           <FolderPill
-            folder={song.folder}
+            folder={
+              song.labels.includes("lively")
+                ? new Folder("lively")
+                : song.folder
+            }
             pillStyle="compact"
             labelStyle="compact"
           />

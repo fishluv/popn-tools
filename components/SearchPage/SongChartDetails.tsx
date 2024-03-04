@@ -10,6 +10,7 @@ import LevelPill from "../common/LevelPill"
 import CharacterIcon from "../common/CharacterIcon"
 import { BsMusicNoteBeamed } from "react-icons/bs"
 import { CgNotes } from "react-icons/cg"
+import Folder from "../../models/Folder"
 
 function Detail({
   className,
@@ -193,7 +194,11 @@ export default function SongChartDetails({
       )}
 
       <Detail field="from">
-        <FolderPill folder={folder} pillStyle="full" labelStyle="full" />
+        <FolderPill
+          folder={labels.includes("lively") ? new Folder("lively") : folder}
+          pillStyle="full"
+          labelStyle="full"
+        />
       </Detail>
 
       {!chart && (

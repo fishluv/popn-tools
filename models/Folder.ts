@@ -3,6 +3,7 @@
  */
 const NORMALIZED_FOLDER_VALUES = [
   "cs",
+  "lively",
   "01",
   "02",
   "03",
@@ -32,6 +33,10 @@ const NORMALIZED_FOLDER_VALUES = [
   "27",
 ] as const
 
+/**
+ * Song's in-game folder
+ * TODO: Get Lively out of here...
+ */
 export default class Folder {
   readonly norm: (typeof NORMALIZED_FOLDER_VALUES)[number]
 
@@ -39,6 +44,7 @@ export default class Folder {
     const valNorm = val.toString().toLowerCase().padStart(2, "0")
     switch (valNorm) {
       case "cs":
+      case "lively":
       case "01":
       case "02":
       case "03":
@@ -77,6 +83,8 @@ export default class Folder {
     switch (this.norm) {
       case "cs":
         return "cs"
+      case "lively":
+        return "liv"
       case "01":
       case "02":
       case "03":
@@ -127,7 +135,8 @@ export default class Folder {
   long(): string {
     switch (this.norm) {
       case "cs":
-        return "cs"
+      case "lively":
+        return this.norm
       case "01":
       case "02":
       case "03":
