@@ -101,6 +101,10 @@ export default function SongChartDetails({
         )}
       </p>
 
+      {labels.includes("omnimix") && (
+        <p className={styles.omniNote}>This song is no longer playable.</p>
+      )}
+
       <SongBanner
         className={styles.banner}
         song={songToUse}
