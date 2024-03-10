@@ -18,7 +18,9 @@ export default function ChartSearchResultsList({
   } = useSearchChart({ query, limit: 20 })
 
   if (error) {
-    console.error(`Error searching for charts: ${JSON.stringify(error.data)}`)
+    console.error(
+      `Error searching for charts: ${JSON.stringify(error.data) || error}`,
+    )
     return <div>Uh oh! Something went wrong.</div>
   }
   if (isLoading) {

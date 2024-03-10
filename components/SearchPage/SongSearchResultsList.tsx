@@ -17,7 +17,9 @@ export default function SongSearchResultsList({
   } = useSearchSong({ query, limit: 15 })
 
   if (error) {
-    console.error(`Error searching for songs: ${JSON.stringify(error.data)}`)
+    console.error(
+      `Error searching for songs: ${JSON.stringify(error.data) || error}`,
+    )
     return <div>Uh oh! Something went wrong.</div>
   }
   if (isLoading) {

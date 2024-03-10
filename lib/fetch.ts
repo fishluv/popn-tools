@@ -72,7 +72,7 @@ export interface SearchApiSongResult {
   genre: string
   genre_sort_char: string
   artist: string
-  character1: SearchApiCharacterResult
+  character1?: SearchApiCharacterResult
   easy_diff?: number
   normal_diff?: number
   hyper_diff?: number

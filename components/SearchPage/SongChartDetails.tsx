@@ -83,8 +83,6 @@ export default function SongChartDetails({
     remywikiChara,
     labels,
   } = songToUse
-  const { sortName: chara1SortName, displayName: chara1DisplayName } =
-    character1
   const maybeUpperSuffix = labels.includes("upper") ? " (UPPER)" : ""
 
   return (
@@ -174,27 +172,32 @@ export default function SongChartDetails({
 
       <Detail field="artist" value={artist} />
 
-      <Detail className={styles.chara} field="chara">
-        <CharacterIcon
-          className={styles.CharacterIcon}
-          character={character1}
-          songFolder={folder}
-        />
-        &nbsp;
-        <span>{remywikiChara}</span>
-      </Detail>
+      {character1 && (
+        <>
+          <Detail className={styles.chara} field="chara">
+            <CharacterIcon
+              className={styles.CharacterIcon}
+              character={character1}
+              songFolder={folder}
+            />
+            &nbsp;
+            <span>{remywikiChara}</span>
+          </Detail>
 
-      {/* When remywiki name is different from display name, show display name on second line. */}
-      {/* MZD has a lot of special display names. Ignore them. */}
-      {remywikiChara !== chara1DisplayName && remywikiChara !== "MZD" && (
-        <Detail
-          className={styles.minor}
-          field=""
-          value={`${maybeDisplaySortChar(
-            chara1SortName[0],
-            chara1DisplayName,
-          )}${chara1DisplayName}`}
-        />
+          {/* When remywiki name is different from display name, show display name on second line. */}
+          {/* MZD has a lot of special display names. Ignore them. */}
+          {remywikiChara !== character1.displayName &&
+            remywikiChara !== "MZD" && (
+              <Detail
+                className={styles.minor}
+                field=""
+                value={`${maybeDisplaySortChar(
+                  character1.sortName[0],
+                  character1.displayName,
+                )}${character1.displayName}`}
+              />
+            )}
+        </>
       )}
 
       <Detail field="from">
