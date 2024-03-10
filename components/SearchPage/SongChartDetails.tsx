@@ -225,7 +225,7 @@ export default function SongChartDetails({
             <Detail field="jp rating" value={chart.jpRating} />
           )}
           {chart.sranLevel && (
-            <Detail field="sran level" value={chart.sranLevel} />
+            <Detail field="sran level" value={chart.sranLevel.display()} />
           )}
         </>
       )}

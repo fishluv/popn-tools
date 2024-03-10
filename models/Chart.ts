@@ -1,5 +1,6 @@
 import { SearchApiChartResult } from "../lib/fetch"
 import Song from "./Song"
+import SranLevel from "./SranLevel"
 
 interface ChartContructorProps {
   id: string
@@ -13,7 +14,7 @@ interface ChartContructorProps {
   notes: number | null
   jkwikiPagePath: string | null
   jpRating: string | null
-  sranLevel: string | null
+  sranLevel: SranLevel | null
   labels: string[]
 }
 
@@ -45,7 +46,7 @@ export default class Chart {
       notes,
       jkwikiPagePath: jkwiki_page_path,
       jpRating: rating,
-      sranLevel: sran_level,
+      sranLevel: sran_level ? new SranLevel(sran_level) : null,
       labels,
     })
   }
@@ -61,7 +62,7 @@ export default class Chart {
   readonly notes: number | null
   readonly jkwikiPagePath: string | null
   readonly jpRating: string | null
-  readonly sranLevel: string | null
+  readonly sranLevel: SranLevel | null
   readonly labels: string[]
 
   constructor({
