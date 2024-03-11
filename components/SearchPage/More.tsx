@@ -1,8 +1,11 @@
 import styles from "./More.module.scss"
 import { BsGithub, BsMusicNoteBeamed } from "react-icons/bs"
 import { CgNotes } from "react-icons/cg"
+import useLocalStorage from "../../lib/useLocalStorage"
 
 export default function More() {
+  const [extraOptions, setExtraOptions] = useLocalStorage("extraOptions", "")
+
   return (
     <div className={styles.More}>
       <h6>What is this?</h6>
@@ -24,6 +27,15 @@ export default function More() {
           results are returned.
         </li>
       </ul>
+
+      <h6>Extra options</h6>
+      <input
+        type="text"
+        value={extraOptions}
+        onChange={(event) => {
+          setExtraOptions(event.currentTarget.value)
+        }}
+      />
 
       <div className={styles.github}>
         <span className={styles.sha}>{process.env.GIT_SHA}</span>

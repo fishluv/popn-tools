@@ -11,6 +11,7 @@ import CharacterIcon from "../common/CharacterIcon"
 import { BsMusicNoteBeamed } from "react-icons/bs"
 import { CgNotes } from "react-icons/cg"
 import Folder from "../../models/Folder"
+import useLocalStorage from "../../lib/useLocalStorage"
 
 function Detail({
   className,
@@ -56,6 +57,31 @@ function maybeDisplaySortChar(sortChar: string, value: string) {
   }
 }
 
+function parseExtraOptions(extraOptionsStr: string) {
+  const extraOptions: Record<string, boolean> = {}
+
+  extraOptionsStr.split(",").forEach((opt) => {
+    if (opt.trim()) {
+      extraOptions[opt.trim()] = true
+    }
+  })
+
+  return extraOptions
+}
+
+function diffToEagleFlowerPathPart(diff: "e" | "n" | "h" | "ex") {
+  return ["e", "n", "h", "ex"].indexOf(diff)
+}
+
+function diffToTablanPathPart(diff: "e" | "n" | "h" | "ex") {
+  return {
+    e: "Easy",
+    n: "Normal",
+    h: "Hyper",
+    ex: "EX",
+  }[diff]
+}
+
 export default function SongChartDetails({
   song,
   chart,
@@ -67,9 +93,13 @@ export default function SongChartDetails({
     throw new Error("must specify song or chart")
   }
 
+  const [extraOptionsStr] = useLocalStorage("extraOptions", "")
+  const extraOptions = parseExtraOptions(extraOptionsStr)
+
   const songToUse = (song || chart!.song)!
 
   const {
+    id: songId,
     title,
     titleSortChar,
     genre,
@@ -237,6 +267,7 @@ export default function SongChartDetails({
         <a href={`https://remywiki.com/${remywikiUrlPath}`} target="_blank">
           RemyWiki
         </a>
+
         {chart?.jkwikiPagePath && (
           <>
             <br />
@@ -245,6 +276,48 @@ export default function SongChartDetails({
               target="_blank"
             >
               popn.wiki
+            </a>
+          </>
+        )}
+
+        {extraOptions["eagle"] && (
+          <>
+            <br />
+            <a
+              href={`https://eagle.ac/game/pnm/music/27/${songId}/${diffToEagleFlowerPathPart(
+                chart?.difficulty || "e",
+              )}`}
+              target="_blank"
+            >
+              Eagle
+            </a>
+          </>
+        )}
+
+        {extraOptions["flower"] && (
+          <>
+            <br />
+            <a
+              href={`https://projectflower.eu/game/pnm/music/27/${songId}/${diffToEagleFlowerPathPart(
+                chart?.difficulty || "e",
+              )}`}
+              target="_blank"
+            >
+              Flower
+            </a>
+          </>
+        )}
+
+        {extraOptions["tablan"] && (
+          <>
+            <br />
+            <a
+              href={`https://tablanbass.org/pnm/topscores/${songId}#${diffToTablanPathPart(
+                chart?.difficulty || "e",
+              )}`}
+              target="_blank"
+            >
+              Tabla&apos;n Bass Remix
             </a>
           </>
         )}
