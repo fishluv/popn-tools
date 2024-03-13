@@ -77,7 +77,8 @@ export interface SearchApiSongResult {
   normal_diff?: number
   hyper_diff?: number
   ex_diff?: number
-  folder: string
+  debut: string
+  folder?: string
   slug: string
   remywiki_url_path: string
   remywiki_title: string

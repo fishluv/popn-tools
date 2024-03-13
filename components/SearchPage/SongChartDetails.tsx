@@ -10,7 +10,6 @@ import LevelPill from "../common/LevelPill"
 import CharacterIcon from "../common/CharacterIcon"
 import { BsMusicNoteBeamed } from "react-icons/bs"
 import { CgNotes } from "react-icons/cg"
-import Folder from "../../models/Folder"
 import useLocalStorage from "../../lib/useLocalStorage"
 
 function Detail({
@@ -108,6 +107,7 @@ export default function SongChartDetails({
     remywikiTitle,
     artist,
     character1,
+    debut,
     folder,
     remywikiUrlPath,
     remywikiChara,
@@ -230,12 +230,10 @@ export default function SongChartDetails({
         </>
       )}
 
-      <Detail field="from">
-        <FolderPill
-          folder={labels.includes("lively") ? new Folder("lively") : folder}
-          pillStyle="full"
-          labelStyle="full"
-        />
+      <Detail field="from" value={debut} />
+
+      <Detail field="folder">
+        <FolderPill folder={folder} pillStyle="full" labelStyle="full" />
       </Detail>
 
       {!chart && (

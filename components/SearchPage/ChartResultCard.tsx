@@ -4,7 +4,6 @@ import Chart from "../../models/Chart"
 import SongBanner from "../common/SongBanner"
 import LevelPill from "../common/LevelPill"
 import cx from "classnames"
-import Folder from "../../models/Folder"
 
 export default function ChartResultCard({
   className,
@@ -42,11 +41,7 @@ export default function ChartResultCard({
       {style === "full" && (
         <FolderPill
           className={styles.FolderPill}
-          folder={
-            chart.song.labels.includes("lively")
-              ? new Folder("lively")
-              : chart.song.folder
-          }
+          folder={chart.song.folder}
           pillStyle="compact"
           labelStyle="full"
         />

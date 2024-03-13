@@ -1,6 +1,7 @@
 import { SearchApiSongResult } from "../lib/fetch"
 import Character from "./Character"
-import Folder from "./Folder"
+import OtherFolder, { parseOtherFolder } from "./OtherFolder"
+import VersionFolder, { parseVersionFolder } from "./VersionFolder"
 
 interface SongContructorProps {
   id: number
@@ -14,7 +15,8 @@ interface SongContructorProps {
   normalLevel?: number
   hyperLevel?: number
   exLevel?: number
-  folder: Folder
+  debut: string
+  folder: VersionFolder | OtherFolder | null
   slug: string
   remywikiUrlPath: string
   remywikiTitle: string
@@ -36,6 +38,7 @@ export default class Song {
     normal_diff,
     hyper_diff,
     ex_diff,
+    debut,
     folder,
     slug,
     remywiki_url_path,
@@ -58,7 +61,8 @@ export default class Song {
       normalLevel: normal_diff,
       hyperLevel: hyper_diff,
       exLevel: ex_diff,
-      folder: new Folder(folder),
+      debut,
+      folder: parseVersionFolder(folder) || parseOtherFolder(folder),
       slug,
       remywikiUrlPath: remywiki_url_path,
       remywikiTitle: remywiki_title,
@@ -79,7 +83,8 @@ export default class Song {
   readonly normalLevel?: number
   readonly hyperLevel?: number
   readonly exLevel?: number
-  readonly folder: Folder
+  readonly debut: string
+  readonly folder: VersionFolder | OtherFolder | null
   readonly slug: string
   readonly remywikiUrlPath: string
   readonly remywikiTitle: string
@@ -99,6 +104,7 @@ export default class Song {
     normalLevel,
     hyperLevel,
     exLevel,
+    debut,
     folder,
     slug,
     remywikiUrlPath,
@@ -118,6 +124,7 @@ export default class Song {
     this.normalLevel = normalLevel
     this.hyperLevel = hyperLevel
     this.exLevel = exLevel
+    this.debut = debut
     this.folder = folder
     this.slug = slug
     this.remywikiUrlPath = remywikiUrlPath
