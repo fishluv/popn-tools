@@ -3,10 +3,11 @@ import React from "react"
 import styles from "./FolderPill.module.scss"
 import VersionFolder from "../../models/VersionFolder"
 import OtherFolder from "../../models/OtherFolder"
+import Debut from "../../models/Debut"
 
 interface FolderPillProps {
   className?: string
-  folder: VersionFolder | OtherFolder | null
+  folder: VersionFolder | OtherFolder | Debut | null
   pillStyle: "full" | "compact"
   labelStyle: "full" | "compact"
 }
@@ -20,6 +21,19 @@ export default class FolderPill extends React.Component<FolderPillProps> {
 
     if (folder === null) {
       return "—"
+    }
+
+    if (/^cs[^0-9]/.test(folder)) {
+      switch (folder) {
+        case "csbest":
+          return "best hits"
+        case "cspmp":
+          return "portable"
+        case "cspmp2":
+          return "portable 2"
+        default: // lively, utacchi
+          return folder.replace(/^cs/, "")
+      }
     }
 
     if (labelStyle === "full") {
@@ -101,7 +115,7 @@ export default class FolderPill extends React.Component<FolderPillProps> {
     if (/^\d+/.test(folder)) {
       return Number(folder).toString()
     } else {
-      return folder
+      return folder.replace(/^cs/, "cs ")
     }
   }
 
@@ -112,6 +126,10 @@ export default class FolderPill extends React.Component<FolderPillProps> {
     if (folder) {
       if (/^\d/.test(folder)) {
         folderClass = `ac${folder}`
+      } else if (folder === "cslively") {
+        folderClass = "lively"
+      } else if (/^cs/.test(folder)) {
+        folderClass = "cs"
       } else {
         folderClass = folder
       }

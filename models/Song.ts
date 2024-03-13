@@ -1,5 +1,6 @@
 import { SearchApiSongResult } from "../lib/fetch"
 import Character from "./Character"
+import Debut, { parseDebut } from "./Debut"
 import OtherFolder, { parseOtherFolder } from "./OtherFolder"
 import VersionFolder, { parseVersionFolder } from "./VersionFolder"
 
@@ -15,7 +16,7 @@ interface SongContructorProps {
   normalLevel?: number
   hyperLevel?: number
   exLevel?: number
-  debut: string
+  debut: Debut | null
   folder: VersionFolder | OtherFolder | null
   slug: string
   remywikiUrlPath: string
@@ -61,7 +62,7 @@ export default class Song {
       normalLevel: normal_diff,
       hyperLevel: hyper_diff,
       exLevel: ex_diff,
-      debut,
+      debut: parseDebut(debut),
       folder: parseVersionFolder(folder) || parseOtherFolder(folder),
       slug,
       remywikiUrlPath: remywiki_url_path,
@@ -83,7 +84,7 @@ export default class Song {
   readonly normalLevel?: number
   readonly hyperLevel?: number
   readonly exLevel?: number
-  readonly debut: string
+  readonly debut: Debut | null
   readonly folder: VersionFolder | OtherFolder | null
   readonly slug: string
   readonly remywikiUrlPath: string

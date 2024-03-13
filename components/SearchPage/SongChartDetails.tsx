@@ -230,7 +230,9 @@ export default function SongChartDetails({
         </>
       )}
 
-      <Detail field="from" value={debut} />
+      <Detail field="from">
+        <FolderPill folder={debut} pillStyle="full" labelStyle="full" />
+      </Detail>
 
       <Detail field="folder">
         <FolderPill folder={folder} pillStyle="full" labelStyle="full" />
