@@ -230,13 +230,21 @@ export default function SongChartDetails({
         </>
       )}
 
-      <Detail field="from">
-        <FolderPill folder={debut} pillStyle="full" labelStyle="full" />
-      </Detail>
+      {debut === folder ? (
+        <Detail field="debut/folder">
+          <FolderPill folder={debut} pillStyle="full" labelStyle="full" />
+        </Detail>
+      ) : (
+        <>
+          <Detail field="debut">
+            <FolderPill folder={debut} pillStyle="full" labelStyle="full" />
+          </Detail>
 
-      <Detail field="folder">
-        <FolderPill folder={folder} pillStyle="full" labelStyle="full" />
-      </Detail>
+          <Detail field="folder">
+            <FolderPill folder={folder} pillStyle="full" labelStyle="full" />
+          </Detail>
+        </>
+      )}
 
       {!chart && (
         <Detail field="charts">
