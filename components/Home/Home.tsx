@@ -20,7 +20,7 @@ export default function Home() {
 
           <BigPill className={styles.BigPill} color="yellow" href="/search">
             <CgSearch size="1.25rem" strokeWidth={1} />
-            <span>Quick search</span>
+            <span>Search</span>
           </BigPill>
 
           <BigPill className={styles.BigPill} color="green" href="/listmaker">

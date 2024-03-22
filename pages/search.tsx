@@ -9,7 +9,7 @@ export default function Search() {
   return (
     <>
       <Head>
-        <title>{"Quick search • Pop'n Tools"}</title>
+        <title>{"Search • Pop'n Tools"}</title>
       </Head>
       <SearchPage mode={mode} />
     </>
