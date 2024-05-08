@@ -49,7 +49,9 @@ function toAscii(fw: string) {
 }
 
 function maybeDisplaySortChar(sortChar: string, value: string) {
-  if (toAscii(sortChar).toLowerCase() === value.charAt(0).toLowerCase()) {
+  if (
+    toAscii(sortChar).toLowerCase() === toAscii(value.charAt(0)).toLowerCase()
+  ) {
     return ""
   } else {
     return `[${sortChar}] `
@@ -107,6 +109,7 @@ export default function SongChartDetails({
     remywikiTitle,
     artist,
     character1,
+    character2,
     debut,
     folder,
     remywikiUrlPath,
@@ -202,33 +205,48 @@ export default function SongChartDetails({
 
       <Detail field="artist" value={artist} />
 
-      {character1 && (
-        <>
-          <Detail className={styles.chara} field="chara">
+      <Detail className={styles.chara} field="chara">
+        <div>
+          {character1 && (
             <CharacterIcon
               className={styles.CharacterIcon}
               character={character1}
               songFolder={folder}
             />
-            &nbsp;
-            <span>{remywikiChara}</span>
-          </Detail>
+          )}
+          {/* forget about chara2 icon bc it's almost always the same as chara1
+          and there's no way to tell when it's different here */}
+        </div>
+        <span>{remywikiChara}</span>
+      </Detail>
 
-          {/* When remywiki name is different from display name, show display name on second line. */}
-          {/* MZD has a lot of special display names. Ignore them. */}
-          {remywikiChara !== character1.displayName &&
-            remywikiChara !== "MZD" && (
-              <Detail
-                className={styles.minor}
-                field=""
-                value={`${maybeDisplaySortChar(
-                  character1.sortName[0],
-                  character1.displayName,
-                )}${character1.displayName}`}
-              />
-            )}
-        </>
-      )}
+      {/* When remywiki name is different from display name, show display name on second line. */}
+      {/* MZD has a lot of special display names. Ignore them. */}
+      {character1 &&
+        remywikiChara !== character1.displayName &&
+        remywikiChara !== "MZD" && (
+          <Detail
+            className={styles.minor}
+            field=""
+            value={`${maybeDisplaySortChar(
+              character1.sortName[0],
+              character1.displayName,
+            )}${toAscii(character1.displayName)}`}
+          />
+        )}
+      {character2 &&
+        character2.displayName !== character1?.displayName &&
+        remywikiChara !== character2.displayName &&
+        remywikiChara !== "MZD" && (
+          <Detail
+            className={styles.minor}
+            field=""
+            value={`${maybeDisplaySortChar(
+              character2.sortName[0],
+              character2.displayName,
+            )}${toAscii(character2.displayName)}`}
+          />
+        )}
 
       {debut === folder ? (
         <Detail field="debut/folder">

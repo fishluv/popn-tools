@@ -12,6 +12,7 @@ interface SongContructorProps {
   genreSortChar: string
   artist: string
   character1?: Character
+  character2?: Character
   easyLevel?: number
   normalLevel?: number
   hyperLevel?: number
@@ -35,6 +36,7 @@ export default class Song {
     genre_sort_char,
     artist,
     character1,
+    character2,
     easy_diff,
     normal_diff,
     hyper_diff,
@@ -58,6 +60,9 @@ export default class Song {
       character1: character1
         ? Character.fromSearchApiCharacterResult(character1)
         : undefined,
+      character2: character2
+        ? Character.fromSearchApiCharacterResult(character2)
+        : undefined,
       easyLevel: easy_diff,
       normalLevel: normal_diff,
       hyperLevel: hyper_diff,
@@ -80,6 +85,7 @@ export default class Song {
   readonly genreSortChar: string
   readonly artist: string
   readonly character1?: Character
+  readonly character2?: Character
   readonly easyLevel?: number
   readonly normalLevel?: number
   readonly hyperLevel?: number
@@ -101,6 +107,7 @@ export default class Song {
     genreSortChar,
     artist,
     character1,
+    character2,
     easyLevel,
     normalLevel,
     hyperLevel,
@@ -121,6 +128,7 @@ export default class Song {
     this.genreSortChar = genreSortChar
     this.artist = artist
     this.character1 = character1
+    this.character2 = character2
     this.easyLevel = easyLevel
     this.normalLevel = normalLevel
     this.hyperLevel = hyperLevel
