@@ -9,6 +9,7 @@ interface ChartContructorProps {
   song: Song
   category: string | null
   bpm: string | null
+  bpmSteps: string[] | null
   duration: number | null
   notes: number | null
   holdNotes: number | null
@@ -26,6 +27,7 @@ export default class Chart {
     song,
     category,
     bpm,
+    bpm_steps,
     duration,
     notes,
     hold_notes,
@@ -41,6 +43,7 @@ export default class Chart {
       song: Song.fromSearchApiSongResult(song),
       category,
       bpm,
+      bpmSteps: bpm_steps,
       duration,
       notes,
       holdNotes: hold_notes,
@@ -57,6 +60,7 @@ export default class Chart {
   readonly song: Song
   readonly category: string | null
   readonly bpm: string | null
+  readonly bpmSteps: string[] | null
   readonly duration: number | null
   readonly notes: number | null
   readonly holdNotes: number | null
@@ -72,6 +76,7 @@ export default class Chart {
     song,
     category,
     bpm,
+    bpmSteps,
     duration,
     notes,
     holdNotes,
@@ -86,6 +91,7 @@ export default class Chart {
     this.song = song
     this.category = category
     this.bpm = bpm
+    this.bpmSteps = bpmSteps
     this.duration = duration
     this.notes = notes
     this.holdNotes = holdNotes

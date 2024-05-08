@@ -286,6 +286,13 @@ export default function SongChartDetails({
       {chart && (
         <>
           <Detail field="bpm" value={chart.bpm || "?"} />
+          {chart.bpmSteps && chart.bpmSteps.length > 1 && (
+            <Detail
+              className={styles.minor}
+              field=""
+              value={chart.bpmSteps.join(" → ")}
+            />
+          )}
           <Detail
             field="duration"
             value={chart.duration ? formatDuration(chart.duration) : "?"}

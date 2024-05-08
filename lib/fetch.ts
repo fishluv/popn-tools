@@ -95,6 +95,7 @@ export interface SearchApiChartResult {
   song: SearchApiSongResult
   category: string | null
   bpm: string | null
+  bpm_steps: string[] | null
   duration: number | null
   notes: number | null
   hold_notes: number | null
