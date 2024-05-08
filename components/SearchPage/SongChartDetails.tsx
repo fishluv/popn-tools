@@ -201,11 +201,13 @@ export default function SongChartDetails({
             field="genre"
             value={genreRomanTrans}
           />
-          <Detail
-            className={styles.minor}
-            field=""
-            value={`${maybeDisplaySortChar(genreSortChar, genre)}${genre}`}
-          />
+          {toAscii(genre) !== genreRomanTrans && (
+            <Detail
+              className={styles.minor}
+              field=""
+              value={`${maybeDisplaySortChar(genreSortChar, genre)}${genre}`}
+            />
+          )}
         </>
       )}
 
