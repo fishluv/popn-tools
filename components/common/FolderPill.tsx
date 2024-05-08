@@ -115,7 +115,7 @@ export default class FolderPill extends React.Component<FolderPillProps> {
     if (/^\d+/.test(folder)) {
       return Number(folder).toString()
     } else {
-      return folder.replace(/^cs/, "cs ")
+      return folder
     }
   }
 
