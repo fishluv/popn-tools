@@ -58,6 +58,12 @@ function maybeDisplaySortChar(sortChar: string, value: string) {
   }
 }
 
+function formatDuration(duration: number) {
+  const min = Math.floor(duration / 60)
+  const sec = duration % 60
+  return `${min}:${String(sec).padStart(2, "0")}`
+}
+
 function parseExtraOptions(extraOptionsStr: string) {
   const extraOptions: Record<string, boolean> = {}
 
@@ -278,7 +284,10 @@ export default function SongChartDetails({
       {chart && (
         <>
           <Detail field="bpm" value={chart.bpm || "?"} />
-          <Detail field="duration" value={chart.duration || "?"} />
+          <Detail
+            field="duration"
+            value={chart.duration ? formatDuration(chart.duration) : "?"}
+          />
           <Detail field="notes" value={chart.notes?.toString() || "?"} />
           {chart.jpRating && (
             <Detail field="jp rating" value={chart.jpRating} />

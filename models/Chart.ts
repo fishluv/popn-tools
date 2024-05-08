@@ -10,7 +10,7 @@ interface ChartContructorProps {
   hasHolds: boolean
   category: string | null
   bpm: string | null
-  duration: string | null
+  duration: number | null
   notes: number | null
   jkwikiPagePath: string | null
   jpRating: string | null
@@ -58,7 +58,7 @@ export default class Chart {
   readonly hasHolds: boolean
   readonly category: string | null
   readonly bpm: string | null
-  readonly duration: string | null
+  readonly duration: number | null
   readonly notes: number | null
   readonly jkwikiPagePath: string | null
   readonly jpRating: string | null

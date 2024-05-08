@@ -96,7 +96,7 @@ export interface SearchApiChartResult {
   has_holds: boolean
   category: string | null
   bpm: string | null
-  duration: string | null
+  duration: number | null
   notes: number | null
   jkwiki_page_path: string | null
   rating: string | null
