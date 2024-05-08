@@ -7,11 +7,11 @@ interface ChartContructorProps {
   difficulty: "e" | "n" | "h" | "ex"
   level: number
   song: Song
-  hasHolds: boolean
   category: string | null
   bpm: string | null
   duration: number | null
   notes: number | null
+  holdNotes: number | null
   jkwikiPagePath: string | null
   jpRating: string | null
   sranLevel: SranLevel | null
@@ -24,11 +24,11 @@ export default class Chart {
     difficulty,
     level,
     song,
-    has_holds,
     category,
     bpm,
     duration,
     notes,
+    hold_notes,
     jkwiki_page_path,
     rating,
     sran_level,
@@ -39,11 +39,11 @@ export default class Chart {
       difficulty,
       level,
       song: Song.fromSearchApiSongResult(song),
-      hasHolds: has_holds,
       category,
       bpm,
       duration,
       notes,
+      holdNotes: hold_notes,
       jkwikiPagePath: jkwiki_page_path,
       jpRating: rating,
       sranLevel: sran_level ? new SranLevel(sran_level) : null,
@@ -55,11 +55,11 @@ export default class Chart {
   readonly difficulty: "e" | "n" | "h" | "ex"
   readonly level: number
   readonly song: Song
-  readonly hasHolds: boolean
   readonly category: string | null
   readonly bpm: string | null
   readonly duration: number | null
   readonly notes: number | null
+  readonly holdNotes: number | null
   readonly jkwikiPagePath: string | null
   readonly jpRating: string | null
   readonly sranLevel: SranLevel | null
@@ -70,11 +70,11 @@ export default class Chart {
     difficulty,
     level,
     song,
-    hasHolds,
     category,
     bpm,
     duration,
     notes,
+    holdNotes,
     jkwikiPagePath,
     jpRating,
     sranLevel,
@@ -84,11 +84,11 @@ export default class Chart {
     this.difficulty = difficulty
     this.level = level
     this.song = song
-    this.hasHolds = hasHolds
     this.category = category
     this.bpm = bpm
     this.duration = duration
     this.notes = notes
+    this.holdNotes = holdNotes
     this.jkwikiPagePath = jkwikiPagePath
     this.jpRating = jpRating
     this.sranLevel = sranLevel

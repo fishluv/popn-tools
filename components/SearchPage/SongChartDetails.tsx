@@ -157,7 +157,7 @@ export default function SongChartDetails({
             pillStyle="full"
             labelStyle="full"
           />
-          {chart.hasHolds && <span className={styles.holdsPill}>long</span>}
+          {!!chart.holdNotes && <span className={styles.holdsPill}>long</span>}
         </div>
       )}
 
@@ -288,7 +288,16 @@ export default function SongChartDetails({
             field="duration"
             value={chart.duration ? formatDuration(chart.duration) : "?"}
           />
-          <Detail field="notes" value={chart.notes?.toString() || "?"} />
+          <Detail field="notes">
+            {chart.notes ? (
+              <>
+                <span>{chart.notes}</span>
+                <span>{!!chart.holdNotes && `(${chart.holdNotes} long)`}</span>
+              </>
+            ) : (
+              "?"
+            )}
+          </Detail>
           {chart.jpRating && (
             <Detail field="jp rating" value={chart.jpRating} />
           )}
