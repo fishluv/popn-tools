@@ -76,7 +76,7 @@ function parseExtraOptions(extraOptionsStr: string) {
   return extraOptions
 }
 
-function diffToEagleFlowerPathPart(diff: "e" | "n" | "h" | "ex") {
+function diffToEagleFlowerPlifePathPart(diff: "e" | "n" | "h" | "ex") {
   return ["e", "n", "h", "ex"].indexOf(diff)
 }
 
@@ -337,7 +337,7 @@ export default function SongChartDetails({
           <>
             <br />
             <a
-              href={`https://eagle.ac/game/pnm/music/27/${songId}/${diffToEagleFlowerPathPart(
+              href={`https://eagle.ac/game/pnm/music/27/${songId}/${diffToEagleFlowerPlifePathPart(
                 chart?.difficulty || "e",
               )}`}
               target="_blank"
@@ -351,7 +351,7 @@ export default function SongChartDetails({
           <>
             <br />
             <a
-              href={`https://projectflower.eu/game/pnm/music/27/${songId}/${diffToEagleFlowerPathPart(
+              href={`https://projectflower.eu/game/pnm/music/27/${songId}/${diffToEagleFlowerPlifePathPart(
                 chart?.difficulty || "e",
               )}`}
               target="_blank"
@@ -371,6 +371,20 @@ export default function SongChartDetails({
               target="_blank"
             >
               Tabla&apos;n Bass Remix
+            </a>
+          </>
+        )}
+
+        {extraOptions["plife"] && (
+          <>
+            <br />
+            <a
+              href={`https://programmedlife.org/en/game/pnm/music/${songId}/${diffToEagleFlowerPlifePathPart(
+                chart?.difficulty || "e",
+              )}`}
+              target="_blank"
+            >
+              Programmed Life
             </a>
           </>
         )}
