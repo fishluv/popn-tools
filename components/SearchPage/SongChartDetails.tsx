@@ -293,10 +293,12 @@ export default function SongChartDetails({
               value={chart.bpmSteps.join(" → ")}
             />
           )}
+
           <Detail
             field="duration"
             value={chart.duration ? formatDuration(chart.duration) : "?"}
           />
+
           <Detail field="notes">
             {chart.notes ? (
               <>
@@ -307,9 +309,22 @@ export default function SongChartDetails({
               "?"
             )}
           </Detail>
+
+          <Detail field="timing" value={chart.timing || "?"} />
+          {chart.timingSteps && chart.timingSteps.length > 0 && (
+            <Detail
+              className={styles.minor}
+              field=""
+              value={chart.timingSteps
+                .map((steps) => steps.join("/"))
+                .join(" → ")}
+            />
+          )}
+
           {chart.jpRating && (
             <Detail field="jp rating" value={chart.jpRating} />
           )}
+
           {chart.sranLevel && (
             <Detail field="sran level" value={chart.sranLevel.display()} />
           )}

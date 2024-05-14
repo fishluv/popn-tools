@@ -99,6 +99,8 @@ export interface SearchApiChartResult {
   duration: number | null
   notes: number | null
   hold_notes: number | null
+  timing: string | null
+  timing_steps: string[][] | null
   jkwiki_page_path: string | null
   rating: string | null
   sran_level: string | null

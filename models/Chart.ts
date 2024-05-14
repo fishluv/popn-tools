@@ -13,6 +13,8 @@ interface ChartContructorProps {
   duration: number | null
   notes: number | null
   holdNotes: number | null
+  timing: string | null
+  timingSteps: string[][] | null
   jkwikiPagePath: string | null
   jpRating: string | null
   sranLevel: SranLevel | null
@@ -31,6 +33,8 @@ export default class Chart {
     duration,
     notes,
     hold_notes,
+    timing,
+    timing_steps,
     jkwiki_page_path,
     rating,
     sran_level,
@@ -47,6 +51,8 @@ export default class Chart {
       duration,
       notes,
       holdNotes: hold_notes,
+      timing,
+      timingSteps: timing_steps,
       jkwikiPagePath: jkwiki_page_path,
       jpRating: rating,
       sranLevel: sran_level ? new SranLevel(sran_level) : null,
@@ -64,6 +70,8 @@ export default class Chart {
   readonly duration: number | null
   readonly notes: number | null
   readonly holdNotes: number | null
+  readonly timing: string | null
+  readonly timingSteps: string[][] | null
   readonly jkwikiPagePath: string | null
   readonly jpRating: string | null
   readonly sranLevel: SranLevel | null
@@ -80,6 +88,8 @@ export default class Chart {
     duration,
     notes,
     holdNotes,
+    timing,
+    timingSteps,
     jkwikiPagePath,
     jpRating,
     sranLevel,
@@ -95,6 +105,8 @@ export default class Chart {
     this.duration = duration
     this.notes = notes
     this.holdNotes = holdNotes
+    this.timing = timing
+    this.timingSteps = timingSteps
     this.jkwikiPagePath = jkwikiPagePath
     this.jpRating = jpRating
     this.sranLevel = sranLevel
