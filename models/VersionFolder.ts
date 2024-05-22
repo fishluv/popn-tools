@@ -3,15 +3,15 @@
  */
 export const VERSION_FOLDERS = [
   "cs",
-  "01",
-  "02",
-  "03",
-  "04",
-  "05",
-  "06",
-  "07",
-  "08",
-  "09",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
   "10",
   "11",
   "12",
@@ -32,24 +32,23 @@ export const VERSION_FOLDERS = [
   "27",
 ] as const
 
-type VersionFolder = typeof VERSION_FOLDERS[number]
+type VersionFolder = (typeof VERSION_FOLDERS)[number]
 export default VersionFolder
 
 export function parseVersionFolder(
   s: string | undefined | null,
 ): VersionFolder | null {
-  const snorm = s?.toLowerCase()?.padStart(2, "0")
-  switch (snorm) {
+  switch (s) {
     case "cs":
-    case "01":
-    case "02":
-    case "03":
-    case "04":
-    case "05":
-    case "06":
-    case "07":
-    case "08":
-    case "09":
+    case "1":
+    case "2":
+    case "3":
+    case "4":
+    case "5":
+    case "6":
+    case "7":
+    case "8":
+    case "9":
     case "10":
     case "11":
     case "12":
@@ -68,9 +67,7 @@ export function parseVersionFolder(
     case "25":
     case "26":
     case "27":
-      return snorm
-    case "00":
-      return "cs"
+      return s
     default:
       return null
   }
