@@ -310,7 +310,13 @@ export default function SongChartDetails({
             )}
           </Detail>
 
-          <Detail field="timing" value={chart.timing || "?"} />
+          <Detail className={styles.timing} field="timing">
+            {chart.timing ? (
+              <span className={styles[chart.timing]}>{chart.timing}</span>
+            ) : (
+              <>{"?"}</>
+            )}
+          </Detail>
           {chart.timingSteps && chart.timingSteps.length > 0 && (
             <Detail
               className={styles.minor}
