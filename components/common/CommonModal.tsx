@@ -22,11 +22,10 @@ export default function CommonModal({
         overlay: { zIndex: 100 },
         content: {
           width: "320px",
-          minHeight: "fit-content",
           left: "calc(50% - 160px)",
           top: "10%",
           padding: "0",
-          overflow: "visible",
+          overflow: "scroll",
         },
       }}
     >
