@@ -1,4 +1,4 @@
-import { SearchApiCharacterResult } from "../lib/fetch"
+import { SearchApiCharacterResult } from "../lib/search"
 
 interface CharacterContructorProps {
   id: number

@@ -1,5 +1,5 @@
 import styles from "./SongSearchResultsList.module.scss"
-import { useSearchSong } from "../../lib/fetch"
+import { useSearchSong } from "../../lib/search"
 import SongResultCard from "./SongResultCard"
 import Song from "../../models/Song"
 

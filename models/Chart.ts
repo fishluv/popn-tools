@@ -1,4 +1,4 @@
-import { SearchApiChartResult } from "../lib/fetch"
+import { SearchApiChartResult } from "../lib/search"
 import Song from "./Song"
 import SranLevel from "./SranLevel"
 

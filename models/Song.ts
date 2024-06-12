@@ -1,4 +1,4 @@
-import { SearchApiSongResult } from "../lib/fetch"
+import { SearchApiSongResult } from "../lib/search"
 import Character from "./Character"
 import Debut, { parseDebut } from "./Debut"
 import OtherFolder, { parseOtherFolder } from "./OtherFolder"
