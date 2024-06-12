@@ -1,6 +1,8 @@
 .Measure {
   display: flex;
   gap: 16px;
+  border: 1px solid rgba(100, 100, 100, 0.8);
+  border-width: 1px 0;
 
   .measureNumber {
     width: 80px;
@@ -11,6 +13,7 @@
 
   .noteArea {
     position: relative;
+    width: 198px;
 
     .Lane {
       height: 100%;
@@ -80,20 +83,19 @@
       left: 176px;
     }
 
-    .guideLines {
+    .GuideLine {
       position: absolute;
-    }
+      width: 100%;
+      border-style: solid;
+      border-width: 2px 0 0 0;
 
-    .bpmChanges {
-      position: absolute;
-    }
+      &.beat {
+        border-color: rgba(100, 100, 100, 0.8);
+      }
 
-    .notes {
-      position: absolute;
-    }
-
-    .holdNotes {
-      position: absolute;
+      &.half {
+        border-color: rgba(200, 200, 200, 0.8);
+      }
     }
   }
 }

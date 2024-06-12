@@ -2,7 +2,7 @@ import cx from "classnames"
 import MeasureData from "../../models/MeasureData"
 import styles from "./Measure.module.scss"
 
-const PIXELS_PER_MS = 0.4
+const PIXELS_PER_MS = 0.3
 
 function getNoteAreaHeight(measure: MeasureData) {
   const durByBpm = { [measure.startBpm]: 0 }
@@ -73,6 +73,86 @@ function getNoteDatas(measure: MeasureData, noteAreaHeight: number) {
   return noteDatas
 }
 
+type NoteOrd = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+function keyNumToOrds(keyNum: number): NoteOrd[] {
+  const ords: NoteOrd[] = []
+  for (let ord = 0; ord <= 8; ord += 1) {
+    if (((keyNum >> ord) & 0x1) === 1) {
+      ords.push(ord as NoteOrd)
+    }
+  }
+  return ords
+}
+
+function Note({ lane, y }: NoteData) {
+  const noteStyle = {
+    top: y - 10, // Shift up a bit.
+  }
+  return (
+    <div className={cx(styles.Note, styles[`lane${lane}`])} style={noteStyle}>
+      O
+    </div>
+  )
+}
+interface GuideLineData {
+  type: "beat" | "half"
+  y: number
+}
+
+function getGuideLineDatas(measure: MeasureData, noteAreaHeight: number) {
+  let prevY = noteAreaHeight - 1
+  let prevTs = measure.startTimestamp
+  let prevBpm = measure.startBpm
+  let prevBeatY = noteAreaHeight - 1
+
+  const guideLineDatas: GuideLineData[] = []
+
+  measure.rows.forEach(({ timestamp, measurebeatend, bpm }, index) => {
+    const newTs = timestamp
+    const newY = calculateNewY({ prevY, prevBpm, prevTs, newTs })
+
+    // Ignore "m". We draw measure lines with a simple border.
+    // Ignore "e". Not needed for now.
+    if (measurebeatend === "b") {
+      guideLineDatas.push({
+        type: "beat",
+        y: newY,
+      })
+
+      if (index !== 0) {
+        guideLineDatas.push({
+          type: "half",
+          y: (prevBeatY + newY) / 2.0,
+        })
+
+        prevBeatY = newY
+      }
+    }
+
+    prevY = newY
+    prevTs = newTs
+    if (bpm !== null) {
+      prevBpm = bpm
+    }
+  })
+
+  const endTs = measure.startTimestamp + measure.duration
+  const endY = calculateNewY({ prevY, prevBpm, prevTs, newTs: endTs })
+  guideLineDatas.push({
+    type: "half",
+    y: (prevBeatY + endY) / 2.0,
+  })
+
+  return guideLineDatas
+}
+
+function GuideLine({ type, y }: GuideLineData) {
+  const style = {
+    top: y,
+  }
+  return <div className={cx(styles.GuideLine, styles[type])} style={style} />
+}
+
 function calculateNewY({
   prevY,
   prevBpm,
@@ -89,35 +169,13 @@ function calculateNewY({
   return prevY - tsDelta * PIXELS_PER_MS * bpmFactor
 }
 
-type NoteOrd = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
-function keyNumToOrds(keyNum: number): NoteOrd[] {
-  const ords: NoteOrd[] = []
-  for (let ord = 0; ord <= 8; ord += 1) {
-    if (((keyNum >> ord) & 0x1) === 1) {
-      ords.push(ord as NoteOrd)
-    }
-  }
-  return ords
-}
-
-function Note({ noteData }: { noteData: NoteData }) {
-  const { lane, y } = noteData
-  const noteStyle = {
-    top: y,
-  }
-  return (
-    <div className={cx(styles.Note, styles[`lane${lane}`])} style={noteStyle}>
-      O
-    </div>
-  )
-}
-
 export default function Measure({ measureData }: { measureData: MeasureData }) {
   const noteAreaHeight = getNoteAreaHeight(measureData)
   const noteAreaStyle = {
     height: noteAreaHeight,
   }
   const noteDatas = getNoteDatas(measureData, noteAreaHeight)
+  const guideLineDatas = getGuideLineDatas(measureData, noteAreaHeight)
 
   return (
     <div className={styles.Measure}>
@@ -133,14 +191,13 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
         <div className={cx(styles.Lane, styles.lane8)}></div>
         <div className={cx(styles.Lane, styles.lane9)}></div>
 
-        <div className={styles.guideLines}></div>
-        <div className={styles.bpmChanges}></div>
-        <div className={styles.notes}>
-          {noteDatas.map((noteData, index) => (
-            <Note key={index} noteData={noteData} />
-          ))}
-        </div>
-        <div className={styles.holdNotes}></div>
+        {guideLineDatas.map(({ type, y }, index) => (
+          <GuideLine key={index} type={type} y={y} />
+        ))}
+
+        {noteDatas.map(({ lane, y }, index) => (
+          <Note key={index} lane={lane} y={y} />
+        ))}
       </div>
     </div>
   )
