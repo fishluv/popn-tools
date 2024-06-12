@@ -1,6 +1,6 @@
 import { ChartCsvRow } from "../lib/fetchChart"
 
-export default class Measure {
+export default class MeasureData {
   static fromCsvRows(chartCsvRows: ChartCsvRow[]) {
     let currRowTs = 0
     let currRows: ChartCsvRow[] = []
@@ -9,7 +9,7 @@ export default class Measure {
     let currKeyOn = 0
     let currStartBpm: number | null = null
     let currBpm: number | null = null
-    const measures: Measure[] = []
+    const measures: MeasureData[] = []
 
     chartCsvRows.forEach((row) => {
       const { timestamp, keyon, keyoff, measurebeatend, bpm } = row
@@ -19,7 +19,7 @@ export default class Measure {
       // If start of new measure, flush first.
       if (["m", "e"].includes(measurebeatend) && currRows.length) {
         measures.push(
-          new Measure({
+          new MeasureData({
             rows: currRows,
             index: currIndex,
             startKeyOn: currStartKeyOn,
@@ -49,7 +49,7 @@ export default class Measure {
 
     if (currRows.length) {
       measures.push(
-        new Measure({
+        new MeasureData({
           rows: currRows,
           index: currIndex,
           startKeyOn: currStartKeyOn,

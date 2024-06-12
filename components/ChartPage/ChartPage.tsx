@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { ChartCsvRow, fetchChart } from "../../lib/fetchChart"
-import MeasureData from "../../models/Measure"
+import MeasureData from "../../models/MeasureData"
 import Measure from "./Measure"
 
 export default function ChartPage(

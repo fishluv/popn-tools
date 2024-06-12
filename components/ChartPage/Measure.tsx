@@ -1,9 +1,9 @@
-import MeasureModel from "../../models/Measure"
+import MeasureData from "../../models/MeasureData"
 import styles from "./Measure.module.scss"
 
 const PIXELS_PER_MS = 0.4
 
-function getNoteAreaHeight(measure: MeasureModel) {
+function getNoteAreaHeight(measure: MeasureData) {
   const durByBpm = { [measure.startBpm]: 0 }
   let currBpm = measure.startBpm
   let currTs = measure.startTimestamp
@@ -36,7 +36,7 @@ function getNoteAreaHeight(measure: MeasureModel) {
   return noteAreaHeight
 }
 
-export default function Measure({ measure }: { measure: MeasureModel }) {
+export default function Measure({ measure }: { measure: MeasureData }) {
   const noteAreaStyle = {
     height: getNoteAreaHeight(measure),
   }
