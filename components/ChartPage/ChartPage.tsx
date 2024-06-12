@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { ChartCsvRow, fetchChart } from "../../lib/fetchChart"
+import Measure from "../../models/Measure"
 
 export default function ChartPage(
   songSlug: string | undefined,
@@ -39,10 +40,9 @@ export default function ChartPage(
     case "success":
       return (
         <div>
-          {chartCsvRows &&
-            chartCsvRows.map((row, index) => (
-              <div key={index}>{JSON.stringify(row)}</div>
-            ))}
+          {Measure.fromCsvRows(chartCsvRows).map((measure, index) => (
+            <div key={index}>{JSON.stringify(measure)}</div>
+          ))}
         </div>
       )
   }
