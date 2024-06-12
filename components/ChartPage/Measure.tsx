@@ -36,14 +36,14 @@ function getNoteAreaHeight(measure: MeasureData) {
   return noteAreaHeight
 }
 
-export default function Measure({ measure }: { measure: MeasureData }) {
+export default function Measure({ measureData }: { measureData: MeasureData }) {
   const noteAreaStyle = {
-    height: getNoteAreaHeight(measure),
+    height: getNoteAreaHeight(measureData),
   }
 
   return (
     <div className={styles.Measure}>
-      <div className={styles.measureNumber}>{measure.index}</div>
+      <div className={styles.measureNumber}>{measureData.index}</div>
       <div className={styles.noteArea} style={noteAreaStyle}>
         <div className={styles.lane1}></div>
         <div className={styles.lane2}></div>

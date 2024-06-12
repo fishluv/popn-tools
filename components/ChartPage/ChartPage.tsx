@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { ChartCsvRow, fetchChart } from "../../lib/fetchChart"
 import MeasureData from "../../models/MeasureData"
-import Measure from "./Measure"
+import MeasureList from "./MeasureList"
 
 export default function ChartPage(
   songSlug: string | undefined,
@@ -40,15 +40,7 @@ export default function ChartPage(
       return <div>Uh oh! Something went wrong.</div>
     case "success":
       return (
-        <div>
-          {MeasureData.fromCsvRows(chartCsvRows)
-            .slice(0, 10)
-            .map((measure, index) => (
-              <div key={index}>
-                <Measure measure={measure} />
-              </div>
-            ))}
-        </div>
+        <MeasureList measureDatas={MeasureData.fromCsvRows(chartCsvRows)} />
       )
   }
 }
