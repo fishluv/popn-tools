@@ -10,9 +10,31 @@
   }
 
   .noteArea {
-    display: flex;
-    gap: 2px;
     position: relative;
+
+    .Lane {
+      height: 100%;
+
+      &.lane1, &.lane9 {
+        background-color: rgba(200, 200, 200, 0.5);
+      }
+      &.lane2, &.lane8 {
+        background-color: rgba(255, 250, 118, 0.5);
+      }
+      &.lane3, &.lane7 {
+        background-color: rgba(182, 249, 184, 0.5);
+      }
+      &.lane4, &.lane6 {
+        background-color: rgba(145, 190, 245, 0.5);
+      }
+      &.lane5 {
+        background-color: rgba(246, 175, 176, 0.5);
+      }
+    }
+
+    .Note {
+      text-align: center;
+    }
 
     .lane1,
     .lane2,
@@ -23,7 +45,7 @@
     .lane7,
     .lane8,
     .lane9 {
-      height: 100%;
+      position: absolute;
     }
 
     .lane1, .lane3, .lane5, .lane7, .lane9 {
@@ -33,20 +55,29 @@
       width: 18px;
     }
 
-    .lane1, .lane9 {
-      background-color: rgba(200, 200, 200, 0.5);
+    .lane2 {
+      left: 24px;
     }
-    .lane2, .lane8 {
-      background-color: rgba(255, 250, 118, 0.5);
+    .lane3 {
+      left: 44px;
     }
-    .lane3, .lane7 {
-      background-color: rgba(182, 249, 184, 0.5);
-    }
-    .lane4, .lane6 {
-      background-color: rgba(145, 190, 245, 0.5);
+    .lane4 {
+      left: 68px;
     }
     .lane5 {
-      background-color: rgba(246, 175, 176, 0.5);
+      left: 88px;
+    }
+    .lane6 {
+      left: 112px;
+    }
+    .lane7 {
+      left: 132px;
+    }
+    .lane8 {
+      left: 156px;
+    }
+    .lane9 {
+      left: 176px;
     }
 
     .guideLines {
@@ -59,36 +90,6 @@
 
     .notes {
       position: absolute;
-
-      .Note {
-        position: absolute;
-        text-align: center;
-
-        &.lane2 {
-          left: 24px;
-        }
-        &.lane3 {
-          left: 44px;
-        }
-        &.lane4 {
-          left: 68px;
-        }
-        &.lane5 {
-          left: 88px;
-        }
-        &.lane6 {
-          left: 112px;
-        }
-        &.lane7 {
-          left: 132px;
-        }
-        &.lane8 {
-          left: 156px;
-        }
-        &.lane9 {
-          left: 176px;
-        }
-      }
     }
 
     .holdNotes {

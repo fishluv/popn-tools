@@ -123,15 +123,15 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
     <div className={styles.Measure}>
       <div className={styles.measureNumber}>{measureData.index}</div>
       <div className={styles.noteArea} style={noteAreaStyle}>
-        <div className={styles.lane1}></div>
-        <div className={styles.lane2}></div>
-        <div className={styles.lane3}></div>
-        <div className={styles.lane4}></div>
-        <div className={styles.lane5}></div>
-        <div className={styles.lane6}></div>
-        <div className={styles.lane7}></div>
-        <div className={styles.lane8}></div>
-        <div className={styles.lane9}></div>
+        <div className={cx(styles.Lane, styles.lane1)}></div>
+        <div className={cx(styles.Lane, styles.lane2)}></div>
+        <div className={cx(styles.Lane, styles.lane3)}></div>
+        <div className={cx(styles.Lane, styles.lane4)}></div>
+        <div className={cx(styles.Lane, styles.lane5)}></div>
+        <div className={cx(styles.Lane, styles.lane6)}></div>
+        <div className={cx(styles.Lane, styles.lane7)}></div>
+        <div className={cx(styles.Lane, styles.lane8)}></div>
+        <div className={cx(styles.Lane, styles.lane9)}></div>
 
         <div className={styles.guideLines}></div>
         <div className={styles.bpmChanges}></div>
