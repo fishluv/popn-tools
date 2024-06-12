@@ -1,0 +1,68 @@
+.Measure {
+  display: flex;
+  gap: 16px;
+
+  .measureNumber {
+    width: 80px;
+    text-align: right;
+    font-size: 32px;
+    align-self: center;
+  }
+
+  .noteArea {
+    display: flex;
+    gap: 2px;
+    position: relative;
+
+    .lane1,
+    .lane2,
+    .lane3,
+    .lane4,
+    .lane5,
+    .lane6,
+    .lane7,
+    .lane8,
+    .lane9 {
+      height: 100%;
+    }
+
+    .lane1, .lane3, .lane5, .lane7, .lane9 {
+      width: 22px;
+    }
+    .lane2, .lane4, .lane6, .lane8 {
+      width: 18px;
+    }
+
+    .lane1, .lane9 {
+      background-color: rgba(200, 200, 200, 0.5);
+    }
+    .lane2, .lane8 {
+      background-color: rgba(255, 250, 118, 0.5);
+    }
+    .lane3, .lane7 {
+      background-color: rgba(182, 249, 184, 0.5);
+    }
+    .lane4, .lane6 {
+      background-color: rgba(145, 190, 245, 0.5);
+    }
+    .lane5 {
+      background-color: rgba(246, 175, 176, 0.5);
+    }
+
+    .guideLines {
+      position: absolute;
+    }
+
+    .bpmChanges {
+      position: absolute;
+    }
+
+    .notes {
+      position: absolute;
+    }
+
+    .holdNotes {
+      position: absolute;
+    }
+  }
+}

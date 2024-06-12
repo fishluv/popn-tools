@@ -64,6 +64,7 @@ export default class Measure {
 
   readonly rows: ChartCsvRow[]
   readonly index: number
+  readonly startTimestamp: number
   readonly startKeyOn: number
   readonly startBpm: number
   readonly duration: number
@@ -83,6 +84,7 @@ export default class Measure {
   }) {
     this.rows = rows
     this.index = index
+    this.startTimestamp = rows[0].timestamp
     this.startKeyOn = startKeyOn
     this.startBpm = startBpm
     this.duration = duration
