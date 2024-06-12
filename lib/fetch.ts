@@ -3,6 +3,7 @@ import useSWR from "swr"
 import urlJoin from "url-join"
 import Song from "../models/Song"
 import Chart from "../models/Chart"
+import HttpError from "./HttpError"
 
 export function useSearchSong({
   query,
@@ -52,17 +53,6 @@ export function useSearchChart({
 
 function getSearchApiUrl(...parts: string[]) {
   return urlJoin(process.env.NEXT_PUBLIC_SEARCH_API_URL!, ...parts)
-}
-
-class HttpError extends Error {
-  data: any
-  status: number
-
-  constructor(data: any, status: number) {
-    super("Error")
-    this.data = data
-    this.status = status
-  }
 }
 
 export interface SearchApiSongResult {
