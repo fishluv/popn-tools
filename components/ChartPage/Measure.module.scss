@@ -59,6 +59,36 @@
 
     .notes {
       position: absolute;
+
+      .Note {
+        position: absolute;
+        text-align: center;
+
+        &.lane2 {
+          left: 24px;
+        }
+        &.lane3 {
+          left: 44px;
+        }
+        &.lane4 {
+          left: 68px;
+        }
+        &.lane5 {
+          left: 88px;
+        }
+        &.lane6 {
+          left: 112px;
+        }
+        &.lane7 {
+          left: 132px;
+        }
+        &.lane8 {
+          left: 156px;
+        }
+        &.lane9 {
+          left: 176px;
+        }
+      }
     }
 
     .holdNotes {

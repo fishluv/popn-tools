@@ -9,7 +9,7 @@ export default function MeasureList({
 }) {
   return (
     <div className={styles.MeasureList}>
-      {measureDatas.slice(0, 10).map((measureData, index) => (
+      {measureDatas.map((measureData, index) => (
         <div key={index}>
           <Measure measureData={measureData} />
         </div>
