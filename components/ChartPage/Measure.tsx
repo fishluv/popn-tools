@@ -153,6 +153,69 @@ function GuideLine({ type, y }: GuideLineData) {
   return <div className={cx(styles.GuideLine, styles[type])} style={style} />
 }
 
+interface BpmEventData {
+  type: "initial" | "increase" | "decrease"
+  bpm: number
+  y: number
+}
+
+function getBpmEventDatas(measure: MeasureData, noteAreaHeight: number) {
+  let prevY = noteAreaHeight - 1
+  let prevTs = measure.startTimestamp
+  let prevBpm = measure.startBpm
+
+  const bpmEventDatas: BpmEventData[] = []
+
+  measure.rows.forEach(({ timestamp, bpm }) => {
+    const newTs = timestamp
+    const newY = calculateNewY({ prevY, prevBpm, prevTs, newTs })
+
+    if (bpm !== null) {
+      let type: "initial" | "increase" | "decrease"
+      if (bpm === prevBpm) {
+        type = "initial"
+      } else if (bpm > prevBpm) {
+        type = "increase"
+      } else {
+        type = "decrease"
+      }
+      bpmEventDatas.push({
+        type,
+        bpm,
+        y: newY,
+      })
+
+      prevBpm = bpm
+    }
+
+    prevY = newY
+    prevTs = newTs
+  })
+
+  return bpmEventDatas
+}
+
+function BpmEvent({ type, bpm, y }: BpmEventData) {
+  const style = {
+    top: y - 2,
+  }
+  let bpmStr
+  if (type === "initial") {
+    bpmStr = `${bpm} bpm`
+  } else if (type === "increase") {
+    bpmStr = `▲ ${bpm} bpm`
+  } else {
+    bpmStr = `▼ ${bpm} bpm`
+  }
+
+  return (
+    <div className={cx(styles.BpmEvent, styles[type])} style={style}>
+      <div className={styles.line} />
+      <div className={styles.bpm}>{bpmStr}</div>
+    </div>
+  )
+}
+
 function calculateNewY({
   prevY,
   prevBpm,
@@ -174,8 +237,9 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
   const noteAreaStyle = {
     height: noteAreaHeight,
   }
-  const noteDatas = getNoteDatas(measureData, noteAreaHeight)
   const guideLineDatas = getGuideLineDatas(measureData, noteAreaHeight)
+  const bpmEventDatas = getBpmEventDatas(measureData, noteAreaHeight)
+  const noteDatas = getNoteDatas(measureData, noteAreaHeight)
 
   return (
     <div className={styles.Measure}>
@@ -193,6 +257,10 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
 
         {guideLineDatas.map(({ type, y }, index) => (
           <GuideLine key={index} type={type} y={y} />
+        ))}
+
+        {bpmEventDatas.map(({ type, bpm, y }, index) => (
+          <BpmEvent key={index} type={type} bpm={bpm} y={y} />
         ))}
 
         {noteDatas.map(({ lane, y }, index) => (
