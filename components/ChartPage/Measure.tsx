@@ -204,12 +204,10 @@ function keyNumToOrds(keyNum: number): NoteOrd[] {
 
 function Note({ lane, y }: NoteData) {
   const noteStyle = {
-    top: y - 10, // Shift up a bit.
+    top: y - 6, // Shift up a bit.
   }
   return (
-    <div className={cx(styles.Note, styles[`lane${lane}`])} style={noteStyle}>
-      O
-    </div>
+    <div className={cx(styles.Note, styles[`lane${lane}`])} style={noteStyle} />
   )
 }
 
@@ -317,26 +315,18 @@ function HoldNote({
   }
 
   const buttStyle = {
-    top: endY - 10, // Shift up a bit.
+    top: endY - 5, // Shift up a bit.
   }
 
   const headStyle = {
-    top: startY - 10, // Shift up a bit.
+    top: startY - 6, // Shift up a bit.
   }
 
   return (
     <div className={cx(styles.HoldNote, styles[`lane${lane}`])}>
+      {shouldDrawButt && <div className={styles.butt} style={buttStyle} />}
       <div className={styles.body} style={bodyStyle} />
-      {shouldDrawButt && (
-        <div className={styles.butt} style={buttStyle}>
-          ^
-        </div>
-      )}
-      {shouldDrawHead && (
-        <div className={styles.head} style={headStyle}>
-          O
-        </div>
-      )}
+      {shouldDrawHead && <div className={styles.head} style={headStyle} />}
     </div>
   )
 }

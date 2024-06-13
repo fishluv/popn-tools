@@ -35,6 +35,32 @@
       }
     }
 
+    .Note, .HoldNote .head, .HoldNote .butt {
+      height: 14px;
+      border: 1px solid rgb(60, 60, 60);
+      border-radius: 42%;
+
+      &.butt {
+        border-bottom: 0;
+      }
+
+      &.lane1, &.lane9 {
+        background-color: rgb(200, 200, 200);
+      }
+      &.lane2, &.lane8 {
+        background-color: rgb(253, 247, 49);
+      }
+      &.lane3, &.lane7 {
+        background-color: rgb(125, 243, 129);
+      }
+      &.lane4, &.lane6 {
+        background-color: rgb(130, 182, 255)
+      }
+      &.lane5 {
+        background-color: rgb(237, 126, 127);
+      }
+    }
+
     .HoldNote {
       .head, .body, .butt {
         position: absolute;
@@ -49,28 +75,43 @@
       }
 
       &.lane1, &.lane9 {
-        .body {
+        .body, .butt {
           background-color: rgb(235, 235, 235);
+        }
+        .head {
+          background-color: rgb(200, 200, 200);
         }
       }
       &.lane2, &.lane8 {
-        .body {
+        .body, .butt {
           background-color: rgb(255, 255, 150);
+        }
+        .head {
+          background-color: rgb(253, 247, 49);
         }
       }
       &.lane3, &.lane7 {
-        .body {
+        .body, .butt {
           background-color: rgb(200, 255, 200);
+        }
+        .head {
+          background-color: rgb(125, 243, 129);
         }
       }
       &.lane4, &.lane6 {
-        .body {
+        .body, .butt {
           background-color: rgb(171, 210, 246)
+        }
+        .head {
+          background-color: rgb(130, 182, 255)
         }
       }
       &.lane5 {
-        .body {
+        .body, .butt {
           background-color: rgb(255, 200, 200);
+        }
+        .head {
+          background-color: rgb(237, 126, 127);
         }
       }
     }
