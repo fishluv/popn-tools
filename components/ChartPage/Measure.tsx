@@ -33,64 +33,6 @@ function getNoteAreaHeight(measure: MeasureData) {
   return noteAreaHeight
 }
 
-type LaneOrd = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
-interface NoteData {
-  lane: LaneOrd
-  y: number
-}
-
-function getNoteDatas(measure: MeasureData, noteAreaHeight: number) {
-  let prevY = noteAreaHeight - 1
-  let prevTs = measure.startTimestamp
-  let prevBpm = measure.startBpm
-
-  const noteDatas: NoteData[] = []
-
-  measure.rows.forEach(({ timestamp, key, bpm }) => {
-    const newTs = timestamp
-    const newY = calculateNewY({ prevY, prevBpm, prevTs, newTs })
-
-    if (key !== null) {
-      keyNumToOrds(key).forEach((ord) => {
-        noteDatas.push({
-          lane: (ord + 1) as LaneOrd,
-          y: newY,
-        })
-      })
-    }
-
-    prevY = newY
-    prevTs = newTs
-    if (bpm !== null) {
-      prevBpm = bpm
-    }
-  })
-
-  return noteDatas
-}
-
-type NoteOrd = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
-function keyNumToOrds(keyNum: number): NoteOrd[] {
-  const ords: NoteOrd[] = []
-  for (let ord = 0; ord <= 8; ord += 1) {
-    if (((keyNum >> ord) & 0x1) === 1) {
-      ords.push(ord as NoteOrd)
-    }
-  }
-  return ords
-}
-
-function Note({ lane, y }: NoteData) {
-  const noteStyle = {
-    top: y - 10, // Shift up a bit.
-  }
-  return (
-    <div className={cx(styles.Note, styles[`lane${lane}`])} style={noteStyle}>
-      O
-    </div>
-  )
-}
-
 interface GuideLineData {
   type: "beat" | "half"
   y: number
@@ -209,6 +151,64 @@ function BpmEvent({ type, bpm, y }: BpmEventData) {
     <div className={cx(styles.BpmEvent, styles[type])} style={style}>
       <div className={styles.line} />
       <div className={styles.bpm}>{bpmStr}</div>
+    </div>
+  )
+}
+
+type LaneOrd = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+interface NoteData {
+  lane: LaneOrd
+  y: number
+}
+
+function getNoteDatas(measure: MeasureData, noteAreaHeight: number) {
+  let prevY = noteAreaHeight - 1
+  let prevTs = measure.startTimestamp
+  let prevBpm = measure.startBpm
+
+  const noteDatas: NoteData[] = []
+
+  measure.rows.forEach(({ timestamp, key, bpm }) => {
+    const newTs = timestamp
+    const newY = calculateNewY({ prevY, prevBpm, prevTs, newTs })
+
+    if (key !== null) {
+      keyNumToOrds(key).forEach((ord) => {
+        noteDatas.push({
+          lane: (ord + 1) as LaneOrd,
+          y: newY,
+        })
+      })
+    }
+
+    prevY = newY
+    prevTs = newTs
+    if (bpm !== null) {
+      prevBpm = bpm
+    }
+  })
+
+  return noteDatas
+}
+
+type NoteOrd = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
+function keyNumToOrds(keyNum: number): NoteOrd[] {
+  const ords: NoteOrd[] = []
+  for (let ord = 0; ord <= 8; ord += 1) {
+    if (((keyNum >> ord) & 0x1) === 1) {
+      ords.push(ord as NoteOrd)
+    }
+  }
+  return ords
+}
+
+function Note({ lane, y }: NoteData) {
+  const noteStyle = {
+    top: y - 10, // Shift up a bit.
+  }
+  return (
+    <div className={cx(styles.Note, styles[`lane${lane}`])} style={noteStyle}>
+      O
     </div>
   )
 }
