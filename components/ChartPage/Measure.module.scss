@@ -19,19 +19,59 @@
       height: 100%;
 
       &.lane1, &.lane9 {
-        background-color: rgba(200, 200, 200, 0.5);
+        background-color: rgba(200, 200, 200, 0.2);
       }
       &.lane2, &.lane8 {
-        background-color: rgba(255, 250, 118, 0.5);
+        background-color: rgba(255, 250, 118, 0.2);
       }
       &.lane3, &.lane7 {
-        background-color: rgba(182, 249, 184, 0.5);
+        background-color: rgba(182, 249, 184, 0.2);
       }
       &.lane4, &.lane6 {
-        background-color: rgba(145, 190, 245, 0.5);
+        background-color: rgba(145, 190, 245, 0.2);
       }
       &.lane5 {
-        background-color: rgba(246, 175, 176, 0.5);
+        background-color: rgba(246, 175, 176, 0.2);
+      }
+    }
+
+    .HoldNote {
+      .head, .body, .butt {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+      }
+
+      .body {
+        border-style: solid;
+        border-color: rgb(60, 60, 60);
+        border-width: 0 1px;
+      }
+
+      &.lane1, &.lane9 {
+        .body {
+          background-color: rgb(235, 235, 235);
+        }
+      }
+      &.lane2, &.lane8 {
+        .body {
+          background-color: rgb(255, 255, 150);
+        }
+      }
+      &.lane3, &.lane7 {
+        .body {
+          background-color: rgb(200, 255, 200);
+        }
+      }
+      &.lane4, &.lane6 {
+        .body {
+          background-color: rgb(171, 210, 246)
+        }
+      }
+      &.lane5 {
+        .body {
+          background-color: rgb(255, 200, 200);
+        }
       }
     }
 

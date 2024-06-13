@@ -90,6 +90,7 @@ function Note({ lane, y }: NoteData) {
     </div>
   )
 }
+
 interface GuideLineData {
   type: "beat" | "half"
   y: number
@@ -212,6 +213,134 @@ function BpmEvent({ type, bpm, y }: BpmEventData) {
   )
 }
 
+interface HoldNoteData {
+  lane: LaneOrd
+  startY: number // start and end are chronological, so startY > endY.
+  endY: number
+  shouldDrawHead: boolean
+  shouldDrawButt: boolean
+}
+
+function getHoldNoteDatas(measure: MeasureData, noteAreaHeight: number) {
+  let prevY = noteAreaHeight - 1
+  let prevTs = measure.startTimestamp
+  let prevBpm = measure.startBpm
+
+  // When did this key start being pressed.
+  const ordToKeyOnY: (number | undefined)[] = []
+  // Init special value for hold notes that started before this measure.
+  keyNumToOrds(measure.startKeyOn).forEach((ord) => {
+    ordToKeyOnY[ord] = -1
+  })
+
+  const holdNoteDatas: HoldNoteData[] = []
+
+  measure.rows.forEach(({ timestamp, keyon, keyoff, bpm }) => {
+    const newTs = timestamp
+    const newY = calculateNewY({ prevY, prevBpm, prevTs, newTs })
+
+    if (keyon !== null) {
+      keyNumToOrds(keyon).forEach((ord) => {
+        ordToKeyOnY[ord] = newY
+      })
+    }
+
+    if (keyoff !== null) {
+      keyNumToOrds(keyoff).forEach((ord) => {
+        const keyOnYForOrd = ordToKeyOnY[ord]
+        let startY
+        if (keyOnYForOrd !== undefined && keyOnYForOrd >= 0) {
+          // Hold note started in this measure.
+          startY = keyOnYForOrd
+        } else {
+          // Hold note started before this measure.
+          startY = noteAreaHeight
+        }
+
+        holdNoteDatas.push({
+          lane: (ord + 1) as LaneOrd,
+          startY,
+          endY: newY,
+          shouldDrawHead: keyOnYForOrd !== undefined && keyOnYForOrd >= 0,
+          shouldDrawButt: true,
+        })
+
+        ordToKeyOnY[ord] = undefined
+      })
+    }
+
+    prevY = newY
+    prevTs = newTs
+    if (bpm !== null) {
+      prevBpm = bpm
+    }
+  })
+
+  // Hold notes that didn't end in this measure.
+  ordToKeyOnY.forEach((keyOnY, ord) => {
+    if (keyOnY === undefined) {
+      return
+    }
+
+    let startY
+    if (keyOnY !== undefined && keyOnY >= 0) {
+      // Hold note started in this measure.
+      startY = keyOnY
+    } else {
+      // Hold note started before this measure.
+      startY = noteAreaHeight
+    }
+
+    holdNoteDatas.push({
+      lane: (ord + 1) as LaneOrd,
+      startY,
+      endY: 0,
+      shouldDrawHead: keyOnY !== undefined && keyOnY >= 0,
+      shouldDrawButt: false,
+    })
+  })
+
+  return holdNoteDatas
+}
+
+function HoldNote({
+  lane,
+  startY,
+  endY,
+  shouldDrawHead,
+  shouldDrawButt,
+}: HoldNoteData) {
+  const bodyHeight = startY - endY
+  const bodyStyle = {
+    top: endY,
+    height: bodyHeight,
+  }
+
+  const buttStyle = {
+    top: endY - 10, // Shift up a bit.
+  }
+
+  const headStyle = {
+    top: startY - 10, // Shift up a bit.
+  }
+
+  return (
+    <div className={cx(styles.HoldNote, styles[`lane${lane}`])}>
+      <div className={styles.body} style={bodyStyle} />
+      {shouldDrawButt && (
+        <div className={styles.butt} style={buttStyle}>
+          ^
+        </div>
+      )}
+      {shouldDrawHead && (
+        <div className={styles.head} style={headStyle}>
+          O
+        </div>
+      )}
+    </div>
+  )
+}
+
 function calculateNewY({
   prevY,
   prevBpm,
@@ -236,6 +365,7 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
   const guideLineDatas = getGuideLineDatas(measureData, noteAreaHeight)
   const bpmEventDatas = getBpmEventDatas(measureData, noteAreaHeight)
   const noteDatas = getNoteDatas(measureData, noteAreaHeight)
+  const holdNoteDatas = getHoldNoteDatas(measureData, noteAreaHeight)
 
   return (
     <div className={styles.Measure}>
@@ -262,6 +392,19 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
         {noteDatas.map(({ lane, y }, index) => (
           <Note key={index} lane={lane} y={y} />
         ))}
+
+        {holdNoteDatas.map(
+          ({ lane, startY, endY, shouldDrawHead, shouldDrawButt }, index) => (
+            <HoldNote
+              key={index}
+              lane={lane}
+              startY={startY}
+              endY={endY}
+              shouldDrawHead={shouldDrawHead}
+              shouldDrawButt={shouldDrawButt}
+            />
+          ),
+        )}
       </div>
     </div>
   )
