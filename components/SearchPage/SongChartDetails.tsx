@@ -121,6 +121,7 @@ export default function SongChartDetails({
     remywikiUrlPath,
     remywikiChara,
     labels,
+    slug,
   } = songToUse
   const maybeUpperSuffix = labels.includes("upper") ? " (UPPER)" : ""
 
@@ -140,6 +141,12 @@ export default function SongChartDetails({
 
       {labels.includes("omnimix") && (
         <p className={styles.omniNote}>This song is no longer playable.</p>
+      )}
+
+      {extraOptions["chartviewer"] && chart && folder === "27" && (
+        <a href={`/chart/${slug}/${chart.difficulty}`} target="_blank">
+          View chart
+        </a>
       )}
 
       <SongBanner
