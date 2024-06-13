@@ -9,11 +9,7 @@ function getNoteAreaHeight(measure: MeasureData) {
   let currBpm = measure.startBpm
   let currTs = measure.startTimestamp
 
-  measure.rows.forEach((row, index) => {
-    if (index === 0) {
-      return
-    }
-
+  measure.rows.forEach((row) => {
     const nextTs = row.timestamp
     durByBpm[currBpm] += nextTs - currTs
     currTs = nextTs
