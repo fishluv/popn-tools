@@ -1,3 +1,21 @@
+$white-lane: rgba(200, 200, 200, 0.2);
+$yellow-lane: rgba(255, 250, 118, 0.2);
+$green-lane: rgba(182, 249, 184, 0.2);
+$blue-lane: rgba(145, 190, 245, 0.2);
+$red-lane: rgba(246, 175, 176, 0.2);
+
+$white-note: rgb(200, 200, 200);
+$yellow-note: rgb(253, 247, 49);
+$green-note: rgb(125, 243, 129);
+$blue-note: rgb(130, 182, 255);
+$red-note: rgb(237, 126, 127);
+
+$white-hold-note: rgb(235, 235, 235);
+$yellow-hold-note: rgb(255, 255, 150);
+$green-hold-note: rgb(200, 255, 200);
+$blue-hold-note: rgb(171, 210, 246);
+$red-hold-note: rgb(255, 200, 200);
+
 .Measure {
   display: flex;
   gap: 16px;
@@ -19,19 +37,19 @@
       height: 100%;
 
       &.lane1, &.lane9 {
-        background-color: rgba(200, 200, 200, 0.2);
+        background-color: $white-lane;
       }
       &.lane2, &.lane8 {
-        background-color: rgba(255, 250, 118, 0.2);
+        background-color: $yellow-lane;
       }
       &.lane3, &.lane7 {
-        background-color: rgba(182, 249, 184, 0.2);
+        background-color: $green-lane;
       }
       &.lane4, &.lane6 {
-        background-color: rgba(145, 190, 245, 0.2);
+        background-color: $blue-lane;
       }
       &.lane5 {
-        background-color: rgba(246, 175, 176, 0.2);
+        background-color: $red-lane;
       }
     }
 
@@ -42,22 +60,23 @@
 
       &.butt {
         border-bottom: 0;
+        border-radius: 32%;
       }
 
       &.lane1, &.lane9 {
-        background-color: rgb(200, 200, 200);
+        background-color: $white-note;
       }
       &.lane2, &.lane8 {
-        background-color: rgb(253, 247, 49);
+        background-color: $yellow-note;
       }
       &.lane3, &.lane7 {
-        background-color: rgb(125, 243, 129);
+        background-color: $green-note;
       }
       &.lane4, &.lane6 {
-        background-color: rgb(130, 182, 255)
+        background-color: $blue-note;
       }
       &.lane5 {
-        background-color: rgb(237, 126, 127);
+        background-color: $red-note;
       }
     }
 
@@ -76,42 +95,42 @@
 
       &.lane1, &.lane9 {
         .body, .butt {
-          background-color: rgb(235, 235, 235);
+          background-color: $white-hold-note;
         }
         .head {
-          background-color: rgb(200, 200, 200);
+          background-color: $white-note;
         }
       }
       &.lane2, &.lane8 {
         .body, .butt {
-          background-color: rgb(255, 255, 150);
+          background-color: $yellow-hold-note;
         }
         .head {
-          background-color: rgb(253, 247, 49);
+          background-color: $yellow-note;
         }
       }
       &.lane3, &.lane7 {
         .body, .butt {
-          background-color: rgb(200, 255, 200);
+          background-color: $green-hold-note;
         }
         .head {
-          background-color: rgb(125, 243, 129);
+          background-color: $green-note;
         }
       }
       &.lane4, &.lane6 {
         .body, .butt {
-          background-color: rgb(171, 210, 246)
+          background-color: $blue-hold-note;
         }
         .head {
-          background-color: rgb(130, 182, 255)
+          background-color: $blue-note;
         }
       }
       &.lane5 {
         .body, .butt {
-          background-color: rgb(255, 200, 200);
+          background-color: $red-hold-note;
         }
         .head {
-          background-color: rgb(237, 126, 127);
+          background-color: $red-note;
         }
       }
     }
