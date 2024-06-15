@@ -186,7 +186,7 @@
         color: rgb(60, 60, 60);
 
         .line {
-          border-color: transparent;
+          background: transparent;
         }
       }
 
@@ -194,7 +194,7 @@
         color: rgb(60, 120, 200);
 
         .line {
-          border-color: rgb(60, 120, 200, 0.7);
+          background: linear-gradient(transparent, rgba(60, 120, 200, 0.7));
         }
       }
 
@@ -202,21 +202,22 @@
         color: rgb(200, 120, 60);
 
         .line {
-          border-color: rgb(200, 120, 60, 0.7);
+          background: linear-gradient(transparent, rgba(200, 120, 60, 0.7));
         }
       }
 
       .line {
-        position: relative;
+        position: absolute;
         width: 198px;
-        border-style: solid;
-        border-width: 8px 0 0 0;
+        height: 40px;
+        bottom: -4px;
       }
 
       .bpm {
-        position: relative;
+        position: absolute;
+        width: max-content;
         left: 202px;
-        bottom: 28px;
+        bottom: -4px;
       }
     }
   }
