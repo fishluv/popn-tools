@@ -34,7 +34,10 @@ export default class MeasureData {
         currStartBpm = currBpm
       }
 
-      currRows.push(row)
+      // Ignore empty "end" measure.
+      if (measurebeatend !== "e") {
+        currRows.push(row)
+      }
 
       if (bpm !== null) {
         currBpm = bpm
