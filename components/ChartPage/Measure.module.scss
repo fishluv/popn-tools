@@ -4,18 +4,6 @@ $green-lane: rgba(182, 249, 184, 0.2);
 $blue-lane: rgba(145, 190, 245, 0.2);
 $red-lane: rgba(246, 175, 176, 0.2);
 
-$white-note: rgb(200, 200, 200);
-$yellow-note: rgb(253, 247, 49);
-$green-note: rgb(125, 243, 129);
-$blue-note: rgb(130, 182, 255);
-$red-note: rgb(237, 126, 127);
-
-$white-hold-note: rgb(235, 235, 235);
-$yellow-hold-note: rgb(255, 255, 150);
-$green-hold-note: rgb(200, 255, 200);
-$blue-hold-note: rgb(171, 210, 246);
-$red-hold-note: rgb(255, 200, 200);
-
 .Measure {
   display: flex;
   gap: 16px;
@@ -33,154 +21,66 @@ $red-hold-note: rgb(255, 200, 200);
     position: relative;
     width: 198px;
 
+    .pos1 {
+      position: absolute;
+      left: 0;
+    }
+    .pos2 {
+      position: absolute;
+      left: 24px;
+    }
+    .pos3 {
+      position: absolute;
+      left: 44px;
+    }
+    .pos4 {
+      position: absolute;
+      left: 68px;
+    }
+    .pos5 {
+      position: absolute;
+      left: 88px;
+    }
+    .pos6 {
+      position: absolute;
+      left: 112px;
+    }
+    .pos7 {
+      position: absolute;
+      left: 132px;
+    }
+    .pos8 {
+      position: absolute;
+      left: 156px;
+    }
+    .pos9 {
+      position: absolute;
+      left: 176px;
+    }
+
     .Lane {
       height: 100%;
 
-      &.lane1, &.lane9 {
+      &.white {
+        width: 22px;
         background-color: $white-lane;
       }
-      &.lane2, &.lane8 {
+      &.yellow {
+        width: 18px;
         background-color: $yellow-lane;
       }
-      &.lane3, &.lane7 {
+      &.green {
+        width: 22px;
         background-color: $green-lane;
       }
-      &.lane4, &.lane6 {
+      &.blue {
+        width: 18px;
         background-color: $blue-lane;
       }
-      &.lane5 {
+      &.red {
+        width: 22px;
         background-color: $red-lane;
       }
-    }
-
-    .Note, .HoldNote .head, .HoldNote .butt {
-      height: 14px;
-      border: 1px solid rgb(60, 60, 60);
-      border-radius: 42%;
-
-      &.butt {
-        border-bottom: 0;
-        border-radius: 32%;
-      }
-
-      &.lane1, &.lane9 {
-        background-color: $white-note;
-      }
-      &.lane2, &.lane8 {
-        background-color: $yellow-note;
-      }
-      &.lane3, &.lane7 {
-        background-color: $green-note;
-      }
-      &.lane4, &.lane6 {
-        background-color: $blue-note;
-      }
-      &.lane5 {
-        background-color: $red-note;
-      }
-    }
-
-    .HoldNote {
-      .head, .body, .butt {
-        position: absolute;
-        width: 100%;
-        text-align: center;
-      }
-
-      .body {
-        border-style: solid;
-        border-color: rgb(60, 60, 60);
-        border-width: 0 1px;
-      }
-
-      &.lane1, &.lane9 {
-        .body, .butt {
-          background-color: $white-hold-note;
-        }
-        .head {
-          background-color: $white-note;
-        }
-      }
-      &.lane2, &.lane8 {
-        .body, .butt {
-          background-color: $yellow-hold-note;
-        }
-        .head {
-          background-color: $yellow-note;
-        }
-      }
-      &.lane3, &.lane7 {
-        .body, .butt {
-          background-color: $green-hold-note;
-        }
-        .head {
-          background-color: $green-note;
-        }
-      }
-      &.lane4, &.lane6 {
-        .body, .butt {
-          background-color: $blue-hold-note;
-        }
-        .head {
-          background-color: $blue-note;
-        }
-      }
-      &.lane5 {
-        .body, .butt {
-          background-color: $red-hold-note;
-        }
-        .head {
-          background-color: $red-note;
-        }
-      }
-    }
-
-    .Note {
-      text-align: center;
-    }
-
-    .lane1,
-    .lane2,
-    .lane3,
-    .lane4,
-    .lane5,
-    .lane6,
-    .lane7,
-    .lane8,
-    .lane9 {
-      position: absolute;
-    }
-
-    .lane1, .lane3, .lane5, .lane7, .lane9 {
-      width: 22px;
-    }
-    .lane2, .lane4, .lane6, .lane8 {
-      width: 18px;
-    }
-
-    .lane2 {
-      left: 24px;
-    }
-    .lane3 {
-      left: 44px;
-    }
-    .lane4 {
-      left: 68px;
-    }
-    .lane5 {
-      left: 88px;
-    }
-    .lane6 {
-      left: 112px;
-    }
-    .lane7 {
-      left: 132px;
-    }
-    .lane8 {
-      left: 156px;
-    }
-    .lane9 {
-      left: 176px;
     }
 
     .GuideLine {

@@ -1,0 +1,36 @@
+$white-note: rgb(200, 200, 200);
+$yellow-note: rgb(253, 247, 49);
+$green-note: rgb(125, 243, 129);
+$blue-note: rgb(130, 182, 255);
+$red-note: rgb(237, 126, 127);
+
+.Note {
+  height: 14px;
+  border: 1px solid rgb(60, 60, 60);
+  border-radius: 42%;
+
+  &.white {
+    width: 22px;
+    background-color: $white-note;
+  }
+
+  &.yellow {
+    width: 18px;
+    background-color: $yellow-note;
+  }
+
+  &.green {
+    width: 22px;
+    background-color: $green-note;
+  }
+
+  &.blue {
+    width: 18px;
+    background-color: $blue-note;
+  }
+
+  &.red {
+    width: 22px;
+    background-color: $red-note;
+  }
+}

@@ -1,6 +1,8 @@
 import cx from "classnames"
 import MeasureData from "../../models/MeasureData"
 import styles from "./Measure.module.scss"
+import Note, { NoteColor } from "./Note"
+import HoldNote from "./HoldNote"
 
 const PIXELS_PER_MS = 0.3
 
@@ -202,15 +204,6 @@ function keyNumToOrds(keyNum: number): NoteOrd[] {
   return ords
 }
 
-function Note({ lane, y }: NoteData) {
-  const noteStyle = {
-    top: y - 6, // Shift up a bit.
-  }
-  return (
-    <div className={cx(styles.Note, styles[`lane${lane}`])} style={noteStyle} />
-  )
-}
-
 interface HoldNoteData {
   lane: LaneOrd
   startY: number // start and end are chronological, so startY > endY.
@@ -301,36 +294,6 @@ function getHoldNoteDatas(measure: MeasureData, noteAreaHeight: number) {
   return holdNoteDatas
 }
 
-function HoldNote({
-  lane,
-  startY,
-  endY,
-  shouldDrawHead,
-  shouldDrawButt,
-}: HoldNoteData) {
-  const bodyHeight = startY - endY
-  const bodyStyle = {
-    top: endY,
-    height: bodyHeight,
-  }
-
-  const buttStyle = {
-    top: endY - 5, // Shift up a bit.
-  }
-
-  const headStyle = {
-    top: startY - 6, // Shift up a bit.
-  }
-
-  return (
-    <div className={cx(styles.HoldNote, styles[`lane${lane}`])}>
-      {shouldDrawButt && <div className={styles.butt} style={buttStyle} />}
-      <div className={styles.body} style={bodyStyle} />
-      {shouldDrawHead && <div className={styles.head} style={headStyle} />}
-    </div>
-  )
-}
-
 function calculateNewY({
   prevY,
   prevBpm,
@@ -347,6 +310,25 @@ function calculateNewY({
   return prevY - tsDelta * PIXELS_PER_MS * bpmFactor
 }
 
+function laneToColor(lane: LaneOrd): NoteColor {
+  switch (lane) {
+    case 1:
+    case 9:
+      return "white"
+    case 2:
+    case 8:
+      return "yellow"
+    case 3:
+    case 7:
+      return "green"
+    case 4:
+    case 6:
+      return "blue"
+    case 5:
+      return "red"
+  }
+}
+
 export default function Measure({ measureData }: { measureData: MeasureData }) {
   const noteAreaHeight = getNoteAreaHeight(measureData)
   const noteAreaStyle = {
@@ -361,15 +343,15 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
     <div className={styles.Measure}>
       <div className={styles.measureNumber}>{measureData.index}</div>
       <div className={styles.noteArea} style={noteAreaStyle}>
-        <div className={cx(styles.Lane, styles.lane1)}></div>
-        <div className={cx(styles.Lane, styles.lane2)}></div>
-        <div className={cx(styles.Lane, styles.lane3)}></div>
-        <div className={cx(styles.Lane, styles.lane4)}></div>
-        <div className={cx(styles.Lane, styles.lane5)}></div>
-        <div className={cx(styles.Lane, styles.lane6)}></div>
-        <div className={cx(styles.Lane, styles.lane7)}></div>
-        <div className={cx(styles.Lane, styles.lane8)}></div>
-        <div className={cx(styles.Lane, styles.lane9)}></div>
+        <div className={cx(styles.Lane, styles.pos1, styles.white)}></div>
+        <div className={cx(styles.Lane, styles.pos2, styles.yellow)}></div>
+        <div className={cx(styles.Lane, styles.pos3, styles.green)}></div>
+        <div className={cx(styles.Lane, styles.pos4, styles.blue)}></div>
+        <div className={cx(styles.Lane, styles.pos5, styles.red)}></div>
+        <div className={cx(styles.Lane, styles.pos6, styles.blue)}></div>
+        <div className={cx(styles.Lane, styles.pos7, styles.green)}></div>
+        <div className={cx(styles.Lane, styles.pos8, styles.yellow)}></div>
+        <div className={cx(styles.Lane, styles.pos9, styles.white)}></div>
 
         {guideLineDatas.map(({ type, y }, index) => (
           <GuideLine key={index} type={type} y={y} />
@@ -379,21 +361,37 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
           <BpmEvent key={index} type={type} bpm={bpm} y={y} />
         ))}
 
-        {noteDatas.map(({ lane, y }, index) => (
-          <Note key={index} lane={lane} y={y} />
-        ))}
+        {noteDatas.map(({ lane, y }, index) => {
+          const style = {
+            top: y - 6,
+          }
+          return (
+            <Note
+              key={index}
+              className={styles[`pos${lane}`]}
+              style={style}
+              color={laneToColor(lane)}
+            />
+          )
+        })}
 
         {holdNoteDatas.map(
-          ({ lane, startY, endY, shouldDrawHead, shouldDrawButt }, index) => (
-            <HoldNote
-              key={index}
-              lane={lane}
-              startY={startY}
-              endY={endY}
-              shouldDrawHead={shouldDrawHead}
-              shouldDrawButt={shouldDrawButt}
-            />
-          ),
+          ({ lane, startY, endY, shouldDrawHead, shouldDrawButt }, index) => {
+            const style = {
+              top: endY + 1,
+            }
+            return (
+              <HoldNote
+                key={index}
+                className={styles[`pos${lane}`]}
+                style={style}
+                color={laneToColor(lane)}
+                yDuration={startY - endY}
+                shouldDrawHead={shouldDrawHead}
+                shouldDrawButt={shouldDrawButt}
+              />
+            )
+          },
         )}
       </div>
     </div>
