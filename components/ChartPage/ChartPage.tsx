@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { ChartCsvRow, fetchChart } from "../../lib/fetchChart"
 import MeasureData from "../../models/MeasureData"
 import MeasureList from "./MeasureList"
+import styles from "./ChartPage.module.scss"
 
 export default function ChartPage(
   songSlug: string | undefined,
@@ -40,7 +41,9 @@ export default function ChartPage(
       return <div>Uh oh! Something went wrong.</div>
     case "success":
       return (
-        <MeasureList measureDatas={MeasureData.fromCsvRows(chartCsvRows)} />
+        <div className={styles.ChartPage}>
+          <MeasureList measureDatas={MeasureData.fromCsvRows(chartCsvRows)} />
+        </div>
       )
   }
 }
