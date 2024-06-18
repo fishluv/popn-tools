@@ -1,5 +1,41 @@
 .ChartPage {
-  margin: 6rem;
-  display: flex;
-  justify-content: center;
+  margin: 2rem;
+
+  .body {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+  }
+
+  @media (width < 732px) {
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: fit-content;
+      margin-bottom: 1rem;
+
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    
+    .SongChartDetails {
+      display: none;
+    }
+  }
+
+  @media (width >= 732px) {
+    .header {
+      display: none;
+    }
+
+    .SongChartDetails {
+      display: block;
+      width: 312px;
+      height: fit-content;
+      position: sticky;
+      top: 2rem;
+    }
+  }
 }

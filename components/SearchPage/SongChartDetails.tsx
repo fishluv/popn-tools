@@ -90,9 +90,11 @@ function diffToTablanPathPart(diff: "e" | "n" | "h" | "ex") {
 }
 
 export default function SongChartDetails({
+  className,
   song,
   chart,
 }: {
+  className?: string
   song?: Song
   chart?: Chart
 }) {
@@ -126,7 +128,7 @@ export default function SongChartDetails({
   const maybeUpperSuffix = labels.includes("upper") ? " (UPPER)" : ""
 
   return (
-    <div className={styles.SongChartDetails}>
+    <div className={cx(styles.SongChartDetails, className)}>
       <p className={cx(styles.header, song ? styles.song : styles.chart)}>
         {song ? (
           <>
