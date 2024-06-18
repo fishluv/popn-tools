@@ -58,6 +58,8 @@ export default function ChartPage(
     case "success":
       return (
         <div className={styles.ChartPage}>
+          <style>{"body { background-image: none; }"}</style>
+
           {chart && (
             <div className={styles.header}>
               {/* TODO: open modal */}
