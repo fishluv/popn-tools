@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ChartCsvRow, fetchChart } from "../../lib/fetchChart"
+import { ChartCsvRow, fetchChartScore } from "../../lib/fetchChartScore"
 import MeasureData from "../../models/MeasureData"
 import MeasureList from "./MeasureList"
 import styles from "./ChartPage.module.scss"
@@ -20,7 +20,7 @@ export default function ChartPage(
       return
     }
 
-    fetchChart({
+    fetchChartScore({
       songSlug: String(songSlug),
       difficulty,
     })

@@ -10,7 +10,7 @@ export type ChartCsvRow = {
   bpm: number | null
 }
 
-export async function fetchChart({
+export async function fetchChartScore({
   songSlug,
   difficulty,
 }: {

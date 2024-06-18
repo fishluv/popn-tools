@@ -1,4 +1,4 @@
-import { ChartCsvRow } from "../lib/fetchChart"
+import { ChartCsvRow } from "../lib/fetchChartScore"
 
 export default class MeasureData {
   static fromCsvRows(chartCsvRows: ChartCsvRow[]) {
