@@ -16,8 +16,24 @@ $red-lane: rgba(246, 175, 176, 0.2);
   .measureNumber {
     width: 80px;
     text-align: right;
-    font-size: 2rem;
     align-self: flex-end;
+    margin-bottom: 0.75rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    line-height: 1;
+
+    .timestamp {
+      font-size: 1rem;
+      color: rgb(160, 160, 160);
+      margin-right: 2px;
+    }
+
+    .num {
+      font-size: 2rem;
+    }
   }
 
   .noteArea {

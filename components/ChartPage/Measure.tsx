@@ -310,6 +310,13 @@ function calculateNewY({
   return prevY - tsDelta * PIXELS_PER_MS * bpmFactor
 }
 
+function formatTimestamp(timestamp: number) {
+  const tsSec = timestamp / 1000
+  const min = Math.floor(tsSec / 60)
+  const sec = Math.floor(tsSec % 60)
+  return `${min}:${sec.toString().padStart(2, "0")}`
+}
+
 function laneToColor(lane: LaneOrd): NoteColor {
   switch (lane) {
     case 1:
@@ -342,7 +349,12 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
   return (
     <div className={styles.Measure} id={`measure${measureData.index}`}>
       <div className={styles.measureNumber}>
-        <a href={`#${measureData.index}`}>{measureData.index}</a>
+        <div className={styles.timestamp}>
+          {formatTimestamp(measureData.startTimestamp)}
+        </div>
+        <div className={styles.num}>
+          <a href={`#${measureData.index}`}>{measureData.index}</a>
+        </div>
       </div>
       <div className={styles.noteArea} style={noteAreaStyle}>
         <div className={cx(styles.Lane, styles.pos1, styles.white)}></div>
