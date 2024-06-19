@@ -54,7 +54,7 @@ export default function ChartPage(
     const measureIndex = window.location.hash.replace("#", "") || "1"
     document
       .getElementById(`measure${measureIndex}`)
-      ?.scrollIntoView({ block: "center", behavior: "instant" })
+      ?.scrollIntoView({ block: "center", behavior: "smooth" })
   })
 
   switch (status) {
