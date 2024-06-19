@@ -50,6 +50,13 @@ export default function ChartPage(
       })
   }, [songSlug, difficulty])
 
+  useEffect(() => {
+    const measureIndex = window.location.hash.replace("#", "") || "1"
+    document
+      .getElementById(`measure${measureIndex}`)
+      ?.scrollIntoView({ block: "center", behavior: "instant" })
+  })
+
   switch (status) {
     case "loading":
       return <div>Loading...</div>

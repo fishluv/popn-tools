@@ -340,8 +340,10 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
   const holdNoteDatas = getHoldNoteDatas(measureData, noteAreaHeight)
 
   return (
-    <div className={styles.Measure}>
-      <div className={styles.measureNumber}>{measureData.index}</div>
+    <div className={styles.Measure} id={`measure${measureData.index}`}>
+      <div className={styles.measureNumber}>
+        <a href={`#${measureData.index}`}>{measureData.index}</a>
+      </div>
       <div className={styles.noteArea} style={noteAreaStyle}>
         <div className={cx(styles.Lane, styles.pos1, styles.white)}></div>
         <div className={cx(styles.Lane, styles.pos2, styles.yellow)}></div>
