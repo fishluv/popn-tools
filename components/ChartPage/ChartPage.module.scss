@@ -1,10 +1,14 @@
 .ChartPage {
-  margin: 2rem 2rem 30vh;
+  margin: 2rem 2rem 0;
 
   .body {
     display: flex;
     gap: 2rem;
     justify-content: center;
+  }
+
+  .MeasureList {
+    margin-bottom: 30vh;
   }
 
   @media (width < 732px) {

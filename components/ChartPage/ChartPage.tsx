@@ -75,7 +75,10 @@ export default function ChartPage(
           )}
 
           <div className={styles.body}>
-            <MeasureList measureDatas={MeasureData.fromCsvRows(chartCsvRows)} />
+            <MeasureList
+              className={styles.MeasureList}
+              measureDatas={MeasureData.fromCsvRows(chartCsvRows)}
+            />
 
             {chart && (
               <SongChartDetails
