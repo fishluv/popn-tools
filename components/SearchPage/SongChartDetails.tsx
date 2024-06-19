@@ -145,7 +145,7 @@ export default function SongChartDetails({
         <p className={styles.omniNote}>This song is no longer playable.</p>
       )}
 
-      {extraOptions["chartviewer"] && chart && folder === "27" && (
+      {extraOptions["chartviewer"] && chart && songId >= 1000 && (
         <a href={`/chart/${slug}/${chart.difficulty}`} target="_blank">
           View chart
         </a>
