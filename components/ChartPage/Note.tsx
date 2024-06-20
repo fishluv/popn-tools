@@ -12,6 +12,10 @@ interface NoteProps {
 
 export default function Note({ className, style, color }: NoteProps) {
   return (
-    <div className={cx(styles.Note, styles[color], className)} style={style} />
+    <div className={cx(styles.Note, styles[color], className)} style={style}>
+      <div className={styles.inside} />
+      <div className={styles.stripe} />
+      <div className={styles.outline} />
+    </div>
   )
 }

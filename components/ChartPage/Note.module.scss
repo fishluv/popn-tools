@@ -6,8 +6,6 @@ $red-note: rgb(237, 126, 127);
 
 .Note {
   height: 14px;
-  border: 1px solid rgb(60, 60, 60);
-  border-radius: 42% / 50%;
 
   &.white, &.green, &.red {
     width: 22px;
@@ -17,23 +15,46 @@ $red-note: rgb(237, 126, 127);
     width: 18px;
   }
 
-  &.white {
+  .inside {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 42% / 50%;
+  }
+
+  &.white .inside {
     background-color: $white-note;
   }
 
-  &.yellow {
+  &.yellow .inside {
     background-color: $yellow-note;
   }
 
-  &.green {
+  &.green .inside {
     background-color: $green-note;
   }
 
-  &.blue {
+  &.blue .inside {
     background-color: $blue-note;
   }
 
-  &.red {
+  &.red .inside {
     background-color: $red-note;
+  }
+
+  .stripe {
+    position: absolute;
+    top: 6px;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+
+  .outline {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgb(60, 60, 60);
+    border-radius: 42% / 50%;
   }
 }
