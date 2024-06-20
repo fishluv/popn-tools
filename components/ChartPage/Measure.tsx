@@ -120,11 +120,15 @@ function getBpmEventDatas(measure: MeasureData, noteAreaHeight: number) {
       } else {
         type = "decrease"
       }
-      bpmEventDatas.push({
-        type,
-        bpm,
-        y: newY,
-      })
+      // Sometimes charts have bpm events that don't change the bpm. Discard these.
+      // E.g. Piano Kaijin EX measure 50.
+      if (!(type === "initial" && measure.index !== 1)) {
+        bpmEventDatas.push({
+          type,
+          bpm,
+          y: newY,
+        })
+      }
 
       prevBpm = bpm
     }
