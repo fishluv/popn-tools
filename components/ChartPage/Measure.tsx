@@ -392,7 +392,7 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
         {holdNoteDatas.map(
           ({ lane, startY, endY, shouldDrawHead, shouldDrawButt }, index) => {
             const style = {
-              top: endY + 1,
+              top: endY,
             }
             return (
               <HoldNote

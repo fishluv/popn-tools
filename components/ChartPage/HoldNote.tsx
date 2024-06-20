@@ -25,7 +25,7 @@ export default function HoldNote({
     ...style,
   }
   const bodyStyle = {
-    height: yDuration,
+    height: yDuration + 2,
   }
 
   return (
