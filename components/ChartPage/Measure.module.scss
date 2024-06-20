@@ -129,18 +129,18 @@ $red-lane: rgba(246, 175, 176, 0.2);
       }
 
       &.increase {
-        color: rgb(60, 120, 200);
+        color: rgb(100, 200, 100);
 
         .line {
-          background: linear-gradient(transparent, rgba(60, 120, 200, 0.7));
+          background: linear-gradient(transparent, rgba(125, 243, 129, 0.7));
         }
       }
 
       &.decrease {
-        color: rgb(200, 120, 60);
+        color: rgb(200, 100, 100);
 
         .line {
-          background: linear-gradient(transparent, rgba(200, 120, 60, 0.7));
+          background: linear-gradient(transparent, rgba(237, 126, 127, 0.7));
         }
       }
 
@@ -155,9 +155,11 @@ $red-lane: rgba(246, 175, 176, 0.2);
         position: absolute;
         width: max-content;
         left: 202px;
-        bottom: -4px;
+        bottom: 0;
+        line-height: 1;
         font-size: 0.875rem;
         font-weight: bold;
+        background: rgba(255, 255, 255, 0.6);
       }
     }
   }
