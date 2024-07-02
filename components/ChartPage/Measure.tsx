@@ -3,6 +3,7 @@ import MeasureData from "../../models/MeasureData"
 import styles from "./Measure.module.scss"
 import Note, { NoteColor } from "./Note"
 import HoldNote from "./HoldNote"
+import { FaLink } from "react-icons/fa6"
 
 const PIXELS_PER_MS = 0.3
 
@@ -357,7 +358,10 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
           {formatTimestamp(measureData.startTimestamp)}
         </div>
         <div className={styles.num}>
-          <a href={`#${measureData.index}`}>{measureData.index}</a>
+          <a href={`#${measureData.index}`}>
+            <FaLink size="1.25rem" />
+          </a>
+          <span>{measureData.index}</span>
         </div>
       </div>
       <div className={styles.noteArea} style={noteAreaStyle}>

@@ -33,6 +33,22 @@ $red-lane: rgba(246, 175, 176, 0.2);
 
     .num {
       font-size: 2rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      gap: 0.125rem;
+
+      a {
+        border-bottom: 2px solid #222;
+        width: 1.25rem;
+        height: 1.25rem;
+        align-self: flex-end;
+        margin-bottom: 2px;
+
+        svg {
+          vertical-align: text-top;
+        }
+      }
     }
   }
 
