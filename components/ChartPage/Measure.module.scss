@@ -175,8 +175,19 @@ $red-lane: rgba(246, 175, 176, 0.2);
         line-height: 1;
         font-size: 0.875rem;
         font-weight: bold;
-        background: rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.7);
       }
     }
+  }
+
+  .startBpm {
+    position: absolute;
+    width: max-content;
+    left: 202px;
+    bottom: 3px;
+    line-height: 1;
+    font-size: 0.875rem;
+    font-weight: bold;
+    opacity: 0.3;
   }
 }

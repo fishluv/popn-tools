@@ -351,6 +351,9 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
   const bpmEventDatas = getBpmEventDatas(measureData, noteAreaHeight)
   const noteDatas = getNoteDatas(measureData, noteAreaHeight)
   const holdNoteDatas = getHoldNoteDatas(measureData, noteAreaHeight)
+  // Show start bpm unless it would be covered up by the first bpm event.
+  const showStartBpm =
+    bpmEventDatas.length === 0 || noteAreaHeight - bpmEventDatas[0].y > 20
 
   async function onMeasureLinkIconClick(index: number) {
     const url = `${location.origin}${location.pathname}#${index}`
@@ -388,6 +391,10 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
         {guideLineDatas.map(({ type, y }, index) => (
           <GuideLine key={index} type={type} y={y} />
         ))}
+
+        {showStartBpm && (
+          <div className={styles.startBpm}>{`${measureData.startBpm} bpm`}</div>
+        )}
 
         {bpmEventDatas.map(({ type, bpm, y }, index) => (
           <BpmEvent key={index} type={type} bpm={bpm} y={y} />
