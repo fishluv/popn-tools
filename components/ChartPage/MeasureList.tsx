@@ -12,7 +12,7 @@ export default function MeasureList({
 }) {
   return (
     <div className={cx(styles.MeasureList, className)}>
-      {measureDatas.map((measureData, index) => (
+      {measureDatas.reverse().map((measureData, index) => (
         <div key={index}>
           <Measure measureData={measureData} />
         </div>
