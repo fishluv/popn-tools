@@ -1,9 +1,10 @@
 import cx from "classnames"
+import toast from "react-hot-toast"
+import { FaLink } from "react-icons/fa6"
 import MeasureData from "../../models/MeasureData"
 import styles from "./Measure.module.scss"
 import Note, { NoteColor } from "./Note"
 import HoldNote from "./HoldNote"
-import { FaLink } from "react-icons/fa6"
 
 const PIXELS_PER_MS = 0.3
 
@@ -351,6 +352,12 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
   const noteDatas = getNoteDatas(measureData, noteAreaHeight)
   const holdNoteDatas = getHoldNoteDatas(measureData, noteAreaHeight)
 
+  async function onMeasureLinkIconClick(index: number) {
+    const url = `${location.origin}${location.pathname}#${index}`
+    await navigator.clipboard.writeText(url)
+    toast(`Copied link to measure ${index}`)
+  }
+
   return (
     <div className={styles.Measure} id={`measure${measureData.index}`}>
       <div className={styles.measureNumber}>
@@ -358,7 +365,10 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
           {formatTimestamp(measureData.startTimestamp)}
         </div>
         <div className={styles.num}>
-          <a href={`#${measureData.index}`}>
+          <a
+            href="javascript:void(0)"
+            onClick={() => onMeasureLinkIconClick(measureData.index)}
+          >
             <FaLink size="1.25rem" />
           </a>
           <span>{measureData.index}</span>
