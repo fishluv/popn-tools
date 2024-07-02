@@ -135,6 +135,7 @@ $red-lane: rgba(246, 175, 176, 0.2);
 
     .BpmEvent {
       position: absolute;
+      z-index: 0;
 
       &.initial {
         color: rgb(60, 60, 60);
@@ -182,7 +183,11 @@ $red-lane: rgba(246, 175, 176, 0.2);
         .arrow {
           margin-right: 2px;
         }
-   }
+      }
+    }
+
+    .Note, .HoldNote {
+      z-index: 1;
     }
 
     .startBpm {

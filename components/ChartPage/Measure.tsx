@@ -410,7 +410,7 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
           return (
             <Note
               key={index}
-              className={styles[`pos${lane}`]}
+              className={cx(styles.Note, styles[`pos${lane}`])}
               style={style}
               color={laneToColor(lane)}
             />
@@ -425,7 +425,7 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
             return (
               <HoldNote
                 key={index}
-                className={styles[`pos${lane}`]}
+                className={cx(styles.HoldNote, styles[`pos${lane}`])}
                 style={style}
                 color={laneToColor(lane)}
                 yDuration={startY - endY}
