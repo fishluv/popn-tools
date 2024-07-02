@@ -146,19 +146,22 @@ function BpmEvent({ type, bpm, y }: BpmEventData) {
   const style = {
     top: y - 2,
   }
-  let bpmStr
+  let arrow
   if (type === "initial") {
-    bpmStr = `${bpm} bpm`
+    arrow = null
   } else if (type === "increase") {
-    bpmStr = `▲ ${bpm} bpm`
+    arrow = "▲"
   } else {
-    bpmStr = `▼ ${bpm} bpm`
+    arrow = "▼"
   }
 
   return (
     <div className={cx(styles.BpmEvent, styles[type])} style={style}>
       <div className={styles.line} />
-      <div className={styles.bpm}>{bpmStr}</div>
+      <div className={styles.bpm}>
+        {arrow && <span className={styles.arrow}>{arrow}</span>}
+        <span className={styles.bpmStr}>{`${bpm} bpm`}</span>
+      </div>
     </div>
   )
 }
@@ -433,6 +436,7 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
           },
         )}
       </div>
+      <div className={styles.empty}></div>
     </div>
   )
 }
