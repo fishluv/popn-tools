@@ -515,7 +515,7 @@ export default function Measure({
   const noteToLane = chartOptions?.laneTransform || NONRAN
 
   async function onMeasureLinkIconClick(index: number) {
-    const url = `${location.origin}${location.pathname}#${index}`
+    const url = `${location.origin}${location.pathname}${location.search}#${index}`
     await navigator.clipboard.writeText(url)
     toast(`Copied link to measure ${index}`)
   }
