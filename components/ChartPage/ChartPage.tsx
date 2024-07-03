@@ -83,7 +83,7 @@ export default function ChartPage(
           <style>{"body { background-image: none; }"}</style>
 
           {chart && (
-            <div className={styles.header}>
+            <div className={styles.mobileOnlyHeader}>
               <ChartResultCard
                 chart={chart}
                 style="full"
@@ -105,7 +105,7 @@ export default function ChartPage(
 
             {chart && (
               <SongChartDetails
-                className={styles.SongChartDetails}
+                className={styles.desktopOnlyDetails}
                 chart={chart}
               />
             )}

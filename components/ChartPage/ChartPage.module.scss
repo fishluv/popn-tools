@@ -12,7 +12,7 @@
   }
 
   @media (width < 732px) {
-    .header {
+    .mobileOnlyHeader {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -24,17 +24,17 @@
       z-index: 10;
     }
     
-    .SongChartDetails {
+    .desktopOnlyDetails {
       display: none;
     }
   }
 
   @media (width >= 732px) {
-    .header {
+    .mobileOnlyHeader {
       display: none;
     }
 
-    .SongChartDetails {
+    .desktopOnlyDetails {
       display: block;
       width: 312px;
       height: fit-content;
