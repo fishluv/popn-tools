@@ -107,6 +107,8 @@ export default function ChartPage(
               <SongChartDetails
                 className={styles.desktopOnlyDetails}
                 chart={chart}
+                showHeader={false}
+                showViewChartLink={false}
               />
             )}
           </div>
@@ -116,7 +118,11 @@ export default function ChartPage(
             onClose={() => setCurrentOpenModal(null)}
           >
             {currentOpenModal === "chartDetails" && openedChart && (
-              <SongChartDetails chart={openedChart} />
+              <SongChartDetails
+                chart={openedChart}
+                showHeader={true}
+                showViewChartLink={false}
+              />
             )}
           </CommonModal>
         </div>

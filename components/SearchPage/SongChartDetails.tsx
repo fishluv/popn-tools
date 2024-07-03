@@ -93,10 +93,14 @@ export default function SongChartDetails({
   className,
   song,
   chart,
+  showHeader,
+  showViewChartLink,
 }: {
   className?: string
   song?: Song
   chart?: Chart
+  showHeader: boolean
+  showViewChartLink?: boolean
 }) {
   if (!song && !chart) {
     throw new Error("must specify song or chart")
@@ -129,23 +133,25 @@ export default function SongChartDetails({
 
   return (
     <div className={cx(styles.SongChartDetails, className)}>
-      <p className={cx(styles.header, song ? styles.song : styles.chart)}>
-        {song ? (
-          <>
-            <BsMusicNoteBeamed /> <span>song</span>
-          </>
-        ) : (
-          <>
-            <CgNotes /> <span>chart</span>
-          </>
-        )}
-      </p>
+      {showHeader && (
+        <p className={cx(styles.header, song ? styles.song : styles.chart)}>
+          {song ? (
+            <>
+              <BsMusicNoteBeamed /> <span>song</span>
+            </>
+          ) : (
+            <>
+              <CgNotes /> <span>chart</span>
+            </>
+          )}
+        </p>
+      )}
 
       {labels.includes("omnimix") && (
         <p className={styles.omniNote}>This song is no longer playable.</p>
       )}
 
-      {extraOptions["chartviewer"] && chart && songId >= 1000 && (
+      {showViewChartLink && extraOptions["chartviewer"] && chart && (
         <a href={`/chart/${slug}/${chart.difficulty}`} target="_blank">
           View chart
         </a>

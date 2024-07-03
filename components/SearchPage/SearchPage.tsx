@@ -103,11 +103,15 @@ export default function SearchPage({ mode }: { mode: "song" | "chart" }) {
         {currentOpenModal === "more" && <More />}
 
         {currentOpenModal === "songDetails" && openedSong && (
-          <SongChartDetails song={openedSong} />
+          <SongChartDetails song={openedSong} showHeader={true} />
         )}
 
         {currentOpenModal === "chartDetails" && openedChart && (
-          <SongChartDetails chart={openedChart} />
+          <SongChartDetails
+            chart={openedChart}
+            showHeader={true}
+            showViewChartLink={true}
+          />
         )}
       </CommonModal>
     </div>
