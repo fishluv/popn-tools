@@ -11,6 +11,8 @@ import SongChartDetails from "../SearchPage/SongChartDetails"
 import ChartResultCard from "../SearchPage/ChartResultCard"
 import { isValidTransformStr, makeLaneTransform } from "./Measure"
 import CommonModal from "../common/CommonModal"
+import More from "./More"
+import { FiMoreHorizontal } from "react-icons/fi"
 
 export default function ChartPage(
   songSlug: string | undefined,
@@ -116,6 +118,16 @@ export default function ChartPage(
             </div>
           )}
 
+          <button
+            className={styles.moreButton}
+            onClick={() => {
+              ReactModal.setAppElement("#app")
+              setCurrentOpenModal("more")
+            }}
+          >
+            <FiMoreHorizontal />
+          </button>
+
           <div className={styles.body}>
             <MeasureList
               className={styles.MeasureList}
@@ -137,6 +149,8 @@ export default function ChartPage(
             isOpen={currentOpenModal !== null}
             onClose={() => setCurrentOpenModal(null)}
           >
+            {currentOpenModal === "more" && <More />}
+
             {currentOpenModal === "chartDetails" && openedChart && (
               <SongChartDetails
                 chart={openedChart}

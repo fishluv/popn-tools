@@ -1,0 +1,90 @@
+.More {
+  font-family: "M PLUS 1", "Arial", sans-serif;
+  line-height: 1.25;
+
+  h6 {
+    font-size: 0.875rem;
+    font-weight: bold;
+  }
+
+  * + h6 {
+    margin-top: 1rem;
+  }
+
+  p {
+    font-size: 0.875rem;
+  }
+
+  input + label {
+    margin-left: 0.25rem;
+  }
+
+  input[type=text] {
+    font-family: Courier, monospace;
+    font-size: 0.875rem;
+  }
+
+  button:hover:enabled:not(:active) {
+    transform: translate(-2px, -2px);
+  }
+
+  .random .controls {
+    .randomInput {
+      margin-left: 1rem;
+
+      &.invalid {
+        background-color: #eba;
+      }
+    }
+  }
+
+  .rran .controls {
+    margin-left: 1rem;
+
+    .rightLeft {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.25rem;
+
+      button {
+        line-height: 1;
+        width: 1.5rem;
+        height: 1.5rem;
+        font-size: 1.5rem;
+        padding: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .description {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 0.875rem;
+      }
+    }
+  }
+
+  .github {
+    margin: -0.5rem -0.5rem -0.5rem 0;
+    display: flex;
+    justify-content: right;
+    align-items: flex-end;
+    gap: 0.25rem;
+
+    .sha {
+      color: #888;
+      font-size: 0.5625rem;
+      line-height: 1;
+    }
+
+    a {
+      // https://stackoverflow.com/a/48690899
+      // box-shadow: inset 0 -1px 0 0 #222;
+      // text-decoration: none;
+      font-size: 1.25rem;
+    }
+  }
+}
