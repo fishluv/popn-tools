@@ -35,6 +35,21 @@
     font-size: 0.75rem;
   }
 
+  .viewChart {
+    margin-top: -0.25rem;
+    margin-bottom: 0.25rem;
+    font-size: 0.875rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.25rem;
+
+    .Note {
+      display: inline-block;
+      align-self: center;
+      margin-top: 0.125rem;
+    }
+  }
+
   .folder {
     display: flex;
     justify-content: center;

@@ -11,6 +11,7 @@ import CharacterIcon from "../common/CharacterIcon"
 import { BsMusicNoteBeamed } from "react-icons/bs"
 import { CgNotes } from "react-icons/cg"
 import useLocalStorage from "../../lib/useLocalStorage"
+import Note from "../ChartPage/Note"
 
 function Detail({
   className,
@@ -152,9 +153,12 @@ export default function SongChartDetails({
       )}
 
       {showViewChartLink && extraOptions["chartviewer"] && chart && (
-        <a href={`/chart/${slug}/${chart.difficulty}`} target="_blank">
-          View chart
-        </a>
+        <div className={styles.viewChart}>
+          <Note className={styles.Note} color="red" />
+          <a href={`/chart/${slug}/${chart.difficulty}`} target="_blank">
+            View chart &gt;&gt;
+          </a>
+        </div>
       )}
 
       <SongBanner

@@ -5,6 +5,7 @@ $blue-note: rgb(130, 182, 255);
 $red-note: rgb(237, 126, 127);
 
 .Note {
+  position: relative;
   height: 14px;
 
   &.white, &.green, &.red {
