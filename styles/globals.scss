@@ -28,9 +28,11 @@ button {
   border-style: solid;
   box-shadow: 1px 1px 3px #888;
 
-  &:hover:enabled:not(:active) {
-    transform: translate(-4px, -4px);
-    box-shadow: 4px 4px 5px #666;
+  @media (hover: hover) {
+    &:hover:enabled:not(:active) {
+      transform: translate(-4px, -4px);
+      box-shadow: 4px 4px 5px #666;
+    }
   }
 
   &:active:enabled {

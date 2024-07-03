@@ -24,8 +24,10 @@
     font-size: 0.875rem;
   }
 
-  button:hover:enabled:not(:active) {
-    transform: translate(-2px, -2px);
+  @media (hover: hover) {
+    button:hover:enabled:not(:active) {
+      transform: translate(-2px, -2px);
+    }
   }
 
   .random .controls {
