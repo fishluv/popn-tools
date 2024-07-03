@@ -9,7 +9,7 @@ import Chart from "../../models/Chart"
 import { fetchChartInfo } from "../../lib/fetchChartInfo"
 import SongChartDetails from "../SearchPage/SongChartDetails"
 import ChartResultCard from "../SearchPage/ChartResultCard"
-import { makeLaneTransform } from "./Measure"
+import { isValidTransformStr, makeLaneTransform } from "./Measure"
 import CommonModal from "../common/CommonModal"
 
 export default function ChartPage(
@@ -21,7 +21,7 @@ export default function ChartPage(
   )
   const [chartCsvRows, setChartCsvRows] = useState<ChartCsvRow[]>([])
   const [chart, setChart] = useState<Chart | undefined>(undefined)
-  const [queryParams] = useQueryParams({
+  const [queryParams, setQueryParams] = useQueryParams({
     r: StringParam,
   })
   const [currentOpenModal, setCurrentOpenModal] = useState<
@@ -71,6 +71,26 @@ export default function ChartPage(
       .getElementById(`measure${measureIndex}`)
       ?.scrollIntoView({ block: "center", behavior: "smooth" })
   })
+
+  useEffect(() => {
+    const r = queryParams.r
+
+    if (r === undefined || r === null) {
+      return
+    }
+
+    if (["", "r0", "r9", "l0", "l9"].includes(r.toLowerCase())) {
+      setQueryParams({ r: undefined })
+    }
+
+    if (["r0m", "r9m", "l0m", "l9m"].includes(r.toLowerCase())) {
+      setQueryParams({ r: "mirror" })
+    }
+
+    if (!isValidTransformStr(r)) {
+      setQueryParams({ r: undefined })
+    }
+  }, [queryParams, setQueryParams])
 
   switch (status) {
     case "loading":

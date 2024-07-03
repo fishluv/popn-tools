@@ -369,13 +369,12 @@ function makeLaneMap(transformStr: string | null | undefined): LaneOrd[] {
     return NONRAN
   }
 
-  const transformStrNorm = transformStr.trim().toLowerCase()
+  const transformStrNorm = transformStr.toLowerCase()
   const match = transformStrNorm.match(/\d/)
   const ords = transformStrNorm.split("").map(Number)
 
   switch (transformStrNorm) {
     case "":
-    case "n":
     case "nonran":
     case "r0":
     case "r9":
@@ -383,7 +382,6 @@ function makeLaneMap(transformStr: string | null | undefined): LaneOrd[] {
     case "l9":
       return NONRAN
 
-    case "m":
     case "mirror":
     case "r0m":
     case "r9m":
@@ -437,7 +435,7 @@ function makeLaneMap(transformStr: string | null | undefined): LaneOrd[] {
       }
 
       console.warn(
-        `Found invalid transform: ${transformStr}. Defaulting to nonran.`,
+        `Found invalid transform: [${transformStr}]. Defaulting to nonran.`,
       )
       return NONRAN
   }
@@ -457,6 +455,25 @@ export function makeLaneTransform(
   return newToOld.map((_, lane) =>
     newToOld.indexOf(lane as LaneOrd),
   ) as LaneOrd[]
+}
+
+export function isValidTransformStr(transformStr: string) {
+  if (transformStr === "nonran") {
+    return true
+  }
+  if (transformStr === "mirror") {
+    return true
+  }
+  if (transformStr.match(/^[LlRr]\dm?$/)) {
+    return true
+  }
+  if (
+    transformStr.match(/^\d{9}$/) &&
+    transformStr.split("").sort().join("") === "123456789"
+  ) {
+    return true
+  }
+  return false
 }
 
 export interface ChartOptions {
