@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import ReactModal from "react-modal"
 import { StringParam, useQueryParams } from "use-query-params"
 import { ChartCsvRow, fetchChartScore } from "../../lib/fetchChartScore"
 import MeasureData from "../../models/MeasureData"
@@ -9,6 +10,7 @@ import { fetchChartInfo } from "../../lib/fetchChartInfo"
 import SongChartDetails from "../SearchPage/SongChartDetails"
 import ChartResultCard from "../SearchPage/ChartResultCard"
 import { makeLaneTransform } from "./Measure"
+import CommonModal from "../common/CommonModal"
 
 export default function ChartPage(
   songSlug: string | undefined,
@@ -22,6 +24,10 @@ export default function ChartPage(
   const [queryParams] = useQueryParams({
     r: StringParam,
   })
+  const [currentOpenModal, setCurrentOpenModal] = useState<
+    "more" | "chartDetails" | null
+  >(null)
+  const [openedChart, setOpenedChart] = useState<Chart | undefined>(undefined)
 
   const chartOptions = {
     laneTransform: makeLaneTransform(queryParams.r),
@@ -73,13 +79,20 @@ export default function ChartPage(
       return <div>Uh oh! Something went wrong.</div>
     case "success":
       return (
-        <div className={styles.ChartPage}>
+        <div id="app" className={styles.ChartPage}>
           <style>{"body { background-image: none; }"}</style>
 
           {chart && (
             <div className={styles.header}>
-              {/* TODO: open modal */}
-              <ChartResultCard chart={chart} style="full" onClick={() => {}} />
+              <ChartResultCard
+                chart={chart}
+                style="full"
+                onClick={() => {
+                  ReactModal.setAppElement("#app")
+                  setOpenedChart(chart)
+                  setCurrentOpenModal("chartDetails")
+                }}
+              />
             </div>
           )}
 
@@ -97,6 +110,15 @@ export default function ChartPage(
               />
             )}
           </div>
+
+          <CommonModal
+            isOpen={currentOpenModal !== null}
+            onClose={() => setCurrentOpenModal(null)}
+          >
+            {currentOpenModal === "chartDetails" && openedChart && (
+              <SongChartDetails chart={openedChart} />
+            )}
+          </CommonModal>
         </div>
       )
   }
