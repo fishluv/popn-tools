@@ -345,12 +345,15 @@ function laneToColor(lane: LaneOrd): NoteColor {
   }
 }
 
+const NONRAN = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] as LaneOrd[]
+const MIRROR = [0, 9, 8, 7, 6, 5, 4, 3, 2, 1] as LaneOrd[]
+
 function pluck<T>(arr: Array<T>, ...indices: number[]) {
   return indices.map((i) => arr[i])
 }
 
 function rotateMapRight(map: LaneOrd[], rotate: number): LaneOrd[] {
-  const base = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  const base = NONRAN.slice(1)
   for (let i = 0; i < rotate; i += 1) {
     base.unshift(base.pop()!)
   }
@@ -361,59 +364,117 @@ function mirrorMap(map: LaneOrd[]): LaneOrd[] {
   return pluck(map, 0, 9, 8, 7, 6, 5, 4, 3, 2, 1)
 }
 
-function getLaneMap(ran: string | null | undefined): LaneOrd[] {
-  const nonran = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] as LaneOrd[]
-  let match
-
-  if (ran === null || ran === undefined || ran === "nonran") {
-    return nonran
+function makeLaneMap(transformStr: string | null | undefined): LaneOrd[] {
+  if (transformStr === undefined || transformStr === null) {
+    return NONRAN
   }
 
-  if (ran === "mirror") {
-    return mirrorMap(nonran)
-  }
+  const transformStrNorm = transformStr.trim().toLowerCase()
+  const match = transformStrNorm.match(/\d/)
+  const ords = transformStrNorm.split("").map(Number)
 
-  // eslint-disable-next-line no-cond-assign
-  if ((match = ran.match(/^r(\d)$/))) {
-    return rotateMapRight(nonran, Number(match[1]))
-  }
+  switch (transformStrNorm) {
+    case "":
+    case "n":
+    case "nonran":
+    case "r0":
+    case "r9":
+    case "l0":
+    case "l9":
+      return NONRAN
 
-  // eslint-disable-next-line no-cond-assign
-  if ((match = ran.match(/^l(\d)$/))) {
-    return rotateMapRight(nonran, 9 - Number(match[1]))
-  }
+    case "m":
+    case "mirror":
+    case "r0m":
+    case "r9m":
+    case "l0m":
+    case "l9m":
+      return MIRROR
 
-  // eslint-disable-next-line no-cond-assign
-  if ((match = ran.match(/^r(\d)m$/))) {
-    return mirrorMap(rotateMapRight(nonran, Number(match[1])))
-  }
+    case "r1":
+    case "r2":
+    case "r3":
+    case "r4":
+    case "r5":
+    case "r6":
+    case "r7":
+    case "r8":
+      return rotateMapRight(NONRAN, Number(match![0]))
 
-  // eslint-disable-next-line no-cond-assign
-  if ((match = ran.match(/^l(\d)m$/))) {
-    return mirrorMap(rotateMapRight(nonran, 9 - Number(match[1])))
-  }
+    case "r1m":
+    case "r2m":
+    case "r3m":
+    case "r4m":
+    case "r5m":
+    case "r6m":
+    case "r7m":
+    case "r8m":
+      return mirrorMap(rotateMapRight(NONRAN, Number(match![0])))
 
-  if (ran.match(/^\d{9}$/)) {
-    const ords = ran.split("").map(Number)
-    if (ords.slice().sort().join("") === "123456789") {
-      return pluck(nonran, 0, ...ords)
-    }
-  }
+    case "l1":
+    case "l2":
+    case "l3":
+    case "l4":
+    case "l5":
+    case "l6":
+    case "l7":
+    case "l8":
+      return rotateMapRight(NONRAN, 9 - Number(match![0]))
 
-  console.warn(`Found invalid transform: ${ran}. Defaulting to nonran.`)
-  return nonran
+    case "l1m":
+    case "l2m":
+    case "l3m":
+    case "l4m":
+    case "l5m":
+    case "l6m":
+    case "l7m":
+    case "l8m":
+      return mirrorMap(rotateMapRight(NONRAN, 9 - Number(match![0])))
+
+    default:
+      if (ords.length === 9 && ords.slice().sort().join("") === "123456789") {
+        return pluck(NONRAN, 0, ...ords)
+      }
+
+      console.warn(
+        `Found invalid transform: ${transformStr}. Defaulting to nonran.`,
+      )
+      return NONRAN
+  }
 }
 
-function getNoteMap(ran: string | null | undefined): LaneOrd[] {
-  // Maps lane to note.
-  const laneMap = getLaneMap(ran)
+/**
+ * Given a new-lane-to-old-lane transform string, produce an
+ * old-lane-to-new-lane mapping that can be used to modify a chart's notes.
+ */
+export function makeLaneTransform(
+  transformStr: string | null | undefined,
+): LaneOrd[] {
+  // From user input. Maps new lane to old lane.
+  const newToOld = makeLaneMap(transformStr)
 
-  // Invert because we need to map note to lane.
-  return laneMap.map((_, lane) => laneMap.indexOf(lane as LaneOrd)) as LaneOrd[]
+  // Invert because we need to map old lane to new lane.
+  return newToOld.map((_, lane) =>
+    newToOld.indexOf(lane as LaneOrd),
+  ) as LaneOrd[]
 }
 
 export interface ChartOptions {
-  ran?: string
+  /**
+   * Mapping from old lane to new lane.
+   *
+   * For ease of lookup, this should be of length 10, and the first item should
+   * be ignored.
+   *
+   * Examples:
+   *   nonran = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+   *   mirror = [0, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+   *   right1 = [0, 2, 3, 4, 5, 6, 7, 8, 9, 1]
+   *
+   * Note: This is the INVERSE of the user-facing transform map, which is new
+   * lane to old lane.
+   */
+  laneTransform?: LaneOrd[]
 }
 
 export default function Measure({
@@ -434,7 +495,7 @@ export default function Measure({
   // Show start bpm unless it would be covered up by the first bpm event.
   const showStartBpm =
     bpmEventDatas.length === 0 || noteAreaHeight - bpmEventDatas[0].y > 20
-  const noteToLane = getNoteMap(chartOptions?.ran)
+  const noteToLane = chartOptions?.laneTransform || NONRAN
 
   async function onMeasureLinkIconClick(index: number) {
     const url = `${location.origin}${location.pathname}#${index}`
