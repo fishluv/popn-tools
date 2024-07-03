@@ -72,7 +72,7 @@ export default function ChartPage(
     document
       .getElementById(`measure${measureIndex}`)
       ?.scrollIntoView({ block: "center", behavior: "smooth" })
-  })
+  }, [chartCsvRows]) // Only after initial load.
 
   useEffect(() => {
     const r = queryParams.r
