@@ -345,7 +345,84 @@ function laneToColor(lane: LaneOrd): NoteColor {
   }
 }
 
-export default function Measure({ measureData }: { measureData: MeasureData }) {
+function pluck<T>(arr: Array<T>, ...indices: number[]) {
+  return indices.map((i) => arr[i])
+}
+
+function rotateMapRight(map: LaneOrd[], rotate: number): LaneOrd[] {
+  const base = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  for (let i = 0; i < rotate; i += 1) {
+    base.unshift(base.pop()!)
+  }
+  return pluck(map, 0, ...base)
+}
+
+function mirrorMap(map: LaneOrd[]): LaneOrd[] {
+  return pluck(map, 0, 9, 8, 7, 6, 5, 4, 3, 2, 1)
+}
+
+function getLaneMap(ran: string | null | undefined): LaneOrd[] {
+  const nonran = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] as LaneOrd[]
+  let match
+
+  if (ran === null || ran === undefined || ran === "nonran") {
+    return nonran
+  }
+
+  if (ran === "mirror") {
+    return mirrorMap(nonran)
+  }
+
+  // eslint-disable-next-line no-cond-assign
+  if ((match = ran.match(/^r(\d)$/))) {
+    return rotateMapRight(nonran, Number(match[1]))
+  }
+
+  // eslint-disable-next-line no-cond-assign
+  if ((match = ran.match(/^l(\d)$/))) {
+    return rotateMapRight(nonran, 9 - Number(match[1]))
+  }
+
+  // eslint-disable-next-line no-cond-assign
+  if ((match = ran.match(/^r(\d)m$/))) {
+    return mirrorMap(rotateMapRight(nonran, Number(match[1])))
+  }
+
+  // eslint-disable-next-line no-cond-assign
+  if ((match = ran.match(/^l(\d)m$/))) {
+    return mirrorMap(rotateMapRight(nonran, 9 - Number(match[1])))
+  }
+
+  if (ran.match(/^\d{9}$/)) {
+    const ords = ran.split("").map(Number)
+    if (ords.slice().sort().join("") === "123456789") {
+      return pluck(nonran, 0, ...ords)
+    }
+  }
+
+  console.warn(`Found invalid transform: ${ran}. Defaulting to nonran.`)
+  return nonran
+}
+
+function getNoteMap(ran: string | null | undefined): LaneOrd[] {
+  // Maps lane to note.
+  const laneMap = getLaneMap(ran)
+
+  // Invert because we need to map note to lane.
+  return laneMap.map((_, lane) => laneMap.indexOf(lane as LaneOrd)) as LaneOrd[]
+}
+
+export interface ChartOptions {
+  ran?: string
+}
+
+export default function Measure({
+  measureData,
+  chartOptions,
+}: {
+  measureData: MeasureData
+  chartOptions?: ChartOptions
+}) {
   const noteAreaHeight = getNoteAreaHeight(measureData)
   const noteAreaStyle = {
     height: noteAreaHeight,
@@ -357,6 +434,7 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
   // Show start bpm unless it would be covered up by the first bpm event.
   const showStartBpm =
     bpmEventDatas.length === 0 || noteAreaHeight - bpmEventDatas[0].y > 20
+  const noteToLane = getNoteMap(chartOptions?.ran)
 
   async function onMeasureLinkIconClick(index: number) {
     const url = `${location.origin}${location.pathname}#${index}`
@@ -407,12 +485,13 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
           const style = {
             top: y - 6,
           }
+          const laneToUse = noteToLane[lane]
           return (
             <Note
               key={index}
-              className={cx(styles.Note, styles[`pos${lane}`])}
+              className={cx(styles.Note, styles[`pos${laneToUse}`])}
               style={style}
-              color={laneToColor(lane)}
+              color={laneToColor(laneToUse)}
             />
           )
         })}
@@ -422,12 +501,13 @@ export default function Measure({ measureData }: { measureData: MeasureData }) {
             const style = {
               top: endY,
             }
+            const laneToUse = noteToLane[lane]
             return (
               <HoldNote
                 key={index}
-                className={cx(styles.HoldNote, styles[`pos${lane}`])}
+                className={cx(styles.HoldNote, styles[`pos${laneToUse}`])}
                 style={style}
-                color={laneToColor(lane)}
+                color={laneToColor(laneToUse)}
                 yDuration={startY - endY}
                 shouldDrawHead={shouldDrawHead}
                 shouldDrawButt={shouldDrawButt}
