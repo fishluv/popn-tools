@@ -36,10 +36,14 @@
 
     .desktopOnlyDetails {
       display: block;
+      position: sticky;
+      top: 0;
+
       width: 312px;
       height: fit-content;
-      position: sticky;
-      top: 2rem;
+      max-height: 100vh;
+      overflow: scroll;
+      padding-bottom: 2rem;
     }
   }
 }
