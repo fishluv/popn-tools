@@ -289,6 +289,10 @@ export default function More() {
             chartOptions={{
               laneTransform: makeLaneTransform(makeTransformStr()),
             }}
+            displayOptions={{
+              noteSpacing: "default",
+              bpmAgnostic: false,
+            }}
           />
         </div>
       </div>

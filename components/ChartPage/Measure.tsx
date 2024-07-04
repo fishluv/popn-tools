@@ -6,9 +6,25 @@ import styles from "./Measure.module.scss"
 import Note, { NoteColor } from "./Note"
 import HoldNote from "./HoldNote"
 
-const PIXELS_PER_MS = 0.3
+type NoteSpacing = "veryslow" | "slow" | "default" | "fast" | "veryfast"
 
-function getNoteAreaHeight(measure: MeasureData) {
+export interface DisplayOptions {
+  noteSpacing: NoteSpacing
+  bpmAgnostic: boolean
+}
+
+const PIXELS_PER_MS_BY_SPACING: Record<NoteSpacing, number> = {
+  veryslow: 0.2,
+  slow: 0.25,
+  default: 0.3,
+  fast: 0.4,
+  veryfast: 0.5,
+}
+
+function getNoteAreaHeight(
+  measure: MeasureData,
+  displayOptions: DisplayOptions,
+) {
   const durByBpm = { [measure.startBpm]: 0 }
   let currBpm = measure.startBpm
   let currTs = measure.startTimestamp
@@ -30,7 +46,11 @@ function getNoteAreaHeight(measure: MeasureData) {
 
   let noteAreaHeight = 0
   Object.entries(durByBpm).forEach(([bpm, duration]) => {
-    noteAreaHeight += msToPixels({ ms: duration, bpm: Number(bpm) })
+    noteAreaHeight += msToPixels({
+      ms: duration,
+      bpm: Number(bpm),
+      ...displayOptions,
+    })
   })
 
   return noteAreaHeight
@@ -41,7 +61,11 @@ interface GuideLineData {
   y: number
 }
 
-function getGuideLineDatas(measure: MeasureData, noteAreaHeight: number) {
+function getGuideLineDatas(
+  measure: MeasureData,
+  noteAreaHeight: number,
+  displayOptions: DisplayOptions,
+) {
   let prevY = noteAreaHeight - 1
   let prevTs = measure.startTimestamp
   let prevBpm = measure.startBpm
@@ -51,7 +75,13 @@ function getGuideLineDatas(measure: MeasureData, noteAreaHeight: number) {
 
   measure.rows.forEach(({ timestamp, measurebeatend, bpm }, index) => {
     const newTs = timestamp
-    const newY = calculateNewY({ prevY, prevBpm, prevTs, newTs })
+    const newY = calculateNewY({
+      prevY,
+      prevBpm,
+      prevTs,
+      newTs,
+      ...displayOptions,
+    })
 
     // Ignore "m". We draw measure lines with a simple border.
     // Ignore "e". Not needed for now.
@@ -79,7 +109,13 @@ function getGuideLineDatas(measure: MeasureData, noteAreaHeight: number) {
   })
 
   const endTs = measure.startTimestamp + measure.duration
-  const endY = calculateNewY({ prevY, prevBpm, prevTs, newTs: endTs })
+  const endY = calculateNewY({
+    prevY,
+    prevBpm,
+    prevTs,
+    newTs: endTs,
+    ...displayOptions,
+  })
   guideLineDatas.push({
     type: "half",
     y: (prevBeatY + endY) / 2.0,
@@ -101,7 +137,11 @@ interface BpmEventData {
   y: number
 }
 
-function getBpmEventDatas(measure: MeasureData, noteAreaHeight: number) {
+function getBpmEventDatas(
+  measure: MeasureData,
+  noteAreaHeight: number,
+  displayOptions: DisplayOptions,
+) {
   let prevY = noteAreaHeight - 1
   let prevTs = measure.startTimestamp
   let prevBpm = measure.startBpm
@@ -110,7 +150,13 @@ function getBpmEventDatas(measure: MeasureData, noteAreaHeight: number) {
 
   measure.rows.forEach(({ timestamp, bpm }) => {
     const newTs = timestamp
-    const newY = calculateNewY({ prevY, prevBpm, prevTs, newTs })
+    const newY = calculateNewY({
+      prevY,
+      prevBpm,
+      prevTs,
+      newTs,
+      ...displayOptions,
+    })
 
     if (bpm !== null) {
       let type: "initial" | "increase" | "decrease"
@@ -171,7 +217,11 @@ interface NoteData {
   y: number
 }
 
-function getNoteDatas(measure: MeasureData, noteAreaHeight: number) {
+function getNoteDatas(
+  measure: MeasureData,
+  noteAreaHeight: number,
+  displayOptions: DisplayOptions,
+) {
   let prevY = noteAreaHeight - 1
   let prevTs = measure.startTimestamp
   let prevBpm = measure.startBpm
@@ -180,7 +230,13 @@ function getNoteDatas(measure: MeasureData, noteAreaHeight: number) {
 
   measure.rows.forEach(({ timestamp, key, bpm }) => {
     const newTs = timestamp
-    const newY = calculateNewY({ prevY, prevBpm, prevTs, newTs })
+    const newY = calculateNewY({
+      prevY,
+      prevBpm,
+      prevTs,
+      newTs,
+      ...displayOptions,
+    })
 
     if (key !== null) {
       keyNumToOrds(key).forEach((ord) => {
@@ -220,7 +276,11 @@ interface HoldNoteData {
   shouldDrawButt: boolean
 }
 
-function getHoldNoteDatas(measure: MeasureData, noteAreaHeight: number) {
+function getHoldNoteDatas(
+  measure: MeasureData,
+  noteAreaHeight: number,
+  displayOptions: DisplayOptions,
+) {
   let prevY = noteAreaHeight - 1
   let prevTs = measure.startTimestamp
   let prevBpm = measure.startBpm
@@ -236,7 +296,13 @@ function getHoldNoteDatas(measure: MeasureData, noteAreaHeight: number) {
 
   measure.rows.forEach(({ timestamp, keyon, keyoff, bpm }) => {
     const newTs = timestamp
-    const newY = calculateNewY({ prevY, prevBpm, prevTs, newTs })
+    const newY = calculateNewY({
+      prevY,
+      prevBpm,
+      prevTs,
+      newTs,
+      ...displayOptions,
+    })
 
     if (keyon !== null) {
       keyNumToOrds(keyon).forEach((ord) => {
@@ -307,19 +373,28 @@ function calculateNewY({
   prevBpm,
   prevTs,
   newTs,
+  noteSpacing,
+  bpmAgnostic,
 }: {
   prevY: number
   prevBpm: number
   prevTs: number
   newTs: number
-}) {
+} & DisplayOptions) {
   const tsDelta = newTs - prevTs
-  return prevY - msToPixels({ ms: tsDelta, bpm: prevBpm })
+  return (
+    prevY - msToPixels({ ms: tsDelta, bpm: prevBpm, noteSpacing, bpmAgnostic })
+  )
 }
 
-function msToPixels({ ms, bpm }: { ms: number; bpm: number }) {
-  const bpmFactor = bpm / 200.0
-  return ms * PIXELS_PER_MS * bpmFactor
+function msToPixels({
+  ms,
+  bpm,
+  noteSpacing,
+  bpmAgnostic,
+}: { ms: number; bpm: number } & DisplayOptions) {
+  const bpmFactor = bpmAgnostic ? 1.0 : bpm / 200.0
+  return ms * PIXELS_PER_MS_BY_SPACING[noteSpacing] * bpmFactor
 }
 
 function formatTimestamp(timestamp: number) {
@@ -501,19 +576,33 @@ export default function Measure({
   className,
   measureData,
   chartOptions,
+  displayOptions,
 }: {
   className?: string
   measureData: MeasureData
   chartOptions?: ChartOptions
+  displayOptions: DisplayOptions
 }) {
-  const noteAreaHeight = getNoteAreaHeight(measureData)
+  const noteAreaHeight = getNoteAreaHeight(measureData, displayOptions)
   const noteAreaStyle = {
     height: noteAreaHeight,
   }
-  const guideLineDatas = getGuideLineDatas(measureData, noteAreaHeight)
-  const bpmEventDatas = getBpmEventDatas(measureData, noteAreaHeight)
-  const noteDatas = getNoteDatas(measureData, noteAreaHeight)
-  const holdNoteDatas = getHoldNoteDatas(measureData, noteAreaHeight)
+  const guideLineDatas = getGuideLineDatas(
+    measureData,
+    noteAreaHeight,
+    displayOptions,
+  )
+  const bpmEventDatas = getBpmEventDatas(
+    measureData,
+    noteAreaHeight,
+    displayOptions,
+  )
+  const noteDatas = getNoteDatas(measureData, noteAreaHeight, displayOptions)
+  const holdNoteDatas = getHoldNoteDatas(
+    measureData,
+    noteAreaHeight,
+    displayOptions,
+  )
   // Show start bpm unless it would be covered up by the first bpm event.
   const showStartBpm =
     bpmEventDatas.length === 0 || noteAreaHeight - bpmEventDatas[0].y > 20

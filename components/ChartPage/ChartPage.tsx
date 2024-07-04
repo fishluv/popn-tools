@@ -9,7 +9,12 @@ import Chart from "../../models/Chart"
 import { fetchChartInfo } from "../../lib/fetchChartInfo"
 import SongChartDetails from "../SearchPage/SongChartDetails"
 import ChartResultCard from "../SearchPage/ChartResultCard"
-import { isValidTransformStr, makeLaneTransform } from "./Measure"
+import {
+  ChartOptions,
+  DisplayOptions,
+  isValidTransformStr,
+  makeLaneTransform,
+} from "./Measure"
 import CommonModal from "../common/CommonModal"
 import More from "./More"
 import { FiMoreHorizontal } from "react-icons/fi"
@@ -31,8 +36,12 @@ export default function ChartPage(
   >(null)
   const [openedChart, setOpenedChart] = useState<Chart | undefined>(undefined)
 
-  const chartOptions = {
+  const chartOptions: ChartOptions = {
     laneTransform: makeLaneTransform(queryParams.r),
+  }
+  const displayOptions: DisplayOptions = {
+    noteSpacing: "default",
+    bpmAgnostic: false,
   }
 
   useEffect(() => {
@@ -133,6 +142,7 @@ export default function ChartPage(
               className={styles.MeasureList}
               measureDatas={MeasureData.fromCsvRows(chartCsvRows)}
               chartOptions={chartOptions}
+              displayOptions={displayOptions}
             />
 
             {chart && (
