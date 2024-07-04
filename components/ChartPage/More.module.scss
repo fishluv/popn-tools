@@ -70,6 +70,7 @@
 
     .preview {
       position: relative;
+      height: 98px;
 
       .Measure {
         // Crop out everything but the note area LOL
@@ -77,7 +78,7 @@
         position: absolute;
         transform: scaleX(75%);
         top: 4px;
-        left: -136px;
+        left: -140px;
       }
     }
   }
