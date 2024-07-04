@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import ReactModal from "react-modal"
-import { StringParam, useQueryParams } from "use-query-params"
+import { BooleanParam, StringParam, useQueryParams } from "use-query-params"
 import { ChartCsvRow, fetchChartScore } from "../../lib/fetchChartScore"
 import MeasureData from "../../models/MeasureData"
 import MeasureList from "./MeasureList"
@@ -14,6 +14,7 @@ import {
   DisplayOptions,
   isValidTransformStr,
   makeLaneTransform,
+  parseNoteSpacing,
 } from "./Measure"
 import CommonModal from "../common/CommonModal"
 import More from "./More"
@@ -30,6 +31,8 @@ export default function ChartPage(
   const [chart, setChart] = useState<Chart | undefined>(undefined)
   const [queryParams, setQueryParams] = useQueryParams({
     r: StringParam,
+    hs: StringParam,
+    constant: BooleanParam,
   })
   const [currentOpenModal, setCurrentOpenModal] = useState<
     "more" | "chartDetails" | null
@@ -40,8 +43,8 @@ export default function ChartPage(
     laneTransform: makeLaneTransform(queryParams.r),
   }
   const displayOptions: DisplayOptions = {
-    noteSpacing: "default",
-    bpmAgnostic: false,
+    noteSpacing: parseNoteSpacing(queryParams.hs),
+    bpmAgnostic: !!queryParams.constant,
   }
 
   useEffect(() => {
@@ -84,22 +87,29 @@ export default function ChartPage(
   }, [chartCsvRows]) // Only after initial load.
 
   useEffect(() => {
-    const r = queryParams.r
+    const { r, hs, constant } = queryParams
 
-    if (r === undefined || r === null) {
-      return
+    if (r !== undefined && r !== null) {
+      if (["", "r0", "r9", "l0", "l9"].includes(r.toLowerCase())) {
+        setQueryParams({ r: undefined })
+      }
+
+      if (["r0m", "r9m", "l0m", "l9m"].includes(r.toLowerCase())) {
+        setQueryParams({ r: "mirror" })
+      }
+
+      if (!isValidTransformStr(r)) {
+        setQueryParams({ r: undefined })
+      }
     }
 
-    if (["", "r0", "r9", "l0", "l9"].includes(r.toLowerCase())) {
-      setQueryParams({ r: undefined })
+    const hsNorm = parseNoteSpacing(hs)
+    if (hsNorm === "default") {
+      setQueryParams({ hs: undefined })
     }
 
-    if (["r0m", "r9m", "l0m", "l9m"].includes(r.toLowerCase())) {
-      setQueryParams({ r: "mirror" })
-    }
-
-    if (!isValidTransformStr(r)) {
-      setQueryParams({ r: undefined })
+    if (!constant) {
+      setQueryParams({ constant: undefined })
     }
   }, [queryParams, setQueryParams])
 

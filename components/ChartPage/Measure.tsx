@@ -8,6 +8,19 @@ import HoldNote from "./HoldNote"
 
 type NoteSpacing = "veryslow" | "slow" | "default" | "fast" | "veryfast"
 
+export function parseNoteSpacing(hs: string | null | undefined): NoteSpacing {
+  switch (hs) {
+    case "veryslow":
+    case "slow":
+    case "default":
+    case "fast":
+    case "veryfast":
+      return hs
+    default:
+      return "default"
+  }
+}
+
 export interface DisplayOptions {
   noteSpacing: NoteSpacing
   bpmAgnostic: boolean
