@@ -495,9 +495,11 @@ export interface ChartOptions {
 }
 
 export default function Measure({
+  className,
   measureData,
   chartOptions,
 }: {
+  className?: string
   measureData: MeasureData
   chartOptions?: ChartOptions
 }) {
@@ -521,7 +523,10 @@ export default function Measure({
   }
 
   return (
-    <div className={styles.Measure} id={`measure${measureData.index}`}>
+    <div
+      className={cx(className, styles.Measure)}
+      id={`measure${measureData.index}`}
+    >
       <div className={styles.measureNumber}>
         <div className={styles.timestamp}>
           {formatTimestamp(measureData.startTimestamp)}

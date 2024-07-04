@@ -25,7 +25,8 @@ export default function CommonModal({
           left: "calc(50% - 160px)",
           top: "10%",
           padding: "0",
-          overflow: "scroll",
+          overflowX: "hidden",
+          overflowY: "scroll",
         },
       }}
     >

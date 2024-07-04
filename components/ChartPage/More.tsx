@@ -6,8 +6,91 @@ import { VscTriangleLeft, VscTriangleRight } from "react-icons/vsc"
 import useLocalStorage from "../../lib/useLocalStorage"
 import { useState } from "react"
 import { StringParam, useQueryParams } from "use-query-params"
+import Measure, { makeLaneTransform } from "./Measure"
+import MeasureData from "../../models/MeasureData"
 
 type ChartTransform = "nonran" | "mirror" | "random" | "rran"
+
+const PREVIEW_MEASURE_DATA = new MeasureData({
+  rows: [
+    {
+      timestamp: 0,
+      key: 1,
+      keyon: null,
+      keyoff: null,
+      measurebeatend: "m",
+      bpm: 150,
+    },
+    {
+      timestamp: 50,
+      key: 2,
+      keyon: null,
+      keyoff: null,
+      measurebeatend: null,
+      bpm: null,
+    },
+    {
+      timestamp: 100,
+      key: 4,
+      keyon: null,
+      keyoff: null,
+      measurebeatend: null,
+      bpm: null,
+    },
+    {
+      timestamp: 150,
+      key: 8,
+      keyon: null,
+      keyoff: null,
+      measurebeatend: null,
+      bpm: null,
+    },
+    {
+      timestamp: 200,
+      key: 16,
+      keyon: null,
+      keyoff: null,
+      measurebeatend: "b",
+      bpm: null,
+    },
+    {
+      timestamp: 250,
+      key: 32,
+      keyon: null,
+      keyoff: null,
+      measurebeatend: null,
+      bpm: null,
+    },
+    {
+      timestamp: 300,
+      key: 64,
+      keyon: null,
+      keyoff: null,
+      measurebeatend: null,
+      bpm: null,
+    },
+    {
+      timestamp: 350,
+      key: 128,
+      keyon: null,
+      keyoff: null,
+      measurebeatend: null,
+      bpm: null,
+    },
+    {
+      timestamp: 400,
+      key: 256,
+      keyon: null,
+      keyoff: null,
+      measurebeatend: "b",
+      bpm: null,
+    },
+  ],
+  index: 1,
+  startKeyOn: 0,
+  startBpm: 150,
+  duration: 400,
+})
 
 export default function More() {
   const [storedTransform, storeTransform] = useLocalStorage(
@@ -55,20 +138,28 @@ export default function More() {
     return random.split("").sort().join("") === "123456789"
   }
 
-  function onSaveClick() {
+  function makeTransformStr() {
     if (transform === "nonran") {
-      setQueryParams({ r: undefined })
+      return undefined
     } else if (transform === "mirror") {
-      setQueryParams({ r: "mirror" })
+      return "mirror"
     } else if (transform === "random") {
-      storeRandom(random)
-      setQueryParams({ r: random })
+      return random
     } else if (transform === "rran") {
-      const rranStr = `r${rranNum}${rranMir ? "m" : ""}`
-      storeRran(rranStr)
-      setQueryParams({ r: rranStr })
+      return `r${rranNum}${rranMir ? "m" : ""}`
+    }
+    return undefined
+  }
+
+  function onSaveClick() {
+    const transformStr = makeTransformStr()
+    if (transform === "random") {
+      storeRandom(transformStr!)
+    } else if (transform === "rran") {
+      storeRran(transformStr!)
     }
     storeTransform(transform)
+    setQueryParams({ r: transformStr })
   }
 
   return (
@@ -83,108 +174,123 @@ export default function More() {
 
       <h6>Transform options</h6>
 
-      <div>
-        <input
-          id="nonranRadio"
-          type="radio"
-          checked={transform === "nonran"}
-          onChange={onTransformChange}
-        />
-        <label htmlFor="nonranRadio">Nonran</label>
-      </div>
-
-      <div>
-        <input
-          id="mirrorRadio"
-          type="radio"
-          checked={transform === "mirror"}
-          onChange={onTransformChange}
-        />
-        <label htmlFor="mirrorRadio">Mirror</label>
-      </div>
-
-      <div className={styles.random}>
-        <input
-          id="randomRadio"
-          type="radio"
-          checked={transform === "random"}
-          onChange={onTransformChange}
-        />
-        <label htmlFor="randomRadio">Random</label>
-
-        {transform === "random" && (
-          <div className={styles.controls}>
+      <div className={styles.lrContainer}>
+        <div className={styles.options}>
+          <div className={styles.control}>
             <input
-              id="randomInput"
-              className={cx(
-                styles.randomInput,
-                isRandomValid() ? styles.valid : styles.invalid,
-              )}
-              type="text"
-              inputMode="numeric"
-              placeholder="123456789"
-              maxLength={9}
-              size={9}
-              onChange={onRandomChange}
-              value={random}
+              id="nonranRadio"
+              type="radio"
+              checked={transform === "nonran"}
+              onChange={onTransformChange}
             />
-            <button
-              className={styles.icon}
-              onClick={() =>
-                setRandom(
-                  random
-                    .split("")
-                    .sort(() => Math.random() - 0.5)
-                    .join(""),
-                )
-              }
-            >
-              <MdRefresh />
-            </button>
+            <label htmlFor="nonranRadio">Nonran</label>
           </div>
-        )}
-      </div>
 
-      <div className={styles.rran}>
-        <input
-          id="rranRadio"
-          type="radio"
-          checked={transform === "rran"}
-          onChange={onTransformChange}
-        />
-        <label htmlFor="rranRadio">R-ran</label>
+          <div className={styles.control}>
+            <input
+              id="mirrorRadio"
+              type="radio"
+              checked={transform === "mirror"}
+              onChange={onTransformChange}
+            />
+            <label htmlFor="mirrorRadio">Mirror</label>
+          </div>
 
-        {transform === "rran" && (
-          <div className={styles.controls}>
-            <div className={styles.rightLeft}>
-              <button
-                className={styles.icon}
-                onClick={() => setRranNum(((rranNum + 6) % 8) + 1)}
-              >
-                <VscTriangleLeft />
-              </button>
-              <div className={styles.description}>
-                <span>{`Right ${rranNum}`}</span>
-                <span>{`(Left ${9 - rranNum})`}</span>
-              </div>
-              <button
-                className={styles.icon}
-                onClick={() => setRranNum((rranNum % 8) + 1)}
-              >
-                <VscTriangleRight />
-              </button>
-            </div>
-            <div>
+          <div className={cx(styles.control, styles.random)}>
+            <input
+              id="randomRadio"
+              type="radio"
+              checked={transform === "random"}
+              onChange={onTransformChange}
+            />
+            <label htmlFor="randomRadio">Random</label>
+          </div>
+
+          {transform === "random" && (
+            <div className={styles.subControl}>
               <input
-                id="rranMirCheckbox"
-                type="checkbox"
-                checked={rranMir}
-                onChange={() => setRranMir(!rranMir)}
+                id="randomInput"
+                className={cx(
+                  styles.randomInput,
+                  isRandomValid() ? styles.valid : styles.invalid,
+                )}
+                type="text"
+                inputMode="numeric"
+                placeholder="123456789"
+                maxLength={9}
+                size={9}
+                onChange={onRandomChange}
+                value={random}
               />
-              <label htmlFor="rranMirCheckbox">Mirror</label>
+              <button
+                className={styles.icon}
+                onClick={() =>
+                  setRandom(
+                    random
+                      .split("")
+                      .sort(() => Math.random() - 0.5)
+                      .join(""),
+                  )
+                }
+              >
+                <MdRefresh />
+              </button>
             </div>
+          )}
+
+          <div className={cx(styles.control, styles.rran)}>
+            <input
+              id="rranRadio"
+              type="radio"
+              checked={transform === "rran"}
+              onChange={onTransformChange}
+            />
+            <label htmlFor="rranRadio">R-ran</label>
           </div>
-        )}
+
+          {transform === "rran" && (
+            <>
+              <div className={cx(styles.subControl, styles.rightLeft)}>
+                <button
+                  className={styles.icon}
+                  onClick={() => setRranNum((rranNum + 8) % 9)}
+                >
+                  <VscTriangleLeft />
+                </button>
+                <div className={styles.description}>
+                  <span>{`Right ${rranNum}`}</span>
+                  <span>{`(Left ${(9 - rranNum) % 9})`}</span>
+                </div>
+                <button
+                  className={styles.icon}
+                  onClick={() => setRranNum((rranNum + 1) % 9)}
+                >
+                  <VscTriangleRight />
+                </button>
+              </div>
+
+              <div className={styles.subControl}>
+                <input
+                  id="rranMirCheckbox"
+                  type="checkbox"
+                  checked={rranMir}
+                  onChange={() => setRranMir(!rranMir)}
+                />
+                <label htmlFor="rranMirCheckbox">Mirror</label>
+              </div>
+            </>
+          )}
+        </div>
+
+        <div className={styles.preview}>
+          <Measure
+            className={styles.Measure}
+            measureData={PREVIEW_MEASURE_DATA}
+            chartOptions={{
+              laneTransform: makeLaneTransform(makeTransformStr()),
+            }}
+          />
+        </div>
       </div>
 
       <h6>Display options</h6>

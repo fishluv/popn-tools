@@ -6,7 +6,7 @@ export type ChartCsvRow = {
   key: number | null
   keyon: number | null
   keyoff: number | null
-  measurebeatend: "m" | "b" | "e"
+  measurebeatend: "m" | "b" | "e" | null
   bpm: number | null
 }
 

@@ -17,7 +17,11 @@ export default class MeasureData {
       currRowTs = timestamp
 
       // If start of new measure, flush first.
-      if (["m", "e"].includes(measurebeatend) && currRows.length) {
+      if (
+        measurebeatend &&
+        ["m", "e"].includes(measurebeatend) &&
+        currRows.length
+      ) {
         measures.push(
           new MeasureData({
             rows: currRows,
