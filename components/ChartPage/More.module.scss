@@ -21,22 +21,38 @@
 
   input[type=text] {
     font-family: Courier, monospace;
-    font-size: 0.875rem;
+    font-size: 1rem;
   }
 
-  @media (hover: hover) {
-    button:hover:enabled:not(:active) {
-      transform: translate(-2px, -2px);
+  button {
+    line-height: 1;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    border: none;
+    border-radius: 0.25rem;
+    height: 1.5rem;
+
+    @media (hover: hover) {
+      &:hover:enabled:not(:active) {
+        transform: translate(-2px, -2px);
+      }
+    }
+
+    &.icon {
+      width: 1.5rem;
+      font-size: 1.5rem;
+      padding: 0;
     }
   }
 
   .random .controls {
-    .randomInput {
-      margin-left: 1rem;
+    margin-left: 1rem;
+    display: flex;
+    align-items: center;
 
-      &.invalid {
-        background-color: #eba;
-      }
+    .randomInput.invalid {
+      background-color: #eba;
     }
   }
 

@@ -1,6 +1,7 @@
 import cx from "classnames"
 import styles from "./More.module.scss"
 import { BsGithub } from "react-icons/bs"
+import { MdRefresh } from "react-icons/md"
 import { VscTriangleLeft, VscTriangleRight } from "react-icons/vsc"
 import useLocalStorage from "../../lib/useLocalStorage"
 import { useState } from "react"
@@ -72,6 +73,14 @@ export default function More() {
 
   return (
     <div className={styles.More}>
+      <button
+        className={styles.text}
+        onClick={onSaveClick}
+        disabled={transform === "random" && !isRandomValid()}
+      >
+        Apply and save
+      </button>
+
       <h6>Transform options</h6>
 
       <div>
@@ -119,6 +128,19 @@ export default function More() {
               onChange={onRandomChange}
               value={random}
             />
+            <button
+              className={styles.icon}
+              onClick={() =>
+                setRandom(
+                  random
+                    .split("")
+                    .sort(() => Math.random() - 0.5)
+                    .join(""),
+                )
+              }
+            >
+              <MdRefresh />
+            </button>
           </div>
         )}
       </div>
@@ -135,14 +157,20 @@ export default function More() {
         {transform === "rran" && (
           <div className={styles.controls}>
             <div className={styles.rightLeft}>
-              <button onClick={() => setRranNum(((rranNum + 6) % 8) + 1)}>
+              <button
+                className={styles.icon}
+                onClick={() => setRranNum(((rranNum + 6) % 8) + 1)}
+              >
                 <VscTriangleLeft />
               </button>
               <div className={styles.description}>
                 <span>{`Right ${rranNum}`}</span>
                 <span>{`(Left ${9 - rranNum})`}</span>
               </div>
-              <button onClick={() => setRranNum((rranNum % 8) + 1)}>
+              <button
+                className={styles.icon}
+                onClick={() => setRranNum((rranNum % 8) + 1)}
+              >
                 <VscTriangleRight />
               </button>
             </div>
@@ -158,13 +186,6 @@ export default function More() {
           </div>
         )}
       </div>
-
-      <button
-        onClick={onSaveClick}
-        disabled={transform === "random" && !isRandomValid()}
-      >
-        Save
-      </button>
 
       <h6>Display options</h6>
 
