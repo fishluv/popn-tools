@@ -30,8 +30,7 @@ function getNoteAreaHeight(measure: MeasureData) {
 
   let noteAreaHeight = 0
   Object.entries(durByBpm).forEach(([bpm, duration]) => {
-    const bpmFactor = Number(bpm) / 200.0
-    noteAreaHeight += duration * PIXELS_PER_MS * bpmFactor
+    noteAreaHeight += msToPixels({ ms: duration, bpm: Number(bpm) })
   })
 
   return noteAreaHeight
@@ -315,8 +314,12 @@ function calculateNewY({
   newTs: number
 }) {
   const tsDelta = newTs - prevTs
-  const bpmFactor = prevBpm / 200.0
-  return prevY - tsDelta * PIXELS_PER_MS * bpmFactor
+  return prevY - msToPixels({ ms: tsDelta, bpm: prevBpm })
+}
+
+function msToPixels({ ms, bpm }: { ms: number; bpm: number }) {
+  const bpmFactor = bpm / 200.0
+  return ms * PIXELS_PER_MS * bpmFactor
 }
 
 function formatTimestamp(timestamp: number) {
