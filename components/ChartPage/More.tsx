@@ -6,7 +6,7 @@ import { VscTriangleLeft, VscTriangleRight } from "react-icons/vsc"
 import useLocalStorage from "../../lib/useLocalStorage"
 import { useState } from "react"
 import { StringParam, useQueryParams } from "use-query-params"
-import Measure, { makeLaneTransform } from "./Measure"
+import Measure, { NoteSpacing, makeLaneTransform } from "./Measure"
 import MeasureData from "../../models/MeasureData"
 
 type ChartTransform = "nonran" | "mirror" | "random" | "rran"
@@ -93,6 +93,14 @@ const PREVIEW_MEASURE_DATA = new MeasureData({
 })
 
 export default function More() {
+  const [storedHiSpeed, storeHiSpeed] = useLocalStorage(
+    "chart.hispeed",
+    "default",
+  )
+  const [hiSpeed, setHiSpeed] = useState<NoteSpacing>(
+    storedHiSpeed as NoteSpacing,
+  )
+
   const [storedTransform, storeTransform] = useLocalStorage(
     "chart.transform",
     "nonran",
@@ -111,8 +119,26 @@ export default function More() {
   const [rranMir, setRranMir] = useState<boolean>(storedRran.endsWith("m"))
 
   const [_, setQueryParams] = useQueryParams({
+    hs: StringParam,
     r: StringParam,
   })
+
+  function onHiSpeedChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const { id } = event.target
+    if (id === "verySlowRadio") {
+      setHiSpeed("veryslow")
+    } else if (id === "slowRadio") {
+      setHiSpeed("slow")
+    } else if (id === "defaultRadio") {
+      setHiSpeed("default")
+    } else if (id === "fastRadio") {
+      setHiSpeed("fast")
+    } else if (id === "veryFastRadio") {
+      setHiSpeed("veryfast")
+    } else {
+      console.warn(`More: Unknown id ${id}`)
+    }
+  }
 
   function onTransformChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { id } = event.target
@@ -152,6 +178,8 @@ export default function More() {
   }
 
   function onSaveClick() {
+    storeHiSpeed(hiSpeed)
+
     const transformStr = makeTransformStr()
     if (transform === "random") {
       storeRandom(transformStr!)
@@ -159,7 +187,8 @@ export default function More() {
       storeRran(transformStr!)
     }
     storeTransform(transform)
-    setQueryParams({ r: transformStr })
+
+    setQueryParams({ hs: hiSpeed, r: transformStr })
   }
 
   return (
@@ -172,7 +201,63 @@ export default function More() {
         Apply and save
       </button>
 
-      <h6>Transform options</h6>
+      <h6>Hi-speed</h6>
+
+      <div className={styles.hiSpeed}>
+        <div className={styles.line} />
+
+        <div className={styles.subControl}>
+          <input
+            id="verySlowRadio"
+            type="radio"
+            checked={hiSpeed === "veryslow"}
+            onChange={onHiSpeedChange}
+          />
+          <label htmlFor="verySlowRadio">Very slow</label>
+        </div>
+
+        <div className={styles.subControl}>
+          <input
+            id="slowRadio"
+            type="radio"
+            checked={hiSpeed === "slow"}
+            onChange={onHiSpeedChange}
+          />
+          <label htmlFor="slowRadio">Slow</label>
+        </div>
+
+        <div className={styles.subControl}>
+          <input
+            id="defaultRadio"
+            type="radio"
+            checked={hiSpeed === "default"}
+            onChange={onHiSpeedChange}
+          />
+          <label htmlFor="defaultRadio">Default</label>
+        </div>
+
+        <div className={styles.subControl}>
+          <input
+            id="fastRadio"
+            type="radio"
+            checked={hiSpeed === "fast"}
+            onChange={onHiSpeedChange}
+          />
+          <label htmlFor="fastRadio">Fast</label>
+        </div>
+
+        <div className={styles.subControl}>
+          <input
+            id="veryFastRadio"
+            type="radio"
+            checked={hiSpeed === "veryfast"}
+            onChange={onHiSpeedChange}
+          />
+          <label htmlFor="veryFastRadio">Very fast</label>
+        </div>
+      </div>
+
+      <h6>Transform</h6>
 
       <div className={styles.transformOptions}>
         <div className={styles.nonran}>
@@ -292,8 +377,6 @@ export default function More() {
           }}
         />
       </div>
-
-      <h6>Display options</h6>
 
       <h6>What is this?</h6>
       <p>This is a tool for viewing pop&apos;n music chart data.</p>

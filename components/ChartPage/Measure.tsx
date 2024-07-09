@@ -6,7 +6,7 @@ import styles from "./Measure.module.scss"
 import Note, { NoteColor } from "./Note"
 import HoldNote from "./HoldNote"
 
-type NoteSpacing = "veryslow" | "slow" | "default" | "fast" | "veryfast"
+export type NoteSpacing = "veryslow" | "slow" | "default" | "fast" | "veryfast"
 
 export function parseNoteSpacing(hs: string | null | undefined): NoteSpacing {
   switch (hs) {
