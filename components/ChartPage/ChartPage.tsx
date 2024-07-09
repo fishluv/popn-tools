@@ -30,9 +30,9 @@ export default function ChartPage(
   const [chartCsvRows, setChartCsvRows] = useState<ChartCsvRow[]>([])
   const [chart, setChart] = useState<Chart | undefined>(undefined)
   const [queryParams, setQueryParams] = useQueryParams({
-    r: StringParam,
-    hs: StringParam,
+    hs: StringParam, // Hi-speed
     constant: BooleanParam,
+    t: StringParam, // Transform
   })
   const [currentOpenModal, setCurrentOpenModal] = useState<
     "more" | "chartDetails" | null
@@ -40,7 +40,7 @@ export default function ChartPage(
   const [openedChart, setOpenedChart] = useState<Chart | undefined>(undefined)
 
   const chartOptions: ChartOptions = {
-    laneTransform: makeLaneTransform(queryParams.r),
+    laneTransform: makeLaneTransform(queryParams.t),
   }
   const displayOptions: DisplayOptions = {
     noteSpacing: parseNoteSpacing(queryParams.hs),
@@ -87,19 +87,19 @@ export default function ChartPage(
   }, [chartCsvRows]) // Only after initial load.
 
   useEffect(() => {
-    const { r, hs, constant } = queryParams
+    const { t, hs, constant } = queryParams
 
-    if (r !== undefined && r !== null) {
-      if (["", "r0", "r9", "l0", "l9"].includes(r.toLowerCase())) {
-        setQueryParams({ r: undefined })
+    if (t !== undefined && t !== null) {
+      if (["", "r0", "r9", "l0", "l9"].includes(t.toLowerCase())) {
+        setQueryParams({ t: undefined })
       }
 
-      if (["r0m", "r9m", "l0m", "l9m"].includes(r.toLowerCase())) {
-        setQueryParams({ r: "mirror" })
+      if (["r0m", "r9m", "l0m", "l9m"].includes(t.toLowerCase())) {
+        setQueryParams({ t: "mirror" })
       }
 
-      if (!isValidTransformStr(r)) {
-        setQueryParams({ r: undefined })
+      if (!isValidTransformStr(t)) {
+        setQueryParams({ t: undefined })
       }
     }
 

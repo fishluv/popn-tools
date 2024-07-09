@@ -119,8 +119,8 @@ export default function More() {
   const [rranMir, setRranMir] = useState<boolean>(storedRran.endsWith("m"))
 
   const [_, setQueryParams] = useQueryParams({
-    hs: StringParam,
-    r: StringParam,
+    hs: StringParam, // Hi-speed
+    t: StringParam, // Transform
   })
 
   function onHiSpeedChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -188,7 +188,7 @@ export default function More() {
     }
     storeTransform(transform)
 
-    setQueryParams({ hs: hiSpeed, r: transformStr })
+    setQueryParams({ hs: hiSpeed, t: transformStr })
   }
 
   return (
