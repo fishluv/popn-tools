@@ -86,6 +86,8 @@ export default function ChartPage(
         .getElementById(`measure${measureIndex}`)
         ?.scrollIntoView({ block: "start", behavior: "smooth" })
     }
+    // Use requestAnimationFrame to try to prevent race condition.
+    // ...Doesn't always work though.
     window.requestAnimationFrame(scrollToMeasure)
 
     window.addEventListener("hashchange", scrollToMeasure)
