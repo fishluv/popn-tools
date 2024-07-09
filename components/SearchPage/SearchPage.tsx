@@ -52,7 +52,7 @@ export default function SearchPage({ mode }: { mode: "song" | "chart" }) {
 
     document.addEventListener("keydown", handleKeyDown)
     return () => document.removeEventListener("keydown", handleKeyDown)
-  }, [])
+  }, [currentOpenModal])
 
   function onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { value } = event.target

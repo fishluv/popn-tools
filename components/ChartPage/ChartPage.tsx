@@ -167,7 +167,7 @@ export default function ChartPage({
 
     document.addEventListener("keydown", handleKeyDown)
     return () => document.removeEventListener("keydown", handleKeyDown)
-  }, [])
+  }, [currentOpenModal])
 
   switch (status) {
     case "loading":
