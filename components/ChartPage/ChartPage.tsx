@@ -86,7 +86,7 @@ export default function ChartPage(
         .getElementById(`measure${measureIndex}`)
         ?.scrollIntoView({ block: "start", behavior: "smooth" })
     }
-    scrollToMeasure()
+    window.requestAnimationFrame(scrollToMeasure)
 
     window.addEventListener("hashchange", scrollToMeasure)
     return () => window.removeEventListener("hashchange", scrollToMeasure)
