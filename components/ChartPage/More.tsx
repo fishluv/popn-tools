@@ -8,6 +8,7 @@ import { useState } from "react"
 import { BooleanParam, StringParam, useQueryParams } from "use-query-params"
 import Measure, { NoteSpacing, makeLaneTransform } from "./Measure"
 import MeasureData from "../../models/MeasureData"
+import Link from "next/link"
 
 type ChartTransform = "nonran" | "mirror" | "random" | "rran"
 
@@ -397,6 +398,17 @@ export default function More() {
           }}
         />
       </div>
+
+      <h6>Tips</h6>
+      <ul>
+        <li>
+          For now, to view another chart, go back to{" "}
+          <Link href="/search?m=chart" target="_blank">
+            the chart search page
+          </Link>
+          .
+        </li>
+      </ul>
 
       <div className={styles.github}>
         <span className={styles.sha}>{process.env.GIT_SHA}</span>
