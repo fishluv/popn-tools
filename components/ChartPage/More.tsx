@@ -1,6 +1,5 @@
 import cx from "classnames"
 import styles from "./More.module.scss"
-import { BsGithub } from "react-icons/bs"
 import { MdRefresh } from "react-icons/md"
 import { VscTriangleLeft, VscTriangleRight } from "react-icons/vsc"
 import useLocalStorage from "../../lib/useLocalStorage"
@@ -421,13 +420,6 @@ export default function More() {
           setExtraOptions(event.currentTarget.value)
         }}
       />
-
-      <div className={styles.github}>
-        <span className={styles.sha}>{process.env.GIT_SHA}</span>
-        <a href="https://github.com/fishluv/popn-tools" target="_blank">
-          <BsGithub />
-        </a>
-      </div>
     </div>
   )
 }

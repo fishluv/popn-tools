@@ -1,5 +1,5 @@
 import styles from "./More.module.scss"
-import { BsGithub, BsMusicNoteBeamed } from "react-icons/bs"
+import { BsMusicNoteBeamed } from "react-icons/bs"
 import { CgNotes } from "react-icons/cg"
 import useLocalStorage from "../../lib/useLocalStorage"
 
@@ -36,13 +36,6 @@ export default function More() {
           setExtraOptions(event.currentTarget.value)
         }}
       />
-
-      <div className={styles.github}>
-        <span className={styles.sha}>{process.env.GIT_SHA}</span>
-        <a href="https://github.com/fishluv/popn-tools" target="_blank">
-          <BsGithub />
-        </a>
-      </div>
     </div>
   )
 }

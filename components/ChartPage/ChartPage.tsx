@@ -174,6 +174,7 @@ export default function ChartPage(
           <CommonModal
             isOpen={currentOpenModal !== null}
             onClose={() => setCurrentOpenModal(null)}
+            showGithub={currentOpenModal === "more"}
           >
             {currentOpenModal === "more" && <More />}
 

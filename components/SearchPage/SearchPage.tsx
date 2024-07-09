@@ -99,6 +99,7 @@ export default function SearchPage({ mode }: { mode: "song" | "chart" }) {
       <CommonModal
         isOpen={currentOpenModal !== null}
         onClose={() => setCurrentOpenModal(null)}
+        showGithub={currentOpenModal === "more"}
       >
         {currentOpenModal === "more" && <More />}
 

@@ -2,8 +2,6 @@
   font-family: "M PLUS 1", "Arial", sans-serif;
   line-height: 1.25;
   min-height: 100%;
-  padding-bottom: 1rem; // For Github link
-  position: relative;
 
   h6 {
     font-size: 0.875rem;
@@ -37,29 +35,5 @@
     font-family: Courier, monospace;
     font-size: 0.875rem;
     width: 100%;
-  }
-
-  .github {
-    position: absolute;
-    bottom: -0.5rem;
-    right: -0.5rem;
-
-    display: flex;
-    justify-content: right;
-    align-items: flex-end;
-    gap: 0.25rem;
-
-    .sha {
-      color: #888;
-      font-size: 0.5625rem;
-      line-height: 1;
-    }
-
-    a {
-      // https://stackoverflow.com/a/48690899
-      // box-shadow: inset 0 -1px 0 0 #222;
-      // text-decoration: none;
-      font-size: 1.25rem;
-    }
   }
 }
