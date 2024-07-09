@@ -333,7 +333,7 @@ export default function More() {
               className={styles.icon}
               onClick={() =>
                 setRandom(
-                  random
+                  "123456789"
                     .split("")
                     .sort(() => Math.random() - 0.5)
                     .join(""),
