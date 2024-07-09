@@ -398,9 +398,6 @@ export default function More() {
         />
       </div>
 
-      <h6>What is this?</h6>
-      <p>This is a tool for viewing pop&apos;n music chart data.</p>
-
       <div className={styles.github}>
         <span className={styles.sha}>{process.env.GIT_SHA}</span>
         <a href="https://github.com/fishluv/popn-tools" target="_blank">

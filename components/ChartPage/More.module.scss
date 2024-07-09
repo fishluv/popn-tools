@@ -141,34 +141,9 @@
     background-color: #eba;
   }
 
-
-    .rightLeft {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 0.25rem;
-
-      button {
-        line-height: 1;
-        width: 1.5rem;
-        height: 1.5rem;
-        font-size: 1.5rem;
-        padding: 0;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-      }
-
-      .description {
-        display: inline-flex;
-        flex-direction: column;
-        align-items: center;
-        font-size: 0.875rem;
-      }
-    }
-
   .github {
-    margin: -0.5rem -0.5rem -0.5rem 0;
+    margin-top: 1rem;
+    margin-right: -0.5rem;
     display: flex;
     justify-content: right;
     align-items: flex-end;
