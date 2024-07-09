@@ -405,7 +405,7 @@ export default function SongChartDetails({
           <>
             <br />
             <a
-              href={`https://tablanbass.org/pnm/topscores/${songId}#${diffToTablanPathPart(
+              href={`https://tablanbass.net/pnm/topscores/${songId}#${diffToTablanPathPart(
                 chart?.difficulty || "e",
               )}`}
               target="_blank"
