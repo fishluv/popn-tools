@@ -148,6 +148,27 @@ export default function ChartPage({
     }
   }, [queryParams, setQueryParams])
 
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (currentOpenModal !== null) {
+        return
+      }
+
+      const { key, repeat } = event
+      if (repeat) {
+        return
+      }
+
+      if (key === "s") {
+        ReactModal.setAppElement("#app")
+        setCurrentOpenModal("more")
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown)
+    return () => document.removeEventListener("keydown", handleKeyDown)
+  }, [])
+
   switch (status) {
     case "loading":
       return <div>Loading...</div>

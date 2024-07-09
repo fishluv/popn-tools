@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styles from "./SearchPage.module.scss"
 import SongSearchResultsList from "./SongSearchResultsList"
 import { useDebounce } from "../../lib/debounce"
@@ -32,6 +32,27 @@ export default function SearchPage({ mode }: { mode: "song" | "chart" }) {
   const debouncedQuery = useDebounce(query, 125)
 
   const [searchValue, setSearchValue] = useState("")
+
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (currentOpenModal !== null) {
+        return
+      }
+
+      const { key, repeat } = event
+      if (repeat) {
+        return
+      }
+
+      if (key === "s") {
+        ReactModal.setAppElement("#app")
+        setCurrentOpenModal("more")
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown)
+    return () => document.removeEventListener("keydown", handleKeyDown)
+  }, [])
 
   function onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { value } = event.target
