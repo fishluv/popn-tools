@@ -70,6 +70,17 @@
     }
   }
 
+  .normalizeBpm {
+    margin-top: 0.5rem;
+    display: flex;
+
+    label {
+      margin-left: 0.25rem;
+      line-height: 1;
+      flex-grow: 1;
+    }
+  }
+
   .transformOptions {
     display: flex;
     flex-wrap: wrap;

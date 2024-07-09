@@ -5,7 +5,7 @@ import { MdRefresh } from "react-icons/md"
 import { VscTriangleLeft, VscTriangleRight } from "react-icons/vsc"
 import useLocalStorage from "../../lib/useLocalStorage"
 import { useState } from "react"
-import { StringParam, useQueryParams } from "use-query-params"
+import { BooleanParam, StringParam, useQueryParams } from "use-query-params"
 import Measure, { NoteSpacing, makeLaneTransform } from "./Measure"
 import MeasureData from "../../models/MeasureData"
 
@@ -101,6 +101,12 @@ export default function More() {
     storedHiSpeed as NoteSpacing,
   )
 
+  const [storedNormalize, storeNormalize] = useLocalStorage(
+    "chart.normalize",
+    "0",
+  )
+  const [normalize, setNormalize] = useState<boolean>(storedNormalize === "1")
+
   const [storedTransform, storeTransform] = useLocalStorage(
     "chart.transform",
     "nonran",
@@ -120,6 +126,7 @@ export default function More() {
 
   const [_, setQueryParams] = useQueryParams({
     hs: StringParam, // Hi-speed
+    normalize: BooleanParam,
     t: StringParam, // Transform
   })
 
@@ -179,6 +186,7 @@ export default function More() {
 
   function onSaveClick() {
     storeHiSpeed(hiSpeed)
+    storeNormalize(normalize ? "1" : "0")
 
     const transformStr = makeTransformStr()
     if (transform === "random") {
@@ -188,7 +196,7 @@ export default function More() {
     }
     storeTransform(transform)
 
-    setQueryParams({ hs: hiSpeed, t: transformStr })
+    setQueryParams({ hs: hiSpeed, normalize: normalize, t: transformStr })
   }
 
   return (
@@ -255,6 +263,18 @@ export default function More() {
           />
           <label htmlFor="veryFastRadio">Very fast</label>
         </div>
+      </div>
+
+      <div className={styles.normalizeBpm}>
+        <input
+          id="normalizeBpmRadio"
+          type="checkbox"
+          checked={normalize}
+          onChange={() => setNormalize(!normalize)}
+        />
+        <label htmlFor="normalizeBpmRadio">
+          Normalize (Ignore bpm changes)
+        </label>
       </div>
 
       <h6>Transform</h6>

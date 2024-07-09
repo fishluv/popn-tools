@@ -31,7 +31,7 @@ export default function ChartPage(
   const [chart, setChart] = useState<Chart | undefined>(undefined)
   const [queryParams, setQueryParams] = useQueryParams({
     hs: StringParam, // Hi-speed
-    constant: BooleanParam,
+    normalize: BooleanParam,
     t: StringParam, // Transform
   })
   const [currentOpenModal, setCurrentOpenModal] = useState<
@@ -44,7 +44,7 @@ export default function ChartPage(
   }
   const displayOptions: DisplayOptions = {
     noteSpacing: parseNoteSpacing(queryParams.hs),
-    bpmAgnostic: !!queryParams.constant,
+    bpmAgnostic: !!queryParams.normalize,
   }
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export default function ChartPage(
   }, [chartCsvRows]) // Only after initial load.
 
   useEffect(() => {
-    const { t, hs, constant } = queryParams
+    const { t, hs, normalize } = queryParams
 
     if (t !== undefined && t !== null) {
       if (["", "r0", "r9", "l0", "l9"].includes(t.toLowerCase())) {
@@ -108,8 +108,8 @@ export default function ChartPage(
       setQueryParams({ hs: undefined })
     }
 
-    if (!constant) {
-      setQueryParams({ constant: undefined })
+    if (!normalize) {
+      setQueryParams({ normalize: undefined })
     }
   }, [queryParams, setQueryParams])
 
