@@ -38,13 +38,13 @@ button {
 
   @media (hover: hover) {
     &:hover:enabled:not(:active) {
-      transform: translate(-4px, -4px);
+      transform: translate(max(-10%, -4px), max(-10%, -4px));
       box-shadow: 4px 4px 5px #666;
     }
   }
 
   &:active:enabled {
-    transform: translate(2%, 6%);
+    transform: translate(min(8%, 3px), min(8%, 3px));
     box-shadow: 1px 1px 3px #888;
   }
 }
