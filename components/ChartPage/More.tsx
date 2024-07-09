@@ -409,6 +409,9 @@ export default function More() {
           </Link>
           .
         </li>
+        <li>
+          <code>s</code> and <code>esc</code> open and close this modal.
+        </li>
       </ul>
 
       <h6>Extra options</h6>

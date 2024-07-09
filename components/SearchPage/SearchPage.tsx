@@ -39,6 +39,11 @@ export default function SearchPage({ mode }: { mode: "song" | "chart" }) {
         return
       }
 
+      const searchInput = document.getElementById("searchInput")
+      if (searchInput && document.activeElement === searchInput) {
+        return
+      }
+
       const { key, repeat } = event
       if (repeat) {
         return
@@ -47,6 +52,13 @@ export default function SearchPage({ mode }: { mode: "song" | "chart" }) {
       if (key === "s") {
         ReactModal.setAppElement("#app")
         setCurrentOpenModal("more")
+      }
+      if (key === "/") {
+        // requestAnimationFrame is needed to delay the focus
+        // so the slash doesn't get typed.
+        window.requestAnimationFrame(
+          () => document.getElementById("searchInput")?.focus(),
+        )
       }
     }
 
@@ -75,7 +87,8 @@ export default function SearchPage({ mode }: { mode: "song" | "chart" }) {
         </button>
 
         <input
-          className={styles.input}
+          id="searchInput"
+          className={styles.search}
           type="text"
           placeholder={isSongMode ? "Search for songs" : "Search for charts"}
           value={searchValue || (query ?? "")}

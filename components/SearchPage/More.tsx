@@ -26,6 +26,11 @@ export default function More() {
           This is not meant for exhaustive searches. Only the first dozen or so
           results are returned.
         </li>
+        <li>
+          <code>/</code> focuses the search box.
+          <br />
+          <code>s</code> and <code>esc</code> open and close this modal.
+        </li>
       </ul>
 
       <h6>Extra options</h6>
