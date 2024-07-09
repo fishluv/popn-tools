@@ -1,6 +1,4 @@
 .ChartPage {
-  margin: 2rem 2rem 0;
-
   .body {
     display: flex;
     gap: 2rem;
@@ -9,6 +7,11 @@
 
   .MeasureList {
     margin-bottom: 30vh;
+
+    // Measure's width is hardcoded to 390px
+    // and some mobile screens are narrower than that.
+    // This causes a very subtle scaling issue.
+    overflow-x: hidden;
   }
 
   .moreButton {

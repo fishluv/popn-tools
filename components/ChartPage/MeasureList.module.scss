@@ -1,4 +1,8 @@
 .MeasureList {
   display: flex;
   flex-direction: column;
+
+  // In case screen width is narrower than
+  // Measure's hardcoded width of 390px.
+  align-items: center;
 }
