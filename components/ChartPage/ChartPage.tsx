@@ -80,10 +80,16 @@ export default function ChartPage(
   }, [songSlug, difficulty])
 
   useEffect(() => {
-    const measureIndex = window.location.hash.replace("#", "") || "1"
-    document
-      .getElementById(`measure${measureIndex}`)
-      ?.scrollIntoView({ block: "center", behavior: "smooth" })
+    function scrollToMeasure() {
+      const measureIndex = window.location.hash.replace("#", "") || "1"
+      document
+        .getElementById(`measure${measureIndex}`)
+        ?.scrollIntoView({ block: "start", behavior: "smooth" })
+    }
+    scrollToMeasure()
+
+    window.addEventListener("hashchange", scrollToMeasure)
+    return () => window.removeEventListener("hashchange", scrollToMeasure)
   }, [chartCsvRows]) // Only after initial load.
 
   useEffect(() => {

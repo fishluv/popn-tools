@@ -13,6 +13,7 @@ $red-lane: rgba(246, 175, 176, 0.2);
   border-color: rgba(100, 100, 100, 0.8);
   border-width: 0 0 2px;
   font-family: "M PLUS 1", "Arial", sans-serif;
+  scroll-margin-top: 8rem;
 
   .measureNumber {
     width: 80px;
@@ -37,19 +38,22 @@ $red-lane: rgba(246, 175, 176, 0.2);
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
-      gap: 0.25rem;
+      align-items: center;
+      gap: 0.5rem;
 
       button {
         width: 1.5rem;
         height: 1.5rem;
         font-size: 1.25rem;
         padding: 0;
-        align-self: flex-end;
-        margin-bottom: 2px;
 
         svg {
           vertical-align: text-top;
         }
+      }
+
+      a {
+        margin-bottom: 0.25rem;
       }
     }
   }

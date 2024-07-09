@@ -640,7 +640,7 @@ export default function Measure({
           <button onClick={() => onMeasureLinkIconClick(measureData.index)}>
             <FaLink />
           </button>
-          <span>{measureData.index}</span>
+          <a href={`#${measureData.index}`}>{measureData.index}</a>
         </div>
       </div>
       <div className={styles.noteArea} style={noteAreaStyle}>
