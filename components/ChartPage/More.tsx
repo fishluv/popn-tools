@@ -206,7 +206,7 @@ export default function More() {
             <label htmlFor="randomRadio">Random</label>
           </div>
 
-          <div className={styles.subControl}>
+          <div className={cx(styles.subControl, styles.withButton)}>
             <input
               id="randomInput"
               className={cx(
@@ -248,7 +248,7 @@ export default function More() {
             <label htmlFor="rranRadio">R-ran</label>
           </div>
 
-          <div className={styles.subControl}>
+          <div className={cx(styles.subControl, styles.withButton)}>
             <button
               className={styles.icon}
               onClick={() => setRranNum((rranNum + 8) % 9)}
