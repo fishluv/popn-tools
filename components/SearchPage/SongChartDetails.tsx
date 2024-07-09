@@ -152,7 +152,7 @@ export default function SongChartDetails({
         <p className={styles.omniNote}>This song is no longer playable.</p>
       )}
 
-      {showViewChartLink && extraOptions["chartviewer"] && chart && (
+      {showViewChartLink && chart && (
         <div className={styles.viewChart}>
           <Note className={styles.Note} color="red" />
           <a href={`/chart/${slug}/${chart.difficulty}`} target="_blank">
