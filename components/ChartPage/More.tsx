@@ -125,6 +125,8 @@ export default function More() {
   )
   const [rranMir, setRranMir] = useState<boolean>(storedRran.endsWith("m"))
 
+  const [extraOptions, setExtraOptions] = useLocalStorage("extraOptions", "")
+
   const [_, setQueryParams] = useQueryParams({
     hs: StringParam, // Hi-speed
     normalize: BooleanParam,
@@ -409,6 +411,16 @@ export default function More() {
           .
         </li>
       </ul>
+
+      <h6>Extra options</h6>
+      <input
+        className={styles.extraOptionsInput}
+        type="text"
+        value={extraOptions}
+        onChange={(event) => {
+          setExtraOptions(event.currentTarget.value)
+        }}
+      />
 
       <div className={styles.github}>
         <span className={styles.sha}>{process.env.GIT_SHA}</span>

@@ -2,6 +2,9 @@
   font-family: "M PLUS 1", "Arial", sans-serif;
   font-size: 0.875rem;
   line-height: 1.25;
+  min-height: 100%;
+  padding-bottom: 1rem; // For Github link
+  position: relative;
 
   h6 {
     font-size: 0.875rem;
@@ -27,7 +30,6 @@
 
   input[type=text] {
     font-family: Courier, monospace;
-    font-size: 1rem;
   }
 
   button {
@@ -112,6 +114,10 @@
       gap: 0.25rem;
     }
 
+    .random input {
+      font-size: 1rem;
+    }
+
     .rran .subControl .description {
       display: flex;
       flex-direction: column;
@@ -139,8 +145,16 @@
     background-color: #eba;
   }
 
+  .extraOptionsInput {
+    font-size: 0.875rem;
+    width: 100%;
+  }
+
   .github {
-    margin-right: -0.5rem;
+    position: absolute;
+    bottom: -0.5rem;
+    right: -0.5rem;
+
     display: flex;
     justify-content: right;
     align-items: flex-end;
