@@ -22,25 +22,27 @@ $red-lane: rgba(246, 175, 176, 0.2);
 
     display: flex;
     flex-direction: column;
+    gap: 0.25rem;
 
     line-height: 1;
 
     .timestamp {
-      font-size: 1rem;
-      color: rgb(160, 160, 160);
+      font-size: 0.875rem;
+      color: rgb(150, 150, 150);
       margin-right: 2px;
     }
 
     .num {
-      font-size: 2rem;
+      font-size: 1.5rem;
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
-      gap: 0.125rem;
+      gap: 0.25rem;
 
       button {
         width: 1.5rem;
-        font-size: 1.5rem;
+        height: 1.5rem;
+        font-size: 1.25rem;
         padding: 0;
         align-self: flex-end;
         margin-bottom: 2px;
@@ -197,7 +199,7 @@ $red-lane: rgba(246, 175, 176, 0.2);
       line-height: 1;
       font-size: 0.875rem;
       font-weight: bold;
-      opacity: 0.3;
+      color: rgb(190, 190, 190);
     }
   }
 
