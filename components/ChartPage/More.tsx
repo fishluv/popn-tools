@@ -327,6 +327,7 @@ export default function More() {
               size={9}
               onChange={onRandomChange}
               value={random}
+              disabled={transform !== "random"}
             />
             <button
               className={styles.icon}
@@ -338,6 +339,7 @@ export default function More() {
                     .join(""),
                 )
               }
+              disabled={transform !== "random"}
             >
               <MdRefresh />
             </button>
@@ -359,6 +361,7 @@ export default function More() {
             <button
               className={styles.icon}
               onClick={() => setRranNum((rranNum + 8) % 9)}
+              disabled={transform !== "rran"}
             >
               <VscTriangleLeft />
             </button>
@@ -369,6 +372,7 @@ export default function More() {
             <button
               className={styles.icon}
               onClick={() => setRranNum((rranNum + 1) % 9)}
+              disabled={transform !== "rran"}
             >
               <VscTriangleRight />
             </button>
@@ -380,6 +384,7 @@ export default function More() {
               type="checkbox"
               checked={rranMir}
               onChange={() => setRranMir(!rranMir)}
+              disabled={transform !== "rran"}
             />
             <label htmlFor="rranMirCheckbox">Mirror</label>
           </div>
