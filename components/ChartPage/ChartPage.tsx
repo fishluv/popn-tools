@@ -20,10 +20,13 @@ import CommonModal from "../common/CommonModal"
 import More from "./More"
 import { FiMoreHorizontal } from "react-icons/fi"
 
-export default function ChartPage(
-  songSlug: string | undefined,
-  difficulty: "e" | "n" | "h" | "ex",
-) {
+export default function ChartPage({
+  songSlug,
+  difficulty,
+}: {
+  songSlug: string | undefined
+  difficulty: "e" | "n" | "h" | "ex"
+}) {
   const [status, setStatus] = useState<"loading" | "error" | "success">(
     "loading",
   )
@@ -78,6 +81,30 @@ export default function ChartPage(
         console.error(`Error fetching chart info: ${JSON.stringify(error)}`)
       })
   }, [songSlug, difficulty])
+
+  useEffect(() => {
+    if (chart) {
+      let songTitle = chart.song.remywikiTitle
+      if (chart.song.genreRomanTrans.endsWith(" LIVE")) {
+        songTitle = `${songTitle} LIVE`
+      }
+      if (chart.song.genreRomanTrans.endsWith(" LONG")) {
+        songTitle = `${songTitle} LONG`
+      }
+      if (chart.song.labels.includes("ura")) {
+        songTitle = `URA ${songTitle}`
+      }
+      if (chart.song.labels.includes("upper")) {
+        songTitle = `${songTitle} UPPER`
+      }
+      // Knock Out Regrets
+      if (chart.song.id === 3055) {
+        songTitle = `${songTitle} JP`
+      }
+
+      document.title = `${songTitle} [${chart.difficulty.toUpperCase()}] • Pop'n Tools`
+    }
+  }, [chart])
 
   useEffect(() => {
     function scrollToMeasure() {
