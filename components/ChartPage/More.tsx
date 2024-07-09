@@ -174,29 +174,29 @@ export default function More() {
 
       <h6>Transform options</h6>
 
-      <div className={styles.lrContainer}>
-        <div className={styles.options}>
-          <div className={styles.control}>
-            <input
-              id="nonranRadio"
-              type="radio"
-              checked={transform === "nonran"}
-              onChange={onTransformChange}
-            />
-            <label htmlFor="nonranRadio">Nonran</label>
-          </div>
+      <div className={styles.transformOptions}>
+        <div className={styles.nonran}>
+          <input
+            id="nonranRadio"
+            type="radio"
+            checked={transform === "nonran"}
+            onChange={onTransformChange}
+          />
+          <label htmlFor="nonranRadio">Nonran</label>
+        </div>
 
-          <div className={styles.control}>
-            <input
-              id="mirrorRadio"
-              type="radio"
-              checked={transform === "mirror"}
-              onChange={onTransformChange}
-            />
-            <label htmlFor="mirrorRadio">Mirror</label>
-          </div>
+        <div className={styles.mirror}>
+          <input
+            id="mirrorRadio"
+            type="radio"
+            checked={transform === "mirror"}
+            onChange={onTransformChange}
+          />
+          <label htmlFor="mirrorRadio">Mirror</label>
+        </div>
 
-          <div className={cx(styles.control, styles.random)}>
+        <div className={styles.random}>
+          <div>
             <input
               id="randomRadio"
               type="radio"
@@ -206,39 +206,39 @@ export default function More() {
             <label htmlFor="randomRadio">Random</label>
           </div>
 
-          {transform === "random" && (
-            <div className={styles.subControl}>
-              <input
-                id="randomInput"
-                className={cx(
-                  styles.randomInput,
-                  isRandomValid() ? styles.valid : styles.invalid,
-                )}
-                type="text"
-                inputMode="numeric"
-                placeholder="123456789"
-                maxLength={9}
-                size={9}
-                onChange={onRandomChange}
-                value={random}
-              />
-              <button
-                className={styles.icon}
-                onClick={() =>
-                  setRandom(
-                    random
-                      .split("")
-                      .sort(() => Math.random() - 0.5)
-                      .join(""),
-                  )
-                }
-              >
-                <MdRefresh />
-              </button>
-            </div>
-          )}
+          <div className={styles.subControl}>
+            <input
+              id="randomInput"
+              className={cx(
+                styles.randomInput,
+                isRandomValid() ? styles.valid : styles.invalid,
+              )}
+              type="text"
+              inputMode="numeric"
+              placeholder="123456789"
+              maxLength={9}
+              size={9}
+              onChange={onRandomChange}
+              value={random}
+            />
+            <button
+              className={styles.icon}
+              onClick={() =>
+                setRandom(
+                  random
+                    .split("")
+                    .sort(() => Math.random() - 0.5)
+                    .join(""),
+                )
+              }
+            >
+              <MdRefresh />
+            </button>
+          </div>
+        </div>
 
-          <div className={cx(styles.control, styles.rran)}>
+        <div className={styles.rran}>
+          <div>
             <input
               id="rranRadio"
               type="radio"
@@ -248,53 +248,49 @@ export default function More() {
             <label htmlFor="rranRadio">R-ran</label>
           </div>
 
-          {transform === "rran" && (
-            <>
-              <div className={cx(styles.subControl, styles.rightLeft)}>
-                <button
-                  className={styles.icon}
-                  onClick={() => setRranNum((rranNum + 8) % 9)}
-                >
-                  <VscTriangleLeft />
-                </button>
-                <div className={styles.description}>
-                  <span>{`Right ${rranNum}`}</span>
-                  <span>{`(Left ${(9 - rranNum) % 9})`}</span>
-                </div>
-                <button
-                  className={styles.icon}
-                  onClick={() => setRranNum((rranNum + 1) % 9)}
-                >
-                  <VscTriangleRight />
-                </button>
-              </div>
+          <div className={styles.subControl}>
+            <button
+              className={styles.icon}
+              onClick={() => setRranNum((rranNum + 8) % 9)}
+            >
+              <VscTriangleLeft />
+            </button>
+            <div className={styles.description}>
+              <span>{`Right ${rranNum}`}</span>
+              <span>{`(Left ${(9 - rranNum) % 9})`}</span>
+            </div>
+            <button
+              className={styles.icon}
+              onClick={() => setRranNum((rranNum + 1) % 9)}
+            >
+              <VscTriangleRight />
+            </button>
+          </div>
 
-              <div className={styles.subControl}>
-                <input
-                  id="rranMirCheckbox"
-                  type="checkbox"
-                  checked={rranMir}
-                  onChange={() => setRranMir(!rranMir)}
-                />
-                <label htmlFor="rranMirCheckbox">Mirror</label>
-              </div>
-            </>
-          )}
+          <div className={styles.subControl}>
+            <input
+              id="rranMirCheckbox"
+              type="checkbox"
+              checked={rranMir}
+              onChange={() => setRranMir(!rranMir)}
+            />
+            <label htmlFor="rranMirCheckbox">Mirror</label>
+          </div>
         </div>
+      </div>
 
-        <div className={styles.preview}>
-          <Measure
-            className={styles.Measure}
-            measureData={PREVIEW_MEASURE_DATA}
-            chartOptions={{
-              laneTransform: makeLaneTransform(makeTransformStr()),
-            }}
-            displayOptions={{
-              noteSpacing: "default",
-              bpmAgnostic: false,
-            }}
-          />
-        </div>
+      <div className={styles.transformPreview}>
+        <Measure
+          className={styles.Measure}
+          measureData={PREVIEW_MEASURE_DATA}
+          chartOptions={{
+            laneTransform: makeLaneTransform(makeTransformStr()),
+          }}
+          displayOptions={{
+            noteSpacing: "default",
+            bpmAgnostic: false,
+          }}
+        />
       </div>
 
       <h6>Display options</h6>

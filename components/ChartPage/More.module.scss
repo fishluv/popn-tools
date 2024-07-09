@@ -42,44 +42,53 @@
     }
   }
 
-  .lrContainer {
+  .transformOptions {
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    margin-right: -0.5rem;
 
-    .options {
-      width: 160px;
+    .nonran, .mirror, .random, .rran {
+      width: calc(50% - 0.25rem);
       display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
 
-      .control, .subControl {
-        display: flex;
-        align-items: center;
-
-        label {
-          margin-left: 0.25rem;
-          line-height: 1;
-        }
+      label {
+        margin-left: 0.25rem;
+        line-height: 1;
       }
 
       .subControl {
-        margin-top: -0.25rem;
+        display: flex;
+        align-items: center;
         margin-left: 1rem;
       }
     }
 
-    .preview {
-      position: relative;
-      height: 98px;
+    .random, .rran {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
 
-      .Measure {
-        // Crop out everything but the note area LOL
-        clip-path: rect(-8px 296px 98px 96px);
-        position: absolute;
-        transform: scaleX(75%);
-        top: 4px;
-        left: -140px;
-      }
+    .rran .subControl .description {
+      display: flex;
+      flex-direction: column;
+      margin: 0 0.5rem;
+      font-size: 0.75rem;
+      text-align: center;
+    }
+  }
+
+  .transformPreview {
+    margin-top: 0.625rem;
+    position: relative;
+
+    .Measure {
+      // Crop out everything but the note area LOL
+      clip-path: rect(-8px 296px 98px 96px);
+      position: relative;
+      top: 4px;
+      left: -54px;
     }
   }
 
