@@ -637,12 +637,9 @@ export default function Measure({
           {formatTimestamp(measureData.startTimestamp)}
         </div>
         <div className={styles.num}>
-          <a
-            href="javascript:void(0)"
-            onClick={() => onMeasureLinkIconClick(measureData.index)}
-          >
-            <FaLink size="1.25rem" />
-          </a>
+          <button onClick={() => onMeasureLinkIconClick(measureData.index)}>
+            <FaLink />
+          </button>
           <span>{measureData.index}</span>
         </div>
       </div>

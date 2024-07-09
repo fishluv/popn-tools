@@ -38,10 +38,10 @@ $red-lane: rgba(246, 175, 176, 0.2);
       justify-content: flex-end;
       gap: 0.125rem;
 
-      a {
-        border-bottom: 2px solid #222;
-        width: 1.25rem;
-        height: 1.25rem;
+      button {
+        width: 1.5rem;
+        font-size: 1.5rem;
+        padding: 0;
         align-self: flex-end;
         margin-bottom: 2px;
 

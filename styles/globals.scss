@@ -25,7 +25,15 @@ input {
 }
 
 button {
-  border-style: solid;
+  line-height: 1;
+
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  border: none;
+  border-radius: 0.25rem;
   box-shadow: 1px 1px 3px #888;
 
   @media (hover: hover) {
