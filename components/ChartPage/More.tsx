@@ -201,15 +201,34 @@ export default function More() {
     setQueryParams({ hs: hiSpeed, normalize: normalize, t: transformStr })
   }
 
+  function onResetClick() {
+    if (
+      window.confirm(
+        'Reset options to default values? Options will not be applied until you click "Apply and save".',
+      )
+    ) {
+      setHiSpeed("default")
+      setNormalize(false)
+      setTransform("nonran")
+      setRandom("")
+      setRranNum(1)
+      setRranMir(false)
+      onSaveClick()
+    }
+  }
+
   return (
     <div className={styles.More}>
-      <button
-        className={styles.text}
-        onClick={onSaveClick}
-        disabled={transform === "random" && !isRandomValid()}
-      >
-        Apply and save
-      </button>
+      <div className={styles.topButtons}>
+        <button
+          onClick={onSaveClick}
+          disabled={transform === "random" && !isRandomValid()}
+        >
+          Apply and save
+        </button>
+
+        <button onClick={onResetClick}>Reset</button>
+      </div>
 
       <h6>Hi-speed</h6>
 

@@ -41,6 +41,11 @@
     }
   }
 
+  .topButtons {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .hiSpeed {
     display: flex;
     position: relative;
