@@ -5,7 +5,11 @@ import { VscTriangleLeft, VscTriangleRight } from "react-icons/vsc"
 import useLocalStorage from "../../lib/useLocalStorage"
 import { useState } from "react"
 import { BooleanParam, StringParam, useQueryParams } from "use-query-params"
-import Measure, { NoteSpacing, makeLaneTransform } from "./Measure"
+import Measure, {
+  NoteSpacing,
+  makeLaneTransform,
+  parseNoteSpacing,
+} from "./Measure"
 import MeasureData from "../../models/MeasureData"
 import Link from "next/link"
 
@@ -125,7 +129,7 @@ export default function More() {
 
   const [extraOptions, setExtraOptions] = useLocalStorage("extraOptions", "")
 
-  const [_, setQueryParams] = useQueryParams({
+  const [queryParams, setQueryParams] = useQueryParams({
     hs: StringParam, // Hi-speed
     normalize: BooleanParam,
     t: StringParam, // Transform
@@ -166,7 +170,7 @@ export default function More() {
     return random.split("").sort().join("") === "123456789"
   }
 
-  function makeTransformStr() {
+  function transformToTransformStr() {
     if (transform === "nonran") {
       return undefined
     } else if (transform === "mirror") {
@@ -180,10 +184,36 @@ export default function More() {
   }
 
   function onApplyClick() {
-    setQueryParams({ hs: hiSpeed, normalize: normalize, t: makeTransformStr() })
+    setQueryParams({
+      hs: hiSpeed,
+      normalize: normalize,
+      t: transformToTransformStr(),
+    })
   }
 
-  function onResetClick() {
+  function onRevertClick() {
+    const { hs, normalize, t } = queryParams
+    changeHiSpeed(parseNoteSpacing(hs))
+    changeNormalize(!!normalize)
+
+    let match
+    if (t === null || t === undefined || t === "nonran") {
+      changeTransform("nonran")
+    } else if (t === "mirror") {
+      changeTransform("mirror")
+      // eslint-disable-next-line no-cond-assign
+    } else if ((match = t.match(/^\d+$/))) {
+      changeTransform("random")
+      changeRandom(match[0])
+      // eslint-disable-next-line no-cond-assign
+    } else if ((match = t.match(/^r(\d)(m?)$/))) {
+      changeTransform("rran")
+      changeRranNum(Number(match[1]))
+      changeRranMir(!!match[2])
+    }
+  }
+
+  function onDefaultsClick() {
     if (
       window.confirm(
         'Reset options to default values? Options will not be applied until you click "Apply and save".',
@@ -202,13 +232,15 @@ export default function More() {
     <div className={styles.More}>
       <div className={styles.topButtons}>
         <button
+          className={styles.apply}
           onClick={onApplyClick}
           disabled={transform === "random" && !isRandomValid()}
         >
           Apply
         </button>
 
-        <button onClick={onResetClick}>Reset</button>
+        <button onClick={onRevertClick}>Revert</button>
+        <button onClick={onDefaultsClick}>Defaults</button>
       </div>
 
       <h6>Hi-speed</h6>
@@ -396,7 +428,7 @@ export default function More() {
           className={styles.Measure}
           measureData={PREVIEW_MEASURE_DATA}
           chartOptions={{
-            laneTransform: makeLaneTransform(makeTransformStr()),
+            laneTransform: makeLaneTransform(transformToTransformStr()),
           }}
           displayOptions={{
             noteSpacing: "default",
