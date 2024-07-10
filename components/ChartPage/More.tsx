@@ -118,11 +118,10 @@ export default function More() {
   const [storedRandom, storeRandom] = useLocalStorage("chart.random", "")
   const [random, setRandom] = useState<string>(storedRandom)
 
-  const [storedRran, storeRran] = useLocalStorage("chart.rran", "r1")
-  const [rranNum, setRranNum] = useState<number>(
-    Number(storedRran.match(/\d/)![0]),
-  )
-  const [rranMir, setRranMir] = useState<boolean>(storedRran.endsWith("m"))
+  const [storedRranNum, storeRranNum] = useLocalStorage("chart.rranNum", "1")
+  const [rranNum, setRranNum] = useState<number>(Number(storedRranNum))
+  const [storedRranMir, storeRranMir] = useLocalStorage("chart.rranMir", "0")
+  const [rranMir, setRranMir] = useState<boolean>(storedRranMir === "1")
 
   const [extraOptions, setExtraOptions] = useLocalStorage("extraOptions", "")
 
@@ -132,41 +131,35 @@ export default function More() {
     t: StringParam, // Transform
   })
 
-  function onHiSpeedChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const { id } = event.target
-    if (id === "verySlowRadio") {
-      setHiSpeed("veryslow")
-    } else if (id === "slowRadio") {
-      setHiSpeed("slow")
-    } else if (id === "defaultRadio") {
-      setHiSpeed("default")
-    } else if (id === "fastRadio") {
-      setHiSpeed("fast")
-    } else if (id === "veryFastRadio") {
-      setHiSpeed("veryfast")
-    } else {
-      console.warn(`More: Unknown id ${id}`)
-    }
+  function changeHiSpeed(newHiSpeed: NoteSpacing) {
+    setHiSpeed(newHiSpeed)
+    storeHiSpeed(newHiSpeed)
   }
 
-  function onTransformChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const { id } = event.target
-    if (id === "nonranRadio") {
-      setTransform("nonran")
-    } else if (id === "mirrorRadio") {
-      setTransform("mirror")
-    } else if (id === "randomRadio") {
-      setTransform("random")
-    } else if (id === "rranRadio") {
-      setTransform("rran")
-    } else {
-      console.warn(`More: Unknown id ${id}`)
-    }
+  function changeNormalize(newNormalize: boolean) {
+    setNormalize(newNormalize)
+    storeNormalize(newNormalize ? "1" : "0")
   }
 
-  function onRandomChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const { value } = event.target
-    setRandom(value.replace(/[^1-9]/g, ""))
+  function changeTransform(newTransform: ChartTransform) {
+    setTransform(newTransform)
+    storeTransform(newTransform)
+  }
+
+  function changeRandom(newRandom: string) {
+    const norm = newRandom.replace(/[^1-9]/g, "")
+    setRandom(norm)
+    storeRandom(norm)
+  }
+
+  function changeRranNum(newRranNum: number) {
+    setRranNum(newRranNum)
+    storeRranNum(String(newRranNum))
+  }
+
+  function changeRranMir(newRranMir: boolean) {
+    setRranMir(newRranMir)
+    storeRranMir(newRranMir ? "1" : "0")
   }
 
   function isRandomValid() {
@@ -186,19 +179,8 @@ export default function More() {
     return undefined
   }
 
-  function onSaveClick() {
-    storeHiSpeed(hiSpeed)
-    storeNormalize(normalize ? "1" : "0")
-
-    const transformStr = makeTransformStr()
-    if (transform === "random") {
-      storeRandom(transformStr!)
-    } else if (transform === "rran") {
-      storeRran(transformStr!)
-    }
-    storeTransform(transform)
-
-    setQueryParams({ hs: hiSpeed, normalize: normalize, t: transformStr })
+  function onApplyClick() {
+    setQueryParams({ hs: hiSpeed, normalize: normalize, t: makeTransformStr() })
   }
 
   function onResetClick() {
@@ -207,13 +189,12 @@ export default function More() {
         'Reset options to default values? Options will not be applied until you click "Apply and save".',
       )
     ) {
-      setHiSpeed("default")
-      setNormalize(false)
-      setTransform("nonran")
-      setRandom("")
-      setRranNum(1)
-      setRranMir(false)
-      onSaveClick()
+      changeHiSpeed("default")
+      changeNormalize(false)
+      changeTransform("nonran")
+      changeRandom("")
+      changeRranNum(1)
+      changeRranMir(false)
     }
   }
 
@@ -221,10 +202,10 @@ export default function More() {
     <div className={styles.More}>
       <div className={styles.topButtons}>
         <button
-          onClick={onSaveClick}
+          onClick={onApplyClick}
           disabled={transform === "random" && !isRandomValid()}
         >
-          Apply and save
+          Apply
         </button>
 
         <button onClick={onResetClick}>Reset</button>
@@ -240,7 +221,7 @@ export default function More() {
             id="verySlowRadio"
             type="radio"
             checked={hiSpeed === "veryslow"}
-            onChange={onHiSpeedChange}
+            onChange={() => changeHiSpeed("veryslow")}
           />
           <label htmlFor="verySlowRadio">Very slow</label>
         </div>
@@ -250,7 +231,7 @@ export default function More() {
             id="slowRadio"
             type="radio"
             checked={hiSpeed === "slow"}
-            onChange={onHiSpeedChange}
+            onChange={() => changeHiSpeed("slow")}
           />
           <label htmlFor="slowRadio">Slow</label>
         </div>
@@ -260,7 +241,7 @@ export default function More() {
             id="defaultRadio"
             type="radio"
             checked={hiSpeed === "default"}
-            onChange={onHiSpeedChange}
+            onChange={() => changeHiSpeed("default")}
           />
           <label htmlFor="defaultRadio">Default</label>
         </div>
@@ -270,7 +251,7 @@ export default function More() {
             id="fastRadio"
             type="radio"
             checked={hiSpeed === "fast"}
-            onChange={onHiSpeedChange}
+            onChange={() => changeHiSpeed("fast")}
           />
           <label htmlFor="fastRadio">Fast</label>
         </div>
@@ -280,7 +261,7 @@ export default function More() {
             id="veryFastRadio"
             type="radio"
             checked={hiSpeed === "veryfast"}
-            onChange={onHiSpeedChange}
+            onChange={() => changeHiSpeed("veryfast")}
           />
           <label htmlFor="veryFastRadio">Very fast</label>
         </div>
@@ -291,7 +272,7 @@ export default function More() {
           id="normalizeBpmRadio"
           type="checkbox"
           checked={normalize}
-          onChange={() => setNormalize(!normalize)}
+          onChange={() => changeNormalize(!normalize)}
         />
         <label htmlFor="normalizeBpmRadio">
           Normalize (Ignore bpm changes)
@@ -306,7 +287,7 @@ export default function More() {
             id="nonranRadio"
             type="radio"
             checked={transform === "nonran"}
-            onChange={onTransformChange}
+            onChange={() => changeTransform("nonran")}
           />
           <label htmlFor="nonranRadio">Nonran</label>
         </div>
@@ -316,7 +297,7 @@ export default function More() {
             id="mirrorRadio"
             type="radio"
             checked={transform === "mirror"}
-            onChange={onTransformChange}
+            onChange={() => changeTransform("mirror")}
           />
           <label htmlFor="mirrorRadio">Mirror</label>
         </div>
@@ -327,7 +308,7 @@ export default function More() {
               id="randomRadio"
               type="radio"
               checked={transform === "random"}
-              onChange={onTransformChange}
+              onChange={() => changeTransform("random")}
             />
             <label htmlFor="randomRadio">Random</label>
           </div>
@@ -344,14 +325,14 @@ export default function More() {
               placeholder="123456789"
               maxLength={9}
               size={9}
-              onChange={onRandomChange}
+              onChange={(event) => changeRandom(event.target.value)}
               value={random}
               disabled={transform !== "random"}
             />
             <button
               className={styles.icon}
               onClick={() =>
-                setRandom(
+                changeRandom(
                   "123456789"
                     .split("")
                     .sort(() => Math.random() - 0.5)
@@ -371,7 +352,7 @@ export default function More() {
               id="rranRadio"
               type="radio"
               checked={transform === "rran"}
-              onChange={onTransformChange}
+              onChange={() => changeTransform("rran")}
             />
             <label htmlFor="rranRadio">R-ran</label>
           </div>
@@ -379,7 +360,7 @@ export default function More() {
           <div className={cx(styles.subControl, styles.withButton)}>
             <button
               className={styles.icon}
-              onClick={() => setRranNum((rranNum + 8) % 9)}
+              onClick={() => changeRranNum((rranNum + 8) % 9)}
               disabled={transform !== "rran"}
             >
               <VscTriangleLeft />
@@ -390,7 +371,7 @@ export default function More() {
             </div>
             <button
               className={styles.icon}
-              onClick={() => setRranNum((rranNum + 1) % 9)}
+              onClick={() => changeRranNum((rranNum + 1) % 9)}
               disabled={transform !== "rran"}
             >
               <VscTriangleRight />
@@ -402,7 +383,7 @@ export default function More() {
               id="rranMirCheckbox"
               type="checkbox"
               checked={rranMir}
-              onChange={() => setRranMir(!rranMir)}
+              onChange={() => changeRranMir(!rranMir)}
               disabled={transform !== "rran"}
             />
             <label htmlFor="rranMirCheckbox">Mirror</label>
@@ -444,7 +425,7 @@ export default function More() {
         type="text"
         value={extraOptions}
         onChange={(event) => {
-          setExtraOptions(event.currentTarget.value)
+          setExtraOptions(event.target.value)
         }}
       />
     </div>
