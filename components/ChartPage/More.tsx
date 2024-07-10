@@ -214,18 +214,12 @@ export default function More() {
   }
 
   function onDefaultsClick() {
-    if (
-      window.confirm(
-        'Reset options to default values? Options will not be applied until you click "Apply and save".',
-      )
-    ) {
-      changeHiSpeed("default")
-      changeNormalize(false)
-      changeTransform("nonran")
-      changeRandom("")
-      changeRranNum(1)
-      changeRranMir(false)
-    }
+    changeHiSpeed("default")
+    changeNormalize(false)
+    changeTransform("nonran")
+    changeRandom("")
+    changeRranNum(1)
+    changeRranMir(false)
   }
 
   return (
@@ -440,11 +434,18 @@ export default function More() {
       <h6>Tips</h6>
       <ul>
         <li>
-          For now, to view another chart, go back to{" "}
+          To view another chart, go back to the{" "}
           <Link href="/search?m=chart" target="_blank">
-            the chart search page
+            chart search page
           </Link>
           .
+        </li>
+        <li>
+          Changes will not take effect until <span>Apply</span> is clicked.
+        </li>
+        <li>
+          Use <span>Revert</span> to go back to the last set of applied options
+          (i.e. what the chart currently looks like).
         </li>
         <li>
           <code>s</code> and <code>esc</code> open and close this modal.
