@@ -84,6 +84,9 @@ export default function ChartPage({
 
   useEffect(() => {
     if (chart) {
+      // Use the romanized title we get from the song's RemyWiki page.
+      // Sometimes multiple songs share a single page so we need to disambiguate.
+      // (This is the same logic we use to generate song slugs.)
       let songTitle = chart.song.remywikiTitle
       if (chart.song.genreRomanTrans.endsWith(" LIVE")) {
         songTitle = `${songTitle} LIVE`
@@ -97,7 +100,7 @@ export default function ChartPage({
       if (chart.song.labels.includes("upper")) {
         songTitle = `${songTitle} UPPER`
       }
-      // Knock Out Regrets
+      // Knock Out Regrets jp version
       if (chart.song.id === 3055) {
         songTitle = `${songTitle} JP`
       }
