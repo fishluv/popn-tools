@@ -1,15 +1,16 @@
+// Needs to be tabbable, but invisible and out of the way
+// (won't steal clicks) when not focused.
 .closeButton {
   position: absolute;
-  top: 0;
+  top: -3rem;
   right: 0;
   width: 2.5rem;
   height: 2.5rem;
   border-style: solid;
   z-index: 11;
-  opacity: 0;
 
   &:focus {
-    opacity: 1;
+    top: 0;
   }
 }
 
