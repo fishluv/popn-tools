@@ -215,7 +215,7 @@ export default function More() {
     return random.split("").sort().join("") === "123456789"
   }
 
-  function onRevertClick() {
+  function onSyncClick() {
     const { hs, normalize, t } = queryParams
     changeHiSpeed(parseNoteSpacing(hs))
     changeNormalize(!!normalize)
@@ -257,7 +257,7 @@ export default function More() {
           Apply
         </button>
 
-        <button onClick={onRevertClick}>Revert</button>
+        <button onClick={onSyncClick}>Sync</button>
         <button onClick={onDefaultsClick}>Defaults</button>
       </div>
 
@@ -468,8 +468,11 @@ export default function More() {
           Changes will not take effect until <span>Apply</span> is clicked.
         </li>
         <li>
-          Use <span>Revert</span> to go back to the last set of applied options
-          (i.e. what the chart currently looks like).
+          Use <span>Sync</span> to sync this modal with what the chart currently
+          looks like.
+          <br />
+          You can use this to discard your pending changes, or to get in sync
+          with options set in the url.
         </li>
         <li>
           <code>s</code> and <code>esc</code> open and close this modal.
