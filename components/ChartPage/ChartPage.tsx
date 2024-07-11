@@ -84,10 +84,11 @@ export default function ChartPage({
 
   // https://github.com/vercel/next.js/issues/34729
   // This SHOULD be a useEffect, but hash changes (caused by applying new options)
-  // cause a rerender of the whole app, which resets the document title to the one in _app.tsx.
+  // cause a rerender of the whole app, which resets the document title
+  // to the generic one in pages/chart/[songSlug]/index.tsx.
   // This is a hacky workaround to set the title after that happens.
   setTimeout(() => {
-    if (chart) {
+    if (chart && document.title.startsWith("Chart Viewer")) {
       // Use the romanized title we get from the song's RemyWiki page.
       // Sometimes multiple songs share a single page so we need to disambiguate.
       // (This is the same logic we use to generate song slugs.)
@@ -111,7 +112,7 @@ export default function ChartPage({
 
       document.title = `${songTitle} [${chart.difficulty.toUpperCase()}] • Pop'n Tools`
     }
-  }, 300) // Whole app rerender can take like 150 ms to set the document title so to be safe...
+  }, 500) // Whole app rerender can take like 300 ms to set the document title so to be safe...
 
   useEffect(() => {
     function scrollToMeasure() {
