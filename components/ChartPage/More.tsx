@@ -1,9 +1,10 @@
 import cx from "classnames"
+import toast from "react-hot-toast"
 import styles from "./More.module.scss"
 import { MdRefresh } from "react-icons/md"
 import { VscTriangleLeft, VscTriangleRight } from "react-icons/vsc"
 import useLocalStorage from "../../lib/useLocalStorage"
-import { useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { BooleanParam, StringParam, useQueryParams } from "use-query-params"
 import Measure, {
   NoteSpacing,
@@ -135,6 +136,50 @@ export default function More() {
     t: StringParam, // Transform
   })
 
+  const transformToTransformStr = useCallback(
+    function () {
+      if (transform === "nonran") {
+        return undefined
+      } else if (transform === "mirror") {
+        return "mirror"
+      } else if (transform === "random") {
+        return random
+      } else if (transform === "rran") {
+        return `r${rranNum}${rranMir ? "m" : ""}`
+      }
+      return undefined
+    },
+    [transform, random, rranNum, rranMir],
+  )
+
+  const onApplyClick = useCallback(
+    function () {
+      setQueryParams({
+        hs: hiSpeed,
+        normalize: normalize,
+        t: transformToTransformStr(),
+      })
+      toast("✔️ Changes applied")
+    },
+    [setQueryParams, hiSpeed, normalize, transformToTransformStr],
+  )
+
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      const { key, repeat } = event
+      if (repeat) {
+        return
+      }
+
+      if (key === "a") {
+        onApplyClick()
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown)
+    return () => document.removeEventListener("keydown", handleKeyDown)
+  }, [onApplyClick])
+
   function changeHiSpeed(newHiSpeed: NoteSpacing) {
     setHiSpeed(newHiSpeed)
     storeHiSpeed(newHiSpeed)
@@ -168,27 +213,6 @@ export default function More() {
 
   function isRandomValid() {
     return random.split("").sort().join("") === "123456789"
-  }
-
-  function transformToTransformStr() {
-    if (transform === "nonran") {
-      return undefined
-    } else if (transform === "mirror") {
-      return "mirror"
-    } else if (transform === "random") {
-      return random
-    } else if (transform === "rran") {
-      return `r${rranNum}${rranMir ? "m" : ""}`
-    }
-    return undefined
-  }
-
-  function onApplyClick() {
-    setQueryParams({
-      hs: hiSpeed,
-      normalize: normalize,
-      t: transformToTransformStr(),
-    })
   }
 
   function onRevertClick() {
@@ -449,6 +473,8 @@ export default function More() {
         </li>
         <li>
           <code>s</code> and <code>esc</code> open and close this modal.
+          <br />
+          <code>a</code> clicks <span>Apply</span>.
         </li>
       </ul>
 

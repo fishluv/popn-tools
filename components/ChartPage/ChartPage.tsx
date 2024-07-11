@@ -150,12 +150,13 @@ export default function ChartPage({
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
-      if (currentOpenModal !== null) {
+      const { key, repeat } = event
+      if (repeat) {
         return
       }
 
-      const { key, repeat } = event
-      if (repeat) {
+      // If modal is open, it should handle its own keyboard shortcuts.
+      if (currentOpenModal !== null) {
         return
       }
 
