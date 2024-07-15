@@ -100,13 +100,15 @@
 
   .transformOptions {
     display: flex;
-    flex-wrap: wrap;
     gap: 0.5rem;
-    margin-top: 0.5rem;
-    margin-right: -0.5rem;
 
-    .nonran, .mirror, .random, .rran {
-      width: calc(50% - 0.25rem);
+    .firstCol, .secondCol {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .nonran, .mirror, .cross, .random, .rran {
       display: flex;
 
       label {

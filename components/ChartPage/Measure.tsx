@@ -438,6 +438,7 @@ function laneToColor(lane: LaneOrd): NoteColor {
 
 const NONRAN = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] as LaneOrd[]
 const MIRROR = [0, 9, 8, 7, 6, 5, 4, 3, 2, 1] as LaneOrd[]
+const CROSS = [0, 2, 1, 4, 3, 5, 7, 6, 9, 8] as LaneOrd[]
 
 function pluck<T>(arr: Array<T>, ...indices: number[]) {
   return indices.map((i) => arr[i])
@@ -479,6 +480,9 @@ function makeLaneMap(transformStr: string | null | undefined): LaneOrd[] {
     case "l0m":
     case "l9m":
       return MIRROR
+
+    case "cross":
+      return CROSS
 
     case "r1":
     case "r2":
@@ -553,6 +557,9 @@ export function isValidTransformStr(transformStr: string) {
     return true
   }
   if (transformStr === "mirror") {
+    return true
+  }
+  if (transformStr === "cross") {
     return true
   }
   if (transformStr.match(/^[LlRr]\dm?$/)) {

@@ -14,7 +14,7 @@ import Measure, {
 import MeasureData from "../../models/MeasureData"
 import Link from "next/link"
 
-type ChartTransform = "nonran" | "mirror" | "random" | "rran"
+type ChartTransform = "nonran" | "mirror" | "cross" | "random" | "rran"
 
 const PREVIEW_MEASURE_DATA = new MeasureData({
   rows: [
@@ -142,6 +142,8 @@ export default function More() {
         return undefined
       } else if (transform === "mirror") {
         return "mirror"
+      } else if (transform === "cross") {
+        return "cross"
       } else if (transform === "random") {
         return random
       } else if (transform === "rran") {
@@ -225,6 +227,8 @@ export default function More() {
       changeTransform("nonran")
     } else if (t === "mirror") {
       changeTransform("mirror")
+    } else if (t === "cross") {
+      changeTransform("cross")
       // eslint-disable-next-line no-cond-assign
     } else if ((match = t.match(/^\d+$/))) {
       changeTransform("random")
@@ -332,111 +336,125 @@ export default function More() {
       <h6>Transform</h6>
 
       <div className={styles.transformOptions}>
-        <div className={styles.nonran}>
-          <input
-            id="nonranRadio"
-            type="radio"
-            checked={transform === "nonran"}
-            onChange={() => changeTransform("nonran")}
-          />
-          <label htmlFor="nonranRadio">Nonran</label>
-        </div>
-
-        <div className={styles.mirror}>
-          <input
-            id="mirrorRadio"
-            type="radio"
-            checked={transform === "mirror"}
-            onChange={() => changeTransform("mirror")}
-          />
-          <label htmlFor="mirrorRadio">Mirror</label>
-        </div>
-
-        <div className={styles.random}>
-          <div>
+        <div className={styles.firstCol}>
+          <div className={styles.nonran}>
             <input
-              id="randomRadio"
+              id="nonranRadio"
               type="radio"
-              checked={transform === "random"}
-              onChange={() => changeTransform("random")}
+              checked={transform === "nonran"}
+              onChange={() => changeTransform("nonran")}
             />
-            <label htmlFor="randomRadio">Random</label>
+            <label htmlFor="nonranRadio">Nonran</label>
           </div>
 
-          <div className={cx(styles.subControl, styles.withButton)}>
+          <div className={styles.mirror}>
             <input
-              id="randomInput"
-              className={cx(
-                styles.randomInput,
-                isRandomValid() ? styles.valid : styles.invalid,
-              )}
-              type="text"
-              inputMode="numeric"
-              placeholder="123456789"
-              maxLength={9}
-              size={9}
-              onChange={(event) => changeRandom(event.target.value)}
-              value={random}
-              disabled={transform !== "random"}
-            />
-            <button
-              className={styles.icon}
-              onClick={() =>
-                changeRandom(
-                  "123456789"
-                    .split("")
-                    .sort(() => Math.random() - 0.5)
-                    .join(""),
-                )
-              }
-              disabled={transform !== "random"}
-            >
-              <MdRefresh />
-            </button>
-          </div>
-        </div>
-
-        <div className={styles.rran}>
-          <div>
-            <input
-              id="rranRadio"
+              id="mirrorRadio"
               type="radio"
-              checked={transform === "rran"}
-              onChange={() => changeTransform("rran")}
+              checked={transform === "mirror"}
+              onChange={() => changeTransform("mirror")}
             />
-            <label htmlFor="rranRadio">R-ran</label>
+            <label htmlFor="mirrorRadio">Mirror</label>
           </div>
 
-          <div className={cx(styles.subControl, styles.withButton)}>
-            <button
-              className={styles.icon}
-              onClick={() => changeRranNum((rranNum + 8) % 9)}
-              disabled={transform !== "rran"}
-            >
-              <VscTriangleLeft />
-            </button>
-            <div className={styles.description}>
-              <span>{`Right ${rranNum}`}</span>
-              <span>{`(Left ${(9 - rranNum) % 9})`}</span>
+          <div className={styles.random}>
+            <div>
+              <input
+                id="randomRadio"
+                type="radio"
+                checked={transform === "random"}
+                onChange={() => changeTransform("random")}
+              />
+              <label htmlFor="randomRadio">Random</label>
             </div>
-            <button
-              className={styles.icon}
-              onClick={() => changeRranNum((rranNum + 1) % 9)}
-              disabled={transform !== "rran"}
-            >
-              <VscTriangleRight />
-            </button>
+
+            <div className={cx(styles.subControl, styles.withButton)}>
+              <input
+                id="randomInput"
+                className={cx(
+                  styles.randomInput,
+                  isRandomValid() ? styles.valid : styles.invalid,
+                )}
+                type="text"
+                inputMode="numeric"
+                placeholder="123456789"
+                maxLength={9}
+                size={9}
+                onChange={(event) => changeRandom(event.target.value)}
+                value={random}
+                disabled={transform !== "random"}
+              />
+              <button
+                className={styles.icon}
+                onClick={() =>
+                  changeRandom(
+                    "123456789"
+                      .split("")
+                      .sort(() => Math.random() - 0.5)
+                      .join(""),
+                  )
+                }
+                disabled={transform !== "random"}
+              >
+                <MdRefresh />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.secondCol}>
+          <div className={styles.cross}>
+            <input
+              id="crossRadio"
+              type="radio"
+              checked={transform === "cross"}
+              onChange={() => changeTransform("cross")}
+            />
+            <label htmlFor="crossRadio">Cross (クロス)</label>
           </div>
 
-          <div className={styles.subControl}>
-            <input
-              id="rranMirCheckbox"
-              type="checkbox"
-              checked={rranMir}
-              onChange={() => changeRranMir(!rranMir)}
-              disabled={transform !== "rran"}
-            />
-            <label htmlFor="rranMirCheckbox">Mirror</label>
+          <div className={styles.rran}>
+            <div>
+              <input
+                id="rranRadio"
+                type="radio"
+                checked={transform === "rran"}
+                onChange={() => changeTransform("rran")}
+              />
+              <label htmlFor="rranRadio">R-ran</label>
+            </div>
+
+            <div className={cx(styles.subControl, styles.withButton)}>
+              <button
+                className={styles.icon}
+                onClick={() => changeRranNum((rranNum + 8) % 9)}
+                disabled={transform !== "rran"}
+              >
+                <VscTriangleLeft />
+              </button>
+              <div className={styles.description}>
+                <span>{`Right ${rranNum}`}</span>
+                <span>{`(Left ${(9 - rranNum) % 9})`}</span>
+              </div>
+              <button
+                className={styles.icon}
+                onClick={() => changeRranNum((rranNum + 1) % 9)}
+                disabled={transform !== "rran"}
+              >
+                <VscTriangleRight />
+              </button>
+            </div>
+
+            <div className={styles.subControl}>
+              <input
+                id="rranMirCheckbox"
+                type="checkbox"
+                checked={rranMir}
+                onChange={() => changeRranMir(!rranMir)}
+                disabled={transform !== "rran"}
+              />
+              <label htmlFor="rranMirCheckbox">Mirror</label>
+            </div>
           </div>
         </div>
       </div>
