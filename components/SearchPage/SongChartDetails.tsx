@@ -180,6 +180,10 @@ export default function SongChartDetails({
         </div>
       )}
 
+      {extraOptions["songid"] && (
+        <Detail field="song id" value={String(songId)} />
+      )}
+
       {areEquivalent(title, genre) ? (
         <>
           <Detail
