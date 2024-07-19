@@ -5,6 +5,7 @@ import MeasureData from "../../models/MeasureData"
 import styles from "./Measure.module.scss"
 import Note, { NoteColor } from "./Note"
 import HoldNote from "./HoldNote"
+import { CSSProperties } from "react"
 
 export type NoteSpacing = "veryslow" | "slow" | "default" | "fast" | "veryfast"
 
@@ -604,6 +605,13 @@ export default function Measure({
   displayOptions: DisplayOptions
 }) {
   const noteAreaHeight = getNoteAreaHeight(measureData, displayOptions)
+
+  const tinyMeasure = noteAreaHeight < 40
+  const rootStyle: CSSProperties = {}
+  if (tinyMeasure) {
+    rootStyle["height"] = noteAreaHeight + 2 // 2 = bottom border
+  }
+
   const noteAreaStyle = {
     height: noteAreaHeight,
   }
@@ -637,9 +645,10 @@ export default function Measure({
   return (
     <div
       className={cx(className, styles.Measure)}
+      style={rootStyle}
       id={`measure${measureData.index}`}
     >
-      <div className={styles.measureNumber}>
+      <div className={cx(styles.measureNumber, tinyMeasure && styles.squish)}>
         <div className={styles.timestamp}>
           {formatTimestamp(measureData.startTimestamp)}
         </div>
@@ -650,6 +659,7 @@ export default function Measure({
           <a href={`#${measureData.index}`}>{measureData.index}</a>
         </div>
       </div>
+
       <div className={styles.noteArea} style={noteAreaStyle}>
         <div className={cx(styles.Lane, styles.pos1, styles.white)}></div>
         <div className={cx(styles.Lane, styles.pos2, styles.yellow)}></div>
@@ -708,6 +718,7 @@ export default function Measure({
           },
         )}
       </div>
+
       <div className={styles.empty}></div>
     </div>
   )

@@ -27,6 +27,18 @@ $red-lane: rgba(246, 175, 176, 0.2);
 
     line-height: 1;
 
+    &.squish {
+      align-self: unset; // Let self be pushed down into next measure.
+
+      .timestamp {
+        display: none; // Not essential, remove to save space.
+      }
+
+      .num {
+        z-index: 1; // Prevent next measure bodyblocking it.
+      }
+    }
+
     .timestamp {
       font-size: 0.875rem;
       color: rgb(150, 150, 150);
