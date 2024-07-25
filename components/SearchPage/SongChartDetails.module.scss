@@ -5,7 +5,7 @@
   font-family: "M PLUS 1", "Arial", sans-serif;
 
   .header {
-    margin: -1rem -1rem 0.5rem;
+    margin: -1rem -1rem 0;
     height: 1.25rem;
 
     display: flex;
@@ -30,14 +30,13 @@
   }
 
   .omniNote {
-    margin-top: -0.25rem;
+    margin-top: 0.25rem;
     text-align: center;
     font-size: 0.75rem;
   }
 
   .actions {
-    margin-top: -0.25rem;
-    margin-bottom: 0.25rem;
+    margin-top: 0.25rem;
     display: flex;
     justify-content: center;
     gap: 2rem;
@@ -63,7 +62,7 @@
 
   .banner {
     display: block;
-    margin: 0 auto;
+    margin: 0.25rem auto 0;
     border-radius: 4px;
   }
 
