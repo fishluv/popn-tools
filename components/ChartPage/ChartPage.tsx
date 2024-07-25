@@ -225,7 +225,7 @@ export default function ChartPage({
             {chart && (
               <SongChartDetails
                 className={styles.desktopOnlyDetails}
-                chart={chart}
+                chartToOpen={chart}
                 showHeader={false}
                 showViewChartLink={false}
               />
@@ -241,7 +241,7 @@ export default function ChartPage({
 
             {currentOpenModal === "chartDetails" && openedChart && (
               <SongChartDetails
-                chart={openedChart}
+                chartToOpen={openedChart}
                 showHeader={true}
                 showViewChartLink={false}
               />

@@ -1,10 +1,9 @@
 import cx from "classnames"
-import React from "react"
+import React, { useState } from "react"
 import styles from "./SongChartDetails.module.scss"
 import FolderPill from "../common/FolderPill"
 import Song from "../../models/Song"
 import SongBanner from "../common/SongBanner"
-import SongLevelPills from "../common/SongLevelPills"
 import Chart from "../../models/Chart"
 import LevelPill from "../common/LevelPill"
 import CharacterIcon from "../common/CharacterIcon"
@@ -93,16 +92,18 @@ function diffToTablanPathPart(diff: "e" | "n" | "h" | "ex") {
 export default function SongChartDetails({
   className,
   song,
-  chart,
+  chartToOpen,
   showHeader,
   showViewChartLink,
 }: {
   className?: string
   song?: Song
-  chart?: Chart
+  chartToOpen?: Chart
   showHeader: boolean
   showViewChartLink?: boolean
 }) {
+  const [chart, setChart] = useState<Chart | undefined>(chartToOpen)
+
   if (!song && !chart) {
     throw new Error("must specify song or chart")
   }
@@ -136,14 +137,14 @@ export default function SongChartDetails({
   return (
     <div className={cx(styles.SongChartDetails, className)}>
       {showHeader && (
-        <p className={cx(styles.header, song ? styles.song : styles.chart)}>
-          {song ? (
+        <p className={cx(styles.header, chart ? styles.chart : styles.song)}>
+          {chart ? (
             <>
-              <BsMusicNoteBeamed /> <span>song</span>
+              <CgNotes /> <span>chart</span>
             </>
           ) : (
             <>
-              <CgNotes /> <span>chart</span>
+              <BsMusicNoteBeamed /> <span>song</span>
             </>
           )}
         </p>
@@ -154,11 +155,19 @@ export default function SongChartDetails({
       )}
 
       {showViewChartLink && chart && (
-        <div className={styles.viewChart}>
-          <Note className={styles.Note} color="red" />
-          <a href={`/chart/${slug}/${chart.difficulty}`} target="_blank">
-            View chart &gt;&gt;
-          </a>
+        <div className={styles.actions}>
+          {song && (
+            <button onClick={() => setChart(undefined)}>
+              Back to song details
+            </button>
+          )}
+
+          <div className={styles.viewChart}>
+            <Note className={styles.Note} color="red" />
+            <a href={`/chart/${slug}/${chart.difficulty}`} target="_blank">
+              View chart
+            </a>
+          </div>
         </div>
       )}
 
@@ -298,13 +307,21 @@ export default function SongChartDetails({
       )}
 
       {!chart && (
-        <Detail field="charts">
-          <SongLevelPills
-            pillClassName={styles.levelPill}
-            songCharts={charts!}
-            pillStyle="full"
-            labelStyle="compact"
-          />
+        <Detail className={styles.charts} field="charts">
+          {[charts?.easy, charts?.normal, charts?.hyper, charts?.ex]
+            .filter(Boolean)
+            .map((chart, index) => (
+              <div className={styles.chart} key={index}>
+                <LevelPill
+                  className={styles.diffLevelPill}
+                  difficulty={chart!.difficulty}
+                  level={chart!.level}
+                  pillStyle="full"
+                  labelStyle="compact"
+                />
+                <button onClick={() => setChart(chart!)}>See details</button>
+              </div>
+            ))}
         </Detail>
       )}
 

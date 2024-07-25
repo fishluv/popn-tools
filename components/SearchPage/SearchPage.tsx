@@ -140,12 +140,16 @@ export default function SearchPage({ mode }: { mode: "song" | "chart" }) {
         {currentOpenModal === "loading" && <span>Loading...</span>}
 
         {currentOpenModal === "songDetails" && openedSong && (
-          <SongChartDetails song={openedSong} showHeader={true} />
+          <SongChartDetails
+            song={openedSong}
+            showHeader={true}
+            showViewChartLink={true}
+          />
         )}
 
         {currentOpenModal === "chartDetails" && openedChart && (
           <SongChartDetails
-            chart={openedChart}
+            chartToOpen={openedChart}
             showHeader={true}
             showViewChartLink={true}
           />
