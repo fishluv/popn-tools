@@ -19,7 +19,7 @@ export default function SearchPage({ mode }: { mode: "song" | "chart" }) {
   const isSongMode = mode === "song"
 
   const [currentOpenModal, setCurrentOpenModal] = useState<
-    "more" | "songDetails" | "chartDetails" | null
+    "more" | "loading" | "songDetails" | "chartDetails" | null
   >(null)
   const [openedSong, setOpenedSong] = useState<Song | undefined>(undefined)
   const [openedChart, setOpenedChart] = useState<Chart | undefined>(undefined)
@@ -136,6 +136,8 @@ export default function SearchPage({ mode }: { mode: "song" | "chart" }) {
         showGithub={currentOpenModal === "more"}
       >
         {currentOpenModal === "more" && <More />}
+
+        {currentOpenModal === "loading" && <span>Loading...</span>}
 
         {currentOpenModal === "songDetails" && openedSong && (
           <SongChartDetails song={openedSong} showHeader={true} />

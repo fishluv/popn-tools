@@ -13,7 +13,12 @@ export default function SongResultCard({
 }) {
   return (
     <button className={styles.SongResultCard} onClick={() => onClick(song)}>
-      <SongBanner song={song} width={240} height={60} />
+      <SongBanner
+        songId={song.id}
+        songTitle={song.remywikiTitle}
+        width={240}
+        height={60}
+      />
 
       <div className={styles.folderLevels}>
         <div className={styles.folder}>
@@ -25,7 +30,7 @@ export default function SongResultCard({
         </div>
         <div className={styles.levels}>
           <SongLevelPills
-            song={song}
+            songCharts={song.charts!}
             pillStyle="compact"
             labelStyle="compact"
           />

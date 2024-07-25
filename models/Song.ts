@@ -1,22 +1,26 @@
 import { SearchApiSongResult } from "../lib/search"
 import Character from "./Character"
+import Chart from "./Chart"
 import Debut, { parseDebut } from "./Debut"
 import OtherFolder, { parseOtherFolder } from "./OtherFolder"
 import VersionFolder, { parseVersionFolder } from "./VersionFolder"
 
+export interface SongCharts {
+  easy: Chart | null
+  normal: Chart | null
+  hyper: Chart | null
+  ex: Chart | null
+}
+
 interface SongContructorProps {
   id: number
   title: string
-  titleSortChar: string
+  sortTitle: string
   genre: string
-  genreSortChar: string
+  sortGenre: string
   artist: string
-  character1?: Character
-  character2?: Character
-  easyLevel?: number
-  normalLevel?: number
-  hyperLevel?: number
-  exLevel?: number
+  character1: Character | null
+  character2: Character | null
   debut: Debut | null
   folder: VersionFolder | OtherFolder | null
   slug: string
@@ -25,22 +29,20 @@ interface SongContructorProps {
   remywikiChara: string
   genreRomanTrans: string
   labels: string[]
+  // Included in /songs response but not in /charts response.
+  charts: SongCharts | null
 }
 
 export default class Song {
   static fromSearchApiSongResult({
     id,
     title,
-    title_sort_char,
+    sort_title,
     genre,
-    genre_sort_char,
+    sort_genre,
     artist,
     character1,
     character2,
-    easy_diff,
-    normal_diff,
-    hyper_diff,
-    ex_diff,
     debut,
     folder,
     slug,
@@ -49,24 +51,21 @@ export default class Song {
     remywiki_chara,
     genre_romantrans,
     labels,
-  }: SearchApiSongResult) {
+    charts,
+  }: SearchApiSongResult): Song {
     return new Song({
       id,
       title,
-      titleSortChar: title_sort_char,
+      sortTitle: sort_title,
       genre,
-      genreSortChar: genre_sort_char,
+      sortGenre: sort_genre,
       artist,
       character1: character1
         ? Character.fromSearchApiCharacterResult(character1)
-        : undefined,
+        : null,
       character2: character2
         ? Character.fromSearchApiCharacterResult(character2)
-        : undefined,
-      easyLevel: easy_diff,
-      normalLevel: normal_diff,
-      hyperLevel: hyper_diff,
-      exLevel: ex_diff,
+        : null,
       debut: parseDebut(debut),
       folder: parseVersionFolder(folder) || parseOtherFolder(folder),
       slug,
@@ -75,21 +74,25 @@ export default class Song {
       remywikiChara: remywiki_chara,
       genreRomanTrans: genre_romantrans,
       labels,
+      charts: charts
+        ? {
+            easy: charts.e ? Chart.fromSearchApiChartResult(charts.e) : null,
+            normal: charts.n ? Chart.fromSearchApiChartResult(charts.n) : null,
+            hyper: charts.h ? Chart.fromSearchApiChartResult(charts.h) : null,
+            ex: charts.ex ? Chart.fromSearchApiChartResult(charts.ex) : null,
+          }
+        : null,
     })
   }
 
   readonly id: number
   readonly title: string
-  readonly titleSortChar: string
+  readonly sortTitle: string
   readonly genre: string
-  readonly genreSortChar: string
+  readonly sortGenre: string
   readonly artist: string
-  readonly character1?: Character
-  readonly character2?: Character
-  readonly easyLevel?: number
-  readonly normalLevel?: number
-  readonly hyperLevel?: number
-  readonly exLevel?: number
+  readonly character1: Character | null
+  readonly character2: Character | null
   readonly debut: Debut | null
   readonly folder: VersionFolder | OtherFolder | null
   readonly slug: string
@@ -98,20 +101,17 @@ export default class Song {
   readonly remywikiChara: string
   readonly genreRomanTrans: string
   readonly labels: string[]
+  readonly charts: SongCharts | null
 
   constructor({
     id,
     title,
-    titleSortChar,
+    sortTitle,
     genre,
-    genreSortChar,
+    sortGenre,
     artist,
     character1,
     character2,
-    easyLevel,
-    normalLevel,
-    hyperLevel,
-    exLevel,
     debut,
     folder,
     slug,
@@ -120,19 +120,16 @@ export default class Song {
     remywikiChara,
     genreRomanTrans,
     labels,
+    charts,
   }: SongContructorProps) {
     this.id = id
     this.title = title
-    this.titleSortChar = titleSortChar
+    this.sortTitle = sortTitle
     this.genre = genre
-    this.genreSortChar = genreSortChar
+    this.sortGenre = sortGenre
     this.artist = artist
     this.character1 = character1
     this.character2 = character2
-    this.easyLevel = easyLevel
-    this.normalLevel = normalLevel
-    this.hyperLevel = hyperLevel
-    this.exLevel = exLevel
     this.debut = debut
     this.folder = folder
     this.slug = slug
@@ -141,5 +138,6 @@ export default class Song {
     this.remywikiChara = remywikiChara
     this.genreRomanTrans = genreRomanTrans
     this.labels = labels
+    this.charts = charts
   }
 }

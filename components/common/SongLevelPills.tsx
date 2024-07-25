@@ -1,10 +1,10 @@
 import React from "react"
-import Song from "../../models/Song"
+import { SongCharts } from "../../models/Song"
 import LevelPill from "./LevelPill"
 
 interface SongLevelPillsProps {
   pillClassName?: string
-  song: Song
+  songCharts: SongCharts
   pillStyle: "full" | "compact"
   labelStyle: "full" | "compact"
 }
@@ -14,44 +14,44 @@ interface SongLevelPillsProps {
  */
 export default function SongLevelPills({
   pillClassName,
-  song,
+  songCharts: { easy, normal, hyper, ex },
   pillStyle,
   labelStyle,
 }: SongLevelPillsProps) {
   return (
     <>
-      {song.easyLevel && (
+      {easy && (
         <LevelPill
           className={pillClassName}
           difficulty="e"
-          level={song.easyLevel}
+          level={easy.level}
           pillStyle={pillStyle}
           labelStyle={labelStyle}
         />
       )}
-      {song.normalLevel && (
+      {normal && (
         <LevelPill
           className={pillClassName}
           difficulty="n"
-          level={song.normalLevel}
+          level={normal.level}
           pillStyle={pillStyle}
           labelStyle={labelStyle}
         />
       )}
-      {song.hyperLevel && (
+      {hyper && (
         <LevelPill
           className={pillClassName}
           difficulty="h"
-          level={song.hyperLevel}
+          level={hyper.level}
           pillStyle={pillStyle}
           labelStyle={labelStyle}
         />
       )}
-      {song.exLevel && (
+      {ex && (
         <LevelPill
           className={pillClassName}
           difficulty="ex"
-          level={song.exLevel}
+          level={ex.level}
           pillStyle={pillStyle}
           labelStyle={labelStyle}
         />

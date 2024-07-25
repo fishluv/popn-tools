@@ -22,7 +22,8 @@ export default function ChartResultCard({
       onClick={() => onClick(chart)}
     >
       <SongBanner
-        song={chart.song}
+        songId={chart.song?.id ?? 0}
+        songTitle={chart.song?.remywikiTitle || "unknown"}
         width={style === "full" ? 240 : 224}
         height={style === "full" ? 60 : 32}
       />
@@ -41,7 +42,7 @@ export default function ChartResultCard({
       {style === "full" && (
         <FolderPill
           className={styles.FolderPill}
-          folder={chart.song.folder}
+          folder={chart.song?.folder || null}
           pillStyle="compact"
           labelStyle="full"
         />

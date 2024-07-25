@@ -115,10 +115,10 @@ export default function SongChartDetails({
   const {
     id: songId,
     title,
-    titleSortChar,
+    sortTitle,
     genre,
     genreRomanTrans,
-    genreSortChar,
+    sortGenre,
     remywikiTitle,
     artist,
     character1,
@@ -127,10 +127,11 @@ export default function SongChartDetails({
     folder,
     remywikiUrlPath,
     remywikiChara,
-    labels,
+    labels: songLabels,
     slug,
+    charts,
   } = songToUse
-  const maybeUpperSuffix = labels.includes("upper") ? " (UPPER)" : ""
+  const maybeUpperSuffix = songLabels.includes("upper") ? " (UPPER)" : ""
 
   return (
     <div className={cx(styles.SongChartDetails, className)}>
@@ -148,7 +149,7 @@ export default function SongChartDetails({
         </p>
       )}
 
-      {labels.includes("omnimix") && (
+      {songLabels.includes("omnimix") && (
         <p className={styles.omniNote}>This song is no longer playable.</p>
       )}
 
@@ -163,7 +164,8 @@ export default function SongChartDetails({
 
       <SongBanner
         className={styles.banner}
-        song={songToUse}
+        songId={songId}
+        songTitle={remywikiTitle}
         width={280}
         height={70}
       />
@@ -196,7 +198,7 @@ export default function SongChartDetails({
               className={styles.minor}
               field=""
               value={`${maybeDisplaySortChar(
-                titleSortChar,
+                sortTitle[0],
                 remywikiTitle,
               )}${remywikiTitle}`}
             />
@@ -214,7 +216,7 @@ export default function SongChartDetails({
               className={styles.minor}
               field=""
               value={`${maybeDisplaySortChar(
-                titleSortChar,
+                sortTitle[0],
                 remywikiTitle,
               )}${remywikiTitle}`}
             />
@@ -228,7 +230,7 @@ export default function SongChartDetails({
             <Detail
               className={styles.minor}
               field=""
-              value={`${maybeDisplaySortChar(genreSortChar, genre)}${genre}`}
+              value={`${maybeDisplaySortChar(sortGenre[0], genre)}${genre}`}
             />
           )}
         </>
@@ -299,7 +301,7 @@ export default function SongChartDetails({
         <Detail field="charts">
           <SongLevelPills
             pillClassName={styles.levelPill}
-            song={songToUse}
+            songCharts={charts!}
             pillStyle="full"
             labelStyle="compact"
           />

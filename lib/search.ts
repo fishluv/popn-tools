@@ -13,7 +13,7 @@ export function useSearchSong({
   limit: number
 }) {
   return useSWR<Song[]>(
-    getSearchApiUrl("/songs", `?q=${query}&limit=${limit}`),
+    getSearchApiUrl("/v2/songs", `?q=${query}&limit=${limit}`),
     async (url: string) => {
       const res = await fetch(url)
       const data = await res.json()
@@ -35,7 +35,7 @@ export function useSearchChart({
   limit: number
 }) {
   return useSWR<Chart[]>(
-    getSearchApiUrl("/charts", `?q=${query}&limit=${limit}`),
+    getSearchApiUrl("/v2/charts", `?q=${query}&limit=${limit}`),
     async (url: string) => {
       const res = await fetch(url)
       const data = await res.json()
@@ -58,43 +58,22 @@ function getSearchApiUrl(...parts: string[]) {
 export interface SearchApiSongResult {
   id: number
   title: string
-  title_sort_char: string
+  sort_title: string
   genre: string
-  genre_sort_char: string
+  sort_genre: string
   artist: string
-  character1?: SearchApiCharacterResult
-  character2?: SearchApiCharacterResult
-  easy_diff?: number
-  normal_diff?: number
-  hyper_diff?: number
-  ex_diff?: number
+  character1: SearchApiCharacterResult | null
+  character2: SearchApiCharacterResult | null
   debut: string
-  folder?: string
+  folder: string | null
   slug: string
   remywiki_url_path: string
   remywiki_title: string
   remywiki_chara: string
   genre_romantrans: string
   labels: string[]
-}
-
-export interface SearchApiChartResult {
-  id: string
-  difficulty: "e" | "n" | "h" | "ex"
-  level: number
-  song: SearchApiSongResult
-  category: string | null
-  bpm: string | null
-  bpm_steps: string[] | null
-  duration: number | null
-  notes: number | null
-  hold_notes: number | null
-  timing: string | null
-  timing_steps: string[][] | null
-  jkwiki_page_path: string | null
-  rating: string | null
-  sran_level: string | null
-  labels: string[]
+  // Included in /songs response but not in /charts response.
+  charts?: SongCharts
 }
 
 export interface SearchApiCharacterResult {
@@ -103,4 +82,30 @@ export interface SearchApiCharacterResult {
   icon1: string
   disp_name: string
   sort_name: string
+}
+
+interface SongCharts {
+  e: SearchApiChartResult | null
+  n: SearchApiChartResult | null
+  h: SearchApiChartResult | null
+  ex: SearchApiChartResult | null
+}
+
+export interface SearchApiChartResult {
+  id: string
+  difficulty: "e" | "n" | "h" | "ex"
+  level: number
+  bpm: string | null
+  bpm_steps: number[] | null
+  duration: number | null
+  notes: number | null
+  hold_notes: number | null
+  timing: string | null
+  timing_steps: number[][] | null
+  jkwiki_page_path: string | null
+  rating: string | null
+  sran_level: string | null
+  labels: string[]
+  // Included in /charts response but not in /songs response.
+  song?: SearchApiSongResult
 }
