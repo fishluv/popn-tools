@@ -143,7 +143,7 @@ export default function SearchPage({ mode }: { mode: "song" | "chart" }) {
           <SongChartDetails
             song={openedSong}
             showHeader={true}
-            showViewChartLink={true}
+            showActions={true}
           />
         )}
 
@@ -151,7 +151,7 @@ export default function SearchPage({ mode }: { mode: "song" | "chart" }) {
           <SongChartDetails
             chartToOpen={openedChart}
             showHeader={true}
-            showViewChartLink={true}
+            showActions={true}
           />
         )}
       </CommonModal>

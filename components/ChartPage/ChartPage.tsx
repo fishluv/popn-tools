@@ -227,7 +227,7 @@ export default function ChartPage({
                 className={styles.desktopOnlyDetails}
                 chartToOpen={chart}
                 showHeader={false}
-                showViewChartLink={false}
+                showActions={false}
               />
             )}
           </div>
@@ -243,7 +243,7 @@ export default function ChartPage({
               <SongChartDetails
                 chartToOpen={openedChart}
                 showHeader={true}
-                showViewChartLink={false}
+                showActions={false}
               />
             )}
           </CommonModal>

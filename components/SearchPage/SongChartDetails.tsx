@@ -94,13 +94,13 @@ export default function SongChartDetails({
   song,
   chartToOpen,
   showHeader,
-  showViewChartLink,
+  showActions,
 }: {
   className?: string
   song?: Song
   chartToOpen?: Chart
   showHeader: boolean
-  showViewChartLink?: boolean
+  showActions?: boolean
 }) {
   const [chart, setChart] = useState<Chart | undefined>(chartToOpen)
 
@@ -154,20 +154,23 @@ export default function SongChartDetails({
         <p className={styles.omniNote}>This song is no longer playable.</p>
       )}
 
-      {showViewChartLink && chart && (
-        <div className={styles.actions}>
+      {showActions && chart && (
+        <div
+          className={cx(
+            styles.actions,
+            song ? styles.spacebetween : styles.center,
+          )}
+        >
           {song && (
             <button onClick={() => setChart(undefined)}>
               Back to song details
             </button>
           )}
 
-          <div className={styles.viewChart}>
-            <a href={`/chart/${slug}/${chart.difficulty}`} target="_blank">
-              <NoteIcon className={styles.NoteIcon} color="red" />
-              View chart
-            </a>
-          </div>
+          <a href={`/chart/${slug}/${chart.difficulty}`} target="_blank">
+            <NoteIcon className={styles.NoteIcon} color="red" />
+            View chart
+          </a>
         </div>
       )}
 
