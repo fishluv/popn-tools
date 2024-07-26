@@ -161,11 +161,7 @@ export default function SongChartDetails({
             song ? styles.spacebetween : styles.center,
           )}
         >
-          {song && (
-            <button onClick={() => setChart(undefined)}>
-              Back to song details
-            </button>
-          )}
+          {song && <button onClick={() => setChart(undefined)}>⬅ Back</button>}
 
           <a
             className={styles.viewChartLink}
