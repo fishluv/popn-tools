@@ -42,15 +42,14 @@
     gap: 2rem;
     font-size: 0.875rem;
 
-    .viewChart {
+    .viewChart a {
       display: flex;
       justify-content: center;
-      gap: 0.25rem;
+      align-items: center;
+      gap: 0.125rem;
 
-      .Note {
-        display: inline-block;
-        align-self: center;
-        margin-top: 0.125rem;
+      .NoteIcon {
+        font-size: 1rem;
       }
     }
   }

@@ -10,7 +10,7 @@ import CharacterIcon from "../common/CharacterIcon"
 import { BsMusicNoteBeamed } from "react-icons/bs"
 import { CgNotes } from "react-icons/cg"
 import useLocalStorage from "../../lib/useLocalStorage"
-import Note from "../ChartPage/Note"
+import NoteIcon from "../common/NoteIcon"
 
 function Detail({
   className,
@@ -163,8 +163,8 @@ export default function SongChartDetails({
           )}
 
           <div className={styles.viewChart}>
-            <Note className={styles.Note} color="red" />
             <a href={`/chart/${slug}/${chart.difficulty}`} target="_blank">
+              <NoteIcon className={styles.NoteIcon} color="red" />
               View chart
             </a>
           </div>
