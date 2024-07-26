@@ -433,7 +433,7 @@ export default function SongChartDetails({
               )}`}
               target="_blank"
             >
-              Tabla&apos;n Bass Remix
+              {`Tabla'n Bass Remix`}
             </a>
           </>
         )}

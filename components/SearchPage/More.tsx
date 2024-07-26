@@ -9,7 +9,7 @@ export default function More() {
   return (
     <div className={styles.More}>
       <h6>What is this?</h6>
-      <p>This is a quick search tool for pop&apos;n music songs and charts.</p>
+      <p>{`This is a quick search tool for pop'n music songs and charts.`}</p>
 
       <h6>Tips</h6>
       <ul>

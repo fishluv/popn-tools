@@ -5,7 +5,7 @@ export default function Index() {
   return (
     <>
       <Head>
-        <title>Pop&apos;n Tools</title>
+        <title>{`Pop'n Tools`}</title>
       </Head>
       <Home />
     </>

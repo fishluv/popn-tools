@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div className={styles.Home}>
       <div className={styles.main}>
-        <p className={styles.title}>pop&apos;n tools</p>
+        <p className={styles.title}>{`pop'n tools`}</p>
 
         <div className={styles.pills}>
           <BigPill className={styles.BigPill} color="red" href="/randomizer">
