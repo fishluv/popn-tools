@@ -167,7 +167,11 @@ export default function SongChartDetails({
             </button>
           )}
 
-          <a href={`/chart/${slug}/${chart.difficulty}`} target="_blank">
+          <a
+            className={styles.viewChartLink}
+            href={`/chart/${slug}/${chart.difficulty}`}
+            target="_blank"
+          >
             <NoteIcon className={styles.NoteIcon} color="red" />
             View chart
           </a>
@@ -383,6 +387,20 @@ export default function SongChartDetails({
       )}
 
       <Detail className={styles.links} field="links">
+        {showActions && chart && (
+          <>
+            <a
+              className={styles.viewChartLink}
+              href={`/chart/${slug}/${chart.difficulty}`}
+              target="_blank"
+            >
+              <NoteIcon className={styles.NoteIcon} color="red" />
+              View chart
+            </a>
+            <br />
+          </>
+        )}
+
         <a href={`https://remywiki.com/${remywikiUrlPath}`} target="_blank">
           RemyWiki
         </a>
