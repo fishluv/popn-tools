@@ -5,7 +5,7 @@
   font-family: "M PLUS 1", "Arial", sans-serif;
 
   .header {
-    margin: -1rem -1rem 0.5rem;
+    margin-bottom: 0.5rem;
     height: 1.25rem;
 
     display: flex;
@@ -91,6 +91,7 @@
     }
 
     .field {
+      margin-left: 0.25rem;
       display: inline-block;
       width: 25%;
       font-size: 0.75rem;
@@ -101,11 +102,11 @@
     }
 
     .value {
+      margin-left: 0.5rem;
       display: inline-flex;
       column-gap: 0.25rem;
       align-items: flex-start;
       max-width: 72%;
-      margin-left: 0.5rem;
     }
 
     &.chara {
