@@ -34,7 +34,9 @@ export default function ChartSearchResultsList({
           let style: "full" | "compact"
           if (index === 0) {
             style = "full"
-          } else if (chartResult.song.id === chartResults[index - 1].song.id) {
+          } else if (
+            chartResult.song!.id === chartResults[index - 1].song!.id
+          ) {
             style = "compact"
           } else {
             style = "full"

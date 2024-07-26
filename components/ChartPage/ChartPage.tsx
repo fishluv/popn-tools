@@ -89,24 +89,26 @@ export default function ChartPage({
   // This is a hacky workaround to set the title after that happens.
   setTimeout(() => {
     if (chart && document.title.startsWith("Chart Viewer")) {
+      const { remywikiTitle, genreRomanTrans, labels, id } = chart.song!
+
       // Use the romanized title we get from the song's RemyWiki page.
       // Sometimes multiple songs share a single page so we need to disambiguate.
       // (This is the same logic we use to generate song slugs.)
-      let songTitle = chart.song.remywikiTitle
-      if (chart.song.genreRomanTrans.endsWith(" LIVE")) {
+      let songTitle = remywikiTitle
+      if (genreRomanTrans.endsWith(" LIVE")) {
         songTitle = `${songTitle} LIVE`
       }
-      if (chart.song.genreRomanTrans.endsWith(" LONG")) {
+      if (genreRomanTrans.endsWith(" LONG")) {
         songTitle = `${songTitle} LONG`
       }
-      if (chart.song.labels.includes("ura")) {
+      if (labels.includes("ura")) {
         songTitle = `URA ${songTitle}`
       }
-      if (chart.song.labels.includes("upper")) {
+      if (labels.includes("upper")) {
         songTitle = `${songTitle} UPPER`
       }
       // Knock Out Regrets jp version
-      if (chart.song.id === 3055) {
+      if (id === 3055) {
         songTitle = `${songTitle} JP`
       }
 
@@ -223,7 +225,7 @@ export default function ChartPage({
             {chart && (
               <SongChartDetails
                 className={styles.desktopOnlyDetails}
-                chart={chart}
+                chartToOpen={chart}
                 showHeader={false}
                 showViewChartLink={false}
               />
@@ -239,7 +241,7 @@ export default function ChartPage({
 
             {currentOpenModal === "chartDetails" && openedChart && (
               <SongChartDetails
-                chart={openedChart}
+                chartToOpen={openedChart}
                 showHeader={true}
                 showViewChartLink={false}
               />

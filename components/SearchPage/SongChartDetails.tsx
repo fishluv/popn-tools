@@ -1,10 +1,9 @@
 import cx from "classnames"
-import React from "react"
+import React, { useState } from "react"
 import styles from "./SongChartDetails.module.scss"
 import FolderPill from "../common/FolderPill"
 import Song from "../../models/Song"
 import SongBanner from "../common/SongBanner"
-import SongLevelPills from "../common/SongLevelPills"
 import Chart from "../../models/Chart"
 import LevelPill from "../common/LevelPill"
 import CharacterIcon from "../common/CharacterIcon"
@@ -93,16 +92,18 @@ function diffToTablanPathPart(diff: "e" | "n" | "h" | "ex") {
 export default function SongChartDetails({
   className,
   song,
-  chart,
+  chartToOpen,
   showHeader,
   showViewChartLink,
 }: {
   className?: string
   song?: Song
-  chart?: Chart
+  chartToOpen?: Chart
   showHeader: boolean
   showViewChartLink?: boolean
 }) {
+  const [chart, setChart] = useState<Chart | undefined>(chartToOpen)
+
   if (!song && !chart) {
     throw new Error("must specify song or chart")
   }
@@ -115,10 +116,10 @@ export default function SongChartDetails({
   const {
     id: songId,
     title,
-    titleSortChar,
+    sortTitle,
     genre,
     genreRomanTrans,
-    genreSortChar,
+    sortGenre,
     remywikiTitle,
     artist,
     character1,
@@ -127,43 +128,53 @@ export default function SongChartDetails({
     folder,
     remywikiUrlPath,
     remywikiChara,
-    labels,
+    labels: songLabels,
     slug,
+    charts,
   } = songToUse
-  const maybeUpperSuffix = labels.includes("upper") ? " (UPPER)" : ""
+  const maybeUpperSuffix = songLabels.includes("upper") ? " (UPPER)" : ""
 
   return (
     <div className={cx(styles.SongChartDetails, className)}>
       {showHeader && (
-        <p className={cx(styles.header, song ? styles.song : styles.chart)}>
-          {song ? (
+        <p className={cx(styles.header, chart ? styles.chart : styles.song)}>
+          {chart ? (
             <>
-              <BsMusicNoteBeamed /> <span>song</span>
+              <CgNotes /> <span>chart</span>
             </>
           ) : (
             <>
-              <CgNotes /> <span>chart</span>
+              <BsMusicNoteBeamed /> <span>song</span>
             </>
           )}
         </p>
       )}
 
-      {labels.includes("omnimix") && (
+      {songLabels.includes("omnimix") && (
         <p className={styles.omniNote}>This song is no longer playable.</p>
       )}
 
       {showViewChartLink && chart && (
-        <div className={styles.viewChart}>
-          <Note className={styles.Note} color="red" />
-          <a href={`/chart/${slug}/${chart.difficulty}`} target="_blank">
-            View chart &gt;&gt;
-          </a>
+        <div className={styles.actions}>
+          {song && (
+            <button onClick={() => setChart(undefined)}>
+              Back to song details
+            </button>
+          )}
+
+          <div className={styles.viewChart}>
+            <Note className={styles.Note} color="red" />
+            <a href={`/chart/${slug}/${chart.difficulty}`} target="_blank">
+              View chart
+            </a>
+          </div>
         </div>
       )}
 
       <SongBanner
         className={styles.banner}
-        song={songToUse}
+        songId={songId}
+        songTitle={remywikiTitle}
         width={280}
         height={70}
       />
@@ -196,7 +207,7 @@ export default function SongChartDetails({
               className={styles.minor}
               field=""
               value={`${maybeDisplaySortChar(
-                titleSortChar,
+                sortTitle[0],
                 remywikiTitle,
               )}${remywikiTitle}`}
             />
@@ -214,7 +225,7 @@ export default function SongChartDetails({
               className={styles.minor}
               field=""
               value={`${maybeDisplaySortChar(
-                titleSortChar,
+                sortTitle[0],
                 remywikiTitle,
               )}${remywikiTitle}`}
             />
@@ -228,7 +239,7 @@ export default function SongChartDetails({
             <Detail
               className={styles.minor}
               field=""
-              value={`${maybeDisplaySortChar(genreSortChar, genre)}${genre}`}
+              value={`${maybeDisplaySortChar(sortGenre[0], genre)}${genre}`}
             />
           )}
         </>
@@ -296,13 +307,21 @@ export default function SongChartDetails({
       )}
 
       {!chart && (
-        <Detail field="charts">
-          <SongLevelPills
-            pillClassName={styles.levelPill}
-            song={songToUse}
-            pillStyle="full"
-            labelStyle="compact"
-          />
+        <Detail className={styles.charts} field="charts">
+          {[charts?.easy, charts?.normal, charts?.hyper, charts?.ex]
+            .filter(Boolean)
+            .map((chart, index) => (
+              <div className={styles.chart} key={index}>
+                <LevelPill
+                  className={styles.diffLevelPill}
+                  difficulty={chart!.difficulty}
+                  level={chart!.level}
+                  pillStyle="full"
+                  labelStyle="compact"
+                />
+                <button onClick={() => setChart(chart!)}>See details</button>
+              </div>
+            ))}
         </Detail>
       )}
 
