@@ -178,25 +178,29 @@ export default function SongChartDetails({
         </div>
       )}
 
-      <SongBanner
-        className={styles.banner}
-        songId={songId}
-        songTitle={remywikiTitle}
-        width={280}
-        height={70}
-      />
+      <div className={styles.bannerContainer}>
+        <SongBanner
+          className={styles.banner}
+          songId={songId}
+          songTitle={remywikiTitle}
+          width={280}
+          height={70}
+        />
 
-      {chart && (
-        <div className={styles.chartLevelPillContainer}>
-          <LevelPill
-            difficulty={chart.difficulty}
-            level={chart.level}
-            pillStyle="full"
-            labelStyle="full"
-          />
-          {!!chart.holdNotes && <span className={styles.holdsPill}>long</span>}
-        </div>
-      )}
+        {chart && (
+          <>
+            <div className={cx(styles.diffStripe, styles[chart.difficulty])} />
+
+            <LevelPill
+              className={styles.LevelPill}
+              difficulty={chart.difficulty}
+              level={chart.level}
+              pillStyle="compact"
+              labelStyle="full"
+            />
+          </>
+        )}
+      </div>
 
       {extraOptions["songid"] && (
         <Detail field="song id" value={String(songId)} />
@@ -352,7 +356,9 @@ export default function SongChartDetails({
             {chart.notes ? (
               <>
                 <span>{chart.notes}</span>
-                <span>{!!chart.holdNotes && `(${chart.holdNotes} long)`}</span>
+                <span className={styles.holdNotes}>
+                  {!!chart.holdNotes && `(${chart.holdNotes} long)`}
+                </span>
               </>
             ) : (
               "?"
