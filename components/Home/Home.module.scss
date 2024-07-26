@@ -16,7 +16,15 @@
 
     .title {
       font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      span {
+        margin-top: 0.25rem;
+      }
     }
+
     .pills {
       display: flex;
       flex-direction: column;

@@ -5,12 +5,19 @@ import { CgDice3, CgSearch } from "react-icons/cg"
 import { TbLayoutList } from "react-icons/tb"
 import { LuBarChartHorizontal } from "react-icons/lu"
 import { BsGithub } from "react-icons/bs"
+import NoteIcon from "../common/NoteIcon"
 
 export default function Home() {
   return (
     <div className={styles.Home}>
       <div className={styles.main}>
-        <p className={styles.title}>{`pop'n tools`}</p>
+        <p className={styles.title}>
+          <NoteIcon color="red" />
+          <NoteIcon color="blue" />
+          {`pop'n tools`}
+          <NoteIcon color="blue" />
+          <NoteIcon color="red" />
+        </p>
 
         <div className={styles.pills}>
           <BigPill className={styles.BigPill} color="red" href="/randomizer">
