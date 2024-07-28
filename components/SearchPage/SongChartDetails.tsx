@@ -202,52 +202,60 @@ export default function SongChartDetails({
         <Detail field="song id" value={String(songId)} />
       )}
 
-      {areEquivalent(title, genre) ? (
+      {/*
+        1. title exactly equals genre (new songs): only show once
+
+        no sort char, no remywiki title: airplane
+        no sort char, yes remywiki title: hopes and dreams
+        yes sort char, no remywiki title: iki
+        yes sort char, yes remywiki title: soranaki
+      */}
+      {title === genre ? (
         <>
           <Detail
             className={styles.title}
             field="title/genre"
-            value={`${title}${maybeUpperSuffix}`}
+            value={`${maybeDisplaySortChar(
+              sortTitle[0],
+              title,
+            )}${title}${maybeUpperSuffix}`}
           />
+          {/* title contains non-roman characters */}
           {!areEquivalent(title, remywikiTitle) && (
-            <Detail
-              className={styles.minor}
-              field=""
-              value={`${maybeDisplaySortChar(
-                sortTitle[0],
-                remywikiTitle,
-              )}${remywikiTitle}`}
-            />
+            <Detail className={styles.minor} field="" value={remywikiTitle} />
           )}
         </>
       ) : (
+        /*
+          2. title != genre (most old songs): show both
+        */
         <>
           <Detail
             className={styles.title}
             field="title"
-            value={`${title}${maybeUpperSuffix}`}
+            value={`${maybeDisplaySortChar(
+              sortTitle[0],
+              title,
+            )}${title}${maybeUpperSuffix}`}
           />
+          {/* title contains non-roman characters */}
           {!areEquivalent(title, remywikiTitle) && (
-            <Detail
-              className={styles.minor}
-              field=""
-              value={`${maybeDisplaySortChar(
-                sortTitle[0],
-                remywikiTitle,
-              )}${remywikiTitle}`}
-            />
+            <Detail className={styles.minor} field="" value={remywikiTitle} />
           )}
+
+          {/* 
+            no sort char, no romantrans: ddr
+            no sort char, yes romantrans: spy
+            yes sort char, no romantrans: (n/a - not known to happen)
+            yes sort char, yes romantrans: ergosphere
+          */}
           <Detail
             className={styles.genre}
             field="genre"
-            value={genreRomanTrans}
+            value={`${maybeDisplaySortChar(sortGenre[0], genre)}${genre}`}
           />
           {toAscii(genre) !== genreRomanTrans && (
-            <Detail
-              className={styles.minor}
-              field=""
-              value={`${maybeDisplaySortChar(sortGenre[0], genre)}${genre}`}
-            />
+            <Detail className={styles.minor} field="" value={genreRomanTrans} />
           )}
         </>
       )}
