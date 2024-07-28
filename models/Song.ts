@@ -85,6 +85,40 @@ export default class Song {
     })
   }
 
+  static CHAR_FIXES = {
+    圄: "à",
+    鵤: "Ä",
+    圉: "ä",
+    圈: "é",
+    鵐: "ê", // 571 La Peche du Pierrot
+    鵙: "ə", // 1110 uen
+    鶉: "ó",
+    鶇: "ö",
+    圖: "ţ",
+    鵺: "Ü",
+    鶫: "²",
+    鵝: "7",
+    圍: "@", // 88 ANIME HEROINE
+    囎: "ː", // Artist Fuuuːka - Note, not a colon
+    釁: "★", // 1637 Kemono no ouja Meumeu TODO: Change to 🐾?
+    囿: "♥", // 187 CANDY, 205 Prism Heart, and many others
+    囂: "♡", // 1659 Strawberry Chu Chu - Note, not full heart
+    佰: "你", // 31 Woneijatheizau, 1454 Zijiu jau
+    鶚: "㊙",
+    鵑: "", // Artist Akko's
+    炙: "焱", // 1954 Hikage
+    罕: "έ", // 2087 Telos
+    罔: "ς", // 2087 Telos
+  }
+
+  static fixKonamiChars(s: string) {
+    let fixed = s
+    Object.entries(this.CHAR_FIXES).forEach(([weirdChar, fixChar]) => {
+      fixed = fixed.replaceAll(weirdChar, fixChar)
+    })
+    return fixed
+  }
+
   readonly id: number
   readonly title: string
   readonly sortTitle: string
@@ -123,11 +157,11 @@ export default class Song {
     charts,
   }: SongContructorProps) {
     this.id = id
-    this.title = title
+    this.title = Song.fixKonamiChars(title)
     this.sortTitle = sortTitle
-    this.genre = genre
+    this.genre = Song.fixKonamiChars(genre)
     this.sortGenre = sortGenre
-    this.artist = artist
+    this.artist = Song.fixKonamiChars(artist)
     this.character1 = character1
     this.character2 = character2
     this.debut = debut
