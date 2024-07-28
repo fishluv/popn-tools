@@ -54,7 +54,7 @@ function maybeDisplaySortChar(sortChar: string, value: string) {
   ) {
     return ""
   } else {
-    return `[${sortChar}] `
+    return `[${toAscii(sortChar)}] `
   }
 }
 
@@ -215,10 +215,9 @@ export default function SongChartDetails({
           <Detail
             className={styles.title}
             field="title/genre"
-            value={`${maybeDisplaySortChar(
-              sortTitle[0],
+            value={`${maybeDisplaySortChar(sortTitle[0], title)}${toAscii(
               title,
-            )}${title}${maybeUpperSuffix}`}
+            )}${maybeUpperSuffix}`}
           />
           {/* title contains non-roman characters */}
           {!areEquivalent(title, remywikiTitle) && (
@@ -233,10 +232,9 @@ export default function SongChartDetails({
           <Detail
             className={styles.title}
             field="title"
-            value={`${maybeDisplaySortChar(
-              sortTitle[0],
+            value={`${maybeDisplaySortChar(sortTitle[0], title)}${toAscii(
               title,
-            )}${title}${maybeUpperSuffix}`}
+            )}${maybeUpperSuffix}`}
           />
           {/* title contains non-roman characters */}
           {!areEquivalent(title, remywikiTitle) && (
@@ -252,7 +250,9 @@ export default function SongChartDetails({
           <Detail
             className={styles.genre}
             field="genre"
-            value={`${maybeDisplaySortChar(sortGenre[0], genre)}${genre}`}
+            value={`${maybeDisplaySortChar(sortGenre[0], genre)}${toAscii(
+              genre,
+            )}`}
           />
           {toAscii(genre) !== genreRomanTrans && (
             <Detail className={styles.minor} field="" value={genreRomanTrans} />
