@@ -9,6 +9,7 @@ import LevelPill from "../common/LevelPill"
 import CharacterIcon from "../common/CharacterIcon"
 import { BsMusicNoteBeamed } from "react-icons/bs"
 import { CgNotes } from "react-icons/cg"
+import { IoMdArrowRoundBack } from "react-icons/io"
 import useLocalStorage from "../../lib/useLocalStorage"
 import NoteIcon from "../common/NoteIcon"
 
@@ -161,7 +162,11 @@ export default function SongChartDetails({
             song ? styles.spacebetween : styles.center,
           )}
         >
-          {song && <button onClick={() => setChart(undefined)}>⬅ Back</button>}
+          {song && (
+            <button onClick={() => setChart(undefined)}>
+              <IoMdArrowRoundBack viewBox="0 8 512 512" size="1.25em" /> Back
+            </button>
+          )}
 
           <a
             className={styles.viewChartLink}

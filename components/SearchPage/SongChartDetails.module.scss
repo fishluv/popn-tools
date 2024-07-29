@@ -47,6 +47,11 @@
     &.center {
       justify-content: center;
     }
+
+    button {
+      display: flex;
+      gap: 0.125rem;
+    }
   }
 
   a.viewChartLink {
