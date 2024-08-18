@@ -18,6 +18,11 @@ export default function More() {
           more!
         </li>
         <li>
+          You can specify a level range
+          <br />
+          (e.g. <code>42-44</code>).
+        </li>
+        <li>
           Tap <BsMusicNoteBeamed />/<CgNotes /> to switch between songs and
           charts.
         </li>
