@@ -51,14 +51,17 @@ function TimingStep({
     )
   }
 
+  const isStandard = JSON.stringify(timingStep) === "[118,122,126,132,136,140]"
+
   const [badStart, goodStart, greatStart, greatEnd, goodEnd, badEnd] =
     timingStep
-  const [coolStart, coolEnd] = [127.8, 130.2]
+  const [coolStart, coolEnd] = [127.8, 130.2] // Same in every chart.
   const earlyBadSize = goodStart - badStart
   const earlyGoodSize = greatStart - goodStart
-  const earlyGreatSize = coolStart - greatStart
+  // Some great windows are eclipsed by the cool window.
+  const earlyGreatSize = Math.max(0, coolStart - greatStart)
   const coolSize = coolEnd - coolStart
-  const lateGreatSize = greatEnd - coolEnd
+  const lateGreatSize = Math.max(0, greatEnd - coolEnd)
   const lateGoodSize = goodEnd - greatEnd
   const lateBadSize = badEnd - goodEnd
 
@@ -68,46 +71,76 @@ function TimingStep({
 
   const earlyBadStyle: CSSProperties = {
     left: stretch(badStart - 100),
-    width: Math.max(0, stretch(earlyBadSize)),
+    width: stretch(earlyBadSize),
   }
   const earlyGoodStyle: CSSProperties = {
     left: stretch(goodStart - 100),
-    width: Math.max(0, stretch(earlyGoodSize)),
+    width: stretch(earlyGoodSize),
   }
   const earlyGreatStyle: CSSProperties = {
     left: stretch(greatStart - 100),
-    width: Math.max(0, stretch(earlyGreatSize)),
+    width: stretch(earlyGreatSize),
   }
   const coolStyle: CSSProperties = {
     left: stretch(coolStart - 100),
-    width: Math.max(0, stretch(coolSize)),
+    width: stretch(coolSize),
   }
   const lateGreatStyle: CSSProperties = {
     left: stretch(coolEnd - 100),
-    width: Math.max(0, stretch(lateGreatSize)),
+    width: stretch(lateGreatSize),
   }
   const lateGoodStyle: CSSProperties = {
     left: stretch(greatEnd - 100),
-    width: Math.max(0, stretch(lateGoodSize)),
+    width: stretch(lateGoodSize),
   }
   const lateBadStyle: CSSProperties = {
     left: stretch(goodEnd - 100),
-    width: Math.max(0, stretch(lateBadSize)),
+    width: stretch(lateBadSize),
   }
 
+  const info = [
+    isStandard ? "Standard timing" : "Nonstandard timing",
+    timingStep.join("/"),
+    `Early bad window: ${earlyBadSize} frames (${Math.round(
+      earlyBadSize * 16.6,
+    )} ms)`,
+    `Early good window: ${earlyGoodSize} frames (${Math.round(
+      earlyGoodSize * 16.6,
+    )} ms)`,
+    `Early great window: ${earlyGreatSize.toFixed(1)} frames (${Math.round(
+      earlyGreatSize * 16.6,
+    )} ms)`,
+    `Cool window: ${coolSize.toFixed(1)} frames (${Math.round(
+      coolSize * 16.6,
+    )} ms)`,
+    `Late great window: ${lateGreatSize.toFixed(1)} frames (${Math.round(
+      lateGreatSize * 16.6,
+    )} ms)`,
+    `Late good window: ${lateGoodSize} frames (${Math.round(
+      lateGoodSize * 16.6,
+    )} ms)`,
+    `Late bad window: ${lateBadSize} frames (${Math.round(
+      lateBadSize * 16.6,
+    )} ms)`,
+  ].join("\n")
+
   return (
-    <div className={cx(className, styles.TimingStep)}>
-      <div className={styles.bad} style={earlyBadStyle}>
-        {Math.round(earlyBadSize)}
+    <div className={cx(className, styles.TimingStep)} title={info}>
+      {/*
+        Bad and good windows are always ints.
+        Great and cool windows are always floats.
+      */}
+      <div className={styles.bad} style={earlyBadStyle} title="sup">
+        {earlyBadSize}
       </div>
       <div className={styles.bad} style={lateBadStyle}>
-        {Math.round(lateBadSize)}
+        {lateBadSize}
       </div>
       <div className={styles.good} style={earlyGoodStyle}>
-        {Math.round(earlyGoodSize)}
+        {earlyGoodSize}
       </div>
       <div className={styles.good} style={lateGoodStyle}>
-        {Math.round(lateGoodSize)}
+        {lateGoodSize}
       </div>
       <div className={styles.great} style={earlyGreatStyle}>
         {earlyGreatSize.toFixed(1)}
@@ -468,26 +501,30 @@ export default function SongChartDetails({
               <>{"?"}</>
             )}
           </Detail>
-          <Detail className={styles.minor} field="">
-            <TimingStep timingStep={[118, 122, 126, 132, 136, 140]} />
-          </Detail>
+
           {extraOptions["timing"] &&
             chart.timingSteps &&
             chart.timingSteps.length > 0 &&
             chart.timingSteps.map((step, idx) => (
-              <Detail key={idx} className={styles.minor} field="">
+              <Detail
+                key={idx}
+                field=""
+                className={chart.timing === "standard" ? styles.minor : ""}
+              >
                 <TimingStep timingStep={step} />
               </Detail>
             ))}
-          {chart.timingSteps && chart.timingSteps.length > 0 && (
-            <Detail
-              className={styles.minor}
-              field=""
-              value={chart.timingSteps
-                .map((steps) => steps.join("/"))
-                .join(" → ")}
-            />
-          )}
+
+          {extraOptions["timing"] &&
+            chart.timing &&
+            chart.timing !== "standard" && (
+              <>
+                <Detail field="" value="reference: standard" />
+                <Detail field="" className={styles.minor}>
+                  <TimingStep timingStep={[118, 122, 126, 132, 136, 140]} />
+                </Detail>
+              </>
+            )}
 
           {chart.jpRating && (
             <Detail field="jp rating" value={chart.jpRating} />
