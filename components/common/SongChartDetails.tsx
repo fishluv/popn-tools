@@ -1,5 +1,5 @@
 import cx from "classnames"
-import React, { useState } from "react"
+import React, { CSSProperties, useState } from "react"
 import { BsMusicNoteBeamed } from "react-icons/bs"
 import { CgNotes } from "react-icons/cg"
 import { IoMdArrowRoundBack } from "react-icons/io"
@@ -31,6 +31,93 @@ function Detail({
         {value}
         {children}
       </span>
+    </div>
+  )
+}
+
+function TimingStep({
+  className,
+  timingStep,
+}: {
+  className?: string
+  timingStep: number[]
+}) {
+  const validVals = timingStep.filter((val) => val >= 100 && val <= 160)
+  if (validVals.length !== 6) {
+    return (
+      <div className={cx(className, styles.TimingStep)}>
+        {validVals.join("/")}
+      </div>
+    )
+  }
+
+  const [badStart, goodStart, greatStart, greatEnd, goodEnd, badEnd] =
+    timingStep
+  const [coolStart, coolEnd] = [127.8, 130.2]
+  const earlyBadSize = goodStart - badStart
+  const earlyGoodSize = greatStart - goodStart
+  const earlyGreatSize = coolStart - greatStart
+  const coolSize = coolEnd - coolStart
+  const lateGreatSize = greatEnd - coolEnd
+  const lateGoodSize = goodEnd - greatEnd
+  const lateBadSize = badEnd - goodEnd
+
+  function stretch(val: number) {
+    return val * 8
+  }
+
+  const earlyBadStyle: CSSProperties = {
+    left: stretch(badStart - 100),
+    width: Math.max(0, stretch(earlyBadSize)),
+  }
+  const earlyGoodStyle: CSSProperties = {
+    left: stretch(goodStart - 100),
+    width: Math.max(0, stretch(earlyGoodSize)),
+  }
+  const earlyGreatStyle: CSSProperties = {
+    left: stretch(greatStart - 100),
+    width: Math.max(0, stretch(earlyGreatSize)),
+  }
+  const coolStyle: CSSProperties = {
+    left: stretch(coolStart - 100),
+    width: Math.max(0, stretch(coolSize)),
+  }
+  const lateGreatStyle: CSSProperties = {
+    left: stretch(coolEnd - 100),
+    width: Math.max(0, stretch(lateGreatSize)),
+  }
+  const lateGoodStyle: CSSProperties = {
+    left: stretch(greatEnd - 100),
+    width: Math.max(0, stretch(lateGoodSize)),
+  }
+  const lateBadStyle: CSSProperties = {
+    left: stretch(goodEnd - 100),
+    width: Math.max(0, stretch(lateBadSize)),
+  }
+
+  return (
+    <div className={cx(className, styles.TimingStep)}>
+      <div className={styles.bad} style={earlyBadStyle}>
+        {Math.round(earlyBadSize)}
+      </div>
+      <div className={styles.bad} style={lateBadStyle}>
+        {Math.round(lateBadSize)}
+      </div>
+      <div className={styles.good} style={earlyGoodStyle}>
+        {Math.round(earlyGoodSize)}
+      </div>
+      <div className={styles.good} style={lateGoodStyle}>
+        {Math.round(lateGoodSize)}
+      </div>
+      <div className={styles.great} style={earlyGreatStyle}>
+        {earlyGreatSize.toFixed(1)}
+      </div>
+      <div className={styles.great} style={lateGreatStyle}>
+        {lateGreatSize.toFixed(1)}
+      </div>
+      <div className={styles.cool} style={coolStyle}>
+        {coolSize.toFixed(1)}
+      </div>
     </div>
   )
 }
@@ -381,6 +468,17 @@ export default function SongChartDetails({
               <>{"?"}</>
             )}
           </Detail>
+          <Detail className={styles.minor} field="">
+            <TimingStep timingStep={[118, 122, 126, 132, 136, 140]} />
+          </Detail>
+          {extraOptions["timing"] &&
+            chart.timingSteps &&
+            chart.timingSteps.length > 0 &&
+            chart.timingSteps.map((step, idx) => (
+              <Detail key={idx} className={styles.minor} field="">
+                <TimingStep timingStep={step} />
+              </Detail>
+            ))}
           {chart.timingSteps && chart.timingSteps.length > 0 && (
             <Detail
               className={styles.minor}
