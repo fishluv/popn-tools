@@ -7,8 +7,8 @@ import MeasureList from "./MeasureList"
 import styles from "./ChartPage.module.scss"
 import Chart from "../../models/Chart"
 import { fetchChartInfo } from "../../lib/fetchChartInfo"
-import SongChartDetails from "../SearchPage/SongChartDetails"
-import ChartResultCard from "../SearchPage/ChartResultCard"
+import SongChartDetails from "../common/SongChartDetails"
+import ChartResultCard from "../common/ChartResultCard"
 import {
   ChartOptions,
   DisplayOptions,

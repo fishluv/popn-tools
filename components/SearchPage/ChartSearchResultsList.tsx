@@ -1,7 +1,7 @@
 import styles from "./ChartSearchResultsList.module.scss"
 import { useSearchChart } from "../../lib/search"
 import Chart from "../../models/Chart"
-import ChartResultCard from "./ChartResultCard"
+import ChartResultCard from "../common/ChartResultCard"
 import cx from "classnames"
 
 export default function ChartSearchResultsList({
