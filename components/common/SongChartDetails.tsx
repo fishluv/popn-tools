@@ -77,17 +77,19 @@ function TimingStep({
     left: stretch(goodStart - 100),
     width: stretch(earlyGoodSize),
   }
+  // Round these up since they're usually floats
+  // and without rounding there are subtle white gaps.
   const earlyGreatStyle: CSSProperties = {
     left: stretch(greatStart - 100),
-    width: stretch(earlyGreatSize),
+    width: Math.ceil(stretch(earlyGreatSize)),
   }
   const coolStyle: CSSProperties = {
     left: stretch(coolStart - 100),
-    width: stretch(coolSize),
+    width: Math.ceil(stretch(coolSize)),
   }
   const lateGreatStyle: CSSProperties = {
     left: stretch(coolEnd - 100),
-    width: stretch(lateGreatSize),
+    width: Math.ceil(stretch(lateGreatSize)),
   }
   const lateGoodStyle: CSSProperties = {
     left: stretch(greatEnd - 100),
