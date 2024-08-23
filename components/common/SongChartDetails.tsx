@@ -504,8 +504,7 @@ export default function SongChartDetails({
             )}
           </Detail>
 
-          {extraOptions["timing"] &&
-            chart.timingSteps &&
+          {chart.timingSteps &&
             chart.timingSteps.length > 0 &&
             chart.timingSteps.map((step, idx) => (
               <Detail
@@ -517,16 +516,14 @@ export default function SongChartDetails({
               </Detail>
             ))}
 
-          {extraOptions["timing"] &&
-            chart.timing &&
-            chart.timing !== "standard" && (
-              <>
-                <Detail field="" value="reference: standard" />
-                <Detail field="" className={styles.minor}>
-                  <TimingStep timingStep={[118, 122, 126, 132, 136, 140]} />
-                </Detail>
-              </>
-            )}
+          {chart.timing && chart.timing !== "standard" && (
+            <>
+              <Detail field="" value="reference: standard" />
+              <Detail field="" className={styles.minor}>
+                <TimingStep timingStep={[118, 122, 126, 132, 136, 140]} />
+              </Detail>
+            </>
+          )}
 
           {chart.jpRating && (
             <Detail field="jp rating" value={chart.jpRating} />
