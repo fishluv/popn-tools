@@ -65,7 +65,7 @@ function TimingStep({
    * First, we convert approximate frames to ms.
    */
   let [badStart, goodStart, greatStart, greatEnd, goodEnd, badEnd] =
-    timingStep.map((v) => (v - 129) * 16 + (v > 129 ? 4 : 0))
+    timingStep.map((v, i) => (v - 129) * 16 + (i >= 3 ? 4 : 0))
   // Excluded from timing data because it's the same in every chart.
   const [coolStart, coolEnd] = [-20, 20]
   // Some great windows are eclipsed by the cool window (SPY H).
