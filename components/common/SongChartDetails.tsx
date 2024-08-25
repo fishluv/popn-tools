@@ -67,10 +67,18 @@ function TimingStep({
    *
    * First, we convert approximate frames to ms.
    */
-  const [badStart, goodStart, greatStart, greatEnd, goodEnd, badEnd] =
+  let [badStart, goodStart, greatStart, greatEnd, goodEnd, badEnd] =
     timingStep.map((v) => (v - 129) * 16 + (v > 129 ? 4 : 0))
   // Excluded from timing data because it's the same in every chart.
   const [coolStart, coolEnd] = [-20, 20]
+  // Some great windows are eclipsed by the cool window (SPY H).
+  // This clamping ensures no windows overlap (i.e. values monotonically increase).
+  greatStart = Math.min(greatStart, coolStart)
+  goodStart = Math.min(goodStart, greatStart)
+  badStart = Math.min(badStart, goodStart)
+  greatEnd = Math.max(greatEnd, coolEnd)
+  goodEnd = Math.max(goodEnd, greatEnd)
+  badEnd = Math.max(badEnd, goodEnd)
   /*
    * For standard timing, this conversion yields ms values of:
    *   early bad   -176
@@ -88,10 +96,9 @@ function TimingStep({
   // Now we can calculate the effective window sizes in ms.
   const earlyBadSize = goodStart - badStart
   const earlyGoodSize = greatStart - goodStart
-  // Some great windows are eclipsed by the cool window.
-  const earlyGreatSize = Math.max(0, coolStart - greatStart)
+  const earlyGreatSize = coolStart - greatStart
   const coolSize = coolEnd - coolStart
-  const lateGreatSize = Math.max(0, greatEnd - coolEnd)
+  const lateGreatSize = greatEnd - coolEnd
   const lateGoodSize = goodEnd - greatEnd
   const lateBadSize = badEnd - goodEnd
 
