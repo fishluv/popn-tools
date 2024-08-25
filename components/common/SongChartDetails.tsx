@@ -43,7 +43,10 @@ function TimingStep({
   timingStep: number[]
 }) {
   const validVals = timingStep.filter((val) => val >= 100 && val <= 160)
-  if (validVals.length !== 6) {
+  if (
+    validVals.length !== 6 ||
+    validVals.some((val, idx) => idx >= 1 && validVals[idx - 1] > val) // Must monotonically increase.
+  ) {
     return (
       <div className={cx(className, styles.TimingStep)}>
         {validVals.join("/")}
@@ -53,9 +56,36 @@ function TimingStep({
 
   const isStandard = JSON.stringify(timingStep) === "[118,122,126,132,136,140]"
 
+  /**
+   * 1 frame = 16.66 ms at 60 hz (or 16.68 ms at 59.97 hz)
+   * But to simplify the math, Konami uses an approximated frame unit
+   * where 1 approximate frame equals exactly 16 ms.
+   * And then to compensate they enlarge the late side of the windows
+   * by an 4 additional ms.
+   * (Consequently, the late great window is slightly larger than
+   * the early great window.)
+   *
+   * First, we convert approximate frames to ms.
+   */
   const [badStart, goodStart, greatStart, greatEnd, goodEnd, badEnd] =
-    timingStep
-  const [coolStart, coolEnd] = [127.8, 130.2] // Same in every chart.
+    timingStep.map((v) => (v - 129) * 16 + (v > 129 ? 4 : 0))
+  // Excluded from timing data because it's the same in every chart.
+  const [coolStart, coolEnd] = [-20, 20]
+  /*
+   * For standard timing, this conversion yields ms values of:
+   *   early bad   -176
+   *   early good  -112
+   *   early great  -48
+   *   early cool   -20
+   *    late cool   +20
+   *    late great  +52
+   *    late good  +116
+   *    late bad   +180
+   *
+   * The min and max approximate frame values are 104 and 154.
+   * Thus the effective range for converted ms is -400 to +404.
+   */
+  // Now we can calculate the effective window sizes in ms.
   const earlyBadSize = goodStart - badStart
   const earlyGoodSize = greatStart - goodStart
   // Some great windows are eclipsed by the cool window.
@@ -65,65 +95,50 @@ function TimingStep({
   const lateGoodSize = goodEnd - greatEnd
   const lateBadSize = badEnd - goodEnd
 
-  function stretch(val: number) {
-    return val * 8
+  function scale(val: number) {
+    return val * 0.5
   }
 
+  // Add 176 so that standard timing ends up with left = 0.
   const earlyBadStyle: CSSProperties = {
-    left: stretch(badStart - 100),
-    width: stretch(earlyBadSize),
+    left: scale(badStart + 176),
+    width: scale(earlyBadSize),
   }
   const earlyGoodStyle: CSSProperties = {
-    left: stretch(goodStart - 100),
-    width: stretch(earlyGoodSize),
+    left: scale(goodStart + 176),
+    width: scale(earlyGoodSize),
   }
-  // Round these up since they're usually floats
-  // and without rounding there are subtle white gaps.
   const earlyGreatStyle: CSSProperties = {
-    left: stretch(greatStart - 100),
-    width: Math.ceil(stretch(earlyGreatSize)),
+    left: scale(greatStart + 176),
+    width: scale(earlyGreatSize),
   }
   const coolStyle: CSSProperties = {
-    left: stretch(coolStart - 100),
-    width: Math.ceil(stretch(coolSize)),
+    left: scale(coolStart + 176),
+    width: scale(coolSize),
   }
   const lateGreatStyle: CSSProperties = {
-    left: stretch(coolEnd - 100),
-    width: Math.ceil(stretch(lateGreatSize)),
+    left: scale(coolEnd + 176),
+    width: scale(lateGreatSize),
   }
   const lateGoodStyle: CSSProperties = {
-    left: stretch(greatEnd - 100),
-    width: stretch(lateGoodSize),
+    left: scale(greatEnd + 176),
+    width: scale(lateGoodSize),
   }
   const lateBadStyle: CSSProperties = {
-    left: stretch(goodEnd - 100),
-    width: stretch(lateBadSize),
+    left: scale(goodEnd + 176),
+    width: scale(lateBadSize),
   }
 
   const info = [
     isStandard ? "Standard timing" : "Nonstandard timing",
-    timingStep.join("/"),
-    `Early bad window: ${earlyBadSize} frames (${Math.round(
-      earlyBadSize * 16.6,
-    )} ms)`,
-    `Early good window: ${earlyGoodSize} frames (${Math.round(
-      earlyGoodSize * 16.6,
-    )} ms)`,
-    `Early great window: ${earlyGreatSize.toFixed(1)} frames (${Math.round(
-      earlyGreatSize * 16.6,
-    )} ms)`,
-    `Cool window: ${coolSize.toFixed(1)} frames (${Math.round(
-      coolSize * 16.6,
-    )} ms)`,
-    `Late great window: ${lateGreatSize.toFixed(1)} frames (${Math.round(
-      lateGreatSize * 16.6,
-    )} ms)`,
-    `Late good window: ${lateGoodSize} frames (${Math.round(
-      lateGoodSize * 16.6,
-    )} ms)`,
-    `Late bad window: ${lateBadSize} frames (${Math.round(
-      lateBadSize * 16.6,
-    )} ms)`,
+    JSON.stringify(timingStep),
+    `Early bad window: ${earlyBadSize} ms`,
+    `Early good window: ${earlyGoodSize} ms`,
+    `Early great window: ${earlyGreatSize} ms`,
+    `Cool window: ${coolSize} ms`,
+    `Late great window: ${lateGreatSize} ms`,
+    `Late good window: ${lateGoodSize} ms`,
+    `Late bad window: ${lateBadSize} ms`,
   ].join("\n")
 
   return (
@@ -132,7 +147,7 @@ function TimingStep({
         Bad and good windows are always ints.
         Great and cool windows are always floats.
       */}
-      <div className={styles.bad} style={earlyBadStyle} title="sup">
+      <div className={styles.bad} style={earlyBadStyle}>
         {earlyBadSize}
       </div>
       <div className={styles.bad} style={lateBadStyle}>
@@ -145,13 +160,13 @@ function TimingStep({
         {lateGoodSize}
       </div>
       <div className={styles.great} style={earlyGreatStyle}>
-        {earlyGreatSize.toFixed(1)}
+        {earlyGreatSize}
       </div>
       <div className={styles.great} style={lateGreatStyle}>
-        {lateGreatSize.toFixed(1)}
+        {lateGreatSize}
       </div>
       <div className={styles.cool} style={coolStyle}>
-        {coolSize.toFixed(1)}
+        {coolSize}
       </div>
     </div>
   )
