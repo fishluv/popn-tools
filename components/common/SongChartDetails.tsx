@@ -146,10 +146,6 @@ function TimingStep({
 
   return (
     <div className={cx(className, styles.TimingStep)} title={info}>
-      {/*
-        Bad and good windows are always ints.
-        Great and cool windows are always floats.
-      */}
       <div className={styles.bad} style={earlyBadStyle}>
         {earlyBadSize}
       </div>
