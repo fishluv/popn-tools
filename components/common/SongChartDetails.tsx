@@ -42,11 +42,10 @@ function TimingStep({
   className?: string
   timingStep: number[]
 }) {
-  const validVals = timingStep.filter((val) => val >= 100 && val <= 160)
-  if (validVals.length !== 6) {
+  if (timingStep.length !== 6) {
     return (
       <div className={cx(className, styles.TimingStep)}>
-        {validVals.join("/")}
+        {JSON.stringify(timingStep)}
       </div>
     )
   }
