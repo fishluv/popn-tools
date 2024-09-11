@@ -13,7 +13,7 @@ export function useSearchSong({
   limit: number
 }) {
   return useSWR<Song[]>(
-    getSearchApiUrl("/v2/songs", `?q=${query}&limit=${limit}`),
+    getSearchApiUrl("/songs", `?q=${query}&limit=${limit}`),
     async (url: string) => {
       const res = await fetch(url)
       const data = await res.json()
@@ -35,7 +35,7 @@ export function useSearchChart({
   limit: number
 }) {
   return useSWR<Chart[]>(
-    getSearchApiUrl("/v2/charts", `?q=${query}&limit=${limit}`),
+    getSearchApiUrl("/charts", `?q=${query}&limit=${limit}`),
     async (url: string) => {
       const res = await fetch(url)
       const data = await res.json()

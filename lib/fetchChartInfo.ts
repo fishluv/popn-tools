@@ -13,7 +13,7 @@ export async function fetchChartInfo({
   songSlug: string
   difficulty: "e" | "n" | "h" | "ex"
 }) {
-  const url = getSearchApiUrl("/v2/charts", songSlug, difficulty)
+  const url = getSearchApiUrl("/charts", songSlug, difficulty)
   const res = await fetch(url)
   const json = await res.json()
 
