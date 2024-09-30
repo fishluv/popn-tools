@@ -263,7 +263,7 @@ function SongOptions({ initialOptions }: { initialOptions: ListSongsParams }) {
         />
 
         <div className={cx(styles.filterControl, styles.query)}>
-          <label htmlFor="queryInput">Query</label>
+          <label htmlFor="queryInput">Search</label>
           <input
             id="queryInput"
             type="text"

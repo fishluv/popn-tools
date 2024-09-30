@@ -23,7 +23,7 @@ export default function Search() {
   return (
     <>
       <Head>
-        <title>{"List Songs • Pop'n Tools"}</title>
+        <title>{"Browse Songs • Pop'n Tools"}</title>
       </Head>
       <ListSongsPage {...params} />
     </>

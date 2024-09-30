@@ -93,13 +93,17 @@
       margin-left: 0.5rem;
 
       label {
-        width: 48px;
+        width: 4.5rem;
       }
 
       &.query {
         display: flex;
         align-items: center;
         gap: 0.25rem;
+
+        input {
+          width: 14rem;
+        }
       }
     }
 
