@@ -1,3 +1,4 @@
+import cx from "classnames"
 import React, { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import styles from "./ListSongsPage.module.scss"
@@ -133,6 +134,7 @@ function SongOptions({ initialOptions }: { initialOptions: ListSongsParams }) {
     folder: initialFolder,
     level: initialLevel,
     debut: initialDebut,
+    query: initialQuery,
     sorts,
   } = initialOptions
 
@@ -148,6 +150,8 @@ function SongOptions({ initialOptions }: { initialOptions: ListSongsParams }) {
   )
 
   const [debut, setDebut] = useState<string | undefined | null>(initialDebut)
+
+  const [query, setQuery] = useState<string | undefined | null>(initialQuery)
 
   let initialSortBy
   let initialSortDirection
@@ -170,10 +174,15 @@ function SongOptions({ initialOptions }: { initialOptions: ListSongsParams }) {
     const folderParam = folder ? `folder=${folder}` : ""
     const levelParam = levelAdv || level ? `level=${levelAdv || level}` : ""
     const debutParam = debut ? `debut=${debut}` : ""
+    const queryParam = query ? `q=${query}` : ""
     const sortParam = `sort=${sortDirection === "desc" ? "-" : ""}${sortBy}`
-    const params = [folderParam, levelParam, debutParam, sortParam].filter(
-      Boolean,
-    )
+    const params = [
+      folderParam,
+      levelParam,
+      debutParam,
+      queryParam,
+      sortParam,
+    ].filter(Boolean)
     router.push(`${window.location.pathname}?${params.join("&")}`)
   }
 
@@ -182,6 +191,7 @@ function SongOptions({ initialOptions }: { initialOptions: ListSongsParams }) {
     setLevel(null)
     setLevelAdv(null)
     setDebut(null)
+    setQuery(null)
     setSortBy("title")
     setSortDirection("asc")
     router.push(window.location.pathname)
@@ -195,7 +205,7 @@ function SongOptions({ initialOptions }: { initialOptions: ListSongsParams }) {
         </p>
 
         <Select
-          className={styles.filterSelect}
+          className={styles.filterControl}
           id="folderSelect"
           label="Folder"
           options={FOLDER_OPTIONS}
@@ -209,9 +219,8 @@ function SongOptions({ initialOptions }: { initialOptions: ListSongsParams }) {
           }}
         />
 
-        <div className={styles.level}>
+        <div className={cx(styles.filterControl, styles.level)}>
           <Select
-            className={styles.filterSelect}
             id="levelSelect"
             label="Level"
             options={Array(50)
@@ -239,7 +248,7 @@ function SongOptions({ initialOptions }: { initialOptions: ListSongsParams }) {
         </div>
 
         <Select
-          className={styles.filterSelect}
+          className={styles.filterControl}
           id="debutSelect"
           label="Debut"
           options={DEBUT_OPTIONS}
@@ -252,6 +261,18 @@ function SongOptions({ initialOptions }: { initialOptions: ListSongsParams }) {
             }
           }}
         />
+
+        <div className={cx(styles.filterControl, styles.query)}>
+          <label htmlFor="queryInput">Query</label>
+          <input
+            id="queryInput"
+            type="text"
+            value={query ?? ""}
+            onChange={(event) => {
+              setQuery(event.target.value)
+            }}
+          />
+        </div>
       </div>
 
       <div className={styles.sort}>

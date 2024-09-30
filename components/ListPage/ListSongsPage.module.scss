@@ -89,11 +89,17 @@
       }
     }
 
-    .filterSelect {
+    .filterControl {
       margin-left: 0.5rem;
 
       label {
         width: 48px;
+      }
+
+      &.query {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
       }
     }
 

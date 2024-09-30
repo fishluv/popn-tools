@@ -45,9 +45,10 @@ export function parseSongOrdering(s: string | undefined | null): Sort | null {
 }
 
 export interface ListSongsParams {
-  debut?: Debut | null
   folder?: VersionFolder | OtherFolder | null
   level?: string | null
+  debut?: Debut | null
+  query?: string | null
   sorts?: Sort[] | null
   page?: string | null
 }
@@ -92,6 +93,7 @@ export function useListSongs({
   debut,
   folder,
   level,
+  query,
   sorts,
   page,
 }: ListSongsParams) {
@@ -104,6 +106,9 @@ export function useListSongs({
   }
   if (level) {
     params.push(["level", level])
+  }
+  if (query) {
+    params.push(["q", query])
   }
   if (sorts) {
     sorts.forEach((o) => params.push(["sort[]", o]))

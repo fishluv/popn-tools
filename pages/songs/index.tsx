@@ -15,6 +15,7 @@ export default function Search() {
     debut: parseDebut(debut),
     folder: parseVersionFolder(folder) || parseOtherFolder(folder),
     level: searchParams.get("level"),
+    query: searchParams.get("q"),
     sorts: sorts.map(parseSongOrdering).filter(Boolean) as Sort[],
     page: searchParams.get("page") || "1",
   }
