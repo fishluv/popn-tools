@@ -54,3 +54,8 @@ button {
     box-shadow: 1px 1px 3px #888;
   }
 }
+
+code {
+  padding: 1px;
+  border: 1px solid lighten($code-color, 30%); // From Bootstrap.
+}
