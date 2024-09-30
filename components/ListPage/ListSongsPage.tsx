@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import toast from "react-hot-toast"
 import styles from "./ListSongsPage.module.scss"
 import { ListSongsParams, PagyMetadata, useListSongs } from "../../lib/list"
 import Link from "next/link"
@@ -364,7 +365,7 @@ export default function ListSongsPage(params: ListSongsParams) {
         <div className={styles.spacer} />
 
         <div className={styles.charts}>
-          <Link href="/chart">
+          <Link href="javascript:void(0)" onClick={() => toast("Coming soon!")}>
             <CgNotes />
             Charts
           </Link>
