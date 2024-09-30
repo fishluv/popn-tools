@@ -1,0 +1,84 @@
+@import "styles/colors";
+@import "styles/components";
+
+.SongList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  .SongRow {
+    display: flex;
+    gap: 0.5rem;
+
+    .left {
+      display: flex;
+      flex-direction: column;
+      border-radius: 0;
+      padding: 0;
+      position: relative;
+
+      .songId {
+        position: absolute;
+        top: 0;
+        left: 0;
+        @include pill;
+        background-color: #333;
+        color: white;
+      }
+
+      .levels {
+        display: flex;
+
+        .levelPill, .placeholder {
+          width: 40px;
+          height: 18px;
+        }
+
+        .levelPill {
+          text-align: center;
+          padding: 0;
+        }
+
+        .placeholder {
+          &.easy {
+            background-color: $e-light;
+            border: 0 solid $e-bright;
+            border-bottom-width: 2px;
+          }
+
+          &.normal {
+            background-color: $n-light;
+            border: 0 solid $n-bright;
+            border-bottom-width: 2px;
+          }
+
+          &.hyper {
+            background-color: $h-light;
+            border: 0 solid $h-bright;
+            border-bottom-width: 2px;
+          }
+
+          &.ex {
+            background-color: $ex-light;
+            border: 0 solid $ex-bright;
+            border-bottom-width: 2px;
+          }
+        }
+      }
+    }
+
+    .right {
+      line-height: 1;
+
+      .title {
+        font-size: 0.875rem;
+      }
+
+      .genre {
+        margin-top: 0.25rem;
+        font-size: 0.75rem;
+        font-weight: bold;
+      }
+    }
+  }
+}

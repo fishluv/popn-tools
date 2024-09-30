@@ -11,7 +11,7 @@ import NoteIcon from "./NoteIcon"
 import SongBanner from "./SongBanner"
 import Chart from "../../models/Chart"
 import Song from "../../models/Song"
-import useLocalStorage from "../../lib/useLocalStorage"
+import useExtraOptions from "../../lib/useExtraOptions"
 
 function Detail({
   className,
@@ -201,18 +201,6 @@ function formatDuration(duration: number) {
   return `${min}:${String(sec).padStart(2, "0")}`
 }
 
-function parseExtraOptions(extraOptionsStr: string) {
-  const extraOptions: Record<string, boolean> = {}
-
-  extraOptionsStr.split(",").forEach((opt) => {
-    if (opt.trim()) {
-      extraOptions[opt.trim()] = true
-    }
-  })
-
-  return extraOptions
-}
-
 function diffToEagleFlowerPlifePathPart(diff: "e" | "n" | "h" | "ex") {
   return ["e", "n", "h", "ex"].indexOf(diff)
 }
@@ -245,8 +233,7 @@ export default function SongChartDetails({
     throw new Error("must specify song or chart")
   }
 
-  const [extraOptionsStr] = useLocalStorage("extraOptions", "")
-  const extraOptions = parseExtraOptions(extraOptionsStr)
+  const extraOptions = useExtraOptions()
 
   const songToUse = (song || chart!.song)!
 

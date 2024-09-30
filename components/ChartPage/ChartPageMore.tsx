@@ -1,6 +1,6 @@
 import cx from "classnames"
 import toast from "react-hot-toast"
-import styles from "./More.module.scss"
+import styles from "./ChartPageMore.module.scss"
 import { MdRefresh } from "react-icons/md"
 import { VscTriangleLeft, VscTriangleRight } from "react-icons/vsc"
 import useLocalStorage from "../../lib/useLocalStorage"
@@ -13,6 +13,7 @@ import Measure, {
 } from "./Measure"
 import MeasureData from "../../models/MeasureData"
 import Link from "next/link"
+import More from "../common/More"
 
 type ChartTransform = "nonran" | "mirror" | "cross" | "random" | "rran"
 
@@ -97,7 +98,7 @@ const PREVIEW_MEASURE_DATA = new MeasureData({
   duration: 400,
 })
 
-export default function More() {
+export default function ChartPageMore() {
   const [storedHiSpeed, storeHiSpeed] = useLocalStorage(
     "chart.hispeed",
     "default",
@@ -127,8 +128,6 @@ export default function More() {
   const [rranNum, setRranNum] = useState<number>(Number(storedRranNum))
   const [storedRranMir, storeRranMir] = useLocalStorage("chart.rranMir", "0")
   const [rranMir, setRranMir] = useState<boolean>(storedRranMir === "1")
-
-  const [extraOptions, setExtraOptions] = useLocalStorage("extraOptions", "")
 
   const [queryParams, setQueryParams] = useQueryParams({
     hs: StringParam, // Hi-speed
@@ -251,7 +250,7 @@ export default function More() {
   }
 
   return (
-    <div className={styles.More}>
+    <More className={styles.ChartPageMore}>
       <div className={styles.topButtons}>
         <button
           className={styles.apply}
@@ -498,16 +497,6 @@ export default function More() {
           <code>a</code> clicks <span>Apply</span>.
         </li>
       </ul>
-
-      <h6>Extra options</h6>
-      <input
-        className={styles.extraOptionsInput}
-        type="text"
-        value={extraOptions}
-        onChange={(event) => {
-          setExtraOptions(event.target.value)
-        }}
-      />
-    </div>
+    </More>
   )
 }

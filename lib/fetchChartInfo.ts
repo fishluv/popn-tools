@@ -1,10 +1,6 @@
-import urlJoin from "url-join"
 import HttpError from "./HttpError"
 import Chart from "../models/Chart"
-
-function getSearchApiUrl(...parts: string[]) {
-  return urlJoin(process.env.NEXT_PUBLIC_SEARCH_API_URL!, ...parts)
-}
+import { getSearchApiUrl } from "./urls"
 
 export async function fetchChartInfo({
   songSlug,

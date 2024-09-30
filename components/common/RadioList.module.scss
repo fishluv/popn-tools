@@ -1,0 +1,10 @@
+.RadioList {
+  display: flex;
+  flex-direction: column;
+
+  .option {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+  }
+}

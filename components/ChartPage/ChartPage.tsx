@@ -17,7 +17,7 @@ import {
   parseNoteSpacing,
 } from "./Measure"
 import CommonModal from "../common/CommonModal"
-import More from "./More"
+import ChartPageMore from "./ChartPageMore"
 import { FiMoreHorizontal } from "react-icons/fi"
 
 export default function ChartPage({
@@ -237,7 +237,7 @@ export default function ChartPage({
             onClose={() => setCurrentOpenModal(null)}
             showGithub={currentOpenModal === "more"}
           >
-            {currentOpenModal === "more" && <More />}
+            {currentOpenModal === "more" && <ChartPageMore />}
 
             {currentOpenModal === "chartDetails" && openedChart && (
               <SongChartDetails

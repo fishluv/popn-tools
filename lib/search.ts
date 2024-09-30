@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import useSWR from "swr"
-import urlJoin from "url-join"
 import Song from "../models/Song"
 import Chart from "../models/Chart"
 import HttpError from "./HttpError"
+import { getSearchApiUrl } from "./urls"
 
 export function useSearchSong({
   query,
@@ -49,10 +49,6 @@ export function useSearchChart({
       )
     },
   )
-}
-
-function getSearchApiUrl(...parts: string[]) {
-  return urlJoin(process.env.NEXT_PUBLIC_SEARCH_API_URL!, ...parts)
 }
 
 export interface SearchApiSongResult {
