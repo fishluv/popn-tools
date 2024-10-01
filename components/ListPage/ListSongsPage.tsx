@@ -307,9 +307,11 @@ function SongOptions({ initialOptions }: { initialOptions: ListSongsParams }) {
   )
 }
 
-function PageLinks({ page, series }: PagyMetadata) {
+function PageInfo({ count, page, series }: PagyMetadata) {
   return (
-    <div className={styles.PageLinks}>
+    <div className={styles.PageInfo}>
+      <span>{count} total</span>
+      {"•"}
       <span>Page</span>
       {series.map((pageOrGap, index) => {
         if (pageOrGap === "gap") {
@@ -404,7 +406,7 @@ export default function ListSongsPage(params: ListSongsParams) {
       </div>
 
       <SongOptions initialOptions={params} />
-      <PageLinks {...pagy} />
+      <PageInfo {...pagy} />
       <SongList
         songs={songs}
         romanize={!!params.sorts?.[0]?.match(/^-?r/)}
@@ -414,7 +416,7 @@ export default function ListSongsPage(params: ListSongsParams) {
           setCurrentOpenModal("songDetails")
         }}
       />
-      <PageLinks {...pagy} />
+      <PageInfo {...pagy} />
 
       <CommonModal
         isOpen={currentOpenModal !== null}

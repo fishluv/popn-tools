@@ -93,7 +93,11 @@
       margin-left: 0.5rem;
 
       label {
-        width: 4.5rem;
+        width: 3.5rem;
+      }
+
+      &.level input {
+        width: 12rem;
       }
 
       &.query {
@@ -146,9 +150,12 @@
     }
   }
 
-  .PageLinks {
+  .PageInfo {
     align-self: center;
     display: flex;
     gap: 0.5rem;
+    background: #eee;
+    border-radius: 1rem;
+    padding: 0.25rem 0.75rem;
   }
 }
