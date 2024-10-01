@@ -239,6 +239,7 @@ function SongOptions({ initialOptions }: { initialOptions: ListSongsParams }) {
           />
           {" or "}
           <input
+            id="levelInput"
             type="text"
             value={levelAdv || ""}
             onChange={(event) => {
@@ -352,6 +353,14 @@ export default function ListSongsPage(params: ListSongsParams) {
 
       // If modal is open, it should handle its own keyboard shortcuts.
       if (currentOpenModal !== null) {
+        return
+      }
+
+      // Make sure no text inputs on the main page are active!
+      if (
+        document.activeElement &&
+        ["levelInput", "queryInput"].includes(document.activeElement.id)
+      ) {
         return
       }
 
