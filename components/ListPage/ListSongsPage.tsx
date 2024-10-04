@@ -405,7 +405,10 @@ export default function ListSongsPage(params: ListSongsParams) {
         <div className={styles.spacer} />
 
         <div className={styles.charts}>
-          <Link href="javascript:void(0)" onClick={() => toast("Coming soon!")}>
+          <Link
+            href="javascript:void(0)"
+            onClick={() => toast("Coming soon!", { position: "top-center" })}
+          >
             <CgNotes />
             Charts
           </Link>
