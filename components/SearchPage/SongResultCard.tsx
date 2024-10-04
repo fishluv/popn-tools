@@ -23,7 +23,7 @@ export default function SongResultCard({
       <div className={styles.folderLevels}>
         <div className={styles.folder}>
           <FolderPill
-            folder={song.folders[0]}
+            folder={song.folders[0] || song.debut || null}
             pillStyle="compact"
             labelStyle="compact"
           />
