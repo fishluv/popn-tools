@@ -5,7 +5,7 @@ import Chart from "../models/Chart"
 import HttpError from "./HttpError"
 import Debut from "../models/Debut"
 import VersionFolder from "../models/VersionFolder"
-import OtherFolder from "../models/OtherFolder"
+import BemaniFolder from "../models/BemaniFolder"
 import { SearchApiChartResult, SearchApiSongResult } from "./search"
 import { getSearchApiUrl } from "./urls"
 
@@ -45,7 +45,7 @@ export function parseSongOrdering(s: string | undefined | null): Sort | null {
 }
 
 export interface ListSongsParams {
-  folder?: VersionFolder | OtherFolder | null
+  folder?: VersionFolder | BemaniFolder | null
   level?: string | null
   debut?: Debut | null
   query?: string | null
@@ -65,7 +65,7 @@ export interface ListSongsResult {
 
 export interface ListChartsParams {
   debut?: Debut | null
-  folder?: VersionFolder | OtherFolder | null
+  folder?: VersionFolder | BemaniFolder | null
   level?: number | null
   diff?: ("e" | "n" | "h" | "ex")[] | null
   sorts?: Sort[] | null

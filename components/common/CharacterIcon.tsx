@@ -2,7 +2,7 @@ import cx from "classnames"
 import styles from "./CharacterIcon.module.scss"
 import Character from "../../models/Character"
 import VersionFolder from "../../models/VersionFolder"
-import OtherFolder from "../../models/OtherFolder"
+import BemaniFolder from "../../models/BemaniFolder"
 
 export default function CharacterIcon({
   className,
@@ -11,7 +11,7 @@ export default function CharacterIcon({
 }: {
   className?: string
   character: Character
-  songFolder: VersionFolder | OtherFolder | null
+  songFolder: VersionFolder | BemaniFolder | null
 }) {
   const iconUrl = `https://popn-assets.pages.dev/assets/${charaId}/${icon1}.png`
   const iconStyle = {

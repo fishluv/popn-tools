@@ -249,7 +249,7 @@ export default function SongChartDetails({
     character1,
     character2,
     debut,
-    folder,
+    folders,
     remywikiUrlPath,
     remywikiChara,
     labels: songLabels,
@@ -396,7 +396,7 @@ export default function SongChartDetails({
             <CharacterIcon
               className={styles.CharacterIcon}
               character={character1}
-              songFolder={folder}
+              songFolder={folders[0] ?? null}
             />
           )}
           {/* forget about chara2 icon bc it's almost always the same as chara1
@@ -433,21 +433,20 @@ export default function SongChartDetails({
           />
         )}
 
-      {debut === folder ? (
-        <Detail field="debut/folder">
-          <FolderPill folder={debut} pillStyle="full" labelStyle="full" />
-        </Detail>
-      ) : (
-        <>
-          <Detail field="debut">
-            <FolderPill folder={debut} pillStyle="full" labelStyle="full" />
-          </Detail>
+      <Detail field="debut">
+        <FolderPill folder={debut} pillStyle="full" labelStyle="full" />
+      </Detail>
 
-          <Detail field="folder">
-            <FolderPill folder={folder} pillStyle="full" labelStyle="full" />
-          </Detail>
-        </>
-      )}
+      <Detail field="folders">
+        {folders.map((folder, i) => (
+          <FolderPill
+            key={i}
+            folder={folder}
+            pillStyle="full"
+            labelStyle="full"
+          />
+        ))}
+      </Detail>
 
       {!chart && (
         <Detail className={styles.charts} field="charts">
@@ -472,11 +471,18 @@ export default function SongChartDetails({
         <>
           <Detail field="bpm" value={chart.bpm || "?"} />
           {chart.bpmSteps && chart.bpmSteps.length > 1 && (
-            <Detail
-              className={styles.minor}
-              field=""
-              value={chart.bpmSteps.join(" → ")}
-            />
+            <>
+              <Detail
+                className={styles.minor}
+                field=""
+                value={chart.bpmSteps.join(" → ")}
+              />
+              <Detail className={cx(styles.minor, styles.primaryBpm)} field="">
+                {"primary: "}
+                {chart.primaryBpm}
+                {chart.primaryBpmType === "plurality" && " (nonmajority)"}
+              </Detail>
+            </>
           )}
 
           <Detail

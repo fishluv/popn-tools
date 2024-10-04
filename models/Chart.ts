@@ -8,6 +8,8 @@ interface ChartContructorProps {
   level: number
   bpm: string | null
   bpmSteps: number[] | null
+  primaryBpm: number | null
+  primaryBpmType: "totality" | "majority" | "plurality" | null
   duration: number | null
   notes: number | null
   holdNotes: number | null
@@ -21,6 +23,19 @@ interface ChartContructorProps {
   song: Song | null
 }
 
+function parsePrimaryBpmType(
+  s: string | null,
+): "totality" | "majority" | "plurality" | null {
+  switch (s) {
+    case "totality":
+    case "majority":
+    case "plurality":
+      return s
+    default:
+      return null
+  }
+}
+
 export default class Chart {
   static fromSearchApiChartResult({
     id,
@@ -28,6 +43,8 @@ export default class Chart {
     level,
     bpm,
     bpm_steps,
+    bpm_primary,
+    bpm_primary_type,
     duration,
     notes,
     hold_notes,
@@ -45,6 +62,8 @@ export default class Chart {
       level,
       bpm,
       bpmSteps: bpm_steps,
+      primaryBpm: bpm_primary,
+      primaryBpmType: parsePrimaryBpmType(bpm_primary_type),
       duration,
       notes,
       holdNotes: hold_notes,
@@ -63,6 +82,8 @@ export default class Chart {
   readonly level: number
   readonly bpm: string | null
   readonly bpmSteps: number[] | null
+  readonly primaryBpm: number | null
+  readonly primaryBpmType: "totality" | "majority" | "plurality" | null
   readonly duration: number | null
   readonly notes: number | null
   readonly holdNotes: number | null
@@ -80,6 +101,8 @@ export default class Chart {
     level,
     bpm,
     bpmSteps,
+    primaryBpm,
+    primaryBpmType,
     duration,
     notes,
     holdNotes,
@@ -96,6 +119,8 @@ export default class Chart {
     this.level = level
     this.bpm = bpm
     this.bpmSteps = bpmSteps
+    this.primaryBpm = primaryBpm
+    this.primaryBpmType = primaryBpmType
     this.duration = duration
     this.notes = notes
     this.holdNotes = holdNotes

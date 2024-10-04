@@ -61,7 +61,7 @@ export interface SearchApiSongResult {
   character1: SearchApiCharacterResult | null
   character2: SearchApiCharacterResult | null
   debut: string
-  folder: string | null
+  folders: string[]
   slug: string
   remywiki_url_path: string
   remywiki_title: string
@@ -93,6 +93,8 @@ export interface SearchApiChartResult {
   level: number
   bpm: string | null
   bpm_steps: number[] | null
+  bpm_primary: number | null
+  bpm_primary_type: string | null
   duration: number | null
   notes: number | null
   hold_notes: number | null

@@ -125,9 +125,10 @@
 
     .value {
       display: inline-flex;
-      column-gap: 0.25rem;
+      flex-wrap: wrap;
+      gap: 0.25rem;
       align-items: flex-start;
-      max-width: 72%;
+      max-width: 70%;
 
       .holdNotes {
         background-color: $ex-light;
@@ -154,6 +155,10 @@
         display: flex;
         gap: 0.5rem;
       }
+    }
+
+    &.primaryBpm {
+      margin-top: 0.25rem;
     }
 
     &.timing {

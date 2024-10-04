@@ -2,12 +2,12 @@ import cx from "classnames"
 import React from "react"
 import styles from "./FolderPill.module.scss"
 import VersionFolder from "../../models/VersionFolder"
-import OtherFolder from "../../models/OtherFolder"
+import BemaniFolder from "../../models/BemaniFolder"
 import Debut from "../../models/Debut"
 
 interface FolderPillProps {
   className?: string
-  folder: VersionFolder | OtherFolder | Debut | null
+  folder: VersionFolder | BemaniFolder | Debut | null
   pillStyle: "full" | "compact"
   labelStyle: "full" | "compact"
 }

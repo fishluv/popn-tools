@@ -8,16 +8,16 @@ import SongList from "./SongList"
 import RadioList from "../common/RadioList"
 import { useRouter } from "next/navigation"
 import Select from "../common/Select"
+import BemaniFolder from "../../models/BemaniFolder"
+import Debut from "../../models/Debut"
+import Song from "../../models/Song"
 import VersionFolder from "../../models/VersionFolder"
-import OtherFolder from "../../models/OtherFolder"
 import CommonModal from "../common/CommonModal"
 import SongChartDetails from "../common/SongChartDetails"
-import Song from "../../models/Song"
 import ReactModal from "react-modal"
 import { CgNotes } from "react-icons/cg"
 import { BsMusicNoteBeamed } from "react-icons/bs"
 import { FiMoreHorizontal } from "react-icons/fi"
-import Debut from "../../models/Debut"
 import More from "../common/More"
 import useExtraOptions from "../../lib/useExtraOptions"
 
@@ -35,10 +35,11 @@ const SORT_DIRECTION_OPTIONS = [
 ]
 
 const FOLDER_OPTIONS: {
-  id: VersionFolder | OtherFolder
+  id: VersionFolder | BemaniFolder | "dummy1" | "dummy2"
   label?: string
   disabled?: boolean
 }[] = [
+  { id: "dummy1", label: "-- Version folders --", disabled: true },
   { id: "27", label: "unilab" },
   { id: "26", label: "kaimei riddles" },
   { id: "25", label: "peace" },
@@ -67,10 +68,17 @@ const FOLDER_OPTIONS: {
   { id: "2" },
   { id: "1" },
   { id: "cs" },
-  { id: "bemani" },
+  { id: "dummy2", label: "-- Bemani folders --", disabled: true },
+  { id: "iidx" },
   { id: "ddr" },
   { id: "gitadora" },
-  { id: "iidx" },
+  { id: "jubeat" },
+  { id: "reflec" },
+  { id: "sdvx" },
+  { id: "beatstream" },
+  { id: "museca" },
+  { id: "nostalgia" },
+  { id: "bemani" },
 ]
 
 const DEBUT_OPTIONS: {
@@ -433,7 +441,7 @@ export default function ListSongsPage(params: ListSongsParams) {
         showGithub={currentOpenModal === "more"}
       >
         {currentOpenModal === "more" && (
-          <More>
+          <More className={styles.More}>
             <h6>What is this?</h6>
             <p>{`This is a tool for browsing pop'n music songs and charts.`}</p>
             <h6>Tips</h6>

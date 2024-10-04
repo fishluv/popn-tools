@@ -42,7 +42,7 @@ export default function ChartResultCard({
       {style === "full" && (
         <FolderPill
           className={styles.FolderPill}
-          folder={chart.song?.folder || null}
+          folder={chart.song?.folders[0] || null}
           pillStyle="compact"
           labelStyle="full"
         />

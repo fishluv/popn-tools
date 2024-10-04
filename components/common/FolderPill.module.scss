@@ -8,34 +8,79 @@
     background-color: #e6ec70;
     color: #048833;
   }
-  &.bemani {
-    border-color: #5100fe;
-    background-color: #eef;
-    color: #5100fe;
-  }
-  &.ddr {
-    border-color: #31892e;
-    background-color: #ffd;
-    color: #31892e;
-  }
-  &.eemall {
-    border-color: #113AA3;
-    background-color: #e5faff;
-    color: #113AA3;
-  }
-  &.gitadora {
-    border-color: black;
-    background-color: #fef200;
-    color: black;
-  }
-  &.iidx {
-    // default grey is good enough for now
-  }
+
   &.lively {
     border-color: #0044a9;
     background-color: #ffee32;
     color: #0044a9;
   }
+
+  &.iidx {
+    border-color: #523;
+    background-color: #fe8;
+    color: #e5c;
+  }
+
+  &.ddr {
+    border-color: #4a6;
+    background-color: #e8fff8;
+    color: #4a6;
+  }
+
+  &.gitadora {
+    border-color: #43a;
+    background-color: #fb3;
+    color: #43a;
+  }
+
+  &.jubeat {
+    border-color: #a52;
+    background-color: #fff8ee;
+    color: #421;
+  }
+
+  &.reflec {
+    border-color: #4bf;
+    background-color: #fea;
+    color: #4bf;
+  }
+
+  &.sdvx {
+    border-color: #e8b;
+    background-color: #cff;
+    color: #444;
+  }
+
+  &.beatstream {
+    border-color: #222;
+    background-color: #ffa;
+    color: #e46;
+  }
+
+  &.museca {
+    border-color: #222;
+    background-color: #d33;
+    color: white;
+  }
+
+  &.nostalgia {
+    border-color: #b83;
+    background-color: #ffa;
+    color: #851;
+  }
+
+  &.bemani {
+    border-color: #5100fe;
+    background-color: #eef;
+    color: #5100fe;
+  }
+
+  &.eemall {
+    border-color: #113aa3;
+    background-color: #e5faff;
+    color: #113aa3;
+  }
+
   &.ac1 {
     border-color: #00b0f9;
     background-color: #ffee00;
