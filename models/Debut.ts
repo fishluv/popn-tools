@@ -26,6 +26,7 @@ export const DEBUTS = [
   "25",
   "26",
   "27",
+  "28",
   "cs1",
   "cs2",
   "cs3",
@@ -80,6 +81,7 @@ export function parseDebut(s: string | undefined | null): Debut | null {
     case "25":
     case "26":
     case "27":
+    case "28":
     case "cs1":
     case "cs2":
     case "cs3":

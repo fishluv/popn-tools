@@ -40,6 +40,7 @@ const FOLDER_OPTIONS: {
   disabled?: boolean
 }[] = [
   { id: "dummy1", label: "-- Version folders --", disabled: true },
+  { id: "28", label: "jam&fizz" },
   { id: "27", label: "unilab" },
   { id: "26", label: "kaimei riddles" },
   { id: "25", label: "peace" },
@@ -87,6 +88,7 @@ const DEBUT_OPTIONS: {
   disabled?: boolean
 }[] = [
   { id: "dummy1", label: "-- AC --", disabled: true },
+  { id: "28", label: "jam&fizz" },
   { id: "27", label: "unilab" },
   { id: "26", label: "kaimei riddles" },
   { id: "25", label: "peace" },

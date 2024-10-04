@@ -30,6 +30,7 @@ export const VERSION_FOLDERS = [
   "25",
   "26",
   "27",
+  "28",
 ] as const
 
 type VersionFolder = (typeof VERSION_FOLDERS)[number]
@@ -67,6 +68,7 @@ export function parseVersionFolder(
     case "25":
     case "26":
     case "27":
+    case "28":
       return s
     default:
       return null
