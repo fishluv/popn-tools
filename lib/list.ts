@@ -8,6 +8,7 @@ import VersionFolder from "../models/VersionFolder"
 import BemaniFolder from "../models/BemaniFolder"
 import { SearchApiChartResult, SearchApiSongResult } from "./search"
 import { getSearchApiUrl } from "./urls"
+import Difficulty from "../models/Difficulty"
 
 type SortField =
   | "title"
@@ -82,7 +83,7 @@ export interface ListSongsResult {
 }
 
 export type ListChartsParams = SharedListParams & {
-  diff?: ("e" | "n" | "h" | "ex")[] | null
+  diff?: Difficulty[] | null
   bpm?: string | null
   bpmtype?: string | null
   notes?: string | null
