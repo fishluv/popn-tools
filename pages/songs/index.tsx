@@ -4,7 +4,7 @@ import ListSongsPage from "../../components/ListPage/ListSongsPage"
 import { parseDebut } from "../../models/Debut"
 import { parseVersionFolder } from "../../models/VersionFolder"
 import { parseBemaniFolder } from "../../models/BemaniFolder"
-import { ListSongsParams, Sort, parseSongOrdering } from "../../lib/list"
+import { ListSongsParams, Sort, parseSort } from "../../lib/list"
 
 export default function Search() {
   const searchParams = useSearchParams()
@@ -16,7 +16,7 @@ export default function Search() {
     folder: parseVersionFolder(folder) || parseBemaniFolder(folder),
     level: searchParams.get("level"),
     query: searchParams.get("q"),
-    sorts: sorts.map(parseSongOrdering).filter(Boolean) as Sort[],
+    sorts: sorts.map(parseSort).filter(Boolean) as Sort[],
     page: searchParams.get("page") || "1",
   }
 

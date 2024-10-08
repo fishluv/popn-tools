@@ -15,12 +15,17 @@ type SortField =
   | "rtitle"
   | "rgenre"
   | "debut"
-  | "folder"
   | "id"
   | "level"
+  | "bpm"
+  | "duration"
+  | "hnotes"
+  | "notes"
+  | "jrating"
+  | "srlevel"
 export type Sort = SortField | `-${SortField}`
 
-export function parseSongOrdering(s: string | undefined | null): Sort | null {
+export function parseSort(s: string | undefined | null): Sort | null {
   switch (s) {
     case "title":
     case "-title":
@@ -32,19 +37,29 @@ export function parseSongOrdering(s: string | undefined | null): Sort | null {
     case "-rgenre":
     case "debut":
     case "-debut":
-    case "folder":
-    case "-folder":
     case "id":
     case "-id":
     case "level":
     case "-level":
+    case "bpm":
+    case "-bpm":
+    case "duration":
+    case "-duration":
+    case "hnotes":
+    case "-hnotes":
+    case "notes":
+    case "-notes":
+    case "jrating":
+    case "-jrating":
+    case "srlevel":
+    case "-srlevel":
       return s
     default:
       return null
   }
 }
 
-export interface ListSongsParams {
+interface SharedListParams {
   folder?: VersionFolder | BemaniFolder | null
   level?: string | null
   debut?: Debut | null
@@ -52,6 +67,9 @@ export interface ListSongsParams {
   sorts?: Sort[] | null
   page?: string | null
 }
+
+// No songs-only params
+export type ListSongsParams = SharedListParams
 
 export interface ListSongsRawResult {
   data: SearchApiSongResult[]
@@ -63,12 +81,13 @@ export interface ListSongsResult {
   pagy: PagyMetadata
 }
 
-export interface ListChartsParams {
-  debut?: Debut | null
-  folder?: VersionFolder | BemaniFolder | null
-  level?: number | null
+export type ListChartsParams = SharedListParams & {
   diff?: ("e" | "n" | "h" | "ex")[] | null
-  sorts?: Sort[] | null
+  bpm?: string | null
+  bpmtype?: string | null
+  notes?: string | null
+  srlevel?: string | null
+  timing?: string | null
 }
 
 export interface ListChartsRawResult {
@@ -142,15 +161,57 @@ export function useListCharts({
   debut,
   folder,
   level,
-  diff,
+  query,
   sorts,
+  page,
+  diff,
+  bpm,
+  bpmtype,
+  notes,
+  srlevel,
+  timing,
 }: ListChartsParams) {
-  const diffParam = diff?.map((o) => `&diff[]=${o}`)?.join("") ?? ""
-  const sortParam = sorts?.map((o) => `&sort[]=${o}`)?.join("") ?? ""
+  const params: string[][] = []
+  if (debut) {
+    params.push(["debut", debut])
+  }
+  if (folder) {
+    params.push(["folder", folder])
+  }
+  if (level) {
+    params.push(["level", level])
+  }
+  if (query) {
+    params.push(["q", query])
+  }
+  if (sorts) {
+    sorts.forEach((o) => params.push(["sort[]", o]))
+  }
+  if (page) {
+    params.push(["page", page])
+  }
+  if (diff) {
+    diff.forEach((d) => params.push(["diff[]", d]))
+  }
+  if (bpm) {
+    params.push(["bpm", bpm])
+  }
+  if (bpmtype) {
+    params.push(["bpmtype", bpmtype])
+  }
+  if (notes) {
+    params.push(["notes", notes])
+  }
+  if (srlevel) {
+    params.push(["srlevel", srlevel])
+  }
+  if (timing) {
+    params.push(["timing", timing])
+  }
   return useSWR<ListChartsResult>(
     getSearchApiUrl(
       "/list/charts",
-      `?debut=${debut}&folder=${folder}&level=${level}${diffParam}${sortParam}`,
+      `?${new URLSearchParams(params).toString()}`,
     ),
     async (url: string) => {
       const response = await fetch(url)
