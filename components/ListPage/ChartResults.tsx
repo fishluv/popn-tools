@@ -32,7 +32,11 @@ export default function ChartResults({
         columns={[
           {
             label: "",
-            markup: (rec: Chart) => `${rec.difficulty} ${rec.level}`,
+            markup: (rec: Chart) => (
+              <button onClick={() => onChartClick(rec)}>
+                {rec.difficulty} {rec.level}
+              </button>
+            ),
           },
           { label: "Title", markup: (rec: Chart) => rec.song?.remywikiTitle },
         ]}
