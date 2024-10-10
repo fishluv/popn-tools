@@ -1,10 +1,8 @@
 import cx from "classnames"
 import React, { useEffect, useState } from "react"
-import toast from "react-hot-toast"
-import styles from "./ListSongsPage.module.scss"
-import { ListSongsParams, PagyMetadata, useListSongs } from "../../lib/list"
+import styles from "./ListPage.module.scss"
+import { ListParams } from "../../lib/list"
 import Link from "next/link"
-import SongList from "./SongList"
 import RadioList from "../common/RadioList"
 import { useRouter } from "next/navigation"
 import Select from "../common/Select"
@@ -19,7 +17,9 @@ import { CgNotes } from "react-icons/cg"
 import { BsMusicNoteBeamed } from "react-icons/bs"
 import { FiMoreHorizontal } from "react-icons/fi"
 import More from "../common/More"
-import useExtraOptions from "../../lib/useExtraOptions"
+import SongResults from "./SongResults"
+import ChartResults from "./ChartResults"
+import Chart from "../../models/Chart"
 
 const SORT_BY_OPTIONS = [
   { id: "title", label: "Title" },
@@ -139,7 +139,13 @@ const DEBUT_OPTIONS: {
   { id: "cs1", label: "1 CS" },
 ]
 
-function SongOptions({ initialOptions }: { initialOptions: ListSongsParams }) {
+function SongOptions({
+  mode,
+  initialOptions,
+}: {
+  mode: "song" | "chart"
+  initialOptions: ListParams
+}) {
   const {
     folder: initialFolder,
     level: initialLevel,
@@ -163,6 +169,20 @@ function SongOptions({ initialOptions }: { initialOptions: ListSongsParams }) {
 
   const [query, setQuery] = useState<string | undefined | null>(initialQuery)
 
+  // Can't use useExtraOptions because this component is rendered server side.
+  const [sortByOptions, setSortByOptions] =
+    useState<{ id: string; label: string }[]>(SORT_BY_OPTIONS)
+  useEffect(() => {
+    const songIdSet = localStorage
+      .getItem("extraOptions")
+      ?.split(",")
+      .some((opt) => opt.trim() === "songid")
+    setSortByOptions([
+      ...(songIdSet ? [{ id: "id", label: "Id" }] : []),
+      ...SORT_BY_OPTIONS,
+    ])
+  }, [])
+
   let initialSortBy
   let initialSortDirection
   if (sorts?.length) {
@@ -175,8 +195,6 @@ function SongOptions({ initialOptions }: { initialOptions: ListSongsParams }) {
   const [sortBy, setSortBy] = useState<string>(initialSortBy)
   const [sortDirection, setSortDirection] =
     useState<string>(initialSortDirection)
-
-  const extraOptions = useExtraOptions()
 
   const router = useRouter()
 
@@ -208,7 +226,7 @@ function SongOptions({ initialOptions }: { initialOptions: ListSongsParams }) {
   }
 
   return (
-    <div className={styles.SongOptions}>
+    <div className={cx(styles.SongOptions, styles[mode])}>
       <div className={styles.filter}>
         <p className={styles.header}>
           <span>Filter</span>
@@ -294,10 +312,7 @@ function SongOptions({ initialOptions }: { initialOptions: ListSongsParams }) {
           <RadioList
             className={styles.sortByRadios}
             name="sortBy"
-            options={[
-              ...(extraOptions["songid"] ? [{ id: "id", label: "Id" }] : []),
-              ...SORT_BY_OPTIONS,
-            ]}
+            options={sortByOptions}
             selectedOption={sortBy}
             setOption={(id) => setSortBy(id)}
           />
@@ -318,41 +333,18 @@ function SongOptions({ initialOptions }: { initialOptions: ListSongsParams }) {
   )
 }
 
-function PageInfo({ count, page, series }: PagyMetadata) {
-  return (
-    <div className={styles.PageInfo}>
-      <span>{count} total</span>
-      {"•"}
-      <span>Page</span>
-      {series.map((pageOrGap, index) => {
-        if (pageOrGap === "gap") {
-          return <span key={index}>...</span>
-        }
-        if (Number(pageOrGap) === page) {
-          return <span key={index}>{page}</span>
-        }
-
-        const newParams = new URLSearchParams(window.location.search)
-        newParams.set("page", String(pageOrGap))
-        return (
-          <span key={index}>
-            <Link href={`${window.location.pathname}?${newParams}`}>
-              {pageOrGap}
-            </Link>
-          </span>
-        )
-      })}
-    </div>
-  )
-}
-
-export default function ListSongsPage(params: ListSongsParams) {
+export default function ListPage({
+  mode,
+  params,
+}: {
+  mode: "song" | "chart"
+  params: ListParams
+}) {
   const [currentOpenModal, setCurrentOpenModal] = useState<
-    "more" | "songDetails" | null
+    "more" | "songDetails" | "chartDetails" | null
   >(null)
   const [openedSong, setOpenedSong] = useState<Song | null>(null)
-
-  const { data, error, isLoading } = useListSongs(params)
+  const [openedChart, setOpenedChart] = useState<Chart | undefined>(undefined)
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -384,37 +376,41 @@ export default function ListSongsPage(params: ListSongsParams) {
     return () => document.removeEventListener("keydown", handleKeyDown)
   }, [currentOpenModal])
 
-  if (error) {
-    console.error(
-      `Error filtering songs: ${JSON.stringify(error.data) || error}`,
-    )
-    return <div>Uh oh! Something went wrong.</div>
-  }
-  if (!data || isLoading) {
-    return <div>Loading...</div>
-  }
-
-  const { songs, pagy } = data
-
   return (
-    <div id="app" className={styles.ListSongsPage}>
+    <div id="app" className={styles.ListPage}>
       <div className={styles.PageHeader}>
-        <div className={styles.songs}>
-          <BsMusicNoteBeamed />
-          Songs
-        </div>
+        {mode === "song" ? (
+          <>
+            <div className={cx(styles.thisPage, styles.songs)}>
+              <BsMusicNoteBeamed />
+              Songs
+            </div>
 
-        <div className={styles.spacer} />
+            <div className={styles.spacer} />
 
-        <div className={styles.charts}>
-          <Link
-            href="javascript:void(0)"
-            onClick={() => toast("Coming soon!", { position: "top-center" })}
-          >
-            <CgNotes />
-            Charts
-          </Link>
-        </div>
+            <div className={cx(styles.otherPage, styles.charts)}>
+              <Link href="/charts">
+                <CgNotes />
+                Charts
+              </Link>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className={cx(styles.thisPage, styles.charts)}>
+              <CgNotes />
+              Charts
+            </div>
+            <div className={styles.spacer} />
+
+            <div className={cx(styles.otherPage, styles.songs)}>
+              <Link href="/songs">
+                <BsMusicNoteBeamed />
+                Songs
+              </Link>
+            </div>
+          </>
+        )}
 
         <button
           className={styles.moreButton}
@@ -427,18 +423,27 @@ export default function ListSongsPage(params: ListSongsParams) {
         </button>
       </div>
 
-      <SongOptions initialOptions={params} />
-      <PageInfo {...pagy} />
-      <SongList
-        songs={songs}
-        romanize={!!params.sorts?.[0]?.match(/^-?r/)}
-        onSongClick={(song: Song) => {
-          ReactModal.setAppElement("#app")
-          setOpenedSong(song)
-          setCurrentOpenModal("songDetails")
-        }}
-      />
-      <PageInfo {...pagy} />
+      <SongOptions mode={mode} initialOptions={params} />
+
+      {mode === "song" ? (
+        <SongResults
+          params={params}
+          onSongClick={(song: Song) => {
+            ReactModal.setAppElement("#app")
+            setOpenedSong(song)
+            setCurrentOpenModal("songDetails")
+          }}
+        />
+      ) : (
+        <ChartResults
+          params={params}
+          onChartClick={(chart: Chart) => {
+            ReactModal.setAppElement("#app")
+            setOpenedChart(chart)
+            setCurrentOpenModal("chartDetails")
+          }}
+        />
+      )}
 
       <CommonModal
         isOpen={currentOpenModal !== null}
@@ -507,6 +512,14 @@ export default function ListSongsPage(params: ListSongsParams) {
         {currentOpenModal === "songDetails" && openedSong && (
           <SongChartDetails
             song={openedSong}
+            showHeader={true}
+            showActions={true}
+          />
+        )}
+
+        {currentOpenModal === "chartDetails" && openedChart && (
+          <SongChartDetails
+            chartToOpen={openedChart}
             showHeader={true}
             showActions={true}
           />

@@ -1,6 +1,6 @@
 @import "styles/colors";
 
-.ListSongsPage {
+.ListPage {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -22,7 +22,7 @@
       align-self: center;
     }
 
-    .songs {
+    .thisPage {
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -33,17 +33,11 @@
       font-weight: bold;
 
       padding: 0.5rem 1.5rem 0.5rem 1rem;
-      background: $h-light;
       border-radius: 1.5rem;
-      box-shadow: 6px 6px 0 0 $h-bright;
       margin-bottom: 6px;
     }
 
-    .spacer {
-      flex-grow: 1;
-    }
-
-    .charts {
+    .otherPage {
       display: flex;
       align-items: center;
       align-self: flex-end;
@@ -55,9 +49,7 @@
       font-weight: bold;
 
       padding: 0.5rem 1rem 0.5rem 1rem;
-      background: $ex-light;
       border-radius: 1rem;
-      box-shadow: 4px 4px 0 0 $ex-bright;
       margin-bottom: 4px;
 
       a {
@@ -65,6 +57,34 @@
         align-items: center;
         gap: 0.25rem;
       }
+    }
+
+    .songs {
+      background: $h-light;
+
+      &.thisPage {
+        box-shadow: 6px 6px 0 0 $h-bright;
+      }
+
+      &.otherPage {
+        box-shadow: 4px 4px 0 0 $h-bright;
+      }
+    }
+
+    .charts {
+      background: $ex-light;
+
+      &.thisPage {
+        box-shadow: 6px 6px 0 0 $ex-bright;
+      }
+
+      &.otherPage {
+        box-shadow: 4px 4px 0 0 $ex-bright;
+      }
+    }
+
+    .spacer {
+      flex-grow: 1;
     }
 
     .moreButton {
@@ -91,12 +111,11 @@
     .header {
       font-size: 1rem;
       font-weight: bold;
-      border-bottom: 4px solid $h-light;
+      border-bottom: 4px solid transparent;
       margin-bottom: 0.5rem;
 
       span {
         padding: 0.125rem 0.5rem;
-        background: $h-light;
       }
     }
 
@@ -159,15 +178,22 @@
         }
       }
     }
-  }
 
-  .PageInfo {
-    align-self: center;
-    display: flex;
-    gap: 0.5rem;
-    background: #eee;
-    border-radius: 1rem;
-    padding: 0.25rem 0.75rem;
+    &.song .header {
+      border-color: $h-light;
+
+      span {
+        background: $h-light;
+      }
+    }
+
+    &.chart .header {
+      border-color: $ex-light;
+
+      span {
+        background: $ex-light;
+      }
+    }
   }
 }
 

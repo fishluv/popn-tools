@@ -1,10 +1,10 @@
 import Head from "next/head"
 import { useSearchParams } from "next/navigation"
-import ListChartsPage from "../../components/ListPage/ListChartsPage"
+import ListPage from "../../components/ListPage/ListPage"
 import { parseDebut } from "../../models/Debut"
 import { parseVersionFolder } from "../../models/VersionFolder"
 import { parseBemaniFolder } from "../../models/BemaniFolder"
-import { ListChartsParams, Sort, parseSort } from "../../lib/list"
+import { ListParams, Sort, parseSort } from "../../lib/list"
 import Difficulty, { parseDifficulty } from "../../models/Difficulty"
 
 export default function Search() {
@@ -13,7 +13,7 @@ export default function Search() {
   const folder = searchParams.get("folder")
   const sorts = searchParams.getAll("sort")
   const diffs = searchParams.getAll("diff")
-  const params: ListChartsParams = {
+  const params: ListParams = {
     debut: parseDebut(debut),
     folder: parseVersionFolder(folder) || parseBemaniFolder(folder),
     level: searchParams.get("level"),
@@ -33,7 +33,7 @@ export default function Search() {
       <Head>
         <title>{"Browse Charts • Pop'n Tools"}</title>
       </Head>
-      <ListChartsPage {...params} />
+      <ListPage mode="chart" params={params} />
     </>
   )
 }

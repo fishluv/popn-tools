@@ -60,17 +60,23 @@ export function parseSort(s: string | undefined | null): Sort | null {
   }
 }
 
-interface SharedListParams {
+export interface ListParams {
+  // Shared
   folder?: VersionFolder | BemaniFolder | null
   level?: string | null
   debut?: Debut | null
   query?: string | null
   sorts?: Sort[] | null
   page?: string | null
-}
 
-// No songs-only params
-export type ListSongsParams = SharedListParams
+  // Charts-only
+  diff?: Difficulty[] | null
+  bpm?: string | null
+  bpmtype?: string | null
+  notes?: string | null
+  srlevel?: string | null
+  timing?: string | null
+}
 
 export interface ListSongsRawResult {
   data: SearchApiSongResult[]
@@ -80,15 +86,6 @@ export interface ListSongsRawResult {
 export interface ListSongsResult {
   songs: Song[]
   pagy: PagyMetadata
-}
-
-export type ListChartsParams = SharedListParams & {
-  diff?: Difficulty[] | null
-  bpm?: string | null
-  bpmtype?: string | null
-  notes?: string | null
-  srlevel?: string | null
-  timing?: string | null
 }
 
 export interface ListChartsRawResult {
@@ -116,7 +113,7 @@ export function useListSongs({
   query,
   sorts,
   page,
-}: ListSongsParams) {
+}: ListParams) {
   const params: string[][] = []
   if (debut) {
     params.push(["debut", debut])
@@ -171,7 +168,7 @@ export function useListCharts({
   notes,
   srlevel,
   timing,
-}: ListChartsParams) {
+}: ListParams) {
   const params: string[][] = []
   if (debut) {
     params.push(["debut", debut])

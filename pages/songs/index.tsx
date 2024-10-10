@@ -1,17 +1,17 @@
 import Head from "next/head"
 import { useSearchParams } from "next/navigation"
-import ListSongsPage from "../../components/ListPage/ListSongsPage"
+import ListPage from "../../components/ListPage/ListPage"
 import { parseDebut } from "../../models/Debut"
 import { parseVersionFolder } from "../../models/VersionFolder"
 import { parseBemaniFolder } from "../../models/BemaniFolder"
-import { ListSongsParams, Sort, parseSort } from "../../lib/list"
+import { ListParams, Sort, parseSort } from "../../lib/list"
 
 export default function Search() {
   const searchParams = useSearchParams()
   const debut = searchParams.get("debut")
   const folder = searchParams.get("folder")
   const sorts = searchParams.getAll("sort")
-  const params: ListSongsParams = {
+  const params: ListParams = {
     debut: parseDebut(debut),
     folder: parseVersionFolder(folder) || parseBemaniFolder(folder),
     level: searchParams.get("level"),
@@ -25,7 +25,7 @@ export default function Search() {
       <Head>
         <title>{"Browse Songs • Pop'n Tools"}</title>
       </Head>
-      <ListSongsPage {...params} />
+      <ListPage mode="song" params={params} />
     </>
   )
 }
