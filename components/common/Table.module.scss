@@ -1,0 +1,36 @@
+.Table {
+  table-layout: fixed;
+  width: 1px;
+
+  col.banner {
+    width: 128px;
+  }
+  col.titlegenre {
+    width: 160px;
+  }
+  col.bpm {
+    width: 48px;
+  }
+  col.duration {
+    width: 52px;
+  }
+  col.notes {
+    width: 104px;
+  }
+  col.rating {
+    width: 136px;
+  }
+  col.sran {
+    width: 40px;
+  }
+  col.timing {
+    width: 112px;
+  }
+
+  th, td {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 0.25rem 0.25rem;
+  }
+}

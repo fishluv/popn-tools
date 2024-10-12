@@ -5,7 +5,8 @@ import TableBody from "./TableBody"
 import { ReactNode } from "react"
 
 export interface ColumnInfo {
-  label: string
+  id: string
+  label?: string
   /**
    * Property of record to display. Omit to use `markup` instead.
    */
@@ -27,6 +28,11 @@ interface TableProps {
 export default function Table({ className, records, columns }: TableProps) {
   return (
     <table className={cx(styles.Table, className)}>
+      <colgroup>
+        {columns.map((c) => (
+          <col key={c.id} className={styles[c.id]} />
+        ))}
+      </colgroup>
       <TableHead columns={columns} />
       <TableBody columns={columns} records={records} />
     </table>

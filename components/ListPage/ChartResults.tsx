@@ -38,6 +38,12 @@ function ChartBanner({
   )
 }
 
+function formatDuration(duration: number) {
+  const min = Math.floor(duration / 60)
+  const sec = duration % 60
+  return `${min}:${String(sec).padStart(2, "0")}`
+}
+
 export default function ChartResults({
   params,
   onChartClick,
@@ -66,12 +72,59 @@ export default function ChartResults({
         records={charts}
         columns={[
           {
-            label: "",
-            markup: (rec: Chart) => (
-              <ChartBanner chart={rec} onChartClick={onChartClick} />
+            id: "banner",
+            markup: (chart: Chart) => (
+              <ChartBanner chart={chart} onChartClick={onChartClick} />
             ),
           },
-          { label: "Title", markup: (rec: Chart) => rec.song?.remywikiTitle },
+          {
+            id: "titlegenre",
+            markup: (chart: Chart) => chart.song?.remywikiTitle,
+          },
+          {
+            id: "bpm",
+            label: "Bpm",
+            markup: (chart: Chart) => chart.primaryBpm ?? "?",
+          },
+          {
+            id: "duration",
+            label: "Dur.",
+            markup: (chart: Chart) =>
+              chart.duration ? formatDuration(chart.duration) : "?",
+          },
+          {
+            id: "notes",
+            label: "Notes",
+            markup: (chart: Chart) =>
+              chart.notes ? (
+                <>
+                  {chart.notes}
+                  {!!chart.holdNotes && ` (${chart.holdNotes})`}
+                </>
+              ) : (
+                "?"
+              ),
+          },
+          {
+            id: "rating",
+            label: "Rating",
+            prop: "jpRating",
+          },
+          {
+            id: "sran",
+            label: "S乱",
+            markup: (chart: Chart) => chart.sranLevel?.display(),
+          },
+          {
+            id: "timing",
+            label: "Timing",
+            markup: (chart: Chart) =>
+              chart.timing ? (
+                <span className={styles[chart.timing]}>{chart.timing}</span>
+              ) : (
+                <>{"?"}</>
+              ),
+          },
         ]}
       />
       <PageInfo {...pagy} />
