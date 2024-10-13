@@ -1,7 +1,5 @@
 import cx from "classnames"
 import styles from "./Table.module.scss"
-import TableHead from "./TableHead"
-import TableBody from "./TableBody"
 import { ReactNode } from "react"
 
 export interface ColumnInfo {
@@ -33,8 +31,30 @@ export default function Table({ className, records, columns }: TableProps) {
           <col key={c.id} className={styles[c.id]} />
         ))}
       </colgroup>
-      <TableHead columns={columns} />
-      <TableBody columns={columns} records={records} />
+
+      <thead>
+        <tr>
+          {columns.map(({ id, label }, i) => (
+            <th key={i} className={styles[id]}>
+              {label}
+            </th>
+          ))}
+        </tr>
+      </thead>
+
+      <tbody>
+        {records.map((rec) => (
+          <tr key={rec.id}>
+            {columns.map(({ id, prop, markup }, i) => {
+              return (
+                <td key={i} className={styles[id]}>
+                  {(prop && rec[prop]) || (markup && markup(rec)) || ""}
+                </td>
+              )
+            })}
+          </tr>
+        ))}
+      </tbody>
     </table>
   )
 }

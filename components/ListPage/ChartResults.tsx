@@ -118,8 +118,10 @@ export default function ChartResults({
             markup: (chart: Chart) =>
               chart.notes ? (
                 <>
-                  {chart.notes}
-                  {!!chart.holdNotes && ` (${chart.holdNotes})`}
+                  <span className={styles.notes}>{chart.notes}</span>
+                  <span className={styles.holdnotes}>
+                    {!!chart.holdNotes && ` (${chart.holdNotes})`}
+                  </span>
                 </>
               ) : (
                 "?"
@@ -133,7 +135,8 @@ export default function ChartResults({
           {
             id: "sran",
             label: "S乱",
-            markup: (chart: Chart) => chart.sranLevel?.display(),
+            markup: (chart: Chart) =>
+              chart.sranLevel && chart.sranLevel.display(),
           },
           {
             id: "timing",

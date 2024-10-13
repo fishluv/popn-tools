@@ -12,16 +12,16 @@
     width: 48px;
   }
   col.duration {
-    width: 52px;
+    width: 48px;
   }
   col.notes {
-    width: 104px;
+    width: 100px;
   }
   col.rating {
-    width: 136px;
+    width: 132px;
   }
   col.sran {
-    width: 40px;
+    width: 36px;
   }
   col.timing {
     width: 112px;
@@ -32,5 +32,25 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     padding: 0.25rem 0.25rem;
+  }
+
+  th.bpm,
+  th.duration,
+  th.sran {
+    text-align: right;
+  }
+
+  th.notes {
+    padding-left: 0.5rem;
+  }
+
+  td.bpm,
+  td.duration,
+  td.sran {
+    text-align: right;
+  }
+
+  td.notes {
+    padding-left: 0.375rem;
   }
 }
