@@ -65,10 +65,14 @@ export default function ChartResults({
 
   const { charts, pagy } = data
 
+  const useGenre = !!params.sorts?.[0]?.match(/genre/)
+  const romanize = !!params.sorts?.[0]?.match(/^-?r/)
+
   return (
     <>
       <PageInfo {...pagy} />
       <Table
+        className={styles.ChartResults}
         records={charts}
         columns={[
           {
@@ -79,7 +83,23 @@ export default function ChartResults({
           },
           {
             id: "titlegenre",
-            markup: (chart: Chart) => chart.song?.remywikiTitle,
+            markup: (chart: Chart) => {
+              const { title, remywikiTitle, genre, genreRomanTrans } =
+                chart.song!
+              if (useGenre && title !== genre) {
+                return (
+                  <span className={styles.genre}>
+                    {romanize ? genreRomanTrans : genre}
+                  </span>
+                )
+              } else {
+                return (
+                  <span className={styles.title}>
+                    {romanize ? remywikiTitle : title}
+                  </span>
+                )
+              }
+            },
           },
           {
             id: "bpm",
