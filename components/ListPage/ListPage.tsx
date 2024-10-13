@@ -20,6 +20,7 @@ import More from "../common/More"
 import SongResults from "./SongResults"
 import ChartResults from "./ChartResults"
 import Chart from "../../models/Chart"
+import Difficulty from "../../models/Difficulty"
 
 const SORT_BY_OPTIONS = [
   { id: "title", label: "Title" },
@@ -153,6 +154,7 @@ function Options({
     level: initialLevel,
     debut: initialDebut,
     query: initialQuery,
+    diff: initialDiff,
     bpm: initialBpm,
     sorts,
   } = initialOptions
@@ -171,6 +173,9 @@ function Options({
   const [debut, setDebut] = useState<string | undefined | null>(initialDebut)
   const [query, setQuery] = useState<string | undefined | null>(initialQuery)
 
+  const [diff, setDiff] = useState<Difficulty[]>(
+    initialDiff || ["e", "n", "h", "ex"],
+  )
   const [bpm, setBpm] = useState<string | undefined | null>(initialBpm)
 
   // Can't use useExtraOptions because this component is rendered server side.
@@ -203,19 +208,14 @@ function Options({
   const router = useRouter()
 
   function clickFilterButton() {
-    const folderParam = folder ? `folder=${folder}` : ""
-    const levelParam = levelAdv || level ? `level=${levelAdv || level}` : ""
-    const debutParam = debut ? `debut=${debut}` : ""
-    const queryParam = query ? `q=${query}` : ""
-    const bpmParam = bpm ? `bpm=${bpm}` : ""
-    const sortParam = `sort=${sortDirection === "desc" ? "-" : ""}${sortBy}`
     const params = [
-      folderParam,
-      levelParam,
-      debutParam,
-      queryParam,
-      bpmParam,
-      sortParam,
+      folder ? `folder=${folder}` : "",
+      levelAdv || level ? `level=${levelAdv || level}` : "",
+      debut ? `debut=${debut}` : "",
+      query ? `q=${query}` : "",
+      diff ? `diff=${diff.join(",")}` : "",
+      bpm ? `bpm=${bpm}` : "",
+      `sort=${sortDirection === "desc" ? "-" : ""}${sortBy}`,
     ].filter(Boolean)
     router.push(`${window.location.pathname}?${params.join("&")}`)
   }
@@ -226,6 +226,7 @@ function Options({
     setLevelAdv(null)
     setDebut(null)
     setQuery(null)
+    setDiff(["e", "n", "h", "ex"])
     setBpm(null)
     setSortBy("title")
     setSortDirection("asc")
@@ -239,92 +240,183 @@ function Options({
           <span>Filter</span>
         </p>
 
-        <Select
-          className={styles.filterControl}
-          id="folderSelect"
-          label="Folder"
-          options={FOLDER_OPTIONS}
-          dummyOption="(any)"
-          selectedOption={folder || ""}
-          setOption={(id) => {
-            setFolder(id)
-            if (id) {
-              setDebut(null)
-            }
-          }}
-        />
-
-        <div className={cx(styles.filterControl, styles.level)}>
+        <div className={styles.controls}>
           <Select
-            id="levelSelect"
-            label="Level"
-            options={Array(50)
-              .fill(0)
-              .map((_, i) => {
-                const level = String(50 - i)
-                return {
-                  id: level,
-                  label: level,
-                }
-              })}
+            className={styles.filterControl}
+            id="folderSelect"
+            label="Folder"
+            options={FOLDER_OPTIONS}
             dummyOption="(any)"
-            selectedOption={level || ""}
-            setOption={(id) => setLevel(id)}
-            disabled={!!levelAdv}
-          />
-          {" or "}
-          <input
-            id="levelInput"
-            type="text"
-            value={levelAdv || ""}
-            onChange={(event) => {
-              setLevelAdv(event.target.value)
+            selectedOption={folder || ""}
+            setOption={(id) => {
+              setFolder(id)
+              if (id) {
+                setDebut(null)
+              }
             }}
           />
-        </div>
 
-        <Select
-          className={styles.filterControl}
-          id="debutSelect"
-          label="Debut"
-          options={DEBUT_OPTIONS}
-          dummyOption="(any)"
-          selectedOption={debut || ""}
-          setOption={(id) => {
-            setDebut(id)
-            if (id) {
-              setFolder(null)
-            }
-          }}
-        />
+          <div className={cx(styles.filterControl, styles.level)}>
+            <Select
+              className={styles.filterControl}
+              id="levelSelect"
+              label="Level"
+              options={Array(50)
+                .fill(0)
+                .map((_, i) => {
+                  const level = String(50 - i)
+                  return {
+                    id: level,
+                    label: level,
+                  }
+                })}
+              dummyOption="(any)"
+              selectedOption={level || ""}
+              setOption={(id) => setLevel(id)}
+              disabled={!!levelAdv}
+            />
+            {" or "}
+            <input
+              id="levelInput"
+              type="text"
+              value={levelAdv || ""}
+              onChange={(event) => {
+                setLevelAdv(event.target.value)
+              }}
+            />
+          </div>
 
-        <div className={cx(styles.filterControl, styles.query)}>
-          <label htmlFor="queryInput">Search</label>
-          <input
-            id="queryInput"
-            type="text"
-            value={query ?? ""}
-            onChange={(event) => {
-              setQuery(event.target.value)
+          <Select
+            className={styles.filterControl}
+            id="debutSelect"
+            label="Debut"
+            options={DEBUT_OPTIONS}
+            dummyOption="(any)"
+            selectedOption={debut || ""}
+            setOption={(id) => {
+              setDebut(id)
+              if (id) {
+                setFolder(null)
+              }
             }}
           />
-        </div>
 
-        {mode === "chart" && (
-          <>
-            <div className={cx(styles.filterControl, styles.bpm)}>
-              <label htmlFor="bpmInput">Bpm</label>
-              <input
-                id="bpmInput"
-                type="text"
-                value={bpm ?? ""}
-                onChange={(event) => {
-                  setBpm(event.target.value)
-                }}
-              />
-            </div>
-          </>
-        )}
+          <div className={cx(styles.filterControl, styles.query)}>
+            <label htmlFor="queryInput">Search</label>
+            <input
+              id="queryInput"
+              type="text"
+              value={query ?? ""}
+              onChange={(event) => {
+                setQuery(event.target.value)
+              }}
+            />
+          </div>
+
+          {mode === "chart" && (
+            <>
+              <div className={cx(styles.filterControl, styles.diff)}>
+                <label>Diff.</label>
+
+                <div className={styles.diffCheckboxes}>
+                  <div className={styles.filterControl}>
+                    <input
+                      id="easyInput"
+                      type="checkbox"
+                      checked={diff.includes("e")}
+                      onChange={(event) => {
+                        if (event.target.checked && !diff.includes("e")) {
+                          setDiff([...diff, "e"])
+                        } else {
+                          setDiff(diff.filter((d) => d !== "e"))
+                        }
+                      }}
+                    />
+                    <label
+                      htmlFor="easyInput"
+                      className={cx(styles.e, styles.compact)}
+                    >
+                      easy
+                    </label>
+                  </div>
+
+                  <div className={styles.filterControl}>
+                    <input
+                      id="normalInput"
+                      type="checkbox"
+                      checked={diff.includes("n")}
+                      onChange={(event) => {
+                        if (event.target.checked && !diff.includes("n")) {
+                          setDiff([...diff, "n"])
+                        } else {
+                          setDiff(diff.filter((d) => d !== "n"))
+                        }
+                      }}
+                    />
+                    <label
+                      htmlFor="normalInput"
+                      className={cx(styles.n, styles.compact)}
+                    >
+                      normal
+                    </label>
+                  </div>
+                  <div className={styles.filterControl}>
+                    <input
+                      id="hyperInput"
+                      type="checkbox"
+                      checked={diff.includes("h")}
+                      onChange={(event) => {
+                        if (event.target.checked && !diff.includes("h")) {
+                          setDiff([...diff, "h"])
+                        } else {
+                          setDiff(diff.filter((d) => d !== "h"))
+                        }
+                      }}
+                    />
+                    <label
+                      htmlFor="hyperInput"
+                      className={cx(styles.h, styles.compact)}
+                    >
+                      hyper
+                    </label>
+                  </div>
+                  <div className={styles.filterControl}>
+                    <input
+                      id="exInput"
+                      type="checkbox"
+                      checked={diff.includes("ex")}
+                      onChange={(event) => {
+                        if (event.target.checked && !diff.includes("ex")) {
+                          setDiff([...diff, "ex"])
+                        } else {
+                          setDiff(diff.filter((d) => d !== "ex"))
+                        }
+                      }}
+                    />
+                    <label
+                      htmlFor="exInput"
+                      className={cx(styles.ex, styles.compact)}
+                    >
+                      ex
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div className={cx(styles.filterControl, styles.bpm)}>
+                <label htmlFor="bpmInput">Bpm</label>
+                <input
+                  id="bpmInput"
+                  type="text"
+                  value={bpm ?? ""}
+                  onChange={(event) => {
+                    setBpm(event.target.value)
+                  }}
+                />
+              </div>
+            </>
+          )}
+        </div>
       </div>
 
       <div className={styles.sort}>
