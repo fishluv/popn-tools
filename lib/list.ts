@@ -61,7 +61,7 @@ export function parseSort(s: string | undefined | null): Sort | null {
 }
 
 export interface ListParams {
-  // Shared
+  // Common
   folder?: VersionFolder | BemaniFolder | null
   level?: string | null
   debut?: Debut | null

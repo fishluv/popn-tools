@@ -101,7 +101,7 @@
     }
   }
 
-  .SongOptions {
+  .Options {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -134,14 +134,18 @@
         width: 12rem;
       }
 
-      &.query {
+      &.query, &.bpm {
         display: flex;
         align-items: center;
         gap: 0.25rem;
+      }
 
-        input {
-          width: 14rem;
-        }
+      &.query input {
+        width: 14rem;
+      }
+
+      &.bpm input {
+        width: 10rem;
       }
     }
 

@@ -139,7 +139,7 @@ const DEBUT_OPTIONS: {
   { id: "cs1", label: "1 CS" },
 ]
 
-function SongOptions({
+function Options({
   className,
   mode,
   initialOptions,
@@ -153,6 +153,7 @@ function SongOptions({
     level: initialLevel,
     debut: initialDebut,
     query: initialQuery,
+    bpm: initialBpm,
     sorts,
   } = initialOptions
 
@@ -168,8 +169,9 @@ function SongOptions({
   )
 
   const [debut, setDebut] = useState<string | undefined | null>(initialDebut)
-
   const [query, setQuery] = useState<string | undefined | null>(initialQuery)
+
+  const [bpm, setBpm] = useState<string | undefined | null>(initialBpm)
 
   // Can't use useExtraOptions because this component is rendered server side.
   const [sortByOptions, setSortByOptions] =
@@ -205,12 +207,14 @@ function SongOptions({
     const levelParam = levelAdv || level ? `level=${levelAdv || level}` : ""
     const debutParam = debut ? `debut=${debut}` : ""
     const queryParam = query ? `q=${query}` : ""
+    const bpmParam = bpm ? `bpm=${bpm}` : ""
     const sortParam = `sort=${sortDirection === "desc" ? "-" : ""}${sortBy}`
     const params = [
       folderParam,
       levelParam,
       debutParam,
       queryParam,
+      bpmParam,
       sortParam,
     ].filter(Boolean)
     router.push(`${window.location.pathname}?${params.join("&")}`)
@@ -222,13 +226,14 @@ function SongOptions({
     setLevelAdv(null)
     setDebut(null)
     setQuery(null)
+    setBpm(null)
     setSortBy("title")
     setSortDirection("asc")
     router.push(window.location.pathname)
   }
 
   return (
-    <div className={cx(className, styles.SongOptions, styles[mode])}>
+    <div className={cx(className, styles.Options, styles[mode])}>
       <div className={styles.filter}>
         <p className={styles.header}>
           <span>Filter</span>
@@ -304,6 +309,22 @@ function SongOptions({
             }}
           />
         </div>
+
+        {mode === "chart" && (
+          <>
+            <div className={cx(styles.filterControl, styles.bpm)}>
+              <label htmlFor="bpmInput">Bpm</label>
+              <input
+                id="bpmInput"
+                type="text"
+                value={bpm ?? ""}
+                onChange={(event) => {
+                  setBpm(event.target.value)
+                }}
+              />
+            </div>
+          </>
+        )}
       </div>
 
       <div className={styles.sort}>
@@ -425,11 +446,7 @@ export default function ListPage({
         </button>
       </div>
 
-      <SongOptions
-        className={styles.main}
-        mode={mode}
-        initialOptions={params}
-      />
+      <Options className={styles.main} mode={mode} initialOptions={params} />
 
       {mode === "song" ? (
         <SongResults
