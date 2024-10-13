@@ -45,9 +45,11 @@ function formatDuration(duration: number) {
 }
 
 export default function ChartResults({
+  className,
   params,
   onChartClick,
 }: {
+  className?: string
   params: ListParams
   onChartClick(chart: Chart): void
 }) {
@@ -69,82 +71,87 @@ export default function ChartResults({
   const romanize = !!params.sorts?.[0]?.match(/^-?r/)
 
   return (
-    <>
+    <div className={cx(className, styles.ChartResults)}>
       <PageInfo {...pagy} />
-      <Table
-        className={styles.ChartResults}
-        records={charts}
-        columns={[
-          {
-            id: "banner",
-            markup: (chart: Chart) => (
-              <ChartBanner chart={chart} onChartClick={onChartClick} />
-            ),
-          },
-          {
-            id: "titlegenre",
-            markup: (chart: Chart) => {
-              const { title, remywikiTitle, genre, genreRomanTrans } =
-                chart.song!
-              if (useGenre && title !== genre) {
-                return (
-                  <span className={styles.genre}>
-                    {romanize ? genreRomanTrans : genre}
-                  </span>
-                )
-              } else {
-                return (
-                  <span className={styles.title}>
-                    {romanize ? remywikiTitle : title}
-                  </span>
-                )
-              }
-            },
-          },
-          {
-            id: "bpm",
-            label: "Bpm",
-            markup: (chart: Chart) => chart.primaryBpm ?? "?",
-          },
-          {
-            id: "duration",
-            label: "Dur.",
-            markup: (chart: Chart) =>
-              chart.duration ? formatDuration(chart.duration) : "?",
-          },
-          {
-            id: "notes",
-            label: "Notes",
-            markup: (chart: Chart) => chart.notes ?? "?",
-          },
-          {
-            id: "holdnotes",
-            markup: (chart: Chart) => chart.holdNotes && `(${chart.holdNotes})`,
-          },
-          {
-            id: "rating",
-            label: "Rating",
-            prop: "jpRating",
-          },
-          {
-            id: "sran",
-            label: "S乱",
-            markup: (chart: Chart) =>
-              chart.sranLevel && chart.sranLevel.display(),
-          },
-          {
-            id: "timing",
-            label: "Timing",
-            markup: (chart: Chart) =>
-              chart.timing ? (
-                <span className={styles[chart.timing]}>{chart.timing}</span>
-              ) : (
-                <>{"?"}</>
+
+      <div className={styles.tableContainer}>
+        <Table
+          className={styles.Table}
+          records={charts}
+          columns={[
+            {
+              id: "banner",
+              markup: (chart: Chart) => (
+                <ChartBanner chart={chart} onChartClick={onChartClick} />
               ),
-          },
-        ]}
-      />
+            },
+            {
+              id: "titlegenre",
+              markup: (chart: Chart) => {
+                const { title, remywikiTitle, genre, genreRomanTrans } =
+                  chart.song!
+                if (useGenre && title !== genre) {
+                  return (
+                    <span className={styles.genre}>
+                      {romanize ? genreRomanTrans : genre}
+                    </span>
+                  )
+                } else {
+                  return (
+                    <span className={styles.title}>
+                      {romanize ? remywikiTitle : title}
+                    </span>
+                  )
+                }
+              },
+            },
+            {
+              id: "bpm",
+              label: "Bpm",
+              markup: (chart: Chart) => chart.primaryBpm ?? "?",
+            },
+            {
+              id: "duration",
+              label: "Dur.",
+              markup: (chart: Chart) =>
+                chart.duration ? formatDuration(chart.duration) : "?",
+            },
+            {
+              id: "notes",
+              label: "Notes",
+              markup: (chart: Chart) => chart.notes ?? "?",
+            },
+            {
+              id: "holdnotes",
+              markup: (chart: Chart) =>
+                chart.holdNotes && `(${chart.holdNotes})`,
+            },
+            {
+              id: "rating",
+              label: "Rating",
+              prop: "jpRating",
+            },
+            {
+              id: "sran",
+              label: "S乱",
+              markup: (chart: Chart) =>
+                chart.sranLevel && chart.sranLevel.display(),
+            },
+            {
+              id: "timing",
+              label: "Timing",
+              markup: (chart: Chart) =>
+                chart.timing ? (
+                  <span className={styles[chart.timing]}>{chart.timing}</span>
+                ) : (
+                  <>{"?"}</>
+                ),
+            },
+          ]}
+        />
+      </div>
+
       <PageInfo {...pagy} />
-    </>
+    </div>
   )
 }

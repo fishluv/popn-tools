@@ -140,9 +140,11 @@ const DEBUT_OPTIONS: {
 ]
 
 function SongOptions({
+  className,
   mode,
   initialOptions,
 }: {
+  className?: string
   mode: "song" | "chart"
   initialOptions: ListParams
 }) {
@@ -226,7 +228,7 @@ function SongOptions({
   }
 
   return (
-    <div className={cx(styles.SongOptions, styles[mode])}>
+    <div className={cx(className, styles.SongOptions, styles[mode])}>
       <div className={styles.filter}>
         <p className={styles.header}>
           <span>Filter</span>
@@ -378,7 +380,7 @@ export default function ListPage({
 
   return (
     <div id="app" className={styles.ListPage}>
-      <div className={styles.PageHeader}>
+      <div className={cx(styles.main, styles.PageHeader)}>
         {mode === "song" ? (
           <>
             <div className={cx(styles.thisPage, styles.songs)}>
@@ -423,10 +425,15 @@ export default function ListPage({
         </button>
       </div>
 
-      <SongOptions mode={mode} initialOptions={params} />
+      <SongOptions
+        className={styles.main}
+        mode={mode}
+        initialOptions={params}
+      />
 
       {mode === "song" ? (
         <SongResults
+          className={styles.main}
           params={params}
           onSongClick={(song: Song) => {
             ReactModal.setAppElement("#app")

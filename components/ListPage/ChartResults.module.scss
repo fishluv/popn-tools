@@ -1,11 +1,29 @@
 @import "styles/colors";
 
 .ChartResults {
-  font-size: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
 
-  .genre {
-    font-size: 0.75rem;
-    font-weight: bold;
+  .tableContainer {
+    width: 100%;
+    overflow-x: scroll;
+
+    .Table {
+      @media (width >= 600px) {
+        margin-left: calc((100% - 600px) / 2);
+      }
+
+      align-self: flex-start;
+      font-size: 0.875rem;
+
+      .genre {
+        font-size: 0.75rem;
+        font-weight: bold;
+      }
+    }
   }
 }
 

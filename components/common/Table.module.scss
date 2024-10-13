@@ -30,11 +30,15 @@
     width: 112px;
   }
 
-  th, td {
+  td {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     padding: 0.25rem 0.25rem;
+  }
+
+  th {
+    padding: 0 0.25rem;
   }
 
   th.bpm,

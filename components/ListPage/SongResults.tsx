@@ -1,12 +1,16 @@
+import cx from "classnames"
+import styles from "./SongResults.module.scss"
 import { ListParams, useListSongs } from "../../lib/list"
 import Song from "../../models/Song"
 import PageInfo from "./PageInfo"
 import SongList from "./SongList"
 
 export default function SongResults({
+  className,
   params,
   onSongClick,
 }: {
+  className?: string
   params: ListParams
   onSongClick(song: Song): void
 }) {
@@ -25,7 +29,7 @@ export default function SongResults({
   const { songs, pagy } = data
 
   return (
-    <>
+    <div className={cx(className, styles.SongResults)}>
       <PageInfo {...pagy} />
       <SongList
         songs={songs}
@@ -33,6 +37,6 @@ export default function SongResults({
         onSongClick={onSongClick}
       />
       <PageInfo {...pagy} />
-    </>
+    </div>
   )
 }
