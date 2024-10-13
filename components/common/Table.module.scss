@@ -15,7 +15,10 @@
     width: 48px;
   }
   col.notes {
-    width: 100px;
+    width: 52px;
+  }
+  col.holdnotes {
+    width: 44px;
   }
   col.rating {
     width: 132px;
@@ -36,21 +39,19 @@
 
   th.bpm,
   th.duration,
+  th.notes,
   th.sran {
     text-align: right;
   }
 
-  th.notes {
-    padding-left: 0.5rem;
-  }
-
   td.bpm,
   td.duration,
+  td.notes,
   td.sran {
     text-align: right;
   }
 
-  td.notes {
-    padding-left: 0.375rem;
+  td.holdnotes {
+    padding-left: 0;
   }
 }

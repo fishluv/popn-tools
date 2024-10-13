@@ -115,17 +115,11 @@ export default function ChartResults({
           {
             id: "notes",
             label: "Notes",
-            markup: (chart: Chart) =>
-              chart.notes ? (
-                <>
-                  <span className={styles.notes}>{chart.notes}</span>
-                  <span className={styles.holdnotes}>
-                    {!!chart.holdNotes && ` (${chart.holdNotes})`}
-                  </span>
-                </>
-              ) : (
-                "?"
-              ),
+            markup: (chart: Chart) => chart.notes ?? "?",
+          },
+          {
+            id: "holdnotes",
+            markup: (chart: Chart) => chart.holdNotes && `(${chart.holdNotes})`,
           },
           {
             id: "rating",
