@@ -159,6 +159,7 @@ function Options({
     bpm: initialBpm,
     bpmType: initialBpmType,
     duration: initialDuration,
+    notes: initialNotes,
     sorts,
   } = initialOptions
 
@@ -186,6 +187,7 @@ function Options({
   const [duration, setDuration] = useState<string | undefined | null>(
     initialDuration,
   )
+  const [notes, setNotes] = useState<string | undefined | null>(initialNotes)
 
   // Can't use useExtraOptions because this component is rendered server side.
   const [sortByOptions, setSortByOptions] =
@@ -232,6 +234,7 @@ function Options({
       bpm ? `bpm=${bpm}` : "",
       bpmType ? `bpmtype=${bpmType}` : "",
       durSec ? `duration=${durSec}` : "",
+      notes ? `notes=${notes}` : "",
       `sort=${sortDirection === "desc" ? "-" : ""}${sortBy}`,
     ].filter(Boolean)
     router.push(`${window.location.pathname}?${params.join("&")}`)
@@ -247,6 +250,7 @@ function Options({
     setBpm(null)
     setBpmType(null)
     setDuration(null)
+    setNotes(null)
     setSortBy("title")
     setSortDirection("asc")
     router.push(window.location.pathname)
@@ -454,6 +458,18 @@ function Options({
                   value={duration ?? ""}
                   onChange={(event) => {
                     setDuration(event.target.value)
+                  }}
+                />
+              </div>
+
+              <div className={cx(styles.filterControl, styles.notes)}>
+                <label htmlFor="notesInput">Notes</label>
+                <input
+                  id="notesInput"
+                  type="text"
+                  value={notes ?? ""}
+                  onChange={(event) => {
+                    setNotes(event.target.value)
                   }}
                 />
               </div>
