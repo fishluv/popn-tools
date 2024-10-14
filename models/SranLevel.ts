@@ -59,13 +59,13 @@ export default class SranLevel {
   display(): string {
     switch (this.norm) {
       case "01a":
-        return "1-"
+        return "1a"
       case "01b":
-        return "1+"
+        return "1b"
       case "02a":
-        return "2-"
+        return "2a"
       case "02b":
-        return "2+"
+        return "2b"
       case "03":
       case "04":
       case "05":
