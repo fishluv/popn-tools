@@ -161,6 +161,7 @@ function Options({
     duration: initialDuration,
     notes: initialNotes,
     holdNotes: initialHoldNotes,
+    timing: initialTiming,
     sorts,
   } = initialOptions
 
@@ -192,6 +193,7 @@ function Options({
   const [holdNotes, setHoldNotes] = useState<string | undefined | null>(
     initialHoldNotes,
   )
+  const [timing, setTiming] = useState<string | undefined | null>(initialTiming)
 
   // Can't use useExtraOptions because this component is rendered server side.
   const [sortByOptions, setSortByOptions] =
@@ -240,6 +242,7 @@ function Options({
       durSec ? `duration=${durSec}` : "",
       notes ? `notes=${notes}` : "",
       holdNotes ? `hnotes=${holdNotes}` : "",
+      timing ? `timing=${timing}` : "",
       `sort=${sortDirection === "desc" ? "-" : ""}${sortBy}`,
     ].filter(Boolean)
     router.push(`${window.location.pathname}?${params.join("&")}`)
@@ -257,6 +260,7 @@ function Options({
     setDuration(null)
     setNotes(null)
     setHoldNotes(null)
+    setTiming(null)
     setSortBy("title")
     setSortDirection("asc")
     router.push(window.location.pathname)
@@ -491,6 +495,22 @@ function Options({
                   }}
                 />
               </div>
+
+              <Select
+                className={cx(styles.filterControl, styles.timing)}
+                id="timingSelect"
+                label="Timing"
+                options={[
+                  { id: "standard", label: "Standard" },
+                  { id: "nonstandard", label: "Nonstandard" },
+                  { id: "variable", label: "Variable" },
+                ]}
+                dummyOption="(any)"
+                selectedOption={timing || ""}
+                setOption={(id) => {
+                  setTiming(id)
+                }}
+              />
             </>
           )}
         </div>
