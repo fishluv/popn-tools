@@ -157,6 +157,7 @@ function Options({
     query: initialQuery,
     diff: initialDiff,
     bpm: initialBpm,
+    bpmType: initialBpmType,
     sorts,
   } = initialOptions
 
@@ -178,6 +179,9 @@ function Options({
     initialDiff || ["e", "n", "h", "ex"],
   )
   const [bpm, setBpm] = useState<string | undefined | null>(initialBpm)
+  const [bpmType, setBpmType] = useState<string | undefined | null>(
+    initialBpmType,
+  )
 
   // Can't use useExtraOptions because this component is rendered server side.
   const [sortByOptions, setSortByOptions] =
@@ -216,6 +220,7 @@ function Options({
       query ? `q=${query}` : "",
       diff ? `diff=${diff.join(",")}` : "",
       bpm ? `bpm=${bpm}` : "",
+      bpmType ? `bpmtype=${bpmType}` : "",
       `sort=${sortDirection === "desc" ? "-" : ""}${sortBy}`,
     ].filter(Boolean)
     router.push(`${window.location.pathname}?${params.join("&")}`)
@@ -229,6 +234,7 @@ function Options({
     setQuery(null)
     setDiff(["e", "n", "h", "ex"])
     setBpm(null)
+    setBpmType(null)
     setSortBy("title")
     setSortDirection("asc")
     router.push(window.location.pathname)
@@ -411,6 +417,22 @@ function Options({
                   }}
                 />
               </div>
+
+              <Select
+                className={cx(styles.filterControl, styles.bpmType)}
+                id="bpmTypeSelect"
+                label=""
+                options={[
+                  { id: "totality", label: "Constant bpm" },
+                  { id: "majority", label: "Main bpm = majority" },
+                  { id: "plurality", label: "Main bpm = nonmajority" },
+                ]}
+                dummyOption="(any)"
+                selectedOption={bpmType || ""}
+                setOption={(id) => {
+                  setBpmType(id)
+                }}
+              />
             </>
           )}
         </div>

@@ -24,7 +24,7 @@ export default function Search() {
       ? (diff.split(",").map(parseDifficulty).filter(Boolean) as Difficulty[])
       : null,
     bpm: searchParams.get("bpm"),
-    bpmtype: searchParams.get("bpmtype"),
+    bpmType: searchParams.get("bpmtype"),
     notes: searchParams.get("notes"),
     srlevel: searchParams.get("srlevel"),
     timing: searchParams.get("timing"),

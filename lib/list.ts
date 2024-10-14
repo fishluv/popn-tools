@@ -72,7 +72,7 @@ export interface ListParams {
   // Charts-only
   diff?: Difficulty[] | null
   bpm?: string | null
-  bpmtype?: string | null
+  bpmType?: string | null
   notes?: string | null
   srlevel?: string | null
   timing?: string | null
@@ -164,7 +164,7 @@ export function useListCharts({
   page,
   diff,
   bpm,
-  bpmtype,
+  bpmType,
   notes,
   srlevel,
   timing,
@@ -194,8 +194,8 @@ export function useListCharts({
   if (bpm) {
     params.push(["bpm", bpm])
   }
-  if (bpmtype) {
-    params.push(["bpmtype", bpmtype])
+  if (bpmType) {
+    params.push(["bpmtype", bpmType])
   }
   if (notes) {
     params.push(["notes", notes])
