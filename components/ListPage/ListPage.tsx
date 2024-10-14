@@ -160,6 +160,7 @@ function Options({
     bpmType: initialBpmType,
     duration: initialDuration,
     notes: initialNotes,
+    holdNotes: initialHoldNotes,
     sorts,
   } = initialOptions
 
@@ -188,6 +189,9 @@ function Options({
     initialDuration,
   )
   const [notes, setNotes] = useState<string | undefined | null>(initialNotes)
+  const [holdNotes, setHoldNotes] = useState<string | undefined | null>(
+    initialHoldNotes,
+  )
 
   // Can't use useExtraOptions because this component is rendered server side.
   const [sortByOptions, setSortByOptions] =
@@ -235,6 +239,7 @@ function Options({
       bpmType ? `bpmtype=${bpmType}` : "",
       durSec ? `duration=${durSec}` : "",
       notes ? `notes=${notes}` : "",
+      holdNotes ? `hnotes=${holdNotes}` : "",
       `sort=${sortDirection === "desc" ? "-" : ""}${sortBy}`,
     ].filter(Boolean)
     router.push(`${window.location.pathname}?${params.join("&")}`)
@@ -251,6 +256,7 @@ function Options({
     setBpmType(null)
     setDuration(null)
     setNotes(null)
+    setHoldNotes(null)
     setSortBy("title")
     setSortDirection("asc")
     router.push(window.location.pathname)
@@ -470,6 +476,18 @@ function Options({
                   value={notes ?? ""}
                   onChange={(event) => {
                     setNotes(event.target.value)
+                  }}
+                />
+              </div>
+
+              <div className={cx(styles.filterControl, styles.holdNotes)}>
+                <label htmlFor="holdNotesInput">Holds</label>
+                <input
+                  id="holdNotesInput"
+                  type="text"
+                  value={holdNotes ?? ""}
+                  onChange={(event) => {
+                    setHoldNotes(event.target.value)
                   }}
                 />
               </div>

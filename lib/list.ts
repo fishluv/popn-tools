@@ -75,6 +75,7 @@ export interface ListParams {
   bpmType?: string | null
   duration?: string | null
   notes?: string | null
+  holdNotes?: string | null
   srlevel?: string | null
   timing?: string | null
 }
@@ -168,6 +169,7 @@ export function useListCharts({
   bpmType,
   duration,
   notes,
+  holdNotes,
   srlevel,
   timing,
 }: ListParams) {
@@ -204,6 +206,9 @@ export function useListCharts({
   }
   if (notes) {
     params.push(["notes", notes])
+  }
+  if (holdNotes) {
+    params.push(["hnotes", holdNotes])
   }
   if (srlevel) {
     params.push(["srlevel", srlevel])
