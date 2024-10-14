@@ -25,6 +25,7 @@ export default function Search() {
       : null,
     bpm: searchParams.get("bpm"),
     bpmType: searchParams.get("bpmtype"),
+    duration: searchParams.get("duration"),
     notes: searchParams.get("notes"),
     srlevel: searchParams.get("srlevel"),
     timing: searchParams.get("timing"),

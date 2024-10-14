@@ -158,6 +158,7 @@ function Options({
     diff: initialDiff,
     bpm: initialBpm,
     bpmType: initialBpmType,
+    duration: initialDuration,
     sorts,
   } = initialOptions
 
@@ -181,6 +182,9 @@ function Options({
   const [bpm, setBpm] = useState<string | undefined | null>(initialBpm)
   const [bpmType, setBpmType] = useState<string | undefined | null>(
     initialBpmType,
+  )
+  const [duration, setDuration] = useState<string | undefined | null>(
+    initialDuration,
   )
 
   // Can't use useExtraOptions because this component is rendered server side.
@@ -213,6 +217,9 @@ function Options({
   const router = useRouter()
 
   function clickFilterButton() {
+    const durSec = duration?.replaceAll(/(\d):(\d{2})/g, (_match, min, sec) => {
+      return String(Number(min) * 60 + Number(sec))
+    })
     const params = [
       folder ? `folder=${folder}` : "",
       levelAdv || level ? `level=${levelAdv || level}` : "",
@@ -221,6 +228,7 @@ function Options({
       diff ? `diff=${diff.join(",")}` : "",
       bpm ? `bpm=${bpm}` : "",
       bpmType ? `bpmtype=${bpmType}` : "",
+      durSec ? `duration=${durSec}` : "",
       `sort=${sortDirection === "desc" ? "-" : ""}${sortBy}`,
     ].filter(Boolean)
     router.push(`${window.location.pathname}?${params.join("&")}`)
@@ -235,6 +243,7 @@ function Options({
     setDiff(["e", "n", "h", "ex"])
     setBpm(null)
     setBpmType(null)
+    setDuration(null)
     setSortBy("title")
     setSortDirection("asc")
     router.push(window.location.pathname)
@@ -433,6 +442,18 @@ function Options({
                   setBpmType(id)
                 }}
               />
+
+              <div className={cx(styles.filterControl, styles.duration)}>
+                <label htmlFor="durationInput">Durat.</label>
+                <input
+                  id="durationInput"
+                  type="text"
+                  value={duration ?? ""}
+                  onChange={(event) => {
+                    setDuration(event.target.value)
+                  }}
+                />
+              </div>
             </>
           )}
         </div>
