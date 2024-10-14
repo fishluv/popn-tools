@@ -1,5 +1,6 @@
 import cx from "classnames"
 import React, { useEffect, useState } from "react"
+import toast from "react-hot-toast"
 import styles from "./ListPage.module.scss"
 import { ListParams } from "../../lib/list"
 import Link from "next/link"
@@ -233,6 +234,26 @@ function Options({
     router.push(window.location.pathname)
   }
 
+  function handleDiffChange(
+    event: React.ChangeEvent<HTMLInputElement>,
+    selectedDiff: Difficulty,
+  ) {
+    if (event.target.checked) {
+      // Shouldn't already be there but check just in case.
+      if (!diff.includes(selectedDiff)) {
+        setDiff([...diff, selectedDiff])
+      }
+    } else {
+      if (diff.length === 1 && diff[0] === selectedDiff) {
+        toast("At least one difficulty must be selected.", {
+          position: "top-center",
+        })
+      } else {
+        setDiff(diff.filter((d) => d !== selectedDiff))
+      }
+    }
+  }
+
   return (
     <div className={cx(className, styles.Options, styles[mode])}>
       <div className={styles.filter}>
@@ -324,13 +345,7 @@ function Options({
                       id="easyInput"
                       type="checkbox"
                       checked={diff.includes("e")}
-                      onChange={(event) => {
-                        if (event.target.checked && !diff.includes("e")) {
-                          setDiff([...diff, "e"])
-                        } else {
-                          setDiff(diff.filter((d) => d !== "e"))
-                        }
-                      }}
+                      onChange={(event) => handleDiffChange(event, "e")}
                     />
                     <label
                       htmlFor="easyInput"
@@ -345,13 +360,7 @@ function Options({
                       id="normalInput"
                       type="checkbox"
                       checked={diff.includes("n")}
-                      onChange={(event) => {
-                        if (event.target.checked && !diff.includes("n")) {
-                          setDiff([...diff, "n"])
-                        } else {
-                          setDiff(diff.filter((d) => d !== "n"))
-                        }
-                      }}
+                      onChange={(event) => handleDiffChange(event, "n")}
                     />
                     <label
                       htmlFor="normalInput"
@@ -365,13 +374,7 @@ function Options({
                       id="hyperInput"
                       type="checkbox"
                       checked={diff.includes("h")}
-                      onChange={(event) => {
-                        if (event.target.checked && !diff.includes("h")) {
-                          setDiff([...diff, "h"])
-                        } else {
-                          setDiff(diff.filter((d) => d !== "h"))
-                        }
-                      }}
+                      onChange={(event) => handleDiffChange(event, "h")}
                     />
                     <label
                       htmlFor="hyperInput"
@@ -385,13 +388,7 @@ function Options({
                       id="exInput"
                       type="checkbox"
                       checked={diff.includes("ex")}
-                      onChange={(event) => {
-                        if (event.target.checked && !diff.includes("ex")) {
-                          setDiff([...diff, "ex"])
-                        } else {
-                          setDiff(diff.filter((d) => d !== "ex"))
-                        }
-                      }}
+                      onChange={(event) => handleDiffChange(event, "ex")}
                     />
                     <label
                       htmlFor="exInput"
