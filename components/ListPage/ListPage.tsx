@@ -236,7 +236,7 @@ function Options({
       levelAdv || level ? `level=${levelAdv || level}` : "",
       debut ? `debut=${debut}` : "",
       query ? `q=${query}` : "",
-      diff ? `diff=${diff.join(",")}` : "",
+      diff.length === 4 ? "" : `diff=${diff.join(",")}`,
       bpm ? `bpm=${bpm}` : "",
       bpmType ? `bpmtype=${bpmType}` : "",
       durSec ? `duration=${durSec}` : "",
