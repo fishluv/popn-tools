@@ -201,6 +201,9 @@ function Options({
     ])
   }, [])
 
+  // TODO: On refresh, options aren't updated bc initialOptions takes some time to update.
+  // Use useEffect to keep options in sync with initialOptions.
+
   let initialSortBy
   let initialSortDirection
   if (sorts?.length) {
