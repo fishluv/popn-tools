@@ -202,6 +202,17 @@
       flex-direction: column;
       gap: 0.75rem;
 
+      button {
+        &:hover:enabled:not(:active) {
+          transform: none;
+          box-shadow: 1px 1px 5px #666;
+        }
+
+        &:active:enabled {
+          transform: scale(0.9);
+        }
+      }
+
       .selectedSorts {
         display: flex;
         flex-direction: column;

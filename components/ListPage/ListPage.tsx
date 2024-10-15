@@ -16,6 +16,7 @@ import SongChartDetails from "../common/SongChartDetails"
 import ReactModal from "react-modal"
 import { CgNotes } from "react-icons/cg"
 import { BsMusicNoteBeamed } from "react-icons/bs"
+import { FaTrash } from "react-icons/fa"
 import { FiMoreHorizontal } from "react-icons/fi"
 import { LuToggleLeft, LuToggleRight } from "react-icons/lu"
 import More from "../common/More"
@@ -248,13 +249,14 @@ function SortMultiSelect({
                 </button>
                 <button
                   className={styles.removeButton}
+                  disabled={selectedSorts.length === 1}
                   onClick={() => {
                     const newSorts = [...selectedSorts]
                     newSorts.splice(index, 1)
                     setSorts(newSorts)
                   }}
                 >
-                  X
+                  <FaTrash size="1rem" />
                 </button>
               </div>
             </div>
