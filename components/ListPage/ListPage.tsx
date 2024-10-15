@@ -188,8 +188,8 @@ function SortMultiSelect({
                 className={styles.ascDesc}
                 name={`${field}Direction`}
                 options={[
-                  { id: "asc", label: "🔼 Asc" },
-                  { id: "desc", label: "🔽 Desc" },
+                  { id: "asc", label: "🔼 Asc." },
+                  { id: "desc", label: "🔽 Desc." },
                 ]}
                 selectedOption={direction}
                 setOption={(id) => {
@@ -204,6 +204,35 @@ function SortMultiSelect({
               />
 
               <div className={styles.actions}>
+                <button
+                  className={styles.upButton}
+                  disabled={selectedFieldsAndLabels.length === 1 || index === 0}
+                  onClick={() => {
+                    const newSorts = [...selectedSorts]
+                    const temp = newSorts[index - 1]
+                    newSorts[index - 1] = newSorts[index]
+                    newSorts[index] = temp
+                    setSorts(newSorts)
+                  }}
+                >
+                  🔼
+                </button>
+                <button
+                  className={styles.downButton}
+                  disabled={
+                    selectedFieldsAndLabels.length === 1 ||
+                    index === selectedFieldsAndLabels.length - 1
+                  }
+                  onClick={() => {
+                    const newSorts = [...selectedSorts]
+                    const temp = newSorts[index + 1]
+                    newSorts[index + 1] = newSorts[index]
+                    newSorts[index] = temp
+                    setSorts(newSorts)
+                  }}
+                >
+                  🔽
+                </button>
                 <button
                   className={styles.removeButton}
                   onClick={() => {
