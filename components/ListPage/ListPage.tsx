@@ -200,11 +200,17 @@ function SortMultiSelect({
                 <label className={styles.asc} onClick={switchToAsc}>
                   Asc
                 </label>
-                {direction === "asc" ? (
-                  <LuToggleLeft size="1.5rem" onClick={switchToDesc} />
-                ) : (
-                  <LuToggleRight size="1.5rem" onClick={switchToAsc} />
-                )}
+
+                <button
+                  onClick={direction === "asc" ? switchToDesc : switchToAsc}
+                >
+                  {direction === "asc" ? (
+                    <LuToggleLeft size="1.5rem" />
+                  ) : (
+                    <LuToggleRight size="1.5rem" />
+                  )}
+                </button>
+
                 <label className={styles.desc} onClick={switchToDesc}>
                   Desc
                 </label>
