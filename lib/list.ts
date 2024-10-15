@@ -76,7 +76,7 @@ export interface ListParams {
   duration?: string | null
   notes?: string | null
   holdNotes?: string | null
-  srlevel?: string | null
+  sranLevel?: string | null
   timing?: string | null
 }
 
@@ -170,7 +170,7 @@ export function useListCharts({
   duration,
   notes,
   holdNotes,
-  srlevel,
+  sranLevel,
   timing,
 }: ListParams) {
   const params: string[][] = []
@@ -210,8 +210,8 @@ export function useListCharts({
   if (holdNotes) {
     params.push(["hnotes", holdNotes])
   }
-  if (srlevel) {
-    params.push(["srlevel", srlevel])
+  if (sranLevel) {
+    params.push(["srlevel", sranLevel])
   }
   if (timing) {
     params.push(["timing", timing])

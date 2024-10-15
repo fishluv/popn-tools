@@ -22,6 +22,7 @@ import SongResults from "./SongResults"
 import ChartResults from "./ChartResults"
 import Chart from "../../models/Chart"
 import Difficulty from "../../models/Difficulty"
+import { SRAN_VALUES } from "../../models/SranLevel"
 
 const SORT_BY_OPTIONS = [
   { id: "title", label: "Title" },
@@ -161,19 +162,28 @@ function Options({
     duration: initialDuration,
     notes: initialNotes,
     holdNotes: initialHoldNotes,
+    sranLevel: initialSranLevel,
     timing: initialTiming,
     sorts,
   } = initialOptions
 
   const [folder, setFolder] = useState<string | undefined | null>(initialFolder)
 
-  // If initialLevel is a single number, use `level`. Otherwise use `levelAdv`.
-  const singleNumber = !!initialLevel?.match(/^\d{1,2}$/)
+  // For level props, if initial is single number, use normal version.
+  // Otherwise use advanced version.
+  const singleLevel = !!initialLevel?.match(/^\d{1,2}$/)
   const [level, setLevel] = useState<string | undefined | null>(
-    singleNumber ? initialLevel : null,
+    singleLevel ? initialLevel : null,
   )
   const [levelAdv, setLevelAdv] = useState<string | undefined | null>(
-    singleNumber ? null : initialLevel,
+    singleLevel ? null : initialLevel,
+  )
+  const singleSranLevel = !!initialSranLevel?.match(/^\d{1,2}[ab]?$/)
+  const [sranLevel, setSranLevel] = useState<string | undefined | null>(
+    singleSranLevel ? initialSranLevel : null,
+  )
+  const [sranLevelAdv, setSranLevelAdv] = useState<string | undefined | null>(
+    singleSranLevel ? null : initialSranLevel,
   )
 
   const [debut, setDebut] = useState<string | undefined | null>(initialDebut)
@@ -234,6 +244,7 @@ function Options({
     const params = [
       folder ? `folder=${folder}` : "",
       levelAdv || level ? `level=${levelAdv || level}` : "",
+      sranLevelAdv || sranLevel ? `srlevel=${sranLevelAdv || sranLevel}` : "",
       debut ? `debut=${debut}` : "",
       query ? `q=${query}` : "",
       diff.length === 4 ? "" : `diff=${diff.join(",")}`,
@@ -252,6 +263,7 @@ function Options({
     setFolder(null)
     setLevel(null)
     setLevelAdv(null)
+    setSranLevelAdv(null)
     setDebut(null)
     setQuery(null)
     setDiff(["e", "n", "h", "ex"])
@@ -492,6 +504,31 @@ function Options({
                   value={holdNotes ?? ""}
                   onChange={(event) => {
                     setHoldNotes(event.target.value)
+                  }}
+                />
+              </div>
+
+              <div className={cx(styles.filterControl, styles.sranLevel)}>
+                <Select
+                  className={styles.filterControl}
+                  id="sranLevelSelect"
+                  label="S乱"
+                  options={[...SRAN_VALUES].reverse().map((val) => ({
+                    id: val,
+                    label: val.startsWith("0") ? val.slice(1) : val,
+                  }))}
+                  dummyOption="(any)"
+                  selectedOption={sranLevel || ""}
+                  setOption={(id) => setSranLevel(id)}
+                  disabled={!!sranLevelAdv}
+                />
+                {" or "}
+                <input
+                  id="sranLevelInput"
+                  type="text"
+                  value={sranLevelAdv || ""}
+                  onChange={(event) => {
+                    setSranLevelAdv(event.target.value)
                   }}
                 />
               </div>

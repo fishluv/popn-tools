@@ -28,7 +28,7 @@ export default function Search() {
     duration: searchParams.get("duration"),
     notes: searchParams.get("notes"),
     holdNotes: searchParams.get("hnotes"),
-    srlevel: searchParams.get("srlevel"),
+    sranLevel: searchParams.get("srlevel"),
     timing: searchParams.get("timing"),
   }
 
