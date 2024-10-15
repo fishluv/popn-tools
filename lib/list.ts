@@ -70,7 +70,7 @@ export interface ListParams {
   page?: string | null
 
   // Charts-only
-  diff?: Difficulty[] | null
+  diffs?: Difficulty[] | null
   bpm?: string | null
   bpmType?: string | null
   duration?: string | null
@@ -164,7 +164,7 @@ export function useListCharts({
   query,
   sorts,
   page,
-  diff,
+  diffs,
   bpm,
   bpmType,
   duration,
@@ -192,8 +192,8 @@ export function useListCharts({
   if (page) {
     params.push(["page", page])
   }
-  if (diff) {
-    diff.forEach((d) => params.push(["diff[]", d]))
+  if (diffs) {
+    diffs.forEach((d) => params.push(["diff[]", d]))
   }
   if (bpm) {
     params.push(["bpm", bpm])

@@ -156,7 +156,7 @@ function Options({
     level: initialLevel,
     debut: initialDebut,
     query: initialQuery,
-    diff: initialDiff,
+    diffs: initialDiffs,
     bpm: initialBpm,
     bpmType: initialBpmType,
     duration: initialDuration,
@@ -189,8 +189,8 @@ function Options({
   const [debut, setDebut] = useState<string | undefined | null>(initialDebut)
   const [query, setQuery] = useState<string | undefined | null>(initialQuery)
 
-  const [diff, setDiff] = useState<Difficulty[]>(
-    initialDiff || ["e", "n", "h", "ex"],
+  const [diffs, setDiffs] = useState<Difficulty[]>(
+    initialDiffs || ["e", "n", "h", "ex"],
   )
   const [bpm, setBpm] = useState<string | undefined | null>(initialBpm)
   const [bpmType, setBpmType] = useState<string | undefined | null>(
@@ -247,7 +247,7 @@ function Options({
       sranLevelAdv || sranLevel ? `srlevel=${sranLevelAdv || sranLevel}` : "",
       debut ? `debut=${debut}` : "",
       query ? `q=${query}` : "",
-      diff.length === 4 ? "" : `diff=${diff.join(",")}`,
+      diffs.length === 4 ? "" : `diff=${diffs.join(",")}`,
       bpm ? `bpm=${bpm}` : "",
       bpmType ? `bpmtype=${bpmType}` : "",
       durSec ? `duration=${durSec}` : "",
@@ -267,7 +267,7 @@ function Options({
     setSranLevelAdv(null)
     setDebut(null)
     setQuery(null)
-    setDiff(["e", "n", "h", "ex"])
+    setDiffs(["e", "n", "h", "ex"])
     setBpm(null)
     setBpmType(null)
     setDuration(null)
@@ -285,16 +285,16 @@ function Options({
   ) {
     if (event.target.checked) {
       // Shouldn't already be there but check just in case.
-      if (!diff.includes(selectedDiff)) {
-        setDiff([...diff, selectedDiff])
+      if (!diffs.includes(selectedDiff)) {
+        setDiffs([...diffs, selectedDiff])
       }
     } else {
-      if (diff.length === 1 && diff[0] === selectedDiff) {
+      if (diffs.length === 1 && diffs[0] === selectedDiff) {
         toast("At least one difficulty must be selected.", {
           position: "top-center",
         })
       } else {
-        setDiff(diff.filter((d) => d !== selectedDiff))
+        setDiffs(diffs.filter((d) => d !== selectedDiff))
       }
     }
   }
@@ -381,7 +381,7 @@ function Options({
 
           {mode === "chart" && (
             <>
-              <div className={cx(styles.filterControl, styles.diff)}>
+              <div className={styles.filterControl}>
                 <label>Diff.</label>
 
                 <div className={styles.diffCheckboxes}>
@@ -389,7 +389,7 @@ function Options({
                     <input
                       id="easyInput"
                       type="checkbox"
-                      checked={diff.includes("e")}
+                      checked={diffs.includes("e")}
                       onChange={(event) => handleDiffChange(event, "e")}
                     />
                     <label
@@ -404,7 +404,7 @@ function Options({
                     <input
                       id="normalInput"
                       type="checkbox"
-                      checked={diff.includes("n")}
+                      checked={diffs.includes("n")}
                       onChange={(event) => handleDiffChange(event, "n")}
                     />
                     <label
@@ -418,7 +418,7 @@ function Options({
                     <input
                       id="hyperInput"
                       type="checkbox"
-                      checked={diff.includes("h")}
+                      checked={diffs.includes("h")}
                       onChange={(event) => handleDiffChange(event, "h")}
                     />
                     <label
@@ -432,7 +432,7 @@ function Options({
                     <input
                       id="exInput"
                       type="checkbox"
-                      checked={diff.includes("ex")}
+                      checked={diffs.includes("ex")}
                       onChange={(event) => handleDiffChange(event, "ex")}
                     />
                     <label

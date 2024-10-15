@@ -12,7 +12,7 @@ export default function Search() {
   const debut = searchParams.get("debut")
   const folder = searchParams.get("folder")
   const sorts = searchParams.getAll("sort")
-  const diff = searchParams.get("diff")
+  const diffs = searchParams.get("diff")
   const params: ListParams = {
     debut: parseDebut(debut),
     folder: parseVersionFolder(folder) || parseBemaniFolder(folder),
@@ -20,8 +20,8 @@ export default function Search() {
     query: searchParams.get("q"),
     sorts: sorts.map(parseSort).filter(Boolean) as Sort[],
     page: searchParams.get("page") || "1",
-    diff: diff
-      ? (diff.split(",").map(parseDifficulty).filter(Boolean) as Difficulty[])
+    diffs: diffs
+      ? (diffs.split(",").map(parseDifficulty).filter(Boolean) as Difficulty[])
       : null,
     bpm: searchParams.get("bpm"),
     bpmType: searchParams.get("bpmtype"),
