@@ -735,8 +735,9 @@ function Options({
               { field: "level", label: "Level" },
               { field: "title", label: "Title" },
               { field: "genre", label: "Genre" },
-              { field: "rtitle", label: "Title (romanized)" },
-              { field: "rgenre", label: "Genre (romanized)" },
+              { field: "rtitle", label: "Title (rom.)" },
+              { field: "rgenre", label: "Genre (rom.)" },
+              { field: "debut", label: "Song debut" },
             ]}
             selectedSorts={sorts ?? []}
             setSorts={setSorts}
