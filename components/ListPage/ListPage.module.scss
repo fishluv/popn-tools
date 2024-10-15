@@ -202,6 +202,12 @@
       flex-direction: column;
       gap: 0.75rem;
 
+      .selectedSorts {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
       .line {
         border: 0 solid #ddd;
         border-bottom-width: 2px;
@@ -211,8 +217,8 @@
         display: flex;
         gap: 1rem;
         
-        .sortName {
-          width: 10rem;
+        .sortField {
+          width: 7rem;
         }
 
         .ascDesc, .spacer {
@@ -221,12 +227,21 @@
 
         .ascDesc {
           display: flex;
-          gap: 0.75rem;
+          align-items: center;
+          gap: 0.125rem;
+          user-select: none; // Otherwise spamming toggle will select "Desc".
 
-          div {
-            display: flex;
-            gap: 0.25rem;
-            align-items: center;
+          label {
+            padding: 0 0.5rem;
+            border-radius: 1rem;
+          }
+
+          &.asc label.asc {
+            background: $e-light;
+          }
+
+          &.desc label.desc {
+            background: $h-light;
           }
         }
 

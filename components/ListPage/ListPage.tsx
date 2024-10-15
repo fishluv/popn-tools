@@ -17,6 +17,7 @@ import ReactModal from "react-modal"
 import { CgNotes } from "react-icons/cg"
 import { BsMusicNoteBeamed } from "react-icons/bs"
 import { FiMoreHorizontal } from "react-icons/fi"
+import { LuToggleLeft, LuToggleRight } from "react-icons/lu"
 import More from "../common/More"
 import SongResults from "./SongResults"
 import ChartResults from "./ChartResults"
@@ -173,6 +174,17 @@ function SortMultiSelect({
     <div className={cx(className, styles.SortMultiSelect)}>
       <div className={styles.selectedSorts}>
         {selectedFieldsAndLabels.map(({ field, direction, label }, index) => {
+          function switchToAsc() {
+            const newSorts = [...selectedSorts]
+            newSorts[index] = field
+            setSorts(newSorts)
+          }
+          function switchToDesc() {
+            const newSorts = [...selectedSorts]
+            newSorts[index] = `-${field}`
+            setSorts(newSorts)
+          }
+
           return (
             <div
               key={field}
@@ -182,26 +194,21 @@ function SortMultiSelect({
                 direction === "desc" ? styles.desc : styles.asc,
               )}
             >
-              <span className={styles.sortName}>{label}</span>
+              <span className={styles.sortField}>{label}</span>
 
-              <RadioList
-                className={styles.ascDesc}
-                name={`${field}Direction`}
-                options={[
-                  { id: "asc", label: "🔼 Asc." },
-                  { id: "desc", label: "🔽 Desc." },
-                ]}
-                selectedOption={direction}
-                setOption={(id) => {
-                  const newSorts = [...selectedSorts]
-                  if (id === "asc") {
-                    newSorts[index] = field
-                  } else {
-                    newSorts[index] = `-${field}`
-                  }
-                  setSorts(newSorts)
-                }}
-              />
+              <div className={cx(styles.ascDesc, styles[direction])}>
+                <label className={styles.asc} onClick={switchToAsc}>
+                  Asc
+                </label>
+                {direction === "asc" ? (
+                  <LuToggleLeft size="1.5rem" onClick={switchToDesc} />
+                ) : (
+                  <LuToggleRight size="1.5rem" onClick={switchToAsc} />
+                )}
+                <label className={styles.desc} onClick={switchToDesc}>
+                  Desc
+                </label>
+              </div>
 
               <div className={styles.actions}>
                 <button
@@ -258,7 +265,7 @@ function SortMultiSelect({
               key={field}
               className={cx(styles.sortOption, styles.unselected)}
             >
-              <span className={styles.sortName}>{label}</span>
+              <span className={styles.sortField}>{label}</span>
               <span className={styles.spacer} />
               <div className={styles.actions}>
                 <button
