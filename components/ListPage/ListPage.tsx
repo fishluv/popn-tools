@@ -263,6 +263,7 @@ function Options({
     setFolder(null)
     setLevel(null)
     setLevelAdv(null)
+    setSranLevel(null)
     setSranLevelAdv(null)
     setDebut(null)
     setQuery(null)
