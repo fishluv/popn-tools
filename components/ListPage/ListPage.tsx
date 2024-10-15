@@ -32,11 +32,6 @@ const SORT_BY_OPTIONS = [
   { id: "debut", label: "Debut version" },
 ]
 
-const SORT_DIRECTION_OPTIONS = [
-  { id: "asc", label: "🔼 Ascending" },
-  { id: "desc", label: "🔽 Descending" },
-]
-
 const FOLDER_OPTIONS: {
   id: VersionFolder | BemaniFolder | "dummy1" | "dummy2"
   label?: string
@@ -179,8 +174,8 @@ function SortMultiSelect({
                 className={styles.ascDesc}
                 name={`${sortField}Direction`}
                 options={[
-                  { id: "asc", label: "Asc." },
-                  { id: "desc", label: "Desc." },
+                  { id: "asc", label: "🔼 Asc" },
+                  { id: "desc", label: "🔽 Desc" },
                 ]}
                 selectedOption={isDesc ? "desc" : "asc"}
                 setOption={(id) => {
@@ -669,7 +664,10 @@ function Options({
             <RadioList
               className={styles.RadioList}
               name="sortDirection"
-              options={SORT_DIRECTION_OPTIONS}
+              options={[
+                { id: "asc", label: "🔼 Ascending" },
+                { id: "desc", label: "🔽 Descending" },
+              ]}
               selectedOption={
                 sorts?.length
                   ? sorts[0].startsWith("-")
