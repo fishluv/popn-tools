@@ -139,51 +139,65 @@ const DEBUT_OPTIONS: {
 
 function SortMultiSelect({
   className,
-  availableSorts,
+  availableSortFieldsAndLabels,
   selectedSorts,
   setSorts,
 }: {
   className?: string
-  availableSorts: SortField[]
+  availableSortFieldsAndLabels: { field: SortField; label: string }[]
   selectedSorts: Sort[]
   setSorts(sorts: Sort[]): void
 }) {
-  const unselectedSorts = availableSorts.filter(
-    (opt) => !selectedSorts.includes(opt) && !selectedSorts.includes(`-${opt}`),
+  const selectedFieldsAndLabels: {
+    field: SortField
+    direction: "asc" | "desc"
+    label: string
+  }[] = selectedSorts.map((sort) => {
+    const isThisDesc = sort.startsWith("-")
+    const thisField = (isThisDesc ? sort.slice(1) : sort) as SortField
+    const sortFieldAndLabel = availableSortFieldsAndLabels.find(
+      ({ field }) => field === thisField,
+    )!
+    return {
+      field: sortFieldAndLabel.field,
+      direction: isThisDesc ? "desc" : "asc",
+      label: sortFieldAndLabel.label,
+    }
+  })
+  const unselectedFieldsAndLabels = availableSortFieldsAndLabels.filter(
+    ({ field }) =>
+      !selectedSorts.includes(field) && !selectedSorts.includes(`-${field}`),
   )
 
   return (
     <div className={cx(className, styles.SortMultiSelect)}>
       <div className={styles.selectedSorts}>
-        {selectedSorts.map((sort, index) => {
-          const isDesc = sort.startsWith("-")
-          const sortField = (isDesc ? sort.slice(1) : sort) as SortField
-
+        {selectedFieldsAndLabels.map(({ field, direction, label }, index) => {
           return (
             <div
-              key={sortField}
+              key={field}
               className={cx(
                 styles.sortOption,
                 styles.selected,
-                isDesc ? styles.desc : styles.asc,
+                direction === "desc" ? styles.desc : styles.asc,
               )}
             >
-              <span className={styles.sortName}>{sortField}</span>
+              <span className={styles.sortName}>{label}</span>
 
               <RadioList
                 className={styles.ascDesc}
-                name={`${sortField}Direction`}
+                name={`${field}Direction`}
                 options={[
                   { id: "asc", label: "🔼 Asc" },
                   { id: "desc", label: "🔽 Desc" },
                 ]}
-                selectedOption={isDesc ? "desc" : "asc"}
+                selectedOption={direction}
                 setOption={(id) => {
                   const newSorts = [...selectedSorts]
                   if (id === "asc") {
-                    newSorts[index] = sortField
+                    newSorts[index] = field
                   } else {
-                    newSorts[index] = `-${sortField}`
+                    newSorts[index] = `-${field}`
                   }
                   setSorts(newSorts)
                 }}
@@ -209,19 +223,19 @@ function SortMultiSelect({
       <div className={styles.line} />
 
       <div className={styles.unselectedSorts}>
-        {unselectedSorts.map((sortField) => {
+        {unselectedFieldsAndLabels.map(({ field, label }) => {
           return (
             <div
-              key={sortField}
+              key={field}
               className={cx(styles.sortOption, styles.unselected)}
             >
-              <span className={styles.sortName}>{sortField}</span>
+              <span className={styles.sortName}>{label}</span>
               <span className={styles.spacer} />
               <div className={styles.actions}>
                 <button
                   className={styles.addButton}
                   onClick={() => {
-                    setSorts([...selectedSorts, sortField])
+                    setSorts([...selectedSorts, field])
                   }}
                 >
                   +
@@ -688,7 +702,13 @@ function Options({
 
         {mode === "chart" && (
           <SortMultiSelect
-            availableSorts={["level", "title", "genre", "rtitle", "rgenre"]}
+            availableSortFieldsAndLabels={[
+              { field: "level", label: "Level" },
+              { field: "title", label: "Title" },
+              { field: "genre", label: "Genre" },
+              { field: "rtitle", label: "Title (romanized)" },
+              { field: "rgenre", label: "Genre (romanized)" },
+            ]}
             selectedSorts={sorts ?? []}
             setSorts={setSorts}
           />
