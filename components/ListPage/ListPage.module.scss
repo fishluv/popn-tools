@@ -136,8 +136,10 @@
         width: 3.5rem;
       }
 
-      &.level input {
-        width: 12rem;
+      &.level, &.sranLevel {
+        input {
+          width: 12rem;
+        }
       }
 
       &.query, &.bpm {
@@ -150,11 +152,13 @@
         width: 14rem;
       }
 
-      &.bpm input,
-      &.duration input,
-      &.notes input,
-      &.holdNotes input {
-        width: 10rem;
+      &.bpm,
+      &.duration,
+      &.notes,
+      &.holdNotes {
+        input {
+          width: 10rem;
+        }
       }
 
       &.bpmType,
@@ -181,16 +185,6 @@
 
       .sortByRadios {
         margin-left: 0.5rem;
-      }
-    }
-
-    .level {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-
-      input {
-        width: 8rem;
       }
     }
 
