@@ -2,7 +2,7 @@ import cx from "classnames"
 import React, { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import styles from "./ListPage.module.scss"
-import { ListParams } from "../../lib/list"
+import { ListParams, Sort } from "../../lib/list"
 import Link from "next/link"
 import RadioList from "../common/RadioList"
 import { useRouter } from "next/navigation"
@@ -164,7 +164,7 @@ function Options({
     holdNotes: initialHoldNotes,
     sranLevel: initialSranLevel,
     timing: initialTiming,
-    sorts,
+    sorts: initialSorts,
   } = initialOptions
 
   const [folder, setFolder] = useState<string | undefined | null>(initialFolder)
@@ -219,21 +219,10 @@ function Options({
     ])
   }, [])
 
+  const [sorts, setSorts] = useState<Sort[]>(initialSorts || ["title"])
+
   // TODO: On refresh, options aren't updated bc initialOptions takes some time to update.
   // Use useEffect to keep options in sync with initialOptions.
-
-  let initialSortBy
-  let initialSortDirection
-  if (sorts?.length) {
-    initialSortBy = sorts[0].replace(/^-/, "")
-    initialSortDirection = sorts[0].startsWith("-") ? "desc" : "asc"
-  } else {
-    initialSortBy = "title"
-    initialSortDirection = "asc"
-  }
-  const [sortBy, setSortBy] = useState<string>(initialSortBy)
-  const [sortDirection, setSortDirection] =
-    useState<string>(initialSortDirection)
 
   const router = useRouter()
 
@@ -254,7 +243,7 @@ function Options({
       notes ? `notes=${notes}` : "",
       holdNotes ? `hnotes=${holdNotes}` : "",
       timing ? `timing=${timing}` : "",
-      `sort=${sortDirection === "desc" ? "-" : ""}${sortBy}`,
+      `sort=${sorts.join(",")}`,
     ].filter(Boolean)
     router.push(`${window.location.pathname}?${params.join("&")}`)
   }
@@ -274,8 +263,7 @@ function Options({
     setNotes(null)
     setHoldNotes(null)
     setTiming(null)
-    setSortBy("title")
-    setSortDirection("asc")
+    setSorts(["title"])
     router.push(window.location.pathname)
   }
 
@@ -563,14 +551,22 @@ function Options({
             className={styles.sortByRadios}
             name="sortBy"
             options={sortByOptions}
-            selectedOption={sortBy}
-            setOption={(id) => setSortBy(id)}
+            selectedOption={
+              sorts[0].startsWith("-") ? sorts[0].slice(1) : sorts[0]
+            }
+            setOption={(id) =>
+              setSorts([(sorts[0].startsWith("-") ? `-${id}` : id) as Sort])
+            }
           />
           <RadioList
             name="sortDirection"
             options={SORT_DIRECTION_OPTIONS}
-            selectedOption={sortDirection}
-            setOption={(id) => setSortDirection(id)}
+            selectedOption={sorts[0].startsWith("-") ? "desc" : "asc"}
+            setOption={(id) =>
+              setSorts([
+                (id === "asc" ? sorts[0].slice(1) : `-${sorts[0]}`) as Sort,
+              ])
+            }
           />
         </div>
       </div>
