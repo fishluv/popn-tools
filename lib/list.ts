@@ -10,7 +10,7 @@ import { SearchApiChartResult, SearchApiSongResult } from "./search"
 import { getSearchApiUrl } from "./urls"
 import Difficulty from "../models/Difficulty"
 
-type SortField =
+export type SortField =
   | "title"
   | "genre"
   | "rtitle"

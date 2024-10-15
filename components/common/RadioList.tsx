@@ -1,6 +1,4 @@
-import cx from "classnames"
-import styles from "./RadioList.module.scss"
-
+/** Encapsulates markup and state logic for radio button group. No styling. */
 export default function RadioList({
   className,
   name,
@@ -16,18 +14,18 @@ export default function RadioList({
   setOption(id: string): void
 }) {
   return (
-    <div className={cx(styles.RadioList, className)}>
+    <div className={className}>
       {options.map(({ id, label }) => {
         return (
-          <div key={id} className={styles.option}>
+          <div key={id}>
             <input
-              id={`${id}Radio`}
+              id={`${name}${id}Radio`}
               name={name}
               type="radio"
               checked={id === selectedOption}
               onChange={() => setOption(id)}
             />
-            <label htmlFor={`${id}Radio`}>{label}</label>
+            <label htmlFor={`${name}${id}Radio`}>{label}</label>
           </div>
         )
       })}

@@ -2,7 +2,7 @@ import cx from "classnames"
 import React, { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import styles from "./ListPage.module.scss"
-import { ListParams, Sort } from "../../lib/list"
+import { ListParams, Sort, SortField } from "../../lib/list"
 import Link from "next/link"
 import RadioList from "../common/RadioList"
 import { useRouter } from "next/navigation"
@@ -142,6 +142,104 @@ const DEBUT_OPTIONS: {
   { id: "cs1", label: "1 CS" },
 ]
 
+function SortMultiSelect({
+  className,
+  availableSorts,
+  selectedSorts,
+  setSorts,
+}: {
+  className?: string
+  availableSorts: SortField[]
+  selectedSorts: Sort[]
+  setSorts(sorts: Sort[]): void
+}) {
+  const unselectedSorts = availableSorts.filter(
+    (opt) => !selectedSorts.includes(opt) && !selectedSorts.includes(`-${opt}`),
+  )
+
+  return (
+    <div className={cx(className, styles.SortMultiSelect)}>
+      <div className={styles.selectedSorts}>
+        {selectedSorts.map((sort, index) => {
+          const isDesc = sort.startsWith("-")
+          const sortField = (isDesc ? sort.slice(1) : sort) as SortField
+
+          return (
+            <div
+              key={sortField}
+              className={cx(
+                styles.sortOption,
+                styles.selected,
+                isDesc ? styles.desc : styles.asc,
+              )}
+            >
+              <span className={styles.sortName}>{sortField}</span>
+
+              <RadioList
+                className={styles.ascDesc}
+                name={`${sortField}Direction`}
+                options={[
+                  { id: "asc", label: "Asc." },
+                  { id: "desc", label: "Desc." },
+                ]}
+                selectedOption={isDesc ? "desc" : "asc"}
+                setOption={(id) => {
+                  const newSorts = [...selectedSorts]
+                  if (id === "asc") {
+                    newSorts[index] = sortField
+                  } else {
+                    newSorts[index] = `-${sortField}`
+                  }
+                  setSorts(newSorts)
+                }}
+              />
+
+              <div className={styles.actions}>
+                <button
+                  className={styles.removeButton}
+                  onClick={() => {
+                    const newSorts = [...selectedSorts]
+                    newSorts.splice(index, 1)
+                    setSorts(newSorts)
+                  }}
+                >
+                  X
+                </button>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      <div className={styles.line} />
+
+      <div className={styles.unselectedSorts}>
+        {unselectedSorts.map((sortField) => {
+          return (
+            <div
+              key={sortField}
+              className={cx(styles.sortOption, styles.unselected)}
+            >
+              <span className={styles.sortName}>{sortField}</span>
+              <span className={styles.spacer} />
+              <div className={styles.actions}>
+                <button
+                  className={styles.addButton}
+                  onClick={() => {
+                    setSorts([...selectedSorts, sortField])
+                  }}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 function Options({
   className,
   mode,
@@ -219,7 +317,9 @@ function Options({
     ])
   }, [])
 
-  const [sorts, setSorts] = useState<Sort[]>(initialSorts || ["title"])
+  const [sorts, setSorts] = useState<Sort[] | undefined | null>(
+    initialSorts?.length ? initialSorts : ["title"],
+  )
 
   // TODO: On refresh, options aren't updated bc initialOptions takes some time to update.
   // Use useEffect to keep options in sync with initialOptions.
@@ -243,7 +343,7 @@ function Options({
       notes ? `notes=${notes}` : "",
       holdNotes ? `hnotes=${holdNotes}` : "",
       timing ? `timing=${timing}` : "",
-      `sort=${sorts.join(",")}`,
+      sorts ? `sort=${sorts.join(",")}` : "",
     ].filter(Boolean)
     router.push(`${window.location.pathname}?${params.join("&")}`)
   }
@@ -546,29 +646,55 @@ function Options({
         <p className={styles.header}>
           <span>Sort</span>
         </p>
-        <div className={styles.leftright}>
-          <RadioList
-            className={styles.sortByRadios}
-            name="sortBy"
-            options={sortByOptions}
-            selectedOption={
-              sorts[0].startsWith("-") ? sorts[0].slice(1) : sorts[0]
-            }
-            setOption={(id) =>
-              setSorts([(sorts[0].startsWith("-") ? `-${id}` : id) as Sort])
-            }
+
+        {mode === "song" && (
+          <div className={styles.leftright}>
+            <RadioList
+              className={styles.RadioList}
+              name="sortBy"
+              options={sortByOptions}
+              selectedOption={
+                sorts?.length
+                  ? sorts[0].startsWith("-")
+                    ? sorts[0].slice(1)
+                    : sorts[0]
+                  : ""
+              }
+              setOption={(id) => {
+                if (sorts?.length) {
+                  setSorts([(sorts[0].startsWith("-") ? `-${id}` : id) as Sort])
+                }
+              }}
+            />
+            <RadioList
+              className={styles.RadioList}
+              name="sortDirection"
+              options={SORT_DIRECTION_OPTIONS}
+              selectedOption={
+                sorts?.length
+                  ? sorts[0].startsWith("-")
+                    ? "desc"
+                    : "asc"
+                  : "asc"
+              }
+              setOption={(id) => {
+                if (sorts?.length) {
+                  setSorts([
+                    (id === "asc" ? sorts[0].slice(1) : `-${sorts[0]}`) as Sort,
+                  ])
+                }
+              }}
+            />
+          </div>
+        )}
+
+        {mode === "chart" && (
+          <SortMultiSelect
+            availableSorts={["level", "title", "genre", "rtitle", "rgenre"]}
+            selectedSorts={sorts ?? []}
+            setSorts={setSorts}
           />
-          <RadioList
-            name="sortDirection"
-            options={SORT_DIRECTION_OPTIONS}
-            selectedOption={sorts[0].startsWith("-") ? "desc" : "asc"}
-            setOption={(id) =>
-              setSorts([
-                (id === "asc" ? sorts[0].slice(1) : `-${sorts[0]}`) as Sort,
-              ])
-            }
-          />
-        </div>
+        )}
       </div>
 
       <div className={styles.buttons}>

@@ -33,7 +33,7 @@ export default function SongResults({
       <PageInfo {...pagy} />
       <SongList
         songs={songs}
-        romanize={!!params.sorts?.[0]?.match(/^-?r/)}
+        romanize={!!params.sorts?.some((sort) => sort.match(/^-?r/))}
         onSongClick={onSongClick}
       />
       <PageInfo {...pagy} />

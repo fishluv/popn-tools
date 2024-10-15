@@ -183,8 +183,59 @@
       display: flex;
       gap: 1rem;
 
-      .sortByRadios {
+      .RadioList {
         margin-left: 0.5rem;
+        display: flex;
+        flex-direction: column;
+
+        div {
+          display: flex;
+          gap: 0.25rem;
+          align-items: center;
+        }
+      }
+    }
+
+    .SortMultiSelect {
+      padding: 0 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      .line {
+        border: 0 solid #ddd;
+        border-bottom-width: 2px;
+      }
+
+      .sortOption {
+        display: flex;
+        gap: 1rem;
+        
+        .sortName {
+          width: 10rem;
+        }
+
+        .ascDesc, .spacer {
+          width: 10rem;
+        }
+
+        .ascDesc {
+          display: flex;
+          gap: 1rem;
+
+          div {
+            display: flex;
+            gap: 0.25rem;
+            align-items: center;
+          }
+        }
+
+        .actions {
+          flex-grow: 1;
+          display: flex;
+          justify-content: flex-end;
+          gap: 1rem;
+        }
       }
     }
 
