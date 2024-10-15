@@ -465,7 +465,7 @@ function Options({
                   { id: "majority", label: "Main bpm = majority" },
                   { id: "plurality", label: "Main bpm = nonmajority" },
                 ]}
-                dummyOption="(any)"
+                dummyOption="(any bpm type)"
                 selectedOption={bpmType || ""}
                 setOption={(id) => {
                   setBpmType(id)
