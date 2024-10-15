@@ -732,12 +732,18 @@ function Options({
         {mode === "chart" && (
           <SortMultiSelect
             availableSortFieldsAndLabels={[
-              { field: "level", label: "Level" },
               { field: "title", label: "Title" },
               { field: "genre", label: "Genre" },
               { field: "rtitle", label: "Title (rom.)" },
               { field: "rgenre", label: "Genre (rom.)" },
               { field: "debut", label: "Song debut" },
+              { field: "level", label: "Level" },
+              { field: "bpm", label: "Bpm" },
+              { field: "duration", label: "Duration" },
+              { field: "notes", label: "Notes" },
+              { field: "hnotes", label: "Hold notes" },
+              { field: "jrating", label: "Rating" },
+              { field: "srlevel", label: "S乱 level" },
             ]}
             selectedSorts={sorts ?? []}
             setSorts={setSorts}
