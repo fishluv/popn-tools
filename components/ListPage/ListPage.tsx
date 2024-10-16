@@ -716,14 +716,14 @@ function Options({
             availableSortFieldsAndLabels={[
               { field: "title", label: "Title" },
               { field: "genre", label: "Genre" },
-              { field: "rtitle", label: "Title (rom.)" },
-              { field: "rgenre", label: "Genre (rom.)" },
-              { field: "debut", label: "Song debut" },
+              { field: "rtitle", label: "Title (r)" },
+              { field: "rgenre", label: "Genre (r)" },
+              { field: "debut", label: "Debut" },
               { field: "level", label: "Level" },
               { field: "bpm", label: "Bpm" },
               { field: "duration", label: "Duration" },
               { field: "notes", label: "Notes" },
-              { field: "hnotes", label: "Hold notes" },
+              { field: "hnotes", label: "Holds" },
               { field: "jrating", label: "Rating" },
               { field: "srlevel", label: "S乱 level" },
             ]}
