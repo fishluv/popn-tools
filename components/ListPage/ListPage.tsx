@@ -18,12 +18,8 @@ import { CgNotes } from "react-icons/cg"
 import { BsMusicNoteBeamed } from "react-icons/bs"
 import { FaTrash } from "react-icons/fa"
 import { FiMoreHorizontal } from "react-icons/fi"
-import {
-  LuMoveDownLeft,
-  LuMoveUpLeft,
-  LuToggleLeft,
-  LuToggleRight,
-} from "react-icons/lu"
+import { ImArrowDownLeft2, ImArrowUpLeft2 } from "react-icons/im"
+import { LuToggleLeft, LuToggleRight } from "react-icons/lu"
 import More from "../common/More"
 import SongResults from "./SongResults"
 import ChartResults from "./ChartResults"
@@ -258,15 +254,13 @@ function SortMultiSelect({
                       setSorts(newSorts)
                     }}
                   >
-                    Swap
+                    <div className={styles.upleft}>
+                      <ImArrowUpLeft2 />
+                    </div>
+                    <div className={styles.downleft}>
+                      <ImArrowDownLeft2 />
+                    </div>
                   </button>
-
-                  <div className={styles.upleft}>
-                    <LuMoveUpLeft size="1rem" />
-                  </div>
-                  <div className={styles.downleft}>
-                    <LuMoveDownLeft size="1rem" />
-                  </div>
                 </div>
               )}
             </div>
@@ -716,8 +710,8 @@ function Options({
             availableSortFieldsAndLabels={[
               { field: "title", label: "Title" },
               { field: "genre", label: "Genre" },
-              { field: "rtitle", label: "Title (r)" },
-              { field: "rgenre", label: "Genre (r)" },
+              { field: "rtitle", label: "Title (rom)" },
+              { field: "rgenre", label: "Genre (rom)" },
               { field: "debut", label: "Debut" },
               { field: "level", label: "Level" },
               { field: "bpm", label: "Bpm" },
