@@ -1,6 +1,5 @@
 import cx from "classnames"
 import React, { useEffect, useState } from "react"
-import toast from "react-hot-toast"
 import styles from "./ListPage.module.scss"
 import { ListParams, Sort, SortField } from "../../lib/list"
 import Link from "next/link"
@@ -391,13 +390,7 @@ function Options({
         setDiffs([...diffs, selectedDiff])
       }
     } else {
-      if (diffs.length === 1 && diffs[0] === selectedDiff) {
-        toast("At least one difficulty must be selected.", {
-          position: "top-center",
-        })
-      } else {
-        setDiffs(diffs.filter((d) => d !== selectedDiff))
-      }
+      setDiffs(diffs.filter((d) => d !== selectedDiff))
     }
   }
 
@@ -492,6 +485,7 @@ function Options({
                       id="easyInput"
                       type="checkbox"
                       checked={diffs.includes("e")}
+                      disabled={diffs.length === 1 && diffs[0] === "e"}
                       onChange={(event) => handleDiffChange(event, "e")}
                     />
                     <label
@@ -507,6 +501,7 @@ function Options({
                       id="normalInput"
                       type="checkbox"
                       checked={diffs.includes("n")}
+                      disabled={diffs.length === 1 && diffs[0] === "n"}
                       onChange={(event) => handleDiffChange(event, "n")}
                     />
                     <label
@@ -521,6 +516,7 @@ function Options({
                       id="hyperInput"
                       type="checkbox"
                       checked={diffs.includes("h")}
+                      disabled={diffs.length === 1 && diffs[0] === "h"}
                       onChange={(event) => handleDiffChange(event, "h")}
                     />
                     <label
@@ -535,6 +531,7 @@ function Options({
                       id="exInput"
                       type="checkbox"
                       checked={diffs.includes("ex")}
+                      disabled={diffs.length === 1 && diffs[0] === "ex"}
                       onChange={(event) => handleDiffChange(event, "ex")}
                     />
                     <label
