@@ -286,59 +286,49 @@ function Options({
   mode: "song" | "chart"
   initialOptions: ListParams
 }) {
-  const {
-    folder: initialFolder,
-    level: initialLevel,
-    debut: initialDebut,
-    query: initialQuery,
-    diffs: initialDiffs,
-    bpm: initialBpm,
-    bpmType: initialBpmType,
-    duration: initialDuration,
-    notes: initialNotes,
-    holdNotes: initialHoldNotes,
-    sranLevel: initialSranLevel,
-    timing: initialTiming,
-    sorts: initialSorts,
-  } = initialOptions
-
-  const [folder, setFolder] = useState<string | undefined | null>(initialFolder)
-
-  // For level props, if initial is single number, use normal version.
-  // Otherwise use advanced version.
-  const singleLevel = !!initialLevel?.match(/^\d{1,2}$/)
-  const [level, setLevel] = useState<string | undefined | null>(
-    singleLevel ? initialLevel : null,
-  )
-  const [levelAdv, setLevelAdv] = useState<string | undefined | null>(
-    singleLevel ? null : initialLevel,
-  )
-  const singleSranLevel = !!initialSranLevel?.match(/^\d{1,2}[ab]?$/)
-  const [sranLevel, setSranLevel] = useState<string | undefined | null>(
-    singleSranLevel ? initialSranLevel : null,
-  )
+  // We want to initialize from initialOptions but it takes some time to
+  // hydrate from url params, so we do the real init below in a useEffect.
+  const [folder, setFolder] = useState<string | undefined | null>(null)
+  const [level, setLevel] = useState<string | undefined | null>(null)
+  const [levelAdv, setLevelAdv] = useState<string | undefined | null>(null)
+  const [debut, setDebut] = useState<string | undefined | null>(null)
+  const [query, setQuery] = useState<string | undefined | null>(null)
+  const [diffs, setDiffs] = useState<Difficulty[]>(["e", "n", "h", "ex"])
+  const [bpm, setBpm] = useState<string | undefined | null>(null)
+  const [bpmType, setBpmType] = useState<string | undefined | null>(null)
+  const [duration, setDuration] = useState<string | undefined | null>(null)
+  const [notes, setNotes] = useState<string | undefined | null>(null)
+  const [holdNotes, setHoldNotes] = useState<string | undefined | null>(null)
+  const [sranLevel, setSranLevel] = useState<string | undefined | null>(null)
   const [sranLevelAdv, setSranLevelAdv] = useState<string | undefined | null>(
-    singleSranLevel ? null : initialSranLevel,
+    null,
   )
+  const [timing, setTiming] = useState<string | undefined | null>(null)
+  const [sorts, setSorts] = useState<Sort[] | undefined | null>(null)
 
-  const [debut, setDebut] = useState<string | undefined | null>(initialDebut)
-  const [query, setQuery] = useState<string | undefined | null>(initialQuery)
+  useEffect(() => {
+    // For level props, if initial is single number, use normal version.
+    // Otherwise use advanced version.
+    const { level: initialLevel, sranLevel: initialSranLevel } = initialOptions
+    const singleLevel = !!initialLevel?.match(/^\d{1,2}$/)
+    const singleSranLevel = !!initialSranLevel?.match(/^\d{1,2}[ab]?$/)
 
-  const [diffs, setDiffs] = useState<Difficulty[]>(
-    initialDiffs || ["e", "n", "h", "ex"],
-  )
-  const [bpm, setBpm] = useState<string | undefined | null>(initialBpm)
-  const [bpmType, setBpmType] = useState<string | undefined | null>(
-    initialBpmType,
-  )
-  const [duration, setDuration] = useState<string | undefined | null>(
-    initialDuration,
-  )
-  const [notes, setNotes] = useState<string | undefined | null>(initialNotes)
-  const [holdNotes, setHoldNotes] = useState<string | undefined | null>(
-    initialHoldNotes,
-  )
-  const [timing, setTiming] = useState<string | undefined | null>(initialTiming)
+    setFolder(initialOptions.folder)
+    setLevel(singleLevel ? initialLevel : null)
+    setLevelAdv(singleLevel ? null : initialLevel)
+    setDebut(initialOptions.debut)
+    setQuery(initialOptions.query)
+    setDiffs(initialOptions.diffs || ["e", "n", "h", "ex"])
+    setBpm(initialOptions.bpm)
+    setBpmType(initialOptions.bpmType)
+    setDuration(initialOptions.duration)
+    setNotes(initialOptions.notes)
+    setHoldNotes(initialOptions.holdNotes)
+    setSranLevel(singleSranLevel ? initialSranLevel : null)
+    setSranLevelAdv(singleSranLevel ? null : initialSranLevel)
+    setTiming(initialOptions.timing)
+    setSorts(initialOptions.sorts?.length ? initialOptions.sorts : ["title"])
+  }, [initialOptions])
 
   // Can't use useExtraOptions because this component is rendered server side.
   const [sortByOptions, setSortByOptions] =
@@ -353,13 +343,6 @@ function Options({
       ...SORT_BY_OPTIONS,
     ])
   }, [])
-
-  const [sorts, setSorts] = useState<Sort[] | undefined | null>(
-    initialSorts?.length ? initialSorts : ["title"],
-  )
-
-  // TODO: On refresh, options aren't updated bc initialOptions takes some time to update.
-  // Use useEffect to keep options in sync with initialOptions.
 
   const router = useRouter()
 
