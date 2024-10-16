@@ -41,6 +41,11 @@
     padding: 0 0.25rem;
   }
 
+  td.banner {
+    position: sticky;
+    left: 0;
+  }
+
   th.bpm,
   th.duration,
   th.notes,
