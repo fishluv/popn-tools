@@ -227,12 +227,13 @@
       .sortOption {
         display: flex;
         gap: 1rem;
+        position: relative;
         
         .sortField {
           width: 7rem;
         }
 
-        .ascDesc, .spacer {
+        .spacer {
           width: 11rem;
         }
 
@@ -256,11 +257,33 @@
           }
         }
 
-        .actions {
-          flex-grow: 1;
+        .swapContainer {
+          position: relative;
+          bottom: 14px;
           display: flex;
-          justify-content: flex-end;
-          gap: 1rem;
+          margin-left: 0.5rem;
+
+          .upleft {
+            visibility: hidden;
+            position: absolute;
+            right: calc(100% + 4px);
+            bottom: 10px;
+          }
+
+          .downleft {
+            visibility: hidden;
+            position: absolute;
+            right: calc(100% + 4px);
+            top: 8px;
+          }
+
+          @media (hover: hover) {
+            &:hover, &:focus {
+              .upleft, .downleft {
+                visibility: visible;
+              }
+            }
+          }
         }
       }
     }

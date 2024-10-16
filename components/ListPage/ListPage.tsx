@@ -18,7 +18,12 @@ import { CgNotes } from "react-icons/cg"
 import { BsMusicNoteBeamed } from "react-icons/bs"
 import { FaTrash } from "react-icons/fa"
 import { FiMoreHorizontal } from "react-icons/fi"
-import { LuToggleLeft, LuToggleRight } from "react-icons/lu"
+import {
+  LuMoveDownLeft,
+  LuMoveUpLeft,
+  LuToggleLeft,
+  LuToggleRight,
+} from "react-icons/lu"
 import More from "../common/More"
 import SongResults from "./SongResults"
 import ChartResults from "./ChartResults"
@@ -195,6 +200,18 @@ function SortMultiSelect({
                 direction === "desc" ? styles.desc : styles.asc,
               )}
             >
+              <button
+                className={styles.removeButton}
+                disabled={selectedSorts.length === 1}
+                onClick={() => {
+                  const newSorts = [...selectedSorts]
+                  newSorts.splice(index, 1)
+                  setSorts(newSorts)
+                }}
+              >
+                <FaTrash size="1rem" />
+              </button>
+
               <span className={styles.sortField}>{label}</span>
 
               <div className={cx(styles.ascDesc, styles[direction])}>
@@ -217,48 +234,29 @@ function SortMultiSelect({
                 </label>
               </div>
 
-              <div className={styles.actions}>
-                <button
-                  className={styles.upButton}
-                  disabled={selectedFieldsAndLabels.length === 1 || index === 0}
-                  onClick={() => {
-                    const newSorts = [...selectedSorts]
-                    const temp = newSorts[index - 1]
-                    newSorts[index - 1] = newSorts[index]
-                    newSorts[index] = temp
-                    setSorts(newSorts)
-                  }}
-                >
-                  🔼
-                </button>
-                <button
-                  className={styles.downButton}
-                  disabled={
-                    selectedFieldsAndLabels.length === 1 ||
-                    index === selectedFieldsAndLabels.length - 1
-                  }
-                  onClick={() => {
-                    const newSorts = [...selectedSorts]
-                    const temp = newSorts[index + 1]
-                    newSorts[index + 1] = newSorts[index]
-                    newSorts[index] = temp
-                    setSorts(newSorts)
-                  }}
-                >
-                  🔽
-                </button>
-                <button
-                  className={styles.removeButton}
-                  disabled={selectedSorts.length === 1}
-                  onClick={() => {
-                    const newSorts = [...selectedSorts]
-                    newSorts.splice(index, 1)
-                    setSorts(newSorts)
-                  }}
-                >
-                  <FaTrash size="1rem" />
-                </button>
-              </div>
+              {index >= 1 && (
+                <div className={styles.swapContainer}>
+                  <button
+                    className={styles.swapButton}
+                    onClick={() => {
+                      const newSorts = [...selectedSorts]
+                      const temp = newSorts[index - 1]
+                      newSorts[index - 1] = newSorts[index]
+                      newSorts[index] = temp
+                      setSorts(newSorts)
+                    }}
+                  >
+                    Swap
+                  </button>
+
+                  <div className={styles.upleft}>
+                    <LuMoveUpLeft size="1rem" />
+                  </div>
+                  <div className={styles.downleft}>
+                    <LuMoveDownLeft size="1rem" />
+                  </div>
+                </div>
+              )}
             </div>
           )
         })}
