@@ -178,6 +178,18 @@ function SortMultiSelect({
 
   return (
     <div className={cx(className, styles.SortMultiSelect)}>
+      <Select
+        id="addSortSelect"
+        label=""
+        options={unselectedFieldsAndLabels.map(({ field, label }) => ({
+          id: field,
+          label,
+        }))}
+        dummyOption="Add a sort field"
+        selectedOption=""
+        setOption={(id) => setSorts([...selectedSorts, id as Sort])}
+      />
+
       <div className={styles.selectedSorts}>
         {selectedFieldsAndLabels.map(({ field, direction, label }, index) => {
           function switchToAsc() {
@@ -257,32 +269,6 @@ function SortMultiSelect({
                   </div>
                 </div>
               )}
-            </div>
-          )
-        })}
-      </div>
-
-      <div className={styles.line} />
-
-      <div className={styles.unselectedSorts}>
-        {unselectedFieldsAndLabels.map(({ field, label }) => {
-          return (
-            <div
-              key={field}
-              className={cx(styles.sortOption, styles.unselected)}
-            >
-              <span className={styles.sortField}>{label}</span>
-              <span className={styles.spacer} />
-              <div className={styles.actions}>
-                <button
-                  className={styles.addButton}
-                  onClick={() => {
-                    setSorts([...selectedSorts, field])
-                  }}
-                >
-                  +
-                </button>
-              </div>
             </div>
           )
         })}

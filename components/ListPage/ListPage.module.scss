@@ -88,10 +88,6 @@
       }
     }
 
-    .spacer {
-      flex-grow: 1;
-    }
-
     .moreButton {
       margin-left: 1rem;
       align-self: flex-end;
@@ -217,11 +213,6 @@
         display: flex;
         flex-direction: column;
         gap: 0.25rem;
-      }
-
-      .line {
-        border: 0 solid #ddd;
-        border-bottom-width: 2px;
       }
 
       .sortOption {
