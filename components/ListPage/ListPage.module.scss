@@ -88,6 +88,10 @@
       }
     }
 
+    .spacer {
+      flex-grow: 1;
+    }
+
     .moreButton {
       margin-left: 1rem;
       align-self: flex-end;
@@ -126,22 +130,17 @@
     .filterControl {
       display: flex;
       align-items: center;
-      gap: 0.25rem;
+      gap: 0.5rem;
 
       > label {
         width: 3.5rem;
+        text-align: right;
       }
 
       &.level, &.sranLevel {
         input {
           width: 12rem;
         }
-      }
-
-      &.query, &.bpm {
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
       }
 
       &.query input {
@@ -167,11 +166,15 @@
       display: flex;
       gap: 1rem;
 
-      label {
-        @include pill;
-        @include diff-bg-colors(bright);
-        color: white;
-        width: unset;
+      .filterControl {
+        gap: 0.25rem;
+
+        label {
+          @include pill;
+          @include diff-bg-colors(bright);
+          color: white;
+          width: unset;
+        }
       }
     }
 
@@ -222,10 +225,6 @@
         
         .sortField {
           width: 7rem;
-        }
-
-        .spacer {
-          width: 11rem;
         }
 
         .ascDesc {
