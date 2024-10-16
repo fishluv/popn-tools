@@ -20,6 +20,12 @@
     border-radius: 2px;
   }
 
+  .changed select,
+  input.changed,
+  label.changed {
+    background: $h-light;
+  }
+
   .PageHeader {
     display: flex;
 

@@ -403,7 +403,7 @@ function Options({
 
         <div className={styles.controls}>
           <Select
-            className={styles.filterControl}
+            className={cx(styles.filterControl, folder ? styles.changed : "")}
             id="folderSelect"
             label="Folder"
             options={FOLDER_OPTIONS}
@@ -419,7 +419,10 @@ function Options({
 
           <div className={cx(styles.filterControl, styles.level)}>
             <Select
-              className={styles.filterControl}
+              className={cx(
+                styles.filterControl,
+                level && !levelAdv ? styles.changed : "",
+              )}
               id="levelSelect"
               label="Level"
               options={Array(50)
@@ -438,6 +441,7 @@ function Options({
             />
             {" or "}
             <input
+              className={levelAdv ? styles.changed : ""}
               id="levelInput"
               type="text"
               value={levelAdv || ""}
@@ -448,7 +452,7 @@ function Options({
           </div>
 
           <Select
-            className={styles.filterControl}
+            className={cx(styles.filterControl, debut ? styles.changed : "")}
             id="debutSelect"
             label="Debut"
             options={DEBUT_OPTIONS}
@@ -465,6 +469,7 @@ function Options({
           <div className={cx(styles.filterControl, styles.query)}>
             <label htmlFor="queryInput">Search</label>
             <input
+              className={query ? styles.changed : ""}
               id="queryInput"
               type="text"
               value={query ?? ""}
@@ -477,7 +482,9 @@ function Options({
           {mode === "chart" && (
             <>
               <div className={styles.filterControl}>
-                <label>Diff.</label>
+                <label className={diffs.length !== 4 ? styles.changed : ""}>
+                  Diff.
+                </label>
 
                 <div className={styles.diffCheckboxes}>
                   <div className={styles.filterControl}>
@@ -547,6 +554,7 @@ function Options({
               <div className={cx(styles.filterControl, styles.bpm)}>
                 <label htmlFor="bpmInput">Bpm</label>
                 <input
+                  className={bpm ? styles.changed : ""}
                   id="bpmInput"
                   type="text"
                   value={bpm ?? ""}
@@ -557,7 +565,11 @@ function Options({
               </div>
 
               <Select
-                className={cx(styles.filterControl, styles.bpmType)}
+                className={cx(
+                  styles.filterControl,
+                  styles.bpmType,
+                  bpmType ? styles.changed : "",
+                )}
                 id="bpmTypeSelect"
                 label=""
                 options={[
@@ -575,6 +587,7 @@ function Options({
               <div className={cx(styles.filterControl, styles.duration)}>
                 <label htmlFor="durationInput">Durat.</label>
                 <input
+                  className={duration ? styles.changed : ""}
                   id="durationInput"
                   type="text"
                   value={duration ?? ""}
@@ -587,6 +600,7 @@ function Options({
               <div className={cx(styles.filterControl, styles.notes)}>
                 <label htmlFor="notesInput">Notes</label>
                 <input
+                  className={notes ? styles.changed : ""}
                   id="notesInput"
                   type="text"
                   value={notes ?? ""}
@@ -599,6 +613,7 @@ function Options({
               <div className={cx(styles.filterControl, styles.holdNotes)}>
                 <label htmlFor="holdNotesInput">Holds</label>
                 <input
+                  className={holdNotes ? styles.changed : ""}
                   id="holdNotesInput"
                   type="text"
                   value={holdNotes ?? ""}
@@ -610,7 +625,10 @@ function Options({
 
               <div className={cx(styles.filterControl, styles.sranLevel)}>
                 <Select
-                  className={styles.filterControl}
+                  className={cx(
+                    styles.filterControl,
+                    sranLevel && !sranLevelAdv ? styles.changed : "",
+                  )}
                   id="sranLevelSelect"
                   label="S乱"
                   options={[...SRAN_VALUES].reverse().map((val) => ({
@@ -624,6 +642,7 @@ function Options({
                 />
                 {" or "}
                 <input
+                  className={sranLevelAdv ? styles.changed : ""}
                   id="sranLevelInput"
                   type="text"
                   value={sranLevelAdv || ""}
@@ -634,7 +653,11 @@ function Options({
               </div>
 
               <Select
-                className={cx(styles.filterControl, styles.timing)}
+                className={cx(
+                  styles.filterControl,
+                  styles.timing,
+                  timing ? styles.changed : "",
+                )}
                 id="timingSelect"
                 label="Timing"
                 options={[
