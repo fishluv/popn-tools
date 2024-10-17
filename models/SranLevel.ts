@@ -1,4 +1,4 @@
-const NORMALIZED_SRAN_VALUES = [
+export const SRAN_VALUES = [
   "01a",
   "01b",
   "02a",
@@ -23,7 +23,7 @@ const NORMALIZED_SRAN_VALUES = [
 ] as const
 
 export default class SranLevel {
-  readonly norm: (typeof NORMALIZED_SRAN_VALUES)[number]
+  readonly norm: (typeof SRAN_VALUES)[number]
 
   constructor(val: string) {
     const valNorm = val.toLowerCase().padStart(2, "0")
@@ -59,13 +59,13 @@ export default class SranLevel {
   display(): string {
     switch (this.norm) {
       case "01a":
-        return "1-"
+        return "1a"
       case "01b":
-        return "1+"
+        return "1b"
       case "02a":
-        return "2-"
+        return "2a"
       case "02b":
-        return "2+"
+        return "2b"
       case "03":
       case "04":
       case "05":

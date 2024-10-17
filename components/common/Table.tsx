@@ -1,11 +1,10 @@
 import cx from "classnames"
 import styles from "./Table.module.scss"
-import TableHead from "./TableHead"
-import TableBody from "./TableBody"
 import { ReactNode } from "react"
 
 export interface ColumnInfo {
-  label: string
+  id: string
+  label?: string
   /**
    * Property of record to display. Omit to use `markup` instead.
    */
@@ -27,8 +26,35 @@ interface TableProps {
 export default function Table({ className, records, columns }: TableProps) {
   return (
     <table className={cx(styles.Table, className)}>
-      <TableHead columns={columns} />
-      <TableBody columns={columns} records={records} />
+      <colgroup>
+        {columns.map((c) => (
+          <col key={c.id} className={styles[c.id]} />
+        ))}
+      </colgroup>
+
+      <thead>
+        <tr>
+          {columns.map(({ id, label }, i) => (
+            <th key={i} className={styles[id]}>
+              {label}
+            </th>
+          ))}
+        </tr>
+      </thead>
+
+      <tbody>
+        {records.map((rec) => (
+          <tr key={rec.id}>
+            {columns.map(({ id, prop, markup }, i) => {
+              return (
+                <td key={i} className={styles[id]}>
+                  {(prop && rec[prop]) || (markup && markup(rec)) || ""}
+                </td>
+              )
+            })}
+          </tr>
+        ))}
+      </tbody>
     </table>
   )
 }

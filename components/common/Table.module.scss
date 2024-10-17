@@ -1,0 +1,66 @@
+.Table {
+  table-layout: fixed;
+  width: 1px;
+
+  col.banner {
+    width: 128px;
+  }
+  col.titlegenre {
+    width: 128px;
+  }
+  col.bpm {
+    width: 48px;
+  }
+  col.duration {
+    width: 48px;
+  }
+  col.notes {
+    width: 52px;
+  }
+  col.holdnotes {
+    width: 44px;
+  }
+  col.rating {
+    width: 132px;
+  }
+  col.sran {
+    width: 36px;
+  }
+  col.timing {
+    width: 112px;
+  }
+
+  td {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 0.25rem 0.25rem;
+  }
+
+  th {
+    padding: 0 0.25rem;
+  }
+
+  td.banner {
+    position: sticky;
+    left: 0;
+  }
+
+  th.bpm,
+  th.duration,
+  th.notes,
+  th.sran {
+    text-align: right;
+  }
+
+  td.bpm,
+  td.duration,
+  td.notes,
+  td.sran {
+    text-align: right;
+  }
+
+  td.holdnotes {
+    padding-left: 0;
+  }
+}

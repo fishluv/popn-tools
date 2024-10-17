@@ -8,8 +8,9 @@ import VersionFolder from "../models/VersionFolder"
 import BemaniFolder from "../models/BemaniFolder"
 import { SearchApiChartResult, SearchApiSongResult } from "./search"
 import { getSearchApiUrl } from "./urls"
+import Difficulty from "../models/Difficulty"
 
-type SortField =
+export type SortField =
   | "title"
   | "genre"
   | "rtitle"
@@ -59,17 +60,25 @@ export function parseSort(s: string | undefined | null): Sort | null {
   }
 }
 
-interface SharedListParams {
+export interface ListParams {
+  // Common
   folder?: VersionFolder | BemaniFolder | null
   level?: string | null
   debut?: Debut | null
   query?: string | null
   sorts?: Sort[] | null
   page?: string | null
-}
 
-// No songs-only params
-export type ListSongsParams = SharedListParams
+  // Charts-only
+  diffs?: Difficulty[] | null
+  bpm?: string | null
+  bpmType?: string | null
+  duration?: string | null
+  notes?: string | null
+  holdNotes?: string | null
+  sranLevel?: string | null
+  timing?: string | null
+}
 
 export interface ListSongsRawResult {
   data: SearchApiSongResult[]
@@ -79,15 +88,6 @@ export interface ListSongsRawResult {
 export interface ListSongsResult {
   songs: Song[]
   pagy: PagyMetadata
-}
-
-export type ListChartsParams = SharedListParams & {
-  diff?: ("e" | "n" | "h" | "ex")[] | null
-  bpm?: string | null
-  bpmtype?: string | null
-  notes?: string | null
-  srlevel?: string | null
-  timing?: string | null
 }
 
 export interface ListChartsRawResult {
@@ -115,7 +115,7 @@ export function useListSongs({
   query,
   sorts,
   page,
-}: ListSongsParams) {
+}: ListParams) {
   const params: string[][] = []
   if (debut) {
     params.push(["debut", debut])
@@ -164,13 +164,15 @@ export function useListCharts({
   query,
   sorts,
   page,
-  diff,
+  diffs,
   bpm,
-  bpmtype,
+  bpmType,
+  duration,
   notes,
-  srlevel,
+  holdNotes,
+  sranLevel,
   timing,
-}: ListChartsParams) {
+}: ListParams) {
   const params: string[][] = []
   if (debut) {
     params.push(["debut", debut])
@@ -190,20 +192,26 @@ export function useListCharts({
   if (page) {
     params.push(["page", page])
   }
-  if (diff) {
-    diff.forEach((d) => params.push(["diff[]", d]))
+  if (diffs) {
+    diffs.forEach((d) => params.push(["diff[]", d]))
   }
   if (bpm) {
     params.push(["bpm", bpm])
   }
-  if (bpmtype) {
-    params.push(["bpmtype", bpmtype])
+  if (bpmType) {
+    params.push(["bpmtype", bpmType])
+  }
+  if (duration) {
+    params.push(["duration", duration])
   }
   if (notes) {
     params.push(["notes", notes])
   }
-  if (srlevel) {
-    params.push(["srlevel", srlevel])
+  if (holdNotes) {
+    params.push(["hnotes", holdNotes])
+  }
+  if (sranLevel) {
+    params.push(["srlevel", sranLevel])
   }
   if (timing) {
     params.push(["timing", timing])

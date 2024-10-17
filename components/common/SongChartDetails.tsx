@@ -478,7 +478,7 @@ export default function SongChartDetails({
                 value={chart.bpmSteps.join(" → ")}
               />
               <Detail className={cx(styles.minor, styles.primaryBpm)} field="">
-                {"primary: "}
+                {"main: "}
                 {chart.primaryBpm}
                 {chart.primaryBpmType === "plurality" && " (nonmajority)"}
               </Detail>

@@ -1,6 +1,4 @@
-import cx from "classnames"
-import styles from "./Select.module.scss"
-
+/** Encapsulates markup and state logic for <select>. No styling. */
 export default function Select({
   className,
   id,
@@ -21,10 +19,9 @@ export default function Select({
   disabled?: boolean
 }) {
   return (
-    <div className={cx(styles.Select, className)}>
+    <div className={className}>
       <label htmlFor={id}>{label}</label>
       <select
-        className={selectedOption ? "" : styles.dummySelected}
         id={id}
         value={selectedOption}
         onChange={(event) => setOption(event.target.value)}
