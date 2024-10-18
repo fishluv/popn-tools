@@ -48,10 +48,12 @@ export default function ChartResults({
   className,
   params,
   onChartClick,
+  romanize,
 }: {
   className?: string
   params: ListParams
   onChartClick(chart: Chart): void
+  romanize: boolean
 }) {
   const { data, error, isLoading } = useListCharts(params)
 
@@ -68,7 +70,6 @@ export default function ChartResults({
   const { charts, pagy } = data
 
   const useGenre = !!params.sorts?.some((sort) => sort.match(/genre/))
-  const romanize = !!params.sorts?.some((sort) => sort.match(/^-?r/))
 
   return (
     <div className={cx(className, styles.ChartResults)}>

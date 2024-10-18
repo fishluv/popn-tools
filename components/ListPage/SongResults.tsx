@@ -9,10 +9,12 @@ export default function SongResults({
   className,
   params,
   onSongClick,
+  romanize,
 }: {
   className?: string
   params: ListParams
   onSongClick(song: Song): void
+  romanize: boolean
 }) {
   const { data, error, isLoading } = useListSongs(params)
 
@@ -31,11 +33,7 @@ export default function SongResults({
   return (
     <div className={cx(className, styles.SongResults)}>
       <PageInfo {...pagy} />
-      <SongList
-        songs={songs}
-        romanize={!!params.sorts?.some((sort) => sort.match(/^-?r/))}
-        onSongClick={onSongClick}
-      />
+      <SongList songs={songs} romanize={romanize} onSongClick={onSongClick} />
       <PageInfo {...pagy} />
     </div>
   )

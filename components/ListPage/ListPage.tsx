@@ -755,6 +755,8 @@ function Options({
   )
 }
 
+export type RomanizeOption = "default" | "always" | "never"
+
 export default function ListPage({
   mode,
   params,
@@ -767,6 +769,19 @@ export default function ListPage({
   >(null)
   const [openedSong, setOpenedSong] = useState<Song | null>(null)
   const [openedChart, setOpenedChart] = useState<Chart | undefined>(undefined)
+
+  const [romanizeOpt, setRomanizeOpt] = useState<RomanizeOption>("default")
+
+  // Can't useLocalStorage because this component is rendered server-side.
+  useEffect(() => {
+    const storedRomanize = localStorage.getItem("list.romanize") || "default"
+    setRomanizeOpt(storedRomanize as RomanizeOption)
+  }, [])
+
+  const romanize =
+    romanizeOpt === "default"
+      ? !!params.sorts?.some((sort) => sort.match(/^-?r/))
+      : romanizeOpt === "always"
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -856,6 +871,7 @@ export default function ListPage({
             setOpenedSong(song)
             setCurrentOpenModal("songDetails")
           }}
+          romanize={romanize}
         />
       ) : (
         <ChartResults
@@ -865,6 +881,7 @@ export default function ListPage({
             setOpenedChart(chart)
             setCurrentOpenModal("chartDetails")
           }}
+          romanize={romanize}
         />
       )}
 
@@ -875,8 +892,35 @@ export default function ListPage({
       >
         {currentOpenModal === "more" && (
           <More className={styles.More}>
+            <h6>Display options</h6>
+            <Select
+              className={styles.romanizeSelect}
+              id="romanizeSelect"
+              label="Romanize title/genre"
+              options={[
+                {
+                  id: "default",
+                  label: "Default",
+                },
+                {
+                  id: "always",
+                  label: "Always",
+                },
+                {
+                  id: "never",
+                  label: "Never",
+                },
+              ]}
+              selectedOption={romanizeOpt}
+              setOption={(opt: RomanizeOption) => {
+                setRomanizeOpt(opt)
+                localStorage.setItem("list.romanize", opt)
+              }}
+            />
+
             <h6>What is this?</h6>
             <p>{`This is a tool for browsing pop'n music songs and charts.`}</p>
+
             <h6>Tips</h6>
             <ul>
               <li>

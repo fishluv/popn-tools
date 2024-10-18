@@ -337,7 +337,15 @@
   }
 }
 
-.More input {
-  border: 1px solid #aaa;
-  border-radius: 2px;
+.More {
+  .romanizeSelect {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  input {
+    border: 1px solid #aaa;
+    border-radius: 2px;
+  }
 }
