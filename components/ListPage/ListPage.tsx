@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react"
 import styles from "./ListPage.module.scss"
 import { ListParams, Sort, SortField } from "../../lib/list"
 import Link from "next/link"
-import RadioList from "../common/RadioList"
 import { useRouter } from "next/navigation"
 import Select from "../common/Select"
 import BemaniFolder from "../../models/BemaniFolder"
@@ -25,14 +24,6 @@ import ChartResults from "./ChartResults"
 import Chart from "../../models/Chart"
 import Difficulty from "../../models/Difficulty"
 import { SRAN_VALUES } from "../../models/SranLevel"
-
-const SORT_BY_OPTIONS = [
-  { id: "title", label: "Title" },
-  { id: "genre", label: "Genre" },
-  { id: "rtitle", label: "Title (romanized)" },
-  { id: "rgenre", label: "Genre (romanized)" },
-  { id: "debut", label: "Debut version" },
-]
 
 const FOLDER_OPTIONS: {
   id: VersionFolder | BemaniFolder | "dummy1" | "dummy2"
@@ -323,19 +314,44 @@ function Options({
     setSorts(initialOptions.sorts?.length ? initialOptions.sorts : ["title"])
   }, [initialOptions])
 
+  const [availableSortFields, setAvailableSortFields] = useState<
+    { field: SortField; label: string }[]
+  >(() => {
+    if (mode === "song") {
+      return [
+        { field: "title", label: "Title" },
+        { field: "genre", label: "Genre" },
+        { field: "rtitle", label: "Title (rom)" },
+        { field: "rgenre", label: "Genre (rom)" },
+        { field: "debut", label: "Debut" },
+      ]
+    } else {
+      return [
+        { field: "title", label: "Title" },
+        { field: "genre", label: "Genre" },
+        { field: "rtitle", label: "Title (rom)" },
+        { field: "rgenre", label: "Genre (rom)" },
+        { field: "debut", label: "Debut" },
+        { field: "level", label: "Level" },
+        { field: "bpm", label: "Bpm" },
+        { field: "duration", label: "Duration" },
+        { field: "notes", label: "Notes" },
+        { field: "hnotes", label: "Holds" },
+        { field: "jrating", label: "Rating" },
+        { field: "srlevel", label: "S乱 level" },
+      ]
+    }
+  })
   // Can't use useExtraOptions because this component is rendered server side.
-  const [sortByOptions, setSortByOptions] =
-    useState<{ id: string; label: string }[]>(SORT_BY_OPTIONS)
   useEffect(() => {
     const songIdSet = localStorage
       .getItem("extraOptions")
       ?.split(",")
       .some((opt) => opt.trim() === "songid")
-    setSortByOptions([
-      ...(songIdSet ? [{ id: "id", label: "Id" }] : []),
-      ...SORT_BY_OPTIONS,
-    ])
-  }, [])
+    if (songIdSet && mode === "song") {
+      setAvailableSortFields((old) => [{ field: "id", label: "Id" }, ...old])
+    }
+  }, [mode])
 
   const router = useRouter()
 
@@ -682,65 +698,16 @@ function Options({
         </p>
 
         {mode === "song" && (
-          <div className={styles.leftright}>
-            <RadioList
-              className={styles.RadioList}
-              name="sortBy"
-              options={sortByOptions}
-              selectedOption={
-                sorts?.length
-                  ? sorts[0].startsWith("-")
-                    ? sorts[0].slice(1)
-                    : sorts[0]
-                  : ""
-              }
-              setOption={(id) => {
-                if (sorts?.length) {
-                  setSorts([(sorts[0].startsWith("-") ? `-${id}` : id) as Sort])
-                }
-              }}
-            />
-            <RadioList
-              className={styles.RadioList}
-              name="sortDirection"
-              options={[
-                { id: "asc", label: "🔼 Ascending" },
-                { id: "desc", label: "🔽 Descending" },
-              ]}
-              selectedOption={
-                sorts?.length
-                  ? sorts[0].startsWith("-")
-                    ? "desc"
-                    : "asc"
-                  : "asc"
-              }
-              setOption={(id) => {
-                if (sorts?.length) {
-                  setSorts([
-                    (id === "asc" ? sorts[0].slice(1) : `-${sorts[0]}`) as Sort,
-                  ])
-                }
-              }}
-            />
-          </div>
+          <SortMultiSelect
+            availableSortFieldsAndLabels={availableSortFields}
+            selectedSorts={sorts ?? []}
+            setSorts={setSorts}
+          />
         )}
 
         {mode === "chart" && (
           <SortMultiSelect
-            availableSortFieldsAndLabels={[
-              { field: "title", label: "Title" },
-              { field: "genre", label: "Genre" },
-              { field: "rtitle", label: "Title (rom)" },
-              { field: "rgenre", label: "Genre (rom)" },
-              { field: "debut", label: "Debut" },
-              { field: "level", label: "Level" },
-              { field: "bpm", label: "Bpm" },
-              { field: "duration", label: "Duration" },
-              { field: "notes", label: "Notes" },
-              { field: "hnotes", label: "Holds" },
-              { field: "jrating", label: "Rating" },
-              { field: "srlevel", label: "S乱 level" },
-            ]}
+            availableSortFieldsAndLabels={availableSortFields}
             selectedSorts={sorts ?? []}
             setSorts={setSorts}
           />
