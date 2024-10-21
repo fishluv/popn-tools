@@ -705,9 +705,16 @@ function Options({
 
                   <button
                     className={styles.collapseButton}
+                    id="collapseChartOptionsButton"
                     onClick={() => {
                       setChartOptionsExpanded(false)
                       localStorage.setItem("list.chartOptionsExpanded", "false")
+                      window.requestAnimationFrame(
+                        () =>
+                          document
+                            .getElementById("expandChartOptionsButton")
+                            ?.focus(),
+                      )
                     }}
                   >
                     Less
@@ -716,9 +723,16 @@ function Options({
               ) : (
                 <button
                   className={styles.expandButton}
+                  id="expandChartOptionsButton"
                   onClick={() => {
                     setChartOptionsExpanded(true)
                     localStorage.setItem("list.chartOptionsExpanded", "true")
+                    window.requestAnimationFrame(
+                      () =>
+                        document
+                          .getElementById("collapseChartOptionsButton")
+                          ?.focus(),
+                    )
                   }}
                 >
                   More
