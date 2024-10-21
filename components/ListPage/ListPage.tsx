@@ -755,7 +755,21 @@ function Options({
   )
 }
 
-export type RomanizeOption = "default" | "always" | "never"
+type WhenOption = "default" | "always" | "never"
+const WHEN_SELECT_OPTIONS: { id: WhenOption; label: string }[] = [
+  {
+    id: "default",
+    label: "Default",
+  },
+  {
+    id: "always",
+    label: "Always",
+  },
+  {
+    id: "never",
+    label: "Never",
+  },
+]
 
 export default function ListPage({
   mode,
@@ -770,18 +784,23 @@ export default function ListPage({
   const [openedSong, setOpenedSong] = useState<Song | null>(null)
   const [openedChart, setOpenedChart] = useState<Chart | undefined>(undefined)
 
-  const [romanizeOpt, setRomanizeOpt] = useState<RomanizeOption>("default")
+  const [romanizeOpt, setRomanizeOpt] = useState<WhenOption>("default")
+  const [genreOpt, setGenreOpt] = useState<WhenOption>("default")
 
   // Can't useLocalStorage because this component is rendered server-side.
   useEffect(() => {
     const storedRomanize = localStorage.getItem("list.romanize") || "default"
-    setRomanizeOpt(storedRomanize as RomanizeOption)
+    setRomanizeOpt(storedRomanize as WhenOption)
   }, [])
 
   const romanize =
     romanizeOpt === "default"
       ? !!params.sorts?.some((sort) => sort.match(/^-?r/))
       : romanizeOpt === "always"
+  const preferGenre =
+    genreOpt === "default"
+      ? !!params.sorts?.some((sort) => sort.match(/genre/))
+      : genreOpt === "always"
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -882,6 +901,7 @@ export default function ListPage({
             setCurrentOpenModal("chartDetails")
           }}
           romanize={romanize}
+          preferGenre={preferGenre}
         />
       )}
 
@@ -893,28 +913,28 @@ export default function ListPage({
         {currentOpenModal === "more" && (
           <More className={styles.More}>
             <h6>Display options</h6>
+
             <Select
               className={styles.romanizeSelect}
               id="romanizeSelect"
               label="Romanize title/genre"
-              options={[
-                {
-                  id: "default",
-                  label: "Default",
-                },
-                {
-                  id: "always",
-                  label: "Always",
-                },
-                {
-                  id: "never",
-                  label: "Never",
-                },
-              ]}
+              options={WHEN_SELECT_OPTIONS}
               selectedOption={romanizeOpt}
-              setOption={(opt: RomanizeOption) => {
+              setOption={(opt: WhenOption) => {
                 setRomanizeOpt(opt)
                 localStorage.setItem("list.romanize", opt)
+              }}
+            />
+
+            <Select
+              className={styles.genreSelect}
+              id="genreSelect"
+              label="Prefer genre"
+              options={WHEN_SELECT_OPTIONS}
+              selectedOption={genreOpt}
+              setOption={(opt: WhenOption) => {
+                setGenreOpt(opt)
+                localStorage.setItem("list.genre", opt)
               }}
             />
 

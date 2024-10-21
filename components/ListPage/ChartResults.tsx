@@ -49,11 +49,13 @@ export default function ChartResults({
   params,
   onChartClick,
   romanize,
+  preferGenre,
 }: {
   className?: string
   params: ListParams
   onChartClick(chart: Chart): void
   romanize: boolean
+  preferGenre: boolean
 }) {
   const { data, error, isLoading } = useListCharts(params)
 
@@ -68,8 +70,6 @@ export default function ChartResults({
   }
 
   const { charts, pagy } = data
-
-  const useGenre = !!params.sorts?.some((sort) => sort.match(/genre/))
 
   return (
     <div className={cx(className, styles.ChartResults)}>
@@ -91,7 +91,7 @@ export default function ChartResults({
               markup: (chart: Chart) => {
                 const { title, remywikiTitle, genre, genreRomanTrans } =
                   chart.song!
-                if (useGenre && title !== genre) {
+                if (preferGenre && title !== genre) {
                   return (
                     <span className={styles.genre}>
                       {romanize ? genreRomanTrans : genre}
