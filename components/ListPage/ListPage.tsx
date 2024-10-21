@@ -947,17 +947,19 @@ export default function ListPage({
               }}
             />
 
-            <Select
-              className={styles.genreSelect}
-              id="genreSelect"
-              label="Prefer genre"
-              options={WHEN_SELECT_OPTIONS}
-              selectedOption={genreOpt}
-              setOption={(opt: WhenOption) => {
-                setGenreOpt(opt)
-                localStorage.setItem("list.genre", opt)
-              }}
-            />
+            {mode === "chart" && (
+              <Select
+                className={styles.genreSelect}
+                id="genreSelect"
+                label="Prefer genre"
+                options={WHEN_SELECT_OPTIONS}
+                selectedOption={genreOpt}
+                setOption={(opt: WhenOption) => {
+                  setGenreOpt(opt)
+                  localStorage.setItem("list.genre", opt)
+                }}
+              />
+            )}
 
             <h6>What is this?</h6>
             <p>{`This is a tool for browsing pop'n music songs and charts.`}</p>
