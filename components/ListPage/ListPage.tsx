@@ -294,12 +294,13 @@ function Options({
     // For level props, if initial is single number, use normal version.
     // Otherwise use advanced version.
     const { level: initialLevel, sranLevel: initialSranLevel } = initialOptions
-    const singleLevel = !!initialLevel?.match(/^\d{1,2}$/)
-    const singleSranLevel = !!initialSranLevel?.match(/^\d{1,2}[ab]?$/)
+    const useLevel = !!initialLevel?.match(/^\d{1,2}$/)
+    const useSranLevel =
+      initialSranLevel === "1-19" || !!initialSranLevel?.match(/^\d{1,2}[ab]?$/)
 
     setFolder(initialOptions.folder)
-    setLevel(singleLevel ? initialLevel : null)
-    setLevelAdv(singleLevel ? null : initialLevel)
+    setLevel(useLevel ? initialLevel : null)
+    setLevelAdv(useLevel ? null : initialLevel)
     setDebut(initialOptions.debut)
     setQuery(initialOptions.query)
     setDiffs(initialOptions.diffs || ["e", "n", "h", "ex"])
@@ -308,8 +309,8 @@ function Options({
     setDuration(initialOptions.duration)
     setNotes(initialOptions.notes)
     setHoldNotes(initialOptions.holdNotes)
-    setSranLevel(singleSranLevel ? initialSranLevel : null)
-    setSranLevelAdv(singleSranLevel ? null : initialSranLevel)
+    setSranLevel(useSranLevel ? initialSranLevel : null)
+    setSranLevelAdv(useSranLevel ? null : initialSranLevel)
     setTiming(initialOptions.timing)
     setSorts(initialOptions.sorts?.length ? initialOptions.sorts : ["title"])
   }, [initialOptions])
@@ -658,11 +659,14 @@ function Options({
                       )}
                       id="sranLevelSelect"
                       label="S乱"
-                      options={[...SRAN_VALUES].reverse().map((val) => ({
-                        id: val,
-                        label: val.startsWith("0") ? val.slice(1) : val,
-                      }))}
-                      dummyOption="(any)"
+                      options={[
+                        { id: "1-19", label: "1–19" },
+                        ...[...SRAN_VALUES].reverse().map((val) => ({
+                          id: val,
+                          label: val.startsWith("0") ? val.slice(1) : val,
+                        })),
+                      ]}
+                      dummyOption="(n/a)"
                       selectedOption={sranLevel || ""}
                       setOption={(id) => setSranLevel(id)}
                       disabled={!!sranLevelAdv}
