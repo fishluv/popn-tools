@@ -795,6 +795,9 @@ export default function ListPage({
   useEffect(() => {
     const storedRomanize = localStorage.getItem("list.romanize") || "default"
     setRomanizeOpt(storedRomanize as WhenOption)
+
+    const storedGenre = localStorage.getItem("list.genre") || "default"
+    setGenreOpt(storedGenre as WhenOption)
   }, [])
 
   const romanize =
