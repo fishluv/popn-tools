@@ -353,6 +353,15 @@ function Options({
     }
   }, [mode])
 
+  const [chartOptionsExpanded, setChartOptionsExpanded] =
+    useState<boolean>(false)
+  useEffect(() => {
+    const storedChartOptionsExpanded = localStorage.getItem(
+      "list.chartOptionsExpanded",
+    )
+    setChartOptionsExpanded(storedChartOptionsExpanded === "true")
+  }, [])
+
   const router = useRouter()
 
   function clickFilterButton() {
@@ -567,126 +576,150 @@ function Options({
                 </div>
               </div>
 
-              <div className={cx(styles.filterControl, styles.bpm)}>
-                <label htmlFor="bpmInput">Bpm</label>
-                <input
-                  className={bpm ? styles.changed : ""}
-                  id="bpmInput"
-                  type="text"
-                  value={bpm ?? ""}
-                  onChange={(event) => {
-                    setBpm(event.target.value)
+              {chartOptionsExpanded ? (
+                <>
+                  <div className={cx(styles.filterControl, styles.bpm)}>
+                    <label htmlFor="bpmInput">Bpm</label>
+                    <input
+                      className={bpm ? styles.changed : ""}
+                      id="bpmInput"
+                      type="text"
+                      value={bpm ?? ""}
+                      onChange={(event) => {
+                        setBpm(event.target.value)
+                      }}
+                    />
+                  </div>
+
+                  <Select
+                    className={cx(
+                      styles.filterControl,
+                      styles.bpmType,
+                      bpmType ? styles.changed : "",
+                    )}
+                    id="bpmTypeSelect"
+                    label=""
+                    options={[
+                      { id: "totality", label: "Constant bpm" },
+                      { id: "majority", label: "Main bpm = majority" },
+                      { id: "plurality", label: "Main bpm = nonmajority" },
+                    ]}
+                    dummyOption="(any bpm type)"
+                    selectedOption={bpmType || ""}
+                    setOption={(id) => {
+                      setBpmType(id)
+                    }}
+                  />
+
+                  <div className={cx(styles.filterControl, styles.duration)}>
+                    <label htmlFor="durationInput">Durat.</label>
+                    <input
+                      className={duration ? styles.changed : ""}
+                      id="durationInput"
+                      type="text"
+                      value={duration ?? ""}
+                      onChange={(event) => {
+                        setDuration(event.target.value)
+                      }}
+                    />
+                  </div>
+
+                  <div className={cx(styles.filterControl, styles.notes)}>
+                    <label htmlFor="notesInput">Notes</label>
+                    <input
+                      className={notes ? styles.changed : ""}
+                      id="notesInput"
+                      type="text"
+                      value={notes ?? ""}
+                      onChange={(event) => {
+                        setNotes(event.target.value)
+                      }}
+                    />
+                  </div>
+
+                  <div className={cx(styles.filterControl, styles.holdNotes)}>
+                    <label htmlFor="holdNotesInput">Holds</label>
+                    <input
+                      className={holdNotes ? styles.changed : ""}
+                      id="holdNotesInput"
+                      type="text"
+                      value={holdNotes ?? ""}
+                      onChange={(event) => {
+                        setHoldNotes(event.target.value)
+                      }}
+                    />
+                  </div>
+
+                  <div className={cx(styles.filterControl, styles.sranLevel)}>
+                    <Select
+                      className={cx(
+                        styles.filterControl,
+                        sranLevel && !sranLevelAdv ? styles.changed : "",
+                      )}
+                      id="sranLevelSelect"
+                      label="S乱"
+                      options={[...SRAN_VALUES].reverse().map((val) => ({
+                        id: val,
+                        label: val.startsWith("0") ? val.slice(1) : val,
+                      }))}
+                      dummyOption="(any)"
+                      selectedOption={sranLevel || ""}
+                      setOption={(id) => setSranLevel(id)}
+                      disabled={!!sranLevelAdv}
+                    />
+                    {" or "}
+                    <input
+                      className={sranLevelAdv ? styles.changed : ""}
+                      id="sranLevelInput"
+                      type="text"
+                      value={sranLevelAdv || ""}
+                      onChange={(event) => {
+                        setSranLevelAdv(event.target.value)
+                      }}
+                    />
+                  </div>
+
+                  <Select
+                    className={cx(
+                      styles.filterControl,
+                      styles.timing,
+                      timing ? styles.changed : "",
+                    )}
+                    id="timingSelect"
+                    label="Timing"
+                    options={[
+                      { id: "standard", label: "Standard" },
+                      { id: "nonstandard", label: "Nonstandard" },
+                      { id: "variable", label: "Variable" },
+                    ]}
+                    dummyOption="(any)"
+                    selectedOption={timing || ""}
+                    setOption={(id) => {
+                      setTiming(id)
+                    }}
+                  />
+
+                  <button
+                    className={styles.collapseButton}
+                    onClick={() => {
+                      setChartOptionsExpanded(false)
+                      localStorage.setItem("list.chartOptionsExpanded", "false")
+                    }}
+                  >
+                    Less
+                  </button>
+                </>
+              ) : (
+                <button
+                  className={styles.expandButton}
+                  onClick={() => {
+                    setChartOptionsExpanded(true)
+                    localStorage.setItem("list.chartOptionsExpanded", "true")
                   }}
-                />
-              </div>
-
-              <Select
-                className={cx(
-                  styles.filterControl,
-                  styles.bpmType,
-                  bpmType ? styles.changed : "",
-                )}
-                id="bpmTypeSelect"
-                label=""
-                options={[
-                  { id: "totality", label: "Constant bpm" },
-                  { id: "majority", label: "Main bpm = majority" },
-                  { id: "plurality", label: "Main bpm = nonmajority" },
-                ]}
-                dummyOption="(any bpm type)"
-                selectedOption={bpmType || ""}
-                setOption={(id) => {
-                  setBpmType(id)
-                }}
-              />
-
-              <div className={cx(styles.filterControl, styles.duration)}>
-                <label htmlFor="durationInput">Durat.</label>
-                <input
-                  className={duration ? styles.changed : ""}
-                  id="durationInput"
-                  type="text"
-                  value={duration ?? ""}
-                  onChange={(event) => {
-                    setDuration(event.target.value)
-                  }}
-                />
-              </div>
-
-              <div className={cx(styles.filterControl, styles.notes)}>
-                <label htmlFor="notesInput">Notes</label>
-                <input
-                  className={notes ? styles.changed : ""}
-                  id="notesInput"
-                  type="text"
-                  value={notes ?? ""}
-                  onChange={(event) => {
-                    setNotes(event.target.value)
-                  }}
-                />
-              </div>
-
-              <div className={cx(styles.filterControl, styles.holdNotes)}>
-                <label htmlFor="holdNotesInput">Holds</label>
-                <input
-                  className={holdNotes ? styles.changed : ""}
-                  id="holdNotesInput"
-                  type="text"
-                  value={holdNotes ?? ""}
-                  onChange={(event) => {
-                    setHoldNotes(event.target.value)
-                  }}
-                />
-              </div>
-
-              <div className={cx(styles.filterControl, styles.sranLevel)}>
-                <Select
-                  className={cx(
-                    styles.filterControl,
-                    sranLevel && !sranLevelAdv ? styles.changed : "",
-                  )}
-                  id="sranLevelSelect"
-                  label="S乱"
-                  options={[...SRAN_VALUES].reverse().map((val) => ({
-                    id: val,
-                    label: val.startsWith("0") ? val.slice(1) : val,
-                  }))}
-                  dummyOption="(any)"
-                  selectedOption={sranLevel || ""}
-                  setOption={(id) => setSranLevel(id)}
-                  disabled={!!sranLevelAdv}
-                />
-                {" or "}
-                <input
-                  className={sranLevelAdv ? styles.changed : ""}
-                  id="sranLevelInput"
-                  type="text"
-                  value={sranLevelAdv || ""}
-                  onChange={(event) => {
-                    setSranLevelAdv(event.target.value)
-                  }}
-                />
-              </div>
-
-              <Select
-                className={cx(
-                  styles.filterControl,
-                  styles.timing,
-                  timing ? styles.changed : "",
-                )}
-                id="timingSelect"
-                label="Timing"
-                options={[
-                  { id: "standard", label: "Standard" },
-                  { id: "nonstandard", label: "Nonstandard" },
-                  { id: "variable", label: "Variable" },
-                ]}
-                dummyOption="(any)"
-                selectedOption={timing || ""}
-                setOption={(id) => {
-                  setTiming(id)
-                }}
-              />
+                >
+                  More
+                </button>
+              )}
             </>
           )}
         </div>
