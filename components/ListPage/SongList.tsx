@@ -4,6 +4,7 @@ import Song from "../../models/Song"
 import LevelPill from "../common/LevelPill"
 import SongBanner from "../common/SongBanner"
 import useExtraOptions from "../../lib/useExtraOptions"
+import FolderPill from "../common/FolderPill"
 
 function SongRow({
   song,
@@ -15,7 +16,8 @@ function SongRow({
   onSongClick(song: Song): void
 }) {
   const extraOptions = useExtraOptions()
-  const { id, title, genre, remywikiTitle, genreRomanTrans, charts } = song
+  const { id, title, genre, remywikiTitle, genreRomanTrans, charts, debut } =
+    song
   return (
     <div className={styles.SongRow}>
       <button className={styles.left} onClick={() => onSongClick(song)}>
@@ -77,6 +79,10 @@ function SongRow({
           ) : (
             <div className={cx(styles.placeholder, styles.ex)} />
           )}
+        </div>
+
+        <div className={styles.debut}>
+          <FolderPill folder={debut} pillStyle="compact" labelStyle="compact" />
         </div>
       </button>
 

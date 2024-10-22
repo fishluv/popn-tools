@@ -23,7 +23,7 @@ export default class FolderPill extends React.Component<FolderPillProps> {
       return "—"
     }
 
-    if (/^cs[^0-9]/.test(folder)) {
+    if (labelStyle === "full") {
       switch (folder) {
         case "csbest":
           return "best hits"
@@ -31,13 +31,10 @@ export default class FolderPill extends React.Component<FolderPillProps> {
           return "portable"
         case "cspmp2":
           return "portable 2"
-        default: // lively, utacchi
-          return folder.replace(/^cs/, "")
-      }
-    }
-
-    if (labelStyle === "full") {
-      switch (folder) {
+        case "cslively":
+          return "lively"
+        case "csutacchi":
+          return "utacchi"
         case "28":
           return "jam&fizz"
         case "27":
@@ -75,6 +72,16 @@ export default class FolderPill extends React.Component<FolderPillProps> {
       }
     } else {
       switch (folder) {
+        case "csbest":
+          return "best"
+        case "cspmp":
+          return "pmp"
+        case "cspmp2":
+          return "pmp2"
+        case "cslively":
+          return "liv"
+        case "csutacchi":
+          return "uta"
         case "bemani":
           return "bem"
         case "gitadora":

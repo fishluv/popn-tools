@@ -20,15 +20,16 @@ export default function SongResultCard({
         height={60}
       />
 
-      <div className={styles.folderLevels}>
-        <div className={styles.folder}>
+      <div className={styles.debutLevels}>
+        <div>
           <FolderPill
-            folder={song.folders[0] || song.debut || null}
+            folder={song.debut || null}
             pillStyle="compact"
             labelStyle="compact"
           />
         </div>
-        <div className={styles.levels}>
+
+        <div>
           <SongLevelPills
             songCharts={song.charts!}
             pillStyle="compact"

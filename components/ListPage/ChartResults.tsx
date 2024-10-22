@@ -6,6 +6,7 @@ import Table from "../common/Table"
 import PageInfo from "./PageInfo"
 import styles from "./ChartResults.module.scss"
 import LevelPill from "../common/LevelPill"
+import FolderPill from "../common/FolderPill"
 
 function ChartBanner({
   chart,
@@ -23,11 +24,20 @@ function ChartBanner({
         height={30}
       />
 
+      <div className={styles.debut}>
+        <FolderPill
+          className={styles.FolderPill}
+          folder={chart.song!.debut}
+          pillStyle="compact"
+          labelStyle="compact"
+        />
+      </div>
+
       <div className={cx(styles.diffStripe, styles[chart.difficulty])} />
 
       <div className={styles.level}>
         <LevelPill
-          className={cx(styles.levelPill, styles[chart.difficulty])}
+          className={styles[chart.difficulty]}
           difficulty={chart.difficulty}
           level={chart.level}
           pillStyle="compact"

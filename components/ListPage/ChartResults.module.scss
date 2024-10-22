@@ -32,6 +32,16 @@
   padding: 0;
   position: relative;
 
+  .folder {
+    position: absolute;
+    right: 0;
+    bottom: 4px;
+
+    .FolderPill {
+      line-height: 14px;
+    }
+  }
+
   .diffStripe {
     position: absolute;
     right: 0;
@@ -43,7 +53,7 @@
     @include diff-border-colors(bright);
   }
 
-  .level {
+  .debut {
     position: absolute;
     left: 0;
     bottom: 0;
