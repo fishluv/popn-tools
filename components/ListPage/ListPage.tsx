@@ -966,46 +966,58 @@ export default function ListPage({
 
             <h6>Tips</h6>
             <ul>
-              <li>
-                You can use <code>and</code> and <code>,</code> to specify a
-                combination of levels and level ranges.
-                <br />(<code>and</code> takes precedence over <code>,</code>.)
-                <br />
-                Examples:
-                <ul>
-                  <li>
-                    <code>30-32</code>
-                    <br />
-                    Songs with a chart level 30-32.
-                  </li>
-                  <li>
-                    <code>30-32, 34</code>
-                    <br /> Songs with a chart level 30-32 or 34.
-                  </li>
-                  <li>
-                    <code>34 and 38</code>
-                    <br />
-                    Songs with one chart level 34 and <em> another </em> chart
-                    level 38.
-                  </li>
-                  <li>
-                    <code>30-32, 34 and 38</code>
-                    <br />
-                    Songs that either:
-                    <ul>
-                      <li>
-                        have a chart level 30-32, <em>or</em>
-                      </li>
-                      <li>
-                        have one chart level 34 and another chart level 38.
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
+              {mode === "song" && (
+                <li>
+                  For <code>Level</code>, you can use <code>-</code> to specify
+                  a range, <code>and</code> to add additional requirements, and{" "}
+                  <code>,</code> to include multiple different requirements.
+                  <br />(<code>and</code> takes precedence over <code>,</code>.)
+                  <br />
+                  Examples:
+                  <ul>
+                    <li>
+                      <code>30-32</code>
+                      <br />
+                      Songs with a chart level 30-32.
+                    </li>
+                    <li>
+                      <code>30-32, 34</code>
+                      <br /> Songs with a chart level 30-32 or 34.
+                    </li>
+                    <li>
+                      <code>34 and 38</code>
+                      <br />
+                      Songs with one chart level 34 and <em> another </em> chart
+                      level 38.
+                    </li>
+                    <li>
+                      <code>30-32, 34 and 38</code>
+                      <br />
+                      Songs that either:
+                      <ul>
+                        <li>
+                          have a chart level 30-32, <em>or</em>
+                        </li>
+                        <li>
+                          have one chart level 34 and another chart level 38.
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              )}
+
+              {mode === "chart" && (
+                <li>
+                  For <code>Level</code>, <code>Bpm</code>, <code>Dur</code>,{" "}
+                  <code>Notes</code>, <code>Holds</code>, and <code>S乱</code>,
+                  you can use <code>-</code> to specify a range and{" "}
+                  <code>,</code> to specify multiple values or ranges.
+                </li>
+              )}
 
               <li>
-                The <code>Search</code> field works the same way as on the{" "}
+                <code>Search</code> works the same way as on the{" "}
                 <Link href="/search" target="_blank">
                   Quick Search page
                 </Link>
