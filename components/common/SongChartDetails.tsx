@@ -578,7 +578,7 @@ export default function SongChartDetails({
             <br />
             <a
               href={`https://eagle.ac/game/pnm/music/27/${songId}/${diffToEagleFlowerPlifePathPart(
-                chart?.difficulty || "e",
+                chart?.difficulty || "n",
               )}`}
               target="_blank"
             >
@@ -592,7 +592,7 @@ export default function SongChartDetails({
             <br />
             <a
               href={`https://projectflower.eu/game/pnm/music/27/${songId}/${diffToEagleFlowerPlifePathPart(
-                chart?.difficulty || "e",
+                chart?.difficulty || "n",
               )}`}
               target="_blank"
             >
@@ -606,7 +606,7 @@ export default function SongChartDetails({
             <br />
             <a
               href={`https://tablanbass.net/pnm/topscores/${songId}#${diffToTablanPathPart(
-                chart?.difficulty || "e",
+                chart?.difficulty || "n",
               )}`}
               target="_blank"
             >
@@ -620,7 +620,7 @@ export default function SongChartDetails({
             <br />
             <a
               href={`https://programmedlife.org/en/game/pnm/music/${songId}/${diffToEagleFlowerPlifePathPart(
-                chart?.difficulty || "e",
+                chart?.difficulty || "n",
               )}`}
               target="_blank"
             >
