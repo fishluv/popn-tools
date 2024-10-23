@@ -72,6 +72,12 @@
         top: 0;
         right: 0;
       }
+
+      &:focus {
+        outline: #07c solid 3px;
+        outline-offset: 2px;
+        border-radius: 2px;
+      }
     }
 
     .right {

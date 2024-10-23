@@ -47,8 +47,6 @@ export default function ChartResultCard({
           labelStyle="full"
         />
       )}
-
-      <div className={styles.overlay} />
     </button>
   )
 }

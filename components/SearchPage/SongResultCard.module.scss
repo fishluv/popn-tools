@@ -1,12 +1,4 @@
 @import "styles/colors";
-@import "styles/components";
-
-.diffLevel {
-  @include pill;
-  @include diff-bg-colors(bright);
-  @include diff-border-colors(dark);
-  color: white;
-}
 
 .SongResultCard {
   display: inline-flex;
@@ -31,14 +23,5 @@
     outline: #07c solid 3px;
     outline-offset: 2px;
     border-radius: 2px;
-  }
-
-  &:active {
-    .overlay {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.75);
-    }
   }
 }

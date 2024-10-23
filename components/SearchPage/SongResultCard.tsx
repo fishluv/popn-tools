@@ -37,8 +37,6 @@ export default function SongResultCard({
           />
         </div>
       </div>
-
-      <div className={styles.overlay} />
     </button>
   )
 }
