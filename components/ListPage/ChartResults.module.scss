@@ -32,7 +32,7 @@
   padding: 0;
   position: relative;
 
-  .folder {
+  .debut {
     position: absolute;
     right: 0;
     bottom: 4px;
@@ -53,7 +53,7 @@
     @include diff-border-colors(bright);
   }
 
-  .debut {
+  .level {
     position: absolute;
     left: 0;
     bottom: 0;
