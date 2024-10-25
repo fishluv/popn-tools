@@ -321,16 +321,16 @@ function Options({
     if (mode === "song") {
       return [
         { field: "title", label: "Title" },
-        { field: "genre", label: "Genre" },
         { field: "rtitle", label: "Title (rom)" },
+        { field: "genre", label: "Genre" },
         { field: "rgenre", label: "Genre (rom)" },
         { field: "debut", label: "Debut" },
       ]
     } else {
       return [
         { field: "title", label: "Title" },
-        { field: "genre", label: "Genre" },
         { field: "rtitle", label: "Title (rom)" },
+        { field: "genre", label: "Genre" },
         { field: "rgenre", label: "Genre (rom)" },
         { field: "debut", label: "Debut" },
         { field: "level", label: "Level" },
