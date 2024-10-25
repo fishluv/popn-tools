@@ -11,6 +11,9 @@
   col.bpm {
     width: 48px;
   }
+  col.bpmtype {
+    width: 12px;
+  }
   col.duration {
     width: 48px;
   }
@@ -60,7 +63,13 @@
     text-align: right;
   }
 
-  td.holdnotes {
+  th.bpm,
+  td.bpm {
+    padding-right: 0;
+  }
+
+  td.holdnotes,
+  td.bpmtype {
     padding-left: 0;
   }
 }

@@ -122,6 +122,16 @@ export default function ChartResults({
               markup: (chart: Chart) => chart.primaryBpm ?? "?",
             },
             {
+              id: "bpmtype",
+              label: "",
+              markup: (chart: Chart) =>
+                chart.primaryBpmType === "majority"
+                  ? "?"
+                  : chart.primaryBpmType === "plurality"
+                  ? "*"
+                  : "",
+            },
+            {
               id: "duration",
               label: "Dur.",
               markup: (chart: Chart) =>
