@@ -9,7 +9,7 @@ interface ChartContructorProps {
   bpm: string | null
   bpmSteps: number[] | null
   primaryBpm: number | null
-  primaryBpmType: "totality" | "majority" | "plurality" | null
+  primaryBpmType: "constant" | "majority" | "nonmajority" | null
   duration: number | null
   notes: number | null
   holdNotes: number | null
@@ -25,11 +25,11 @@ interface ChartContructorProps {
 
 function parsePrimaryBpmType(
   s: string | null,
-): "totality" | "majority" | "plurality" | null {
+): "constant" | "majority" | "nonmajority" | null {
   switch (s) {
-    case "totality":
+    case "constant":
     case "majority":
-    case "plurality":
+    case "nonmajority":
       return s
     default:
       return null
@@ -83,7 +83,7 @@ export default class Chart {
   readonly bpm: string | null
   readonly bpmSteps: number[] | null
   readonly primaryBpm: number | null
-  readonly primaryBpmType: "totality" | "majority" | "plurality" | null
+  readonly primaryBpmType: "constant" | "majority" | "nonmajority" | null
   readonly duration: number | null
   readonly notes: number | null
   readonly holdNotes: number | null

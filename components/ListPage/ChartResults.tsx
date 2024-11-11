@@ -127,7 +127,7 @@ export default function ChartResults({
               markup: (chart: Chart) =>
                 chart.primaryBpmType === "majority"
                   ? "?"
-                  : chart.primaryBpmType === "plurality"
+                  : chart.primaryBpmType === "nonmajority"
                   ? "*"
                   : "",
             },

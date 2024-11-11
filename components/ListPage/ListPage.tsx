@@ -601,9 +601,9 @@ function Options({
                     id="bpmTypeSelect"
                     label=""
                     options={[
-                      { id: "totality", label: "Constant bpm" },
+                      { id: "constant", label: "Constant bpm" },
                       { id: "majority", label: "Main bpm = majority" },
-                      { id: "plurality", label: "Main bpm = nonmajority" },
+                      { id: "nonmajority", label: "Main bpm = nonmajority" },
                     ]}
                     dummyOption="(any bpm type)"
                     selectedOption={bpmType || ""}
