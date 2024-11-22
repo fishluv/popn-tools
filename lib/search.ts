@@ -102,7 +102,7 @@ export interface SearchApiChartResult {
   timing_steps: number[][] | null
   jkwiki_page_path: string | null
   rating: string | null
-  sran_level: string | null
+  sran_level: number | null
   labels: string[]
   // Included in /charts response but not in /songs response.
   song?: SearchApiSongResult

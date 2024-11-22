@@ -23,7 +23,6 @@ import SongResults from "./SongResults"
 import ChartResults from "./ChartResults"
 import Chart from "../../models/Chart"
 import Difficulty from "../../models/Difficulty"
-import { SRAN_VALUES } from "../../models/SranLevel"
 
 const FOLDER_OPTIONS: {
   id: VersionFolder | BemaniFolder | "dummy1" | "dummy2"
@@ -661,10 +660,15 @@ function Options({
                       label="S乱"
                       options={[
                         { id: "1-19", label: "1–19" },
-                        ...[...SRAN_VALUES].reverse().map((val) => ({
-                          id: val,
-                          label: val.startsWith("0") ? val.slice(1) : val,
-                        })),
+                        ...Array(19)
+                          .fill(0)
+                          .map((_, i) => {
+                            const sranLevel = String(19 - i)
+                            return {
+                              id: sranLevel,
+                              label: sranLevel,
+                            }
+                          }),
                       ]}
                       dummyOption="(n/a)"
                       selectedOption={sranLevel || ""}

@@ -537,7 +537,7 @@ export default function SongChartDetails({
           )}
 
           {chart.sranLevel && (
-            <Detail field="sran level" value={chart.sranLevel.display()} />
+            <Detail field="sran level" value={String(chart.sranLevel)} />
           )}
         </>
       )}

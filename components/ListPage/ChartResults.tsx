@@ -155,8 +155,7 @@ export default function ChartResults({
             {
               id: "sran",
               label: "S乱",
-              markup: (chart: Chart) =>
-                chart.sranLevel && chart.sranLevel.display(),
+              markup: (chart: Chart) => chart.sranLevel,
             },
             {
               id: "timing",
