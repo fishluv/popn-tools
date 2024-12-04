@@ -71,6 +71,7 @@ export interface ListParams {
 
   // Charts-only
   diffs?: Difficulty[] | null
+  onlyHardest?: boolean | null
   bpm?: string | null
   bpmType?: string | null
   duration?: string | null
@@ -165,6 +166,7 @@ export function useListCharts({
   sorts,
   page,
   diffs,
+  onlyHardest,
   bpm,
   bpmType,
   duration,
@@ -194,6 +196,9 @@ export function useListCharts({
   }
   if (diffs) {
     diffs.forEach((d) => params.push(["diff[]", d]))
+  }
+  if (onlyHardest) {
+    params.push(["hardest", "1"])
   }
   if (bpm) {
     params.push(["bpm", bpm])

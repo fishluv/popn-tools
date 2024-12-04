@@ -25,6 +25,7 @@ export default function Search() {
     diffs: diffs
       ? (diffs.split(",").map(parseDifficulty).filter(Boolean) as Difficulty[])
       : null,
+    onlyHardest: searchParams.get("hardest") === "1",
     bpm: searchParams.get("bpm"),
     bpmType: searchParams.get("bpmtype"),
     duration: searchParams.get("duration"),

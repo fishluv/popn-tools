@@ -160,6 +160,14 @@
         width: 14rem;
       }
 
+      &.onlyHardest {
+        padding-left: 4rem;
+
+        label {
+          width: unset;
+        }
+      }
+
       &.bpm,
       &.duration,
       &.notes,

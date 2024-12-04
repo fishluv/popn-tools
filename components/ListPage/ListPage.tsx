@@ -277,6 +277,9 @@ function Options({
   const [debut, setDebut] = useState<string | undefined | null>(null)
   const [query, setQuery] = useState<string | undefined | null>(null)
   const [diffs, setDiffs] = useState<Difficulty[]>(["e", "n", "h", "ex"])
+  const [onlyHardest, setOnlyHardest] = useState<boolean | undefined | null>(
+    false,
+  )
   const [bpm, setBpm] = useState<string | undefined | null>(null)
   const [bpmType, setBpmType] = useState<string | undefined | null>(null)
   const [duration, setDuration] = useState<string | undefined | null>(null)
@@ -303,6 +306,7 @@ function Options({
     setDebut(initialOptions.debut)
     setQuery(initialOptions.query)
     setDiffs(initialOptions.diffs || ["e", "n", "h", "ex"])
+    setOnlyHardest(initialOptions.onlyHardest)
     setBpm(initialOptions.bpm)
     setBpmType(initialOptions.bpmType)
     setDuration(initialOptions.duration)
@@ -375,6 +379,7 @@ function Options({
       debut ? `debut=${debut}` : "",
       query ? `q=${query}` : "",
       diffs.length === 4 ? "" : `diff=${diffs.join(",")}`,
+      onlyHardest ? "hardest=1" : "",
       bpm ? `bpm=${bpm}` : "",
       bpmType ? `bpmtype=${bpmType}` : "",
       durSec ? `duration=${durSec}` : "",
@@ -543,6 +548,7 @@ function Options({
                       normal
                     </label>
                   </div>
+
                   <div className={styles.filterControl}>
                     <input
                       id="hyperInput"
@@ -558,6 +564,7 @@ function Options({
                       hyper
                     </label>
                   </div>
+
                   <div className={styles.filterControl}>
                     <input
                       id="exInput"
@@ -574,6 +581,16 @@ function Options({
                     </label>
                   </div>
                 </div>
+              </div>
+
+              <div className={cx(styles.filterControl, styles.onlyHardest)}>
+                <input
+                  id="hardestInput"
+                  type="checkbox"
+                  checked={!!onlyHardest}
+                  onChange={(event) => setOnlyHardest(event.target.checked)}
+                />
+                <label htmlFor="hardestInput">{`Only song's hardest`}</label>
               </div>
 
               {chartOptionsExpanded ? (
