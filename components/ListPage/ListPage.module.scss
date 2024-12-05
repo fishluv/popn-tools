@@ -162,9 +162,11 @@
 
       &.onlyHardest {
         padding-left: 4rem;
+        gap: 0.25rem;
 
         label {
           width: unset;
+          font-size: 0.875rem;
         }
       }
 

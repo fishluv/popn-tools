@@ -590,7 +590,10 @@ function Options({
                   checked={!!onlyHardest}
                   onChange={(event) => setOnlyHardest(event.target.checked)}
                 />
-                <label htmlFor="hardestInput">{`Only song's hardest`}</label>
+                <label
+                  htmlFor="hardestInput"
+                  className={onlyHardest ? styles.changed : ""}
+                >{`Only song's hardest`}</label>
               </div>
 
               {chartOptionsExpanded ? (
