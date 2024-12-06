@@ -8,13 +8,11 @@ module.exports = {
   env: {
     GIT_SHA: gitSha,
   },
-  // Ideally this would be a `rewrite` but surge.sh doesn't handle it correctly
-  // for some reason...
   async redirects() {
     return [
       {
         source: "/randomizer",
-        destination: "https://chinatsu.surge.sh",
+        destination: "https://popn-randomizer.vercel.app",
         permanent: true,
       },
     ]
