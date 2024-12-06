@@ -198,6 +198,10 @@
           color: white;
           width: unset;
         }
+
+        input:not(:checked) + label {
+          background: #ccc;
+        }
       }
     }
 
