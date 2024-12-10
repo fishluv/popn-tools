@@ -35,7 +35,7 @@ $red-lane: rgba(246, 175, 176, 0.2);
       }
 
       .num {
-        z-index: 1; // Prevent next measure bodyblocking it.
+        z-index: 2; // Prevent next measure bodyblocking it.
       }
     }
 
@@ -203,8 +203,52 @@ $red-lane: rgba(246, 175, 176, 0.2);
       }
     }
 
+    .TimingEvent {
+      position: absolute;
+      z-index: 1; // Prevent being blocked by next measure's (e.g.) bpm change.
+
+      &.initial {
+        color: rgb(60, 60, 60);
+      }
+
+      &.change {
+        color: rgb(255, 136, 0);
+
+        .bar {
+          position: absolute;
+          width: 198px;
+          bottom: -6px;
+          height: 10px;
+          background: white;
+          border: 3px solid rgb(255, 136, 0);
+        }
+
+        .connector {
+          position: absolute;
+          left: 198px;
+          bottom: -3px;
+          width: 6px;
+          height: 28px;
+          border-color: rgb(255, 136, 0);
+          border-style: solid;
+          border-width: 0 3px 3px 0;
+        }
+      }
+
+      .timing {
+        position: absolute;
+        width: max-content;
+        left: 206px;
+        bottom: 18px;
+        line-height: 1;
+        font-size: 0.875rem;
+        font-weight: bold;
+        letter-spacing: -0.5px;
+      }
+    }
+
     .Note, .HoldNote {
-      z-index: 1;
+      z-index: 2;
     }
 
     .startBpm {

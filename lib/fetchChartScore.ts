@@ -8,6 +8,7 @@ export type ChartCsvRow = {
   keyoff: number | null
   measurebeatend: "m" | "b" | "e" | null
   bpm: number | null
+  timing?: number | null // For charts with variable timing. There are only a handful of these.
 }
 
 export async function fetchChartScore({

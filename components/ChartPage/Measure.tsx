@@ -225,6 +225,68 @@ function BpmEvent({ type, bpm, y }: BpmEventData) {
   )
 }
 
+interface TimingEventData {
+  index: number
+  y: number
+}
+
+function getTimingEventDatas(
+  measure: MeasureData,
+  noteAreaHeight: number,
+  displayOptions: DisplayOptions,
+) {
+  let prevY = noteAreaHeight - 1
+  let prevTs = measure.startTimestamp
+  let prevBpm = measure.startBpm
+
+  const timingEventDatas: TimingEventData[] = []
+
+  measure.rows.forEach(({ timestamp, bpm, timing }) => {
+    const newTs = timestamp
+    const newY = calculateNewY({
+      prevY,
+      prevBpm,
+      prevTs,
+      newTs,
+      ...displayOptions,
+    })
+
+    if (timing !== null && timing !== undefined) {
+      timingEventDatas.push({
+        index: timing,
+        y: newY,
+      })
+    }
+
+    prevY = newY
+    prevTs = newTs
+    if (bpm !== null) {
+      prevBpm = bpm
+    }
+  })
+
+  return timingEventDatas
+}
+
+function TimingEvent({ index, y }: TimingEventData) {
+  const style = {
+    top: y,
+  }
+  return (
+    <div
+      className={cx(
+        styles.TimingEvent,
+        index > 0 ? styles.change : styles.initial,
+      )}
+      style={style}
+    >
+      <div className={styles.bar} />
+      <div className={styles.connector} />
+      <span className={styles.timing}>{`timing (${index + 1})`}</span>
+    </div>
+  )
+}
+
 type LaneOrd = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 interface NoteData {
   lane: LaneOrd
@@ -625,6 +687,11 @@ export default function Measure({
     noteAreaHeight,
     displayOptions,
   )
+  const timingEventDatas = getTimingEventDatas(
+    measureData,
+    noteAreaHeight,
+    displayOptions,
+  )
   const noteDatas = getNoteDatas(measureData, noteAreaHeight, displayOptions)
   const holdNoteDatas = getHoldNoteDatas(
     measureData,
@@ -681,6 +748,10 @@ export default function Measure({
 
         {bpmEventDatas.map(({ type, bpm, y }, index) => (
           <BpmEvent key={index} type={type} bpm={bpm} y={y} />
+        ))}
+
+        {timingEventDatas.map(({ index, y }) => (
+          <TimingEvent key={y} index={index} y={y} />
         ))}
 
         {noteDatas.map(({ lane, y }, index) => {
