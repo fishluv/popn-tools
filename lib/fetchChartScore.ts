@@ -1,5 +1,6 @@
 import Papa from "papaparse"
 import HttpError from "./HttpError"
+import Difficulty from "../models/Difficulty"
 
 export type ChartCsvRow = {
   timestamp: number
@@ -16,7 +17,7 @@ export async function fetchChartScore({
   difficulty,
 }: {
   songSlug: string
-  difficulty: "e" | "n" | "h" | "ex"
+  difficulty: Difficulty
 }) {
   const url = `https://popn-assets.pages.dev/sd/${songSlug}/${difficulty}.csv`
   const res = await fetch(url)

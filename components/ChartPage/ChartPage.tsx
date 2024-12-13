@@ -19,13 +19,14 @@ import {
 import CommonModal from "../common/CommonModal"
 import ChartPageMore from "./ChartPageMore"
 import { FiMoreHorizontal } from "react-icons/fi"
+import Difficulty from "../../models/Difficulty"
 
 export default function ChartPage({
   songSlug,
   difficulty,
 }: {
   songSlug: string | undefined
-  difficulty: "e" | "n" | "h" | "ex"
+  difficulty: Difficulty
 }) {
   const [status, setStatus] = useState<"loading" | "error" | "success">(
     "loading",

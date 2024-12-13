@@ -4,6 +4,7 @@ import Song from "../models/Song"
 import Chart from "../models/Chart"
 import HttpError from "./HttpError"
 import { getSearchApiUrl } from "./urls"
+import Difficulty from "../models/Difficulty"
 
 export function useSearchSong({
   query,
@@ -81,15 +82,15 @@ export interface SearchApiCharacterResult {
 }
 
 interface SongCharts {
-  e: SearchApiChartResult | null
-  n: SearchApiChartResult | null
-  h: SearchApiChartResult | null
-  ex: SearchApiChartResult | null
+  e?: SearchApiChartResult
+  n?: SearchApiChartResult
+  h?: SearchApiChartResult
+  ex?: SearchApiChartResult
 }
 
 export interface SearchApiChartResult {
   id: string
-  difficulty: "e" | "n" | "h" | "ex"
+  difficulty: Difficulty
   level: number
   bpm: string | null
   bpm_steps: number[] | null

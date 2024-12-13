@@ -12,6 +12,7 @@ import SongBanner from "./SongBanner"
 import Chart from "../../models/Chart"
 import Song from "../../models/Song"
 import useExtraOptions from "../../lib/useExtraOptions"
+import Difficulty from "../../models/Difficulty"
 
 function Detail({
   className,
@@ -201,11 +202,11 @@ function formatDuration(duration: number) {
   return `${min}:${String(sec).padStart(2, "0")}`
 }
 
-function diffToEagleFlowerPlifePathPart(diff: "e" | "n" | "h" | "ex") {
+function diffToEagleFlowerPlifePathPart(diff: Difficulty) {
   return ["e", "n", "h", "ex"].indexOf(diff)
 }
 
-function diffToTablanPathPart(diff: "e" | "n" | "h" | "ex") {
+function diffToTablanPathPart(diff: Difficulty) {
   return {
     e: "Easy",
     n: "Normal",

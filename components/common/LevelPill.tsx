@@ -1,10 +1,11 @@
 import cx from "classnames"
 import React from "react"
 import styles from "./LevelPill.module.scss"
+import Difficulty from "../../models/Difficulty"
 
 interface LevelPillProps {
   className?: string
-  difficulty: "e" | "n" | "h" | "ex"
+  difficulty: Difficulty
   level: number
   pillStyle: "full" | "compact"
   labelStyle: "full" | "compact"

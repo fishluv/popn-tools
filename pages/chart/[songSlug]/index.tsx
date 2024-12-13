@@ -2,8 +2,9 @@ import { useRouter } from "next/router"
 import ChartPage from "../../../components/ChartPage"
 import Link from "next/link"
 import Head from "next/head"
+import Difficulty from "../../../models/Difficulty"
 
-export function makeChartPageHandler(difficulty: "e" | "n" | "h" | "ex") {
+export function makeChartPageHandler(difficulty: Difficulty) {
   return function ChartPageHandler() {
     const {
       query: { songSlug },

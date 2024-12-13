@@ -1,9 +1,10 @@
 import { SearchApiChartResult } from "../lib/search"
+import Difficulty from "./Difficulty"
 import Song from "./Song"
 
 interface ChartContructorProps {
   id: string
-  difficulty: "e" | "n" | "h" | "ex"
+  difficulty: Difficulty
   level: number
   bpm: string | null
   bpmSteps: number[] | null
@@ -77,7 +78,7 @@ export default class Chart {
   }
 
   readonly id: string
-  readonly difficulty: "e" | "n" | "h" | "ex"
+  readonly difficulty: Difficulty
   readonly level: number
   readonly bpm: string | null
   readonly bpmSteps: number[] | null
