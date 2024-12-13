@@ -13,6 +13,7 @@ import Chart from "../../models/Chart"
 import Song from "../../models/Song"
 import useExtraOptions from "../../lib/useExtraOptions"
 import Difficulty from "../../models/Difficulty"
+import Link from "next/link"
 
 function Detail({
   className,
@@ -221,12 +222,14 @@ export default function SongChartDetails({
   chartToOpen,
   showHeader,
   showActions,
+  showOtherCharts,
 }: {
   className?: string
   song?: Song
   chartToOpen?: Chart
   showHeader: boolean
   showActions?: boolean
+  showOtherCharts?: boolean
 }) {
   const [chart, setChart] = useState<Chart | undefined>(chartToOpen)
 
@@ -326,6 +329,63 @@ export default function SongChartDetails({
           </>
         )}
       </div>
+
+      {showOtherCharts && chart?.otherCharts && (
+        <Detail field="other charts">
+          {chart.otherCharts.e && (
+            <Link
+              className={cx(styles.otherChartLink, styles.e)}
+              href={`/chart/${slug}/e`}
+            >
+              <LevelPill
+                difficulty="e"
+                level={chart.otherCharts.e}
+                labelStyle="compact"
+                pillStyle="compact"
+              />
+            </Link>
+          )}
+          {chart.otherCharts.n && (
+            <Link
+              className={cx(styles.otherChartLink, styles.n)}
+              href={`/chart/${slug}/n`}
+            >
+              <LevelPill
+                difficulty="n"
+                level={chart.otherCharts.n}
+                labelStyle="compact"
+                pillStyle="compact"
+              />
+            </Link>
+          )}
+          {chart.otherCharts.h && (
+            <Link
+              className={cx(styles.otherChartLink, styles.h)}
+              href={`/chart/${slug}/h`}
+            >
+              <LevelPill
+                difficulty="h"
+                level={chart.otherCharts.h}
+                labelStyle="compact"
+                pillStyle="compact"
+              />
+            </Link>
+          )}
+          {chart.otherCharts.ex && (
+            <Link
+              className={cx(styles.otherChartLink, styles.ex)}
+              href={`/chart/${slug}/ex`}
+            >
+              <LevelPill
+                difficulty="ex"
+                level={chart.otherCharts.ex}
+                labelStyle="compact"
+                pillStyle="compact"
+              />
+            </Link>
+          )}
+        </Detail>
+      )}
 
       {extraOptions["songid"] && (
         <Detail field="song id" value={String(songId)} />

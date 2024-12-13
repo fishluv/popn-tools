@@ -2,6 +2,14 @@ import { SearchApiChartResult } from "../lib/search"
 import Difficulty from "./Difficulty"
 import Song from "./Song"
 
+interface OtherCharts {
+  // Right now all we care about is chart level.
+  e?: number
+  n?: number
+  h?: number
+  ex?: number
+}
+
 interface ChartContructorProps {
   id: string
   difficulty: Difficulty
@@ -19,8 +27,10 @@ interface ChartContructorProps {
   jpRating: string | null
   sranLevel: number | null
   labels: string[]
-  // Included in /charts response but not in /songs response.
+  // Included in /search/charts response and /fetch/charts response.
   song: Song | null
+  // Included in /fetch/charts response.
+  otherCharts: OtherCharts | null
 }
 
 function parsePrimaryBpmType(
@@ -55,6 +65,7 @@ export default class Chart {
     sran_level,
     labels,
     song,
+    other_charts,
   }: SearchApiChartResult): Chart {
     return new Chart({
       id,
@@ -74,6 +85,7 @@ export default class Chart {
       sranLevel: sran_level,
       labels,
       song: song ? Song.fromSearchApiSongResult(song) : null,
+      otherCharts: other_charts ?? null,
     })
   }
 
@@ -94,6 +106,7 @@ export default class Chart {
   readonly sranLevel: number | null
   readonly labels: string[]
   readonly song: Song | null
+  readonly otherCharts: OtherCharts | null
 
   constructor({
     id,
@@ -113,6 +126,7 @@ export default class Chart {
     sranLevel,
     labels,
     song,
+    otherCharts,
   }: ChartContructorProps) {
     this.id = id
     this.difficulty = difficulty
@@ -131,5 +145,6 @@ export default class Chart {
     this.sranLevel = sranLevel
     this.labels = labels
     this.song = song
+    this.otherCharts = otherCharts
   }
 }

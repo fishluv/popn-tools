@@ -105,6 +105,15 @@ export interface SearchApiChartResult {
   rating: string | null
   sran_level: number | null
   labels: string[]
-  // Included in /charts response but not in /songs response.
+  // Included in /search/charts response and /fetch/charts response.
   song?: SearchApiSongResult
+  // Included in /fetch/charts response.
+  other_charts?: OtherCharts
+}
+
+interface OtherCharts {
+  e?: number
+  n?: number
+  h?: number
+  ex?: number
 }

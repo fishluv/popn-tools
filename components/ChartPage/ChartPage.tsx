@@ -229,6 +229,7 @@ export default function ChartPage({
                 chartToOpen={chart}
                 showHeader={false}
                 showActions={false}
+                showOtherCharts={true}
               />
             )}
           </div>
@@ -245,6 +246,7 @@ export default function ChartPage({
                 chartToOpen={openedChart}
                 showHeader={true}
                 showActions={false}
+                showOtherCharts={true}
               />
             )}
           </CommonModal>
