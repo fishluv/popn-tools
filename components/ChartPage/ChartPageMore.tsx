@@ -167,6 +167,14 @@ export default function ChartPageMore() {
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
+      // Make sure no text inputs are active!
+      if (
+        document.activeElement?.tagName?.toLowerCase() === "input" &&
+        document.activeElement?.getAttribute("type") === "text"
+      ) {
+        return
+      }
+
       const { key, repeat } = event
       if (repeat) {
         return

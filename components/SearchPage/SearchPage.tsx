@@ -40,8 +40,10 @@ export default function SearchPage({ mode }: { mode: "song" | "chart" }) {
       }
 
       // Make sure no text inputs on the main page are active!
-      const searchInput = document.getElementById("searchInput")
-      if (searchInput && document.activeElement === searchInput) {
+      if (
+        document.activeElement?.tagName?.toLowerCase() === "input" &&
+        document.activeElement?.getAttribute("type") === "text"
+      ) {
         return
       }
 
