@@ -28,11 +28,11 @@ export interface DisplayOptions {
 }
 
 const PIXELS_PER_MS_BY_SPACING: Record<NoteSpacing, number> = {
-  veryslow: 0.15,
-  slow: 0.2,
-  default: 0.3,
-  fast: 0.45,
-  veryfast: 0.6,
+  veryslow: 0.1,
+  slow: 0.15,
+  default: 0.2,
+  fast: 0.3,
+  veryfast: 0.45,
 }
 
 function getNoteAreaHeight(
