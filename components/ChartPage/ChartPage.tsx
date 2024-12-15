@@ -54,7 +54,7 @@ export default function ChartPage({
     bpmAgnostic: !!queryParams.normalize,
   }
 
-  // Workaround for server side generated component.
+  // Need this workaround because page components are generated server-side.
   const [extraOptions, setExtraOptions] = useState<Record<string, boolean>>({})
   useEffect(() => {
     setExtraOptions(

@@ -23,6 +23,7 @@ import SongResults from "./SongResults"
 import ChartResults from "./ChartResults"
 import Chart from "../../models/Chart"
 import Difficulty from "../../models/Difficulty"
+import { parseExtraOptions } from "../../lib/useExtraOptions"
 
 const FOLDER_OPTIONS: {
   id: VersionFolder | BemaniFolder | "dummy1" | "dummy2"
@@ -346,16 +347,20 @@ function Options({
       ]
     }
   })
-  // Can't use useExtraOptions because this component is rendered server side.
+
+  // Need this workaround because page components are generated server-side.
+  const [extraOptions, setExtraOptions] = useState<Record<string, boolean>>({})
   useEffect(() => {
-    const songIdSet = localStorage
-      .getItem("extraOptions")
-      ?.split(",")
-      .some((opt) => opt.trim() === "songid")
-    if (songIdSet && mode === "song") {
+    setExtraOptions(
+      parseExtraOptions(localStorage.getItem("extraOptions") || ""),
+    )
+  }, [])
+
+  useEffect(() => {
+    if (mode === "song" && extraOptions["songid"]) {
       setAvailableSortFields((old) => [{ field: "id", label: "Id" }, ...old])
     }
-  }, [mode])
+  }, [mode, extraOptions])
 
   const [chartOptionsExpanded, setChartOptionsExpanded] =
     useState<boolean>(false)
