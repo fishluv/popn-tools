@@ -332,6 +332,7 @@ export default function SongChartDetails({
 
       {showOtherCharts && chart?.otherCharts && (
         <Detail field="other charts">
+          {Object.keys(chart.otherCharts).length === 0 && "(none)"}
           {chart.otherCharts.e && (
             <Link
               className={cx(styles.otherChartLink, styles.e)}
