@@ -14,10 +14,9 @@
     overflow-x: hidden;
   }
 
-  .moreButton {
+  .searchButton, .moreButton {
     position: fixed;
     top: 1.5rem;
-    right: 1rem;
     z-index: 11;
 
     line-height: 1;
@@ -26,6 +25,14 @@
     font-size: 1.25rem;
     border: none;
     border-radius: 50%;
+  }
+
+  .searchButton {
+    left: 1.5rem;
+  }
+
+  .moreButton {
+    right: 1.5rem;
   }
 
   @media (width < 732px) {

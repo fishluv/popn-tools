@@ -18,8 +18,11 @@ import {
 } from "./Measure"
 import CommonModal from "../common/CommonModal"
 import ChartPageMore from "./ChartPageMore"
+import { CgSearch } from "react-icons/cg"
 import { FiMoreHorizontal } from "react-icons/fi"
 import Difficulty from "../../models/Difficulty"
+import { ChartPageSearch } from "./ChartPageSearch"
+import { parseExtraOptions } from "../../lib/useExtraOptions"
 
 export default function ChartPage({
   songSlug,
@@ -39,7 +42,7 @@ export default function ChartPage({
     t: StringParam, // Transform
   })
   const [currentOpenModal, setCurrentOpenModal] = useState<
-    "more" | "chartDetails" | null
+    "search" | "more" | "chartDetails" | null
   >(null)
   const [openedChart, setOpenedChart] = useState<Chart | undefined>(undefined)
 
@@ -50,6 +53,14 @@ export default function ChartPage({
     noteSpacing: parseNoteSpacing(queryParams.hs),
     bpmAgnostic: !!queryParams.normalize,
   }
+
+  // Workaround for server side generated component.
+  const [extraOptions, setExtraOptions] = useState<Record<string, boolean>>({})
+  useEffect(() => {
+    setExtraOptions(
+      parseExtraOptions(localStorage.getItem("extraOptions") || ""),
+    )
+  }, [])
 
   useEffect(() => {
     if (!songSlug) {
@@ -191,6 +202,18 @@ export default function ChartPage({
         <div id="app" className={styles.ChartPage}>
           <style>{"body { background-image: none; }"}</style>
 
+          {extraOptions["search"] && (
+            <button
+              className={styles.searchButton}
+              onClick={() => {
+                ReactModal.setAppElement("#app")
+                setCurrentOpenModal("search")
+              }}
+            >
+              <CgSearch />
+            </button>
+          )}
+
           {chart && (
             <div className={styles.mobileOnlyHeader}>
               <ChartResultCard
@@ -239,6 +262,8 @@ export default function ChartPage({
             onClose={() => setCurrentOpenModal(null)}
             showGithub={currentOpenModal === "more"}
           >
+            {currentOpenModal === "search" && <ChartPageSearch chart={chart} />}
+
             {currentOpenModal === "more" && <ChartPageMore />}
 
             {currentOpenModal === "chartDetails" && openedChart && (

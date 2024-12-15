@@ -1,6 +1,6 @@
 import useLocalStorage from "./useLocalStorage"
 
-function parseExtraOptions(extraOptionsStr: string) {
+export function parseExtraOptions(extraOptionsStr: string) {
   const extraOptions: Record<string, boolean> = {}
 
   extraOptionsStr.split(",").forEach((opt) => {
