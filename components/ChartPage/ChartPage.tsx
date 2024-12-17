@@ -182,6 +182,15 @@ export default function ChartPage({
         return
       }
 
+      if (key === "q") {
+        ReactModal.setAppElement("#app")
+        // Delay open to prevent `q` from getting into autofocused search input.
+        window.requestAnimationFrame(() => {
+          setCurrentOpenModal("search")
+        })
+        return false
+      }
+
       if (key === "s") {
         ReactModal.setAppElement("#app")
         setCurrentOpenModal("more")
@@ -262,7 +271,7 @@ export default function ChartPage({
             onClose={() => setCurrentOpenModal(null)}
             showGithub={currentOpenModal === "more"}
           >
-            {currentOpenModal === "search" && <ChartPageSearch chart={chart} />}
+            {currentOpenModal === "search" && <ChartPageSearch />}
 
             {currentOpenModal === "more" && <ChartPageMore />}
 

@@ -12,7 +12,6 @@ import Measure, {
   parseNoteSpacing,
 } from "./Measure"
 import MeasureData from "../../models/MeasureData"
-import Link from "next/link"
 import More from "../common/More"
 
 type ChartTransform = "nonran" | "mirror" | "cross" | "random" | "rran"
@@ -483,13 +482,6 @@ export default function ChartPageMore() {
       <h6>Tips</h6>
       <ul>
         <li>
-          To view another chart, go back to the{" "}
-          <Link href="/search?m=chart" target="_blank">
-            chart search page
-          </Link>
-          .
-        </li>
-        <li>
           Changes will not take effect until <span>Apply</span> is clicked.
         </li>
         <li>
@@ -500,9 +492,8 @@ export default function ChartPageMore() {
           with options set in the url.
         </li>
         <li>
-          <code>s</code> and <code>esc</code> open and close this modal.
-          <br />
-          <code>a</code> clicks <span>Apply</span>.
+          <code>s</code> opens this modal. <code>q</code> opens the search
+          modal. <code>a</code> clicks <span>Apply</span>.
         </li>
       </ul>
     </More>
