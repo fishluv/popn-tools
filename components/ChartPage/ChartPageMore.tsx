@@ -7,12 +7,15 @@ import useLocalStorage from "../../lib/useLocalStorage"
 import { useCallback, useEffect, useState } from "react"
 import { BooleanParam, StringParam, useQueryParams } from "use-query-params"
 import Measure, {
+  NoteColoring,
   NoteSpacing,
   makeLaneTransform,
+  parseNoteColoring,
   parseNoteSpacing,
 } from "./Measure"
 import MeasureData from "../../models/MeasureData"
 import More from "../common/More"
+import useExtraOptions from "../../lib/useExtraOptions"
 
 type ChartTransform = "nonran" | "mirror" | "cross" | "random" | "rran"
 
@@ -128,11 +131,22 @@ export default function ChartPageMore() {
   const [storedRranMir, storeRranMir] = useLocalStorage("chart.rranMir", "0")
   const [rranMir, setRranMir] = useState<boolean>(storedRranMir === "1")
 
+  const [storedNoteColoring, storeNoteColoring] = useLocalStorage(
+    "chart.noteColoring",
+    "normal",
+  )
+  const [noteColoring, setNoteColoring] = useState<NoteColoring>(
+    storedNoteColoring as NoteColoring,
+  )
+
   const [queryParams, setQueryParams] = useQueryParams({
     hs: StringParam, // Hi-speed
     normalize: BooleanParam,
     t: StringParam, // Transform
+    color: StringParam, // Note coloring
   })
+
+  const extraOptions = useExtraOptions()
 
   const transformToTransformStr = useCallback(
     function () {
@@ -156,12 +170,13 @@ export default function ChartPageMore() {
     function () {
       setQueryParams({
         hs: hiSpeed,
-        normalize: normalize,
+        normalize,
         t: transformToTransformStr(),
+        color: noteColoring,
       })
       toast("✔️ Changes applied")
     },
-    [setQueryParams, hiSpeed, normalize, transformToTransformStr],
+    [setQueryParams, hiSpeed, normalize, transformToTransformStr, noteColoring],
   )
 
   useEffect(() => {
@@ -219,14 +234,20 @@ export default function ChartPageMore() {
     storeRranMir(newRranMir ? "1" : "0")
   }
 
+  function changeNoteColoring(newNoteColor: NoteColoring) {
+    setNoteColoring(newNoteColor)
+    storeNoteColoring(newNoteColor)
+  }
+
   function isRandomValid() {
     return random.split("").sort().join("") === "123456789"
   }
 
   function onSyncClick() {
-    const { hs, normalize, t } = queryParams
+    const { hs, normalize, t, color } = queryParams
     changeHiSpeed(parseNoteSpacing(hs))
     changeNormalize(!!normalize)
+    changeNoteColoring(parseNoteColoring(color))
 
     let match
     if (t === null || t === undefined || t === "nonran") {
@@ -254,6 +275,7 @@ export default function ChartPageMore() {
     changeRandom("")
     changeRranNum(1)
     changeRranMir(false)
+    changeNoteColoring("normal")
   }
 
   return (
@@ -475,9 +497,37 @@ export default function ChartPageMore() {
           displayOptions={{
             noteSpacing: "default",
             bpmAgnostic: false,
+            noteColoring,
           }}
         />
       </div>
+
+      {extraOptions["quant"] && (
+        <>
+          <h6>Note color</h6>
+          <div className={styles.noteColor}>
+            <div className={styles.normal}>
+              <input
+                id="normalColorRadio"
+                type="radio"
+                checked={noteColoring === "normal"}
+                onChange={() => changeNoteColoring("normal")}
+              />
+              <label htmlFor="normalColorRadio">Normal</label>
+            </div>
+
+            <div className={styles.quantize}>
+              <input
+                id="quantizeRadio"
+                type="radio"
+                checked={noteColoring === "quantize"}
+                onChange={() => changeNoteColoring("quantize")}
+              />
+              <label htmlFor="quantizeRadio">Quantize</label>
+            </div>
+          </div>
+        </>
+      )}
 
       <h6>Tips</h6>
       <ul>

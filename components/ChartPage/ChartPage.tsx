@@ -14,6 +14,7 @@ import {
   DisplayOptions,
   isValidTransformStr,
   makeLaneTransform,
+  parseNoteColoring,
   parseNoteSpacing,
 } from "./Measure"
 import CommonModal from "../common/CommonModal"
@@ -39,6 +40,7 @@ export default function ChartPage({
     hs: StringParam, // Hi-speed
     normalize: BooleanParam,
     t: StringParam, // Transform
+    color: StringParam, // Note coloring
   })
   const [currentOpenModal, setCurrentOpenModal] = useState<
     "search" | "more" | "chartDetails" | null
@@ -51,6 +53,7 @@ export default function ChartPage({
   const displayOptions: DisplayOptions = {
     noteSpacing: parseNoteSpacing(queryParams.hs),
     bpmAgnostic: !!queryParams.normalize,
+    noteColoring: parseNoteColoring(queryParams.color),
   }
 
   useEffect(() => {
@@ -135,7 +138,7 @@ export default function ChartPage({
   }, [chartCsvRows]) // Only after initial load.
 
   useEffect(() => {
-    const { t, hs, normalize } = queryParams
+    const { t, hs, normalize, color } = queryParams
 
     if (t !== undefined && t !== null) {
       if (["", "r0", "r9", "l0", "l9"].includes(t.toLowerCase())) {
@@ -158,6 +161,10 @@ export default function ChartPage({
 
     if (!normalize) {
       setQueryParams({ normalize: undefined })
+    }
+
+    if (color === "normal") {
+      setQueryParams({ color: undefined })
     }
   }, [queryParams, setQueryParams])
 

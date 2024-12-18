@@ -22,9 +22,24 @@ export function parseNoteSpacing(hs: string | null | undefined): NoteSpacing {
   }
 }
 
+export type NoteColoring = "normal" | "quantize"
+
+export function parseNoteColoring(
+  noteColor: string | null | undefined,
+): NoteColoring {
+  switch (noteColor) {
+    case "normal":
+    case "quantize":
+      return noteColor
+    default:
+      return "normal"
+  }
+}
+
 export interface DisplayOptions {
   noteSpacing: NoteSpacing
   bpmAgnostic: boolean
+  noteColoring: NoteColoring
 }
 
 const PIXELS_PER_MS_BY_SPACING: Record<NoteSpacing, number> = {
@@ -456,7 +471,7 @@ function calculateNewY({
   prevBpm: number
   prevTs: number
   newTs: number
-} & DisplayOptions) {
+} & Pick<DisplayOptions, "noteSpacing" | "bpmAgnostic">) {
   const tsDelta = newTs - prevTs
   return (
     prevY - msToPixels({ ms: tsDelta, bpm: prevBpm, noteSpacing, bpmAgnostic })
@@ -468,7 +483,10 @@ function msToPixels({
   bpm,
   noteSpacing,
   bpmAgnostic,
-}: { ms: number; bpm: number } & DisplayOptions) {
+}: { ms: number; bpm: number } & Pick<
+  DisplayOptions,
+  "noteSpacing" | "bpmAgnostic"
+>) {
   const bpmFactor = bpmAgnostic ? 1.0 : bpm / 200.0
   return ms * PIXELS_PER_MS_BY_SPACING[noteSpacing] * bpmFactor
 }

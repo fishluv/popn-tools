@@ -131,6 +131,22 @@
     }
   }
 
+  .noteColor {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .normal, .quantize {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+
+      label {
+        margin-left: 0.25rem;
+      }
+    }
+  }
+
   .randomInput.invalid {
     background-color: #eba;
   }
