@@ -35,6 +35,16 @@
     right: 1.5rem;
   }
 
+  @media (width < 400px) {
+    .searchButton {
+      left: 0.75rem;
+    }
+
+    .moreButton {
+      right: 0.75rem;
+    }
+  }
+
   @media (width < 732px) {
     .mobileOnlyHeader {
       display: flex;
