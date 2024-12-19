@@ -24,16 +24,15 @@ function ChartBanner({
         height={30}
       />
 
+      <div className={cx(styles.diffStripe, styles[chart.difficulty])} />
+
       <div className={styles.debut}>
         <FolderPill
-          className={styles.FolderPill}
           folder={chart.song!.debut}
           pillStyle="compact"
           labelStyle="compact"
         />
       </div>
-
-      <div className={cx(styles.diffStripe, styles[chart.difficulty])} />
 
       <div className={styles.level}>
         <LevelPill

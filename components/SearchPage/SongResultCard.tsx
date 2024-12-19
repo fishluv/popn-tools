@@ -22,16 +22,16 @@ export default function SongResultCard({
 
       <div className={styles.debutLevels}>
         <div>
-          <FolderPill
-            folder={song.debut || null}
+          <SongLevelPills
+            songCharts={song.charts!}
             pillStyle="compact"
             labelStyle="compact"
           />
         </div>
 
         <div>
-          <SongLevelPills
-            songCharts={song.charts!}
+          <FolderPill
+            folder={song.debut || null}
             pillStyle="compact"
             labelStyle="compact"
           />
