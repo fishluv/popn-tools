@@ -3,12 +3,10 @@ import Chart from "../../models/Chart"
 import styles from "./ChartPageSearch.module.scss"
 import ChartSearchResultsList from "../SearchPage/ChartSearchResultsList"
 import { useDebounce } from "../../lib/debounce"
-import { useRouter } from "next/navigation"
 
 export function ChartPageSearch() {
   const [searchValue, setSearchValue] = useState("")
   const debouncedQuery = useDebounce(searchValue, 125)
-  const router = useRouter()
 
   function onInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { value } = event.target
@@ -18,7 +16,7 @@ export function ChartPageSearch() {
   }
 
   function onChartClick(chart: Chart) {
-    router.push(`/chart/${chart.song!.slug}/${chart.difficulty}`)
+    window.location.href = `/chart/${chart.song!.slug}/${chart.difficulty}`
   }
 
   return (
