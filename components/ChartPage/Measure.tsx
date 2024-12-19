@@ -312,12 +312,13 @@ interface NoteData {
 
 function noteTimestampToRhythm(
   noteTs: number,
-  beatTses: number[],
+  prevBeatTs: number,
+  bpm: number,
   measureIndex: number,
 ): Rhythm {
-  // TODO: This doesn't work for measures that contain bpm changes.
-  const beatDuration = beatTses[1] - beatTses[0]
-  const durationAfterBeat = noteTs - beatTses.findLast((ts) => ts <= noteTs)!
+  const durationAfterBeat = noteTs - prevBeatTs
+  // This doesn't work great when the bpm changes mid-beat lol.
+  const beatDuration = 60000 / bpm
   const fraction = durationAfterBeat / beatDuration
   if (durationAfterBeat === 0) {
     return "4th"
@@ -363,19 +364,11 @@ function getNoteDatas(
   let prevY = noteAreaHeight - 1
   let prevTs = measure.startTimestamp
   let prevBpm = measure.startBpm
-
-  const beatTimestamps: number[] = []
-  measure.rows.forEach(({ timestamp, measurebeatend }) => {
-    // "e" is not needed here.
-    if (measurebeatend === "m" || measurebeatend === "b") {
-      beatTimestamps.push(timestamp)
-    }
-  })
-  beatTimestamps.push(measure.startTimestamp + measure.duration)
+  let prevBeatTs = measure.startTimestamp
 
   const noteDatas: NoteData[] = []
 
-  measure.rows.forEach(({ timestamp, key, bpm }) => {
+  measure.rows.forEach(({ timestamp, measurebeatend, key, bpm }) => {
     const newTs = timestamp
     const newY = calculateNewY({
       prevY,
@@ -385,10 +378,15 @@ function getNoteDatas(
       ...displayOptions,
     })
 
+    if (measurebeatend === "m" || measurebeatend === "b") {
+      prevBeatTs = timestamp
+    }
+
     if (key !== null) {
       const rhythm = noteTimestampToRhythm(
         timestamp,
-        beatTimestamps,
+        prevBeatTs,
+        prevBpm,
         measure.index,
       )
 
@@ -439,6 +437,7 @@ function getHoldNoteDatas(
   let prevY = noteAreaHeight - 1
   let prevTs = measure.startTimestamp
   let prevBpm = measure.startBpm
+  let prevBeatTs = measure.startTimestamp
 
   // When did this key start being pressed.
   const ordToKeyOnY: (number | undefined)[] = []
@@ -449,18 +448,9 @@ function getHoldNoteDatas(
 
   const ordToRhythm: (Rhythm | undefined)[] = []
 
-  const beatTimestamps: number[] = []
-  measure.rows.forEach(({ timestamp, measurebeatend }) => {
-    // "e" is not needed here.
-    if (measurebeatend === "m" || measurebeatend === "b") {
-      beatTimestamps.push(timestamp)
-    }
-  })
-  beatTimestamps.push(measure.startTimestamp + measure.duration)
-
   const holdNoteDatas: HoldNoteData[] = []
 
-  measure.rows.forEach(({ timestamp, keyon, keyoff, bpm }) => {
+  measure.rows.forEach(({ timestamp, measurebeatend, keyon, keyoff, bpm }) => {
     const newTs = timestamp
     const newY = calculateNewY({
       prevY,
@@ -470,10 +460,15 @@ function getHoldNoteDatas(
       ...displayOptions,
     })
 
+    if (measurebeatend === "m" || measurebeatend === "b") {
+      prevBeatTs = timestamp
+    }
+
     if (keyon !== null) {
       const rhythm = noteTimestampToRhythm(
         timestamp,
-        beatTimestamps,
+        prevBeatTs,
+        prevBpm,
         measure.index,
       )
 
