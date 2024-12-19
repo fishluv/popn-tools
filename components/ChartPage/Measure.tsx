@@ -310,7 +310,12 @@ interface NoteData {
   rhythm: Rhythm
 }
 
-function noteTimestampToRhythm(noteTs: number, beatTses: number[]): Rhythm {
+function noteTimestampToRhythm(
+  noteTs: number,
+  beatTses: number[],
+  measureIndex: number,
+): Rhythm {
+  // TODO: This doesn't work for measures that contain bpm changes.
   const beatDuration = beatTses[1] - beatTses[0]
   const durationAfterBeat = noteTs - beatTses.findLast((ts) => ts <= noteTs)!
   const fraction = durationAfterBeat / beatDuration
@@ -341,7 +346,7 @@ function noteTimestampToRhythm(noteTs: number, beatTses: number[]): Rhythm {
   ) {
     return "32nd"
   } else {
-    console.log(noteTs, fraction)
+    console.log(measureIndex, noteTs, fraction)
     return "other"
   }
 }
@@ -381,7 +386,11 @@ function getNoteDatas(
     })
 
     if (key !== null) {
-      const rhythm = noteTimestampToRhythm(timestamp, beatTimestamps)
+      const rhythm = noteTimestampToRhythm(
+        timestamp,
+        beatTimestamps,
+        measure.index,
+      )
 
       keyNumToOrds(key).forEach((ord) => {
         noteDatas.push({
@@ -462,7 +471,11 @@ function getHoldNoteDatas(
     })
 
     if (keyon !== null) {
-      const rhythm = noteTimestampToRhythm(timestamp, beatTimestamps)
+      const rhythm = noteTimestampToRhythm(
+        timestamp,
+        beatTimestamps,
+        measure.index,
+      )
 
       keyNumToOrds(keyon).forEach((ord) => {
         ordToKeyOnY[ord] = newY
