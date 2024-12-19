@@ -1,18 +1,24 @@
+// Normal note colors
 $white-note: rgb(200, 200, 200);
 $yellow-note: rgb(253, 247, 49);
 $green-note: rgb(125, 243, 129);
 $blue-note: rgb(130, 182, 255);
 $red-note: rgb(237, 126, 127);
 
+// Rhythm note colors
+$purple-note: rgb(130, 101, 237);
+$pink-note: rgb(248, 165, 241);
+$orange-note: rgb(237, 181, 126);
+
 .Note {
   position: relative;
   height: 14px;
 
-  &.white, &.green, &.red {
+  &.bottom {
     width: 22px;
   }
 
-  &.yellow, &.blue {
+  &.top {
     width: 18px;
   }
 
@@ -41,6 +47,18 @@ $red-note: rgb(237, 126, 127);
 
   &.red .inside {
     background-color: $red-note;
+  }
+
+  &.purple .inside {
+    background-color: $purple-note;
+  }
+
+  &.pink .inside {
+    background-color: $pink-note;
+  }
+
+  &.orange .inside {
+    background-color: $orange-note;
   }
 
   .stripe {

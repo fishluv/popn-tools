@@ -303,9 +303,15 @@ function TimingEvent({ index, y }: TimingEventData) {
 }
 
 type LaneOrd = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+type Rhythm = "4th" | "8th" | "12th" | "16th" | "24th" | "32nd" | "other"
 interface NoteData {
   lane: LaneOrd
   y: number
+  rhythm: Rhythm
+}
+
+function numbersRoughlyEqual(a: number, b: number) {
+  return Math.abs(a - b) < 0.01
 }
 
 function getNoteDatas(
@@ -316,6 +322,16 @@ function getNoteDatas(
   let prevY = noteAreaHeight - 1
   let prevTs = measure.startTimestamp
   let prevBpm = measure.startBpm
+
+  const beatTimestamps: number[] = []
+  measure.rows.forEach(({ timestamp, measurebeatend }) => {
+    // "e" is not needed here.
+    if (measurebeatend === "m" || measurebeatend === "b") {
+      beatTimestamps.push(timestamp)
+    }
+  })
+  beatTimestamps.push(measure.startTimestamp + measure.duration)
+  const beatDuration = beatTimestamps[1] - beatTimestamps[0]
 
   const noteDatas: NoteData[] = []
 
@@ -330,10 +346,46 @@ function getNoteDatas(
     })
 
     if (key !== null) {
+      let rhythm: Rhythm
+      const durationAfterBeat =
+        timestamp - beatTimestamps.findLast((ts) => ts <= timestamp)!
+      const fraction = durationAfterBeat / beatDuration
+      if (durationAfterBeat === 0) {
+        rhythm = "4th"
+      } else if (numbersRoughlyEqual(fraction, 1 / 2)) {
+        rhythm = "8th"
+      } else if (
+        numbersRoughlyEqual(fraction, 1 / 3) ||
+        numbersRoughlyEqual(fraction, 2 / 3)
+      ) {
+        rhythm = "12th"
+      } else if (
+        numbersRoughlyEqual(fraction, 1 / 4) ||
+        numbersRoughlyEqual(fraction, 3 / 4)
+      ) {
+        rhythm = "16th"
+      } else if (
+        numbersRoughlyEqual(fraction, 1 / 6) ||
+        numbersRoughlyEqual(fraction, 5 / 6)
+      ) {
+        rhythm = "24th"
+      } else if (
+        numbersRoughlyEqual(fraction, 1 / 8) ||
+        numbersRoughlyEqual(fraction, 3 / 8) ||
+        numbersRoughlyEqual(fraction, 5 / 8) ||
+        numbersRoughlyEqual(fraction, 7 / 8)
+      ) {
+        rhythm = "32nd"
+      } else {
+        console.log(measure.index, timestamp, fraction)
+        rhythm = "other"
+      }
+
       keyNumToOrds(key).forEach((ord) => {
         noteDatas.push({
           lane: (ord + 1) as LaneOrd,
           y: newY,
+          rhythm,
         })
       })
     }
@@ -514,6 +566,25 @@ function laneToColor(lane: LaneOrd): NoteColor {
       return "blue"
     case 5:
       return "red"
+  }
+}
+
+function rhythmToColor(rhythm: Rhythm): NoteColor {
+  switch (rhythm) {
+    case "4th":
+      return "red"
+    case "8th":
+      return "blue"
+    case "12th":
+      return "purple"
+    case "16th":
+      return "yellow"
+    case "24th":
+      return "pink"
+    case "32nd":
+      return "orange"
+    default:
+      return "white"
   }
 }
 
@@ -772,17 +843,27 @@ export default function Measure({
           <TimingEvent key={y} index={index} y={y} />
         ))}
 
-        {noteDatas.map(({ lane, y }, index) => {
+        {noteDatas.map(({ lane, y, rhythm }, index) => {
           const style = {
             top: y - 6,
           }
           const laneToUse = noteToLane[lane]
+          const row = laneToUse % 2 === 0 ? "top" : "bottom"
+
+          let colorToUse
+          if (displayOptions.noteColoring === "quantize") {
+            colorToUse = rhythmToColor(rhythm)
+          } else {
+            colorToUse = laneToColor(laneToUse)
+          }
+
           return (
             <Note
               key={index}
               className={cx(styles.Note, styles[`pos${laneToUse}`])}
               style={style}
-              color={laneToColor(laneToUse)}
+              color={colorToUse}
+              row={row}
             />
           )
         })}
