@@ -15,7 +15,6 @@ import Measure, {
 } from "./Measure"
 import MeasureData from "../../models/MeasureData"
 import More from "../common/More"
-import useExtraOptions from "../../lib/useExtraOptions"
 
 type ChartTransform = "nonran" | "mirror" | "cross" | "random" | "rran"
 
@@ -30,7 +29,7 @@ const PREVIEW_MEASURE_DATA = new MeasureData({
       bpm: 150,
     },
     {
-      timestamp: 50,
+      timestamp: 100,
       key: 2,
       keyon: null,
       keyoff: null,
@@ -38,7 +37,7 @@ const PREVIEW_MEASURE_DATA = new MeasureData({
       bpm: null,
     },
     {
-      timestamp: 100,
+      timestamp: 200,
       key: 4,
       keyon: null,
       keyoff: null,
@@ -46,7 +45,7 @@ const PREVIEW_MEASURE_DATA = new MeasureData({
       bpm: null,
     },
     {
-      timestamp: 150,
+      timestamp: 300,
       key: 8,
       keyon: null,
       keyoff: null,
@@ -54,7 +53,7 @@ const PREVIEW_MEASURE_DATA = new MeasureData({
       bpm: null,
     },
     {
-      timestamp: 200,
+      timestamp: 400,
       key: 16,
       keyon: null,
       keyoff: null,
@@ -62,7 +61,7 @@ const PREVIEW_MEASURE_DATA = new MeasureData({
       bpm: null,
     },
     {
-      timestamp: 250,
+      timestamp: 500,
       key: 32,
       keyon: null,
       keyoff: null,
@@ -70,7 +69,7 @@ const PREVIEW_MEASURE_DATA = new MeasureData({
       bpm: null,
     },
     {
-      timestamp: 300,
+      timestamp: 600,
       key: 64,
       keyon: null,
       keyoff: null,
@@ -78,7 +77,7 @@ const PREVIEW_MEASURE_DATA = new MeasureData({
       bpm: null,
     },
     {
-      timestamp: 350,
+      timestamp: 700,
       key: 128,
       keyon: null,
       keyoff: null,
@@ -86,7 +85,7 @@ const PREVIEW_MEASURE_DATA = new MeasureData({
       bpm: null,
     },
     {
-      timestamp: 400,
+      timestamp: 800,
       key: 256,
       keyon: null,
       keyoff: null,
@@ -97,7 +96,7 @@ const PREVIEW_MEASURE_DATA = new MeasureData({
   index: 1,
   startKeyOn: 0,
   startBpm: 150,
-  duration: 400,
+  duration: 800,
 })
 
 export default function ChartPageMore() {
@@ -145,8 +144,6 @@ export default function ChartPageMore() {
     t: StringParam, // Transform
     color: StringParam, // Note coloring
   })
-
-  const extraOptions = useExtraOptions()
 
   const transformToTransformStr = useCallback(
     function () {
@@ -495,39 +492,35 @@ export default function ChartPageMore() {
             laneTransform: makeLaneTransform(transformToTransformStr()),
           }}
           displayOptions={{
-            noteSpacing: "default",
+            noteSpacing: "veryslow",
             bpmAgnostic: false,
             noteColoring,
           }}
         />
       </div>
 
-      {extraOptions["quant"] && (
-        <>
-          <h6>Note color</h6>
-          <div className={styles.noteColor}>
-            <div className={styles.normal}>
-              <input
-                id="normalColorRadio"
-                type="radio"
-                checked={noteColoring === "normal"}
-                onChange={() => changeNoteColoring("normal")}
-              />
-              <label htmlFor="normalColorRadio">Normal</label>
-            </div>
+      <h6>Note color</h6>
+      <div className={styles.noteColor}>
+        <div className={styles.normal}>
+          <input
+            id="normalColorRadio"
+            type="radio"
+            checked={noteColoring === "normal"}
+            onChange={() => changeNoteColoring("normal")}
+          />
+          <label htmlFor="normalColorRadio">Normal</label>
+        </div>
 
-            <div className={styles.quantize}>
-              <input
-                id="quantizeRadio"
-                type="radio"
-                checked={noteColoring === "quantize"}
-                onChange={() => changeNoteColoring("quantize")}
-              />
-              <label htmlFor="quantizeRadio">Quantize</label>
-            </div>
-          </div>
-        </>
-      )}
+        <div className={styles.quantize}>
+          <input
+            id="quantizeRadio"
+            type="radio"
+            checked={noteColoring === "quantize"}
+            onChange={() => changeNoteColoring("quantize")}
+          />
+          <label htmlFor="quantizeRadio">Quantize</label>
+        </div>
+      </div>
 
       <h6>Tips</h6>
       <ul>

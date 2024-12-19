@@ -314,7 +314,6 @@ function noteTimestampToRhythm(
   noteTs: number,
   prevBeatTs: number,
   bpm: number,
-  measureIndex: number,
 ): Rhythm {
   const durationAfterBeat = noteTs - prevBeatTs
   // This doesn't work great when the bpm changes mid-beat lol.
@@ -347,7 +346,6 @@ function noteTimestampToRhythm(
   ) {
     return "32nd"
   } else {
-    console.log(measureIndex, noteTs, fraction)
     return "other"
   }
 }
@@ -383,12 +381,7 @@ function getNoteDatas(
     }
 
     if (key !== null) {
-      const rhythm = noteTimestampToRhythm(
-        timestamp,
-        prevBeatTs,
-        prevBpm,
-        measure.index,
-      )
+      const rhythm = noteTimestampToRhythm(timestamp, prevBeatTs, prevBpm)
 
       keyNumToOrds(key).forEach((ord) => {
         noteDatas.push({
@@ -465,12 +458,7 @@ function getHoldNoteDatas(
     }
 
     if (keyon !== null) {
-      const rhythm = noteTimestampToRhythm(
-        timestamp,
-        prevBeatTs,
-        prevBpm,
-        measure.index,
-      )
+      const rhythm = noteTimestampToRhythm(timestamp, prevBeatTs, prevBpm)
 
       keyNumToOrds(keyon).forEach((ord) => {
         ordToKeyOnY[ord] = newY
