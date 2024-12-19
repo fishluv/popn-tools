@@ -11,6 +11,7 @@ interface HoldNoteProps {
   yDuration: number
   shouldDrawHead: boolean
   shouldDrawButt: boolean
+  shouldColorHeadOnly: boolean
 }
 
 export default function HoldNote({
@@ -21,6 +22,7 @@ export default function HoldNote({
   yDuration,
   shouldDrawHead,
   shouldDrawButt,
+  shouldColorHeadOnly,
 }: HoldNoteProps) {
   const rootStyle = {
     height: yDuration + 7,
@@ -38,13 +40,16 @@ export default function HoldNote({
         styles.HoldNote,
         styles[color],
         styles[rowToUse],
+        shouldColorHeadOnly ? styles.colorHeadOnly : styles.colorAll,
         className,
       )}
       style={rootStyle}
     >
       {shouldDrawButt && <div className={styles.butt} />}
       <div className={styles.body} style={bodyStyle} />
-      {shouldDrawHead && <Note className={styles.head} color={color} />}
+      {shouldDrawHead && (
+        <Note className={styles.head} color={color} row={row} />
+      )}
     </div>
   )
 }

@@ -310,6 +310,42 @@ interface NoteData {
   rhythm: Rhythm
 }
 
+function noteTimestampToRhythm(noteTs: number, beatTses: number[]): Rhythm {
+  const beatDuration = beatTses[1] - beatTses[0]
+  const durationAfterBeat = noteTs - beatTses.findLast((ts) => ts <= noteTs)!
+  const fraction = durationAfterBeat / beatDuration
+  if (durationAfterBeat === 0) {
+    return "4th"
+  } else if (numbersRoughlyEqual(fraction, 1 / 2)) {
+    return "8th"
+  } else if (
+    numbersRoughlyEqual(fraction, 1 / 3) ||
+    numbersRoughlyEqual(fraction, 2 / 3)
+  ) {
+    return "12th"
+  } else if (
+    numbersRoughlyEqual(fraction, 1 / 4) ||
+    numbersRoughlyEqual(fraction, 3 / 4)
+  ) {
+    return "16th"
+  } else if (
+    numbersRoughlyEqual(fraction, 1 / 6) ||
+    numbersRoughlyEqual(fraction, 5 / 6)
+  ) {
+    return "24th"
+  } else if (
+    numbersRoughlyEqual(fraction, 1 / 8) ||
+    numbersRoughlyEqual(fraction, 3 / 8) ||
+    numbersRoughlyEqual(fraction, 5 / 8) ||
+    numbersRoughlyEqual(fraction, 7 / 8)
+  ) {
+    return "32nd"
+  } else {
+    console.log(noteTs, fraction)
+    return "other"
+  }
+}
+
 function numbersRoughlyEqual(a: number, b: number) {
   return Math.abs(a - b) < 0.01
 }
@@ -331,7 +367,6 @@ function getNoteDatas(
     }
   })
   beatTimestamps.push(measure.startTimestamp + measure.duration)
-  const beatDuration = beatTimestamps[1] - beatTimestamps[0]
 
   const noteDatas: NoteData[] = []
 
@@ -346,40 +381,7 @@ function getNoteDatas(
     })
 
     if (key !== null) {
-      let rhythm: Rhythm
-      const durationAfterBeat =
-        timestamp - beatTimestamps.findLast((ts) => ts <= timestamp)!
-      const fraction = durationAfterBeat / beatDuration
-      if (durationAfterBeat === 0) {
-        rhythm = "4th"
-      } else if (numbersRoughlyEqual(fraction, 1 / 2)) {
-        rhythm = "8th"
-      } else if (
-        numbersRoughlyEqual(fraction, 1 / 3) ||
-        numbersRoughlyEqual(fraction, 2 / 3)
-      ) {
-        rhythm = "12th"
-      } else if (
-        numbersRoughlyEqual(fraction, 1 / 4) ||
-        numbersRoughlyEqual(fraction, 3 / 4)
-      ) {
-        rhythm = "16th"
-      } else if (
-        numbersRoughlyEqual(fraction, 1 / 6) ||
-        numbersRoughlyEqual(fraction, 5 / 6)
-      ) {
-        rhythm = "24th"
-      } else if (
-        numbersRoughlyEqual(fraction, 1 / 8) ||
-        numbersRoughlyEqual(fraction, 3 / 8) ||
-        numbersRoughlyEqual(fraction, 5 / 8) ||
-        numbersRoughlyEqual(fraction, 7 / 8)
-      ) {
-        rhythm = "32nd"
-      } else {
-        console.log(measure.index, timestamp, fraction)
-        rhythm = "other"
-      }
+      const rhythm = noteTimestampToRhythm(timestamp, beatTimestamps)
 
       keyNumToOrds(key).forEach((ord) => {
         noteDatas.push({
@@ -415,6 +417,7 @@ interface HoldNoteData {
   lane: LaneOrd
   startY: number // start and end are chronological, so startY > endY.
   endY: number
+  rhythm?: Rhythm // If hold note started in a different measure, rhythm is unknown.
   shouldDrawHead: boolean
   shouldDrawButt: boolean
 }
@@ -435,6 +438,17 @@ function getHoldNoteDatas(
     ordToKeyOnY[ord] = -1
   })
 
+  const ordToRhythm: (Rhythm | undefined)[] = []
+
+  const beatTimestamps: number[] = []
+  measure.rows.forEach(({ timestamp, measurebeatend }) => {
+    // "e" is not needed here.
+    if (measurebeatend === "m" || measurebeatend === "b") {
+      beatTimestamps.push(timestamp)
+    }
+  })
+  beatTimestamps.push(measure.startTimestamp + measure.duration)
+
   const holdNoteDatas: HoldNoteData[] = []
 
   measure.rows.forEach(({ timestamp, keyon, keyoff, bpm }) => {
@@ -448,8 +462,11 @@ function getHoldNoteDatas(
     })
 
     if (keyon !== null) {
+      const rhythm = noteTimestampToRhythm(timestamp, beatTimestamps)
+
       keyNumToOrds(keyon).forEach((ord) => {
         ordToKeyOnY[ord] = newY
+        ordToRhythm[ord] = rhythm
       })
     }
 
@@ -469,11 +486,13 @@ function getHoldNoteDatas(
           lane: (ord + 1) as LaneOrd,
           startY,
           endY: newY,
+          rhythm: ordToRhythm[ord],
           shouldDrawHead: keyOnYForOrd !== undefined && keyOnYForOrd >= 0,
           shouldDrawButt: true,
         })
 
         ordToKeyOnY[ord] = undefined
+        ordToRhythm[ord] = undefined
       })
     }
 
@@ -503,6 +522,7 @@ function getHoldNoteDatas(
       lane: (ord + 1) as LaneOrd,
       startY,
       endY: 0,
+      rhythm: ordToRhythm[ord],
       shouldDrawHead: keyOnY !== undefined && keyOnY >= 0,
       shouldDrawButt: false,
     })
@@ -584,7 +604,7 @@ function rhythmToColor(rhythm: Rhythm): NoteColor {
     case "32nd":
       return "orange"
     default:
-      return "white"
+      return "green"
   }
 }
 
@@ -869,20 +889,39 @@ export default function Measure({
         })}
 
         {holdNoteDatas.map(
-          ({ lane, startY, endY, shouldDrawHead, shouldDrawButt }, index) => {
+          (
+            { lane, startY, endY, rhythm, shouldDrawHead, shouldDrawButt },
+            index,
+          ) => {
             const style = {
               top: endY,
             }
             const laneToUse = noteToLane[lane]
+            const row = laneToUse % 2 === 0 ? "top" : "bottom"
+
+            let colorToUse
+            let shouldColorHeadOnly
+            if (displayOptions.noteColoring === "quantize") {
+              colorToUse = rhythm ? rhythmToColor(rhythm) : "white"
+              // When rhythm is unknown (for hold notes that started in different
+              // measures) shouldDrawHead will be false anyway... but whatever...
+              shouldColorHeadOnly = true
+            } else {
+              colorToUse = laneToColor(laneToUse)
+              shouldColorHeadOnly = false
+            }
+
             return (
               <HoldNote
                 key={index}
                 className={cx(styles.HoldNote, styles[`pos${laneToUse}`])}
                 style={style}
-                color={laneToColor(laneToUse)}
+                color={colorToUse}
+                row={row}
                 yDuration={startY - endY}
                 shouldDrawHead={shouldDrawHead}
                 shouldDrawButt={shouldDrawButt}
+                shouldColorHeadOnly={shouldColorHeadOnly}
               />
             )
           },

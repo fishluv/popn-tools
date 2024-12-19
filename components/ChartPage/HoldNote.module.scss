@@ -38,33 +38,41 @@ $red-hold-note: rgb(255, 200, 200);
     border-radius: 32%;
   }
 
-  &.white {
+  &.colorHeadOnly {
     .body, .butt {
       background-color: $white-hold-note;
     }
   }
 
-  &.yellow {
-    .body, .butt {
-      background-color: $yellow-hold-note;
+  &.colorAll {
+    &.white {
+      .body, .butt {
+        background-color: $white-hold-note;
+      }
     }
-  }
 
-  &.green {
-    .body, .butt {
-      background-color: $green-hold-note;
+    &.yellow {
+      .body, .butt {
+        background-color: $yellow-hold-note;
+      }
     }
-  }
 
-  &.blue {
-    .body, .butt {
-      background-color: $blue-hold-note;
+    &.green {
+      .body, .butt {
+        background-color: $green-hold-note;
+      }
     }
-  }
 
-  &.red {
-    .body, .butt {
-      background-color: $red-hold-note;
+    &.blue {
+      .body, .butt {
+        background-color: $blue-hold-note;
+      }
+    }
+
+    &.red {
+      .body, .butt {
+        background-color: $red-hold-note;
+      }
     }
   }
 }
