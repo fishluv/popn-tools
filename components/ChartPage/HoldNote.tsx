@@ -1,12 +1,13 @@
 import cx from "classnames"
 import styles from "./HoldNote.module.scss"
 import { CSSProperties } from "react"
-import Note, { NoteColor } from "./Note"
+import Note, { colorToRow, NoteColor, Row } from "./Note"
 
 interface HoldNoteProps {
   className?: string
   style?: CSSProperties
   color: NoteColor
+  row?: Row // If absent, defaults based on color.
   yDuration: number
   shouldDrawHead: boolean
   shouldDrawButt: boolean
@@ -16,6 +17,7 @@ export default function HoldNote({
   className,
   style,
   color,
+  row,
   yDuration,
   shouldDrawHead,
   shouldDrawButt,
@@ -28,9 +30,16 @@ export default function HoldNote({
     height: yDuration + 2,
   }
 
+  const rowToUse = row ?? colorToRow(color)
+
   return (
     <div
-      className={cx(styles.HoldNote, styles[color], className)}
+      className={cx(
+        styles.HoldNote,
+        styles[color],
+        styles[rowToUse],
+        className,
+      )}
       style={rootStyle}
     >
       {shouldDrawButt && <div className={styles.butt} />}

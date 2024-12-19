@@ -13,7 +13,7 @@ type RhythmNoteColor =
   | "white"
 export type NoteColor = NormalNoteColor | RhythmNoteColor
 
-type Row = "bottom" | "top"
+export type Row = "bottom" | "top"
 
 interface NoteProps {
   className?: string
@@ -22,7 +22,7 @@ interface NoteProps {
   row?: Row // If absent, defaults based on color.
 }
 
-function colorToRow(color: NoteColor): Row {
+export function colorToRow(color: NoteColor): Row {
   switch (color) {
     case "yellow":
     case "blue":

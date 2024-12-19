@@ -5,6 +5,14 @@ $blue-hold-note: rgb(171, 210, 246);
 $red-hold-note: rgb(255, 200, 200);
 
 .HoldNote {
+  &.bottom {
+    width: 22px;
+  }
+
+  &.top {
+    width: 18px;
+  }
+
   .head, .body, .butt {
     position: absolute;
     text-align: center;
@@ -31,40 +39,30 @@ $red-hold-note: rgb(255, 200, 200);
   }
 
   &.white {
-    width: 22px;
-
     .body, .butt {
       background-color: $white-hold-note;
     }
   }
 
   &.yellow {
-    width: 18px;
-
     .body, .butt {
       background-color: $yellow-hold-note;
     }
   }
 
   &.green {
-    width: 22px;
-
     .body, .butt {
       background-color: $green-hold-note;
     }
   }
 
   &.blue {
-    width: 18px;
-
     .body, .butt {
       background-color: $blue-hold-note;
     }
   }
 
   &.red {
-    width: 22px;
-
     .body, .butt {
       background-color: $red-hold-note;
     }
