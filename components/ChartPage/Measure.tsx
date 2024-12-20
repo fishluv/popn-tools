@@ -22,14 +22,14 @@ export function parseNoteSpacing(hs: string | null | undefined): NoteSpacing {
   }
 }
 
-export type NoteColoring = "normal" | "quantize"
+export type NoteColoring = "normal" | "rhythm"
 
 export function parseNoteColoring(
   noteColor: string | null | undefined,
 ): NoteColoring {
   switch (noteColor) {
     case "normal":
-    case "quantize":
+    case "rhythm":
       return noteColor
     default:
       return "normal"
@@ -867,7 +867,7 @@ export default function Measure({
           const row = laneToUse % 2 === 0 ? "top" : "bottom"
 
           let colorToUse
-          if (displayOptions.noteColoring === "quantize") {
+          if (displayOptions.noteColoring === "rhythm") {
             colorToUse = rhythmToColor(rhythm)
           } else {
             colorToUse = laneToColor(laneToUse)
@@ -897,7 +897,7 @@ export default function Measure({
 
             let colorToUse
             let shouldColorHeadOnly
-            if (displayOptions.noteColoring === "quantize") {
+            if (displayOptions.noteColoring === "rhythm") {
               colorToUse = rhythm ? rhythmToColor(rhythm) : "white"
               // When rhythm is unknown (for hold notes that started in different
               // measures) shouldDrawHead will be false anyway... but whatever...

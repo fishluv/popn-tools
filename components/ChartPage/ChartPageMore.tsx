@@ -511,14 +511,14 @@ export default function ChartPageMore() {
           <label htmlFor="normalColorRadio">Normal</label>
         </div>
 
-        <div className={styles.quantize}>
+        <div className={styles.rhythm}>
           <input
-            id="quantizeRadio"
+            id="rhythmRadio"
             type="radio"
-            checked={noteColoring === "quantize"}
-            onChange={() => changeNoteColoring("quantize")}
+            checked={noteColoring === "rhythm"}
+            onChange={() => changeNoteColoring("rhythm")}
           />
-          <label htmlFor="quantizeRadio">Quantize</label>
+          <label htmlFor="rhythmRadio">Rhythm</label>
         </div>
       </div>
 
