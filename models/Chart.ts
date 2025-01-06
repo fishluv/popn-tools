@@ -10,6 +10,8 @@ interface OtherCharts {
   ex?: number
 }
 
+type Prevalence = "constant" | "majority" | "nonmajority"
+
 interface ChartContructorProps {
   id: string
   difficulty: Difficulty
@@ -17,12 +19,15 @@ interface ChartContructorProps {
   bpm: string | null
   bpmSteps: number[] | null
   mainBpm: number | null
-  mainBpmType: "constant" | "majority" | "nonmajority" | null
+  mainBpmType: Prevalence | null
   duration: number | null
   notes: number | null
   holdNotes: number | null
   timing: string | null
   timingSteps: number[][] | null
+  mainTimeSig: string | null
+  mainTimeSigType: Prevalence | null
+  timeSigSteps: string[] | null
   jkwikiPagePath: string | null
   jpRating: string | null
   sranLevel: number | null
@@ -33,9 +38,7 @@ interface ChartContructorProps {
   otherCharts: OtherCharts | null
 }
 
-function parseMainBpmType(
-  s: string | null,
-): "constant" | "majority" | "nonmajority" | null {
+function parsePrevalence(s: string | null): Prevalence | null {
   switch (s) {
     case "constant":
     case "majority":
@@ -60,6 +63,9 @@ export default class Chart {
     hold_notes,
     timing,
     timing_steps,
+    timesig_main,
+    timesig_main_type,
+    timesig_steps,
     jkwiki_page_path,
     rating,
     sran_level,
@@ -74,12 +80,15 @@ export default class Chart {
       bpm,
       bpmSteps: bpm_steps,
       mainBpm: bpm_main,
-      mainBpmType: parseMainBpmType(bpm_main_type),
+      mainBpmType: parsePrevalence(bpm_main_type),
       duration,
       notes,
       holdNotes: hold_notes,
       timing,
       timingSteps: timing_steps,
+      mainTimeSig: timesig_main,
+      mainTimeSigType: parsePrevalence(timesig_main_type),
+      timeSigSteps: timesig_steps,
       jkwikiPagePath: jkwiki_page_path,
       jpRating: rating,
       sranLevel: sran_level,
@@ -95,12 +104,15 @@ export default class Chart {
   readonly bpm: string | null
   readonly bpmSteps: number[] | null
   readonly mainBpm: number | null
-  readonly mainBpmType: "constant" | "majority" | "nonmajority" | null
+  readonly mainBpmType: Prevalence | null
   readonly duration: number | null
   readonly notes: number | null
   readonly holdNotes: number | null
   readonly timing: string | null
   readonly timingSteps: number[][] | null
+  readonly mainTimeSig: string | null
+  readonly mainTimeSigType: Prevalence | null
+  readonly timeSigSteps: string[] | null
   readonly jkwikiPagePath: string | null
   readonly jpRating: string | null
   readonly sranLevel: number | null
@@ -121,6 +133,9 @@ export default class Chart {
     holdNotes,
     timing,
     timingSteps,
+    mainTimeSig,
+    mainTimeSigType,
+    timeSigSteps,
     jkwikiPagePath,
     jpRating,
     sranLevel,
@@ -140,6 +155,9 @@ export default class Chart {
     this.holdNotes = holdNotes
     this.timing = timing
     this.timingSteps = timingSteps
+    this.mainTimeSig = mainTimeSig
+    this.mainTimeSigType = mainTimeSigType
+    this.timeSigSteps = timeSigSteps
     this.jkwikiPagePath = jkwikiPagePath
     this.jpRating = jpRating
     this.sranLevel = sranLevel

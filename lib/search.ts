@@ -101,6 +101,9 @@ export interface SearchApiChartResult {
   hold_notes: number | null
   timing: string | null
   timing_steps: number[][] | null
+  timesig_main: string | null
+  timesig_main_type: string | null
+  timesig_steps: string[] | null
   jkwiki_page_path: string | null
   rating: string | null
   sran_level: number | null
