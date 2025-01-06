@@ -94,8 +94,8 @@ export interface SearchApiChartResult {
   level: number
   bpm: string | null
   bpm_steps: number[] | null
-  bpm_primary: number | null
-  bpm_primary_type: string | null
+  bpm_main: number | null
+  bpm_main_type: string | null
   duration: number | null
   notes: number | null
   hold_notes: number | null

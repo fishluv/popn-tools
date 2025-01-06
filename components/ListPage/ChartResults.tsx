@@ -118,15 +118,15 @@ export default function ChartResults({
             {
               id: "bpm",
               label: "Bpm",
-              markup: (chart: Chart) => chart.primaryBpm ?? "?",
+              markup: (chart: Chart) => chart.mainBpm ?? "?",
             },
             {
               id: "bpmtype",
               label: "",
               markup: (chart: Chart) =>
-                chart.primaryBpmType === "majority"
+                chart.mainBpmType === "majority"
                   ? "?"
-                  : chart.primaryBpmType === "nonmajority"
+                  : chart.mainBpmType === "nonmajority"
                   ? "*"
                   : "",
             },

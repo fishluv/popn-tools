@@ -16,8 +16,8 @@ interface ChartContructorProps {
   level: number
   bpm: string | null
   bpmSteps: number[] | null
-  primaryBpm: number | null
-  primaryBpmType: "constant" | "majority" | "nonmajority" | null
+  mainBpm: number | null
+  mainBpmType: "constant" | "majority" | "nonmajority" | null
   duration: number | null
   notes: number | null
   holdNotes: number | null
@@ -33,7 +33,7 @@ interface ChartContructorProps {
   otherCharts: OtherCharts | null
 }
 
-function parsePrimaryBpmType(
+function parseMainBpmType(
   s: string | null,
 ): "constant" | "majority" | "nonmajority" | null {
   switch (s) {
@@ -53,8 +53,8 @@ export default class Chart {
     level,
     bpm,
     bpm_steps,
-    bpm_primary,
-    bpm_primary_type,
+    bpm_main,
+    bpm_main_type,
     duration,
     notes,
     hold_notes,
@@ -73,8 +73,8 @@ export default class Chart {
       level,
       bpm,
       bpmSteps: bpm_steps,
-      primaryBpm: bpm_primary,
-      primaryBpmType: parsePrimaryBpmType(bpm_primary_type),
+      mainBpm: bpm_main,
+      mainBpmType: parseMainBpmType(bpm_main_type),
       duration,
       notes,
       holdNotes: hold_notes,
@@ -94,8 +94,8 @@ export default class Chart {
   readonly level: number
   readonly bpm: string | null
   readonly bpmSteps: number[] | null
-  readonly primaryBpm: number | null
-  readonly primaryBpmType: "constant" | "majority" | "nonmajority" | null
+  readonly mainBpm: number | null
+  readonly mainBpmType: "constant" | "majority" | "nonmajority" | null
   readonly duration: number | null
   readonly notes: number | null
   readonly holdNotes: number | null
@@ -114,8 +114,8 @@ export default class Chart {
     level,
     bpm,
     bpmSteps,
-    primaryBpm,
-    primaryBpmType,
+    mainBpm,
+    mainBpmType,
     duration,
     notes,
     holdNotes,
@@ -133,8 +133,8 @@ export default class Chart {
     this.level = level
     this.bpm = bpm
     this.bpmSteps = bpmSteps
-    this.primaryBpm = primaryBpm
-    this.primaryBpmType = primaryBpmType
+    this.mainBpm = mainBpm
+    this.mainBpmType = mainBpmType
     this.duration = duration
     this.notes = notes
     this.holdNotes = holdNotes
