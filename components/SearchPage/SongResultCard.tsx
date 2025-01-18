@@ -15,7 +15,7 @@ export default function SongResultCard({
     <button className={styles.SongResultCard} onClick={() => onClick(song)}>
       <SongBanner
         songId={song.id}
-        songTitle={song.remywikiTitle}
+        songTitle={song.romanTitle}
         width={240}
         height={60}
       />

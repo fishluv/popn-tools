@@ -19,7 +19,7 @@ function ChartBanner({
     <button className={styles.ChartBanner} onClick={() => onChartClick(chart)}>
       <SongBanner
         songId={chart.song!.id}
-        songTitle={chart.song!.remywikiTitle}
+        songTitle={chart.song!.romanTitle}
         width={120}
         height={30}
       />
@@ -98,18 +98,17 @@ export default function ChartResults({
             {
               id: "titlegenre",
               markup: (chart: Chart) => {
-                const { title, remywikiTitle, genre, genreRomanTrans } =
-                  chart.song!
+                const { title, romanTitle, genre, romanGenre } = chart.song!
                 if (preferGenre && title !== genre) {
                   return (
                     <span className={styles.genre}>
-                      {romanize ? genreRomanTrans : genre}
+                      {romanize ? romanGenre : genre}
                     </span>
                   )
                 } else {
                   return (
                     <span className={styles.title}>
-                      {romanize ? remywikiTitle : title}
+                      {romanize ? romanTitle : title}
                     </span>
                   )
                 }

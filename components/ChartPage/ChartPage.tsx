@@ -95,30 +95,9 @@ export default function ChartPage({
   // This is a hacky workaround to set the title after that happens.
   setTimeout(() => {
     if (chart && document.title.startsWith("Chart Viewer")) {
-      const { remywikiTitle, genreRomanTrans, labels, id } = chart.song!
-
-      // Use the romanized title we get from the song's RemyWiki page.
-      // Sometimes multiple songs share a single page so we need to disambiguate.
-      // (This is the same logic we use to generate song slugs.)
-      let songTitle = remywikiTitle
-      if (genreRomanTrans.endsWith(" LIVE")) {
-        songTitle = `${songTitle} LIVE`
-      }
-      if (genreRomanTrans.endsWith(" LONG")) {
-        songTitle = `${songTitle} LONG`
-      }
-      if (labels.includes("ura")) {
-        songTitle = `URA ${songTitle}`
-      }
-      if (labels.includes("upper")) {
-        songTitle = `${songTitle} UPPER`
-      }
-      // Knock Out Regrets jp version
-      if (id === 3055) {
-        songTitle = `${songTitle} JP`
-      }
-
-      document.title = `${songTitle} [${chart.difficulty.toUpperCase()}] • Pop'n Tools`
+      document.title = `${
+        chart.song!.romanTitle
+      } [${chart.difficulty.toUpperCase()}] • Pop'n Tools`
     }
   }, 500) // Whole app rerender can take like 300 ms to set the document title so to be safe...
 

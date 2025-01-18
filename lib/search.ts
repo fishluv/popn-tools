@@ -55,19 +55,19 @@ export function useSearchChart({
 export interface SearchApiSongResult {
   id: number
   title: string
-  sort_title: string
+  fw_title: string
+  r_title: string
   genre: string
-  sort_genre: string
+  fw_genre: string
+  r_genre: string
   artist: string
   character1: SearchApiCharacterResult | null
   character2: SearchApiCharacterResult | null
+  r_chara: string
   debut: string
   folders: string[]
   slug: string
   remywiki_url_path: string
-  remywiki_title: string
-  remywiki_chara: string
-  genre_romantrans: string
   labels: string[]
   // Included in /songs response but not in /charts response.
   charts?: SongCharts

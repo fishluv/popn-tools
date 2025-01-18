@@ -16,14 +16,13 @@ function SongRow({
   onSongClick(song: Song): void
 }) {
   const extraOptions = useExtraOptions()
-  const { id, title, genre, remywikiTitle, genreRomanTrans, charts, debut } =
-    song
+  const { id, title, genre, romanTitle, romanGenre, charts, debut } = song
   return (
     <div className={styles.SongRow}>
       <button className={styles.left} onClick={() => onSongClick(song)}>
         <SongBanner
           songId={id}
-          songTitle={remywikiTitle}
+          songTitle={romanTitle}
           width={160}
           height={40}
         />
@@ -87,9 +86,9 @@ function SongRow({
       </button>
 
       <div className={styles.right}>
-        <p className={styles.title}>{romanize ? remywikiTitle : title}</p>
+        <p className={styles.title}>{romanize ? romanTitle : title}</p>
         {title !== genre && (
-          <p className={styles.genre}>{romanize ? genreRomanTrans : genre}</p>
+          <p className={styles.genre}>{romanize ? romanGenre : genre}</p>
         )}
       </div>
     </div>

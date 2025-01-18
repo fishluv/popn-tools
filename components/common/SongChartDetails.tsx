@@ -246,16 +246,16 @@ export default function SongChartDetails({
     title,
     sortTitle,
     genre,
-    genreRomanTrans,
+    romanGenre,
     sortGenre,
-    remywikiTitle,
+    romanTitle,
     artist,
     character1,
     character2,
     debut,
     folders,
     remywikiUrlPath,
-    remywikiChara,
+    romanCharas,
     labels: songLabels,
     slug,
     charts,
@@ -310,7 +310,7 @@ export default function SongChartDetails({
         <SongBanner
           className={styles.banner}
           songId={songId}
-          songTitle={remywikiTitle}
+          songTitle={romanTitle}
           width={280}
           height={70}
         />
@@ -395,10 +395,10 @@ export default function SongChartDetails({
       {/*
         1. title exactly equals genre (new songs): only show once
 
-        no sort char, no remywiki title: airplane
-        no sort char, yes remywiki title: hopes and dreams
-        yes sort char, no remywiki title: iki
-        yes sort char, yes remywiki title: soranaki
+        no sort char, no different roman title: airplane
+        no sort char, yes different roman title: hopes and dreams
+        yes sort char, no different roman title: iki
+        yes sort char, yes different roman title: soranaki
       */}
       {title === genre ? (
         <>
@@ -410,8 +410,8 @@ export default function SongChartDetails({
             )}${maybeUpperSuffix}`}
           />
           {/* title contains non-roman characters */}
-          {!areEquivalent(title, remywikiTitle) && (
-            <Detail className={styles.minor} field="" value={remywikiTitle} />
+          {!areEquivalent(title, romanTitle) && (
+            <Detail className={styles.minor} field="" value={romanTitle} />
           )}
         </>
       ) : (
@@ -427,15 +427,15 @@ export default function SongChartDetails({
             )}${maybeUpperSuffix}`}
           />
           {/* title contains non-roman characters */}
-          {!areEquivalent(title, remywikiTitle) && (
-            <Detail className={styles.minor} field="" value={remywikiTitle} />
+          {!areEquivalent(title, romanTitle) && (
+            <Detail className={styles.minor} field="" value={romanTitle} />
           )}
 
           {/* 
-            no sort char, no romantrans: ddr
-            no sort char, yes romantrans: spy
-            yes sort char, no romantrans: (n/a - not known to happen)
-            yes sort char, yes romantrans: ergosphere
+            no sort char, no roman: ddr
+            no sort char, yes roman: spy
+            yes sort char, no roman: (n/a - not known to happen)
+            yes sort char, yes roman: ergosphere
           */}
           <Detail
             className={styles.genre}
@@ -444,8 +444,8 @@ export default function SongChartDetails({
               genre,
             )}`}
           />
-          {toAscii(genre) !== genreRomanTrans && (
-            <Detail className={styles.minor} field="" value={genreRomanTrans} />
+          {toAscii(genre) !== romanGenre && (
+            <Detail className={styles.minor} field="" value={romanGenre} />
           )}
         </>
       )}
@@ -464,14 +464,14 @@ export default function SongChartDetails({
           {/* forget about chara2 icon bc it's almost always the same as chara1
           and there's no way to tell when it's different here */}
         </div>
-        <span>{remywikiChara}</span>
+        <span>{romanCharas}</span>
       </Detail>
 
-      {/* When remywiki name is different from display name, show display name on second line. */}
+      {/* When combined roman name is different from either character's display name, show display name on second line. */}
       {/* MZD has a lot of special display names. Ignore them. */}
       {character1 &&
-        remywikiChara !== character1.displayName &&
-        remywikiChara !== "MZD" && (
+        romanCharas !== character1.displayName &&
+        romanCharas !== "MZD" && (
           <Detail
             className={styles.minor}
             field=""
@@ -483,8 +483,8 @@ export default function SongChartDetails({
         )}
       {character2 &&
         character2.displayName !== character1?.displayName &&
-        remywikiChara !== character2.displayName &&
-        remywikiChara !== "MZD" && (
+        romanCharas !== character2.displayName &&
+        romanCharas !== "MZD" && (
           <Detail
             className={styles.minor}
             field=""
