@@ -14,6 +14,7 @@ import Song from "../../models/Song"
 import useExtraOptions from "../../lib/useExtraOptions"
 import Difficulty from "../../models/Difficulty"
 import Link from "next/link"
+import { FaPepperHot } from "react-icons/fa6"
 
 function Detail({
   className,
@@ -556,9 +557,16 @@ export default function SongChartDetails({
             {chart.notes ? (
               <>
                 <span>{chart.notes}</span>
-                <span className={styles.holdNotes}>
-                  {!!chart.holdNotes && `(${chart.holdNotes} long)`}
-                </span>
+                {!!chart.holdNotes && (
+                  <span className={styles.holdNotes}>
+                    {`(${chart.holdNotes} holds)`}
+                  </span>
+                )}
+                {!!chart.notes && chart.notes > 1536 && (
+                  <span className={styles.spicy}>
+                    <FaPepperHot />
+                  </span>
+                )}
               </>
             ) : (
               "?"
