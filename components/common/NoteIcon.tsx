@@ -13,8 +13,8 @@ export default function NoteIcon({
 }) {
   return (
     <span className={cx(styles.NoteIcon, styles[color], className)}>
-      <div className={styles.inside} />
-      <div className={styles.stripe} />
+      <span className={styles.inside} />
+      <span className={styles.stripe} />
     </span>
   )
 }
