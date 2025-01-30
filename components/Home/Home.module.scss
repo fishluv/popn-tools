@@ -1,44 +1,73 @@
+@import "styles/colors";
+
 .Home {
   font-family: "M PLUS 1", "Arial", sans-serif;
   min-height: 100vh;
-  padding: 3rem 1rem 1rem;
+  padding: 1rem;
 
   display: flex;
   flex-direction: column;
-  gap: 3rem;
   justify-content: space-between;
 
   .main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3rem;
+    gap: 1.5rem;
+    padding-bottom: 2rem;
 
-    .title {
-      font-size: 1.5rem;
+    .sectionHeader {
+      font-size: 1.25rem;
+      font-weight: bold;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      margin-top: 1.5rem;
 
       span {
         margin-top: 0.125rem;
       }
     }
 
-    .pills {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+    .appCard {
+      text-decoration: none;
 
-      .BigPill {
+      &:hover, &:focus {
+        opacity: 70%;
+      }
+
+      .container {
+        width: 320px;
+        border: 4px solid transparent;
+        border-radius: 1.25rem;
+        padding: 0.75rem;
         display: flex;
-        gap: 0.5rem;
+        flex-direction: column;
+        gap: 0.25rem;
 
-        span {
-          flex-grow: 1;
+        &.quickSearch {
+          background: $e-x-light;
+          border-color: $e-dark;
+        }
+
+        &.songIndex {
+          background: $ex-light;
+          border-color: $ex-dark;
+        }
+
+        &.chartIndex {
+          background: $h-light;
+          border-color: $h-dark;
+        }
+
+        &.randomizer {
+          background: $pu-light;
+          border-color: $pu-dark;
+        }
+
+        .title {
           font-size: 1.25rem;
           font-weight: bold;
-          line-height: 1;
         }
       }
     }

@@ -1,17 +1,15 @@
+import cx from "classnames"
 import React from "react"
 import styles from "./Home.module.scss"
-import BigPill from "./BigPill"
-import { CgDice3, CgSearch } from "react-icons/cg"
-import { TbLayoutList } from "react-icons/tb"
-import { LuBarChartHorizontal } from "react-icons/lu"
 import { BsGithub } from "react-icons/bs"
 import NoteIcon from "../common/NoteIcon"
+import Link from "next/link"
 
 export default function Home() {
   return (
     <div className={styles.Home}>
       <div className={styles.main}>
-        <p className={styles.title}>
+        <p className={styles.sectionHeader}>
           <NoteIcon color="red" />
           <NoteIcon color="blue" />
           {`pop'n tools`}
@@ -19,27 +17,51 @@ export default function Home() {
           <NoteIcon color="red" />
         </p>
 
-        <div className={styles.pills}>
-          <BigPill className={styles.BigPill} color="red" href="/randomizer">
-            <CgDice3 size="1.25rem" strokeWidth={1} />
-            <span>Randomizer</span>
-          </BigPill>
+        <Link className={styles.appCard} href="/search">
+          <div className={cx(styles.container, styles.quickSearch)}>
+            <div className={styles.title}>Quick search</div>
 
-          <BigPill className={styles.BigPill} color="yellow" href="/search">
-            <CgSearch size="1.25rem" strokeWidth={1} />
-            <span>Search</span>
-          </BigPill>
+            <span className={styles.description}>
+              Fast keyword search for songs and charts. Search by title, genre,
+              artist, level, and more!
+            </span>
+          </div>
+        </Link>
 
-          <BigPill className={styles.BigPill} color="green" href="/listmaker">
-            <TbLayoutList size="1.25rem" strokeWidth={3} />
-            <span>List maker</span>
-          </BigPill>
+        <Link className={styles.appCard} href="/songs">
+          <div className={cx(styles.container, styles.songIndex)}>
+            <div className={styles.title}>Song index</div>
 
-          <BigPill className={styles.BigPill} color="blue" href="/tiermaker">
-            <LuBarChartHorizontal size="1.25rem" strokeWidth={3} />
-            <span>Tier maker</span>
-          </BigPill>
-        </div>
+            <span className={styles.description}>
+              {
+                "Browse the entire pop'n song library. Filter and sort by song metadata."
+              }
+            </span>
+          </div>
+        </Link>
+
+        <Link className={styles.appCard} href="/charts">
+          <div className={cx(styles.container, styles.chartIndex)}>
+            <div className={styles.title}>Chart index</div>
+
+            <span className={styles.description}>
+              {
+                "Browse the entire pop'n chart library. Filter and sort by song metadata, as well as chart-specific data like bpm, note count, and duration."
+              }
+            </span>
+          </div>
+        </Link>
+
+        <Link className={styles.appCard} href="/randomizer">
+          <div className={cx(styles.container, styles.randomizer)}>
+            <div className={styles.title}>Randomizer</div>
+
+            <span className={styles.description}>
+              Draw random charts for tournament matches, training, or to just
+              mix things up!
+            </span>
+          </div>
+        </Link>
       </div>
 
       <div className={styles.footer}>
