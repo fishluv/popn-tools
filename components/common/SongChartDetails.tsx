@@ -602,17 +602,25 @@ export default function SongChartDetails({
             </>
           )}
 
-          <Detail field="time sig.">
-            {chart.timeSigSteps && chart.timeSigSteps?.length > 1
-              ? chart.timeSigSteps.join(" → ")
-              : chart.mainTimeSig || "?"}
-          </Detail>
-          {chart.timeSigSteps && chart.timeSigSteps.length > 1 && (
-            <Detail className={cx(styles.minor, styles.mainTimeSig)} field="">
-              {"main: "}
-              {chart.mainTimeSig}
-              {chart.mainTimeSigType === "nonmajority" && " (nonmajority)"}
-            </Detail>
+          {chart.timeSigSteps && chart.timeSigSteps?.length > 1 ? (
+            <>
+              <Detail
+                className={cx(styles.minor, styles.multiTimeSig)}
+                field="time sig."
+              >
+                <span className={styles.timeSigSteps}>
+                  {chart.timeSigSteps.join(" → ")}
+                </span>
+              </Detail>
+
+              <Detail className={cx(styles.minor, styles.mainTimeSig)} field="">
+                {"main: "}
+                {chart.mainTimeSig}
+                {chart.mainTimeSigType === "nonmajority" && " (nonmajority)"}
+              </Detail>
+            </>
+          ) : (
+            <Detail field="time sig." value={chart.mainTimeSig || "?"} />
           )}
 
           {chart.jpRating && (

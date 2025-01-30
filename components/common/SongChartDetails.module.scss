@@ -167,13 +167,22 @@
       }
     }
 
-    &.mainBpm {
+    &.mainBpm,
+    &.mainTimeSig {
       margin-top: 0.25rem;
     }
 
     &.timing {
       .nonstandard, .variable {
         background-color: $h-light;
+      }
+    }
+
+    &.multiTimeSig {
+      margin-top: 0.375rem;
+
+      .timeSigSteps {
+        padding-top: 0.125rem;
       }
     }
 
