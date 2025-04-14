@@ -96,6 +96,7 @@ const PREVIEW_MEASURE_DATA = new MeasureData({
   index: 1,
   startKeyOn: 0,
   startBpm: 150,
+  startNoteCount: 0,
   duration: 800,
 })
 
@@ -495,6 +496,7 @@ export default function ChartPageMore() {
             noteSpacing: "veryslow",
             bpmAgnostic: false,
             noteColoring,
+            chartEditingMode: false,
           }}
         />
       </div>
