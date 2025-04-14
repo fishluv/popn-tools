@@ -74,6 +74,23 @@ $red-lane: rgba(246, 175, 176, 0.2);
     position: relative;
     width: 198px;
 
+    .debug {
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      z-index: 10;
+      opacity: 70%;
+
+      .timestamp {
+        position: absolute;
+        left: 16px;
+      }
+      .notecount {
+        position: absolute;
+        left: 120px;
+      }
+    }
+
     .pos1 {
       position: absolute;
       left: 0;
@@ -148,6 +165,16 @@ $red-lane: rgba(246, 175, 176, 0.2);
 
       &.half {
         border-color: rgba(200, 200, 200, 0.8);
+      }
+
+      .timestamp {
+        display: none;
+      }
+
+      &:hover .timestamp {
+        position: absolute;
+        display: block;
+        right: 100%;
       }
     }
 

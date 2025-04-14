@@ -1,0 +1,15 @@
+.ChartCsvEditor {
+  position: fixed;
+  right: 0;
+  height: 100vh;
+  padding: 1rem;
+  overflow: scroll;
+
+  display: flex;
+  flex-direction: column;
+
+  .textarea {
+    flex-grow: 1;
+    scroll-behavior: smooth;
+  }
+}

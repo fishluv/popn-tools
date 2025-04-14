@@ -40,6 +40,7 @@ export interface DisplayOptions {
   noteSpacing: NoteSpacing
   bpmAgnostic: boolean
   noteColoring: NoteColoring
+  chartEditingMode: boolean
 }
 
 const PIXELS_PER_MS_BY_SPACING: Record<NoteSpacing, number> = {
@@ -88,6 +89,7 @@ function getNoteAreaHeight(
 interface GuideLineData {
   type: "beat" | "half"
   y: number
+  timestamp?: number
 }
 
 function getGuideLineDatas(
@@ -118,6 +120,7 @@ function getGuideLineDatas(
       guideLineDatas.push({
         type: "beat",
         y: newY,
+        timestamp,
       })
 
       if (index !== 0) {
@@ -153,11 +156,15 @@ function getGuideLineDatas(
   return guideLineDatas
 }
 
-function GuideLine({ type, y }: GuideLineData) {
+function GuideLine({ type, y, timestamp }: GuideLineData) {
   const style = {
     top: y,
   }
-  return <div className={cx(styles.GuideLine, styles[type])} style={style} />
+  return (
+    <div className={cx(styles.GuideLine, styles[type])} style={style}>
+      <div className={styles.timestamp}>{timestamp}</div>
+    </div>
+  )
 }
 
 interface BpmEventData {
@@ -403,7 +410,7 @@ function getNoteDatas(
 }
 
 type NoteOrd = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8
-function keyNumToOrds(keyNum: number): NoteOrd[] {
+export function keyNumToOrds(keyNum: number): NoteOrd[] {
   const ords: NoteOrd[] = []
   for (let ord = 0; ord <= 8; ord += 1) {
     if (((keyNum >> ord) & 0x1) === 1) {
@@ -833,6 +840,32 @@ export default function Measure({
       </div>
 
       <div className={styles.noteArea} style={noteAreaStyle}>
+        {displayOptions.chartEditingMode && measureData.index > 1 && (
+          <div className={styles.debug}>
+            <span
+              className={styles.timestamp}
+              onClick={(event) => {
+                if (!event.metaKey) {
+                  return
+                }
+
+                const textarea = document.getElementById(
+                  "chartEditorTextarea",
+                ) as HTMLTextAreaElement
+                const lineNumber = textarea.value
+                  .split("\n")
+                  .map((line) => line.split(",")[0]) // timestamp
+                  .indexOf(String(measureData.startTimestamp))
+                textarea.scrollTop = lineNumber * 24 // line height is 24px...maybe
+              }}
+            >
+              ⏰ {measureData.startTimestamp}
+            </span>
+            <span className={styles.notecount}>
+              🎵 {measureData.startNoteCount}
+            </span>
+          </div>
+        )}
         <div className={cx(styles.Lane, styles.pos1, styles.white)}></div>
         <div className={cx(styles.Lane, styles.pos2, styles.yellow)}></div>
         <div className={cx(styles.Lane, styles.pos3, styles.green)}></div>
@@ -843,8 +876,8 @@ export default function Measure({
         <div className={cx(styles.Lane, styles.pos8, styles.yellow)}></div>
         <div className={cx(styles.Lane, styles.pos9, styles.white)}></div>
 
-        {guideLineDatas.map(({ type, y }, index) => (
-          <GuideLine key={index} type={type} y={y} />
+        {guideLineDatas.map(({ type, y, timestamp }, index) => (
+          <GuideLine key={index} type={type} y={y} timestamp={timestamp} />
         ))}
 
         {showStartBpm && (

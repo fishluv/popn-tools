@@ -23,6 +23,8 @@ import { CgSearch } from "react-icons/cg"
 import { FiMoreHorizontal } from "react-icons/fi"
 import Difficulty from "../../models/Difficulty"
 import { ChartPageSearch } from "./ChartPageSearch"
+import { parseExtraOptions } from "../../lib/useExtraOptions"
+import ChartCsvEditor from "./ChartCsvEditor"
 
 export default function ChartPage({
   songSlug,
@@ -47,6 +49,14 @@ export default function ChartPage({
   >(null)
   const [openedChart, setOpenedChart] = useState<Chart | undefined>(undefined)
 
+  // Need this workaround because page components are generated server-side.
+  const [extraOptions, setExtraOptions] = useState<Record<string, boolean>>({})
+  useEffect(() => {
+    setExtraOptions(
+      parseExtraOptions(localStorage.getItem("extraOptions") || ""),
+    )
+  }, [])
+
   const chartOptions: ChartOptions = {
     laneTransform: makeLaneTransform(queryParams.t),
   }
@@ -54,6 +64,7 @@ export default function ChartPage({
     noteSpacing: parseNoteSpacing(queryParams.hs),
     bpmAgnostic: !!queryParams.normalize,
     noteColoring: parseNoteColoring(queryParams.color),
+    chartEditingMode: !!extraOptions["charteditor"],
   }
 
   useEffect(() => {
@@ -114,7 +125,7 @@ export default function ChartPage({
 
     window.addEventListener("hashchange", scrollToMeasure)
     return () => window.removeEventListener("hashchange", scrollToMeasure)
-  }, [chartCsvRows]) // Only after initial load.
+  }, [status]) // Only after initial load.
 
   useEffect(() => {
     const { t, hs, normalize, color } = queryParams
@@ -178,6 +189,16 @@ export default function ChartPage({
     return () => document.removeEventListener("keydown", handleKeyDown)
   }, [currentOpenModal])
 
+  useEffect(() => {
+    function handleUnload(event: BeforeUnloadEvent) {
+      if (extraOptions["charteditor"]) {
+        event.preventDefault()
+      }
+    }
+    window.addEventListener("beforeunload", handleUnload)
+    return () => window.removeEventListener("beforeunload", handleUnload)
+  }, [extraOptions])
+
   switch (status) {
     case "loading":
       return <div>Loading...</div>
@@ -237,6 +258,18 @@ export default function ChartPage({
                 showHeader={false}
                 showActions={false}
                 showOtherCharts={true}
+              />
+            )}
+
+            {extraOptions["charteditor"] && chartCsvRows.length && (
+              <ChartCsvEditor
+                rows={chartCsvRows}
+                setRows={(newRows: ChartCsvRow[]) => setChartCsvRows(newRows)}
+                scrollToMeasure={(measureIndex) => {
+                  document
+                    .getElementById(`measure${measureIndex}`)
+                    ?.scrollIntoView({ block: "start", behavior: "smooth" })
+                }}
               />
             )}
           </div>

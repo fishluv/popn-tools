@@ -1,0 +1,109 @@
+import { useState } from "react"
+import styles from "./ChartCsvEditor.module.scss"
+import { ChartCsvRow } from "../../lib/fetchChartScore"
+import { keyNumToOrds } from "./Measure"
+
+function keyToLaneOrdString(key: number) {
+  return keyNumToOrds(key)
+    .map((noteOrd) => noteOrd + 1)
+    .join("")
+}
+
+function rowsToWorkingText(rows: ChartCsvRow[]) {
+  return [...rows]
+    .map(({ timestamp, key, measurebeatend, bpm }) => {
+      const laneOrdStr = key !== null ? keyToLaneOrdString(key) : null
+      return [timestamp, laneOrdStr, measurebeatend, bpm]
+        .map((s) => s ?? "")
+        .join(", ")
+    })
+    .toReversed()
+    .join("\n")
+}
+
+function laneOrdStringToKey(laneOrdStr: string): number {
+  let key = 0
+  laneOrdStr.split("").forEach((ord) => (key |= 1 << (Number(ord) - 1)))
+  return key
+}
+
+function workingTextToRows(workingText: string): ChartCsvRow[] {
+  return workingText
+    .split("\n")
+    .map((rowStr) => {
+      const tokens = rowStr.split(/\s*,\s*/)
+      if (tokens.length !== 4) {
+        throw new Error(`invalid row string: ${rowStr}`)
+      }
+
+      return {
+        timestamp: Number(tokens[0]),
+        key: tokens[1] !== "" ? laneOrdStringToKey(tokens[1]) : null,
+        keyon: null,
+        keyoff: null,
+        measurebeatend: (tokens[2] || null) as "m" | "b" | "e" | null,
+        bpm: tokens[3] !== "" ? Number(tokens[3]) : null,
+      }
+    })
+    .toReversed()
+}
+
+export default function ChartCsvEditor({
+  rows,
+  setRows,
+  scrollToMeasure,
+}: {
+  rows: ChartCsvRow[]
+  setRows(newRows: ChartCsvRow[]): void
+  scrollToMeasure(measureIndex: number): void
+}) {
+  const [workingText, setWorkingText] = useState<string>(
+    rowsToWorkingText(rows),
+  )
+  return (
+    <div className={styles.ChartCsvEditor}>
+      <textarea
+        id="chartEditorTextarea"
+        className={styles.textarea}
+        value={workingText}
+        onChange={(event) => setWorkingText(event.target.value)}
+        onClick={(event) => {
+          if (!event.metaKey) {
+            return
+          }
+          const textarea = event.currentTarget
+          const measureIndex =
+            textarea.value.substring(textarea.selectionStart).split(/\s*m\s*/)
+              .length - 1
+          scrollToMeasure(measureIndex)
+        }}
+      />
+
+      <div className={styles.buttons}>
+        <button onClick={() => setRows(workingTextToRows(workingText))}>
+          Apply
+        </button>
+
+        <button
+          onClick={() => {
+            const rows = workingTextToRows(workingText)
+            const text =
+              "timestamp,key,keyon,keyoff,measurebeatend,bpm\n" +
+              rows
+                .map(
+                  ({ timestamp, key, keyon, keyoff, measurebeatend, bpm }) =>
+                    `${timestamp},${key ?? ""},${keyon ?? ""},${keyoff ?? ""},${
+                      measurebeatend ?? ""
+                    },${bpm ?? ""}`,
+                )
+                .join("\n")
+            const blob = new Blob([text], { type: "text/plain" })
+            window.open(URL.createObjectURL(blob), "_blank")
+          }}
+        >
+          Export
+        </button>
+      </div>
+    </div>
+  )
+}
