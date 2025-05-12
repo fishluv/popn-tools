@@ -30,6 +30,7 @@ function laneOrdStringToKey(laneOrdStr: string): number {
 function workingTextToRows(workingText: string): ChartCsvRow[] {
   return workingText
     .split("\n")
+    .filter((rowStr) => Boolean(rowStr.trim()))
     .map((rowStr) => {
       const tokens = rowStr.split(/\s*,\s*/)
       if (tokens.length !== 4) {
