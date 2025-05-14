@@ -856,7 +856,15 @@ export default function Measure({
                   .split("\n")
                   .map((line) => line.split(",")[0]) // timestamp
                   .indexOf(String(measureData.startTimestamp))
-                textarea.scrollTop = lineNumber * 24 // line height is 24px...maybe
+                const lineScrollTop = lineNumber * 24 // line height is 24px...maybe
+
+                const textareaHeight = textarea.clientHeight
+                const scrollPercentage =
+                  event.currentTarget.getBoundingClientRect().y /
+                  window.innerHeight
+                const extraScrollTop = textareaHeight * scrollPercentage
+
+                textarea.scrollTop = lineScrollTop - extraScrollTop
               }}
             >
               ⏰ {measureData.startTimestamp}
