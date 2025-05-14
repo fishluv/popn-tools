@@ -264,8 +264,8 @@ export default function ChartPage({
             {extraOptions["charteditor"] && chartCsvRows.length && (
               <ChartCsvEditor
                 rows={chartCsvRows}
-                setRows={(newRows: ChartCsvRow[]) => setChartCsvRows(newRows)}
-                scrollToMeasure={(measureIndex) => {
+                onApply={(newRows: ChartCsvRow[]) => setChartCsvRows(newRows)}
+                onRowSpecialClick={(measureIndex) => {
                   document
                     .getElementById(`measure${measureIndex}`)
                     ?.scrollIntoView({ block: "start", behavior: "smooth" })

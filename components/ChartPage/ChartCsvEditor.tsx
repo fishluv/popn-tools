@@ -51,12 +51,12 @@ function workingTextToRows(workingText: string): ChartCsvRow[] {
 
 export default function ChartCsvEditor({
   rows,
-  setRows,
-  scrollToMeasure,
+  onApply,
+  onRowSpecialClick,
 }: {
   rows: ChartCsvRow[]
-  setRows(newRows: ChartCsvRow[]): void
-  scrollToMeasure(measureIndex: number): void
+  onApply(newRows: ChartCsvRow[]): void
+  onRowSpecialClick(measureIndex: number): void
 }) {
   const [workingText, setWorkingText] = useState<string>(
     rowsToWorkingText(rows),
@@ -76,17 +76,17 @@ export default function ChartCsvEditor({
           const measureIndex =
             textarea.value.substring(textarea.selectionStart).split(/\s*m\s*/)
               .length - 1
-          scrollToMeasure(measureIndex)
+          onRowSpecialClick(measureIndex)
         }}
         onKeyDown={(event) => {
           if (event.metaKey && event.key === "Enter") {
-            setRows(workingTextToRows(workingText))
+            onApply(workingTextToRows(workingText))
           }
         }}
       />
 
       <div className={styles.buttons}>
-        <button onClick={() => setRows(workingTextToRows(workingText))}>
+        <button onClick={() => onApply(workingTextToRows(workingText))}>
           Apply
         </button>
 
