@@ -78,6 +78,11 @@ export default function ChartCsvEditor({
               .length - 1
           scrollToMeasure(measureIndex)
         }}
+        onKeyDown={(event) => {
+          if (event.metaKey && event.key === "Enter") {
+            setRows(workingTextToRows(workingText))
+          }
+        }}
       />
 
       <div className={styles.buttons}>
