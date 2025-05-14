@@ -10,6 +10,7 @@
 
   .textarea {
     flex-grow: 1;
-    scroll-behavior: smooth;
+    // Pretty jarring with current scroll bug
+    // scroll-behavior: smooth;
   }
 }
