@@ -159,6 +159,12 @@ $red-lane: rgba(246, 175, 176, 0.2);
       border-style: solid;
       border-width: 2px 0 0 0;
 
+      &.measure {
+        // Measure itself already has a bottom border so don't show another line.
+        // Still useful to have an invisible element for highlighting though.
+        border-style: none;
+      }
+
       &.beat {
         border-color: rgba(100, 100, 100, 0.8);
       }

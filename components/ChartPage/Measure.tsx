@@ -87,7 +87,7 @@ function getNoteAreaHeight(
 }
 
 interface GuideLineData {
-  type: "beat" | "half"
+  type: "measure" | "beat" | "half"
   y: number
   timestamp?: number
 }
@@ -105,7 +105,7 @@ function getGuideLineDatas(
 
   const guideLineDatas: GuideLineData[] = []
 
-  measure.rows.forEach(({ timestamp, measurebeatend, bpm }, index) => {
+  measure.rows.forEach(({ timestamp, measurebeatend, bpm }) => {
     const newTs = timestamp
     const newY = calculateNewY({
       prevY,
@@ -115,8 +115,17 @@ function getGuideLineDatas(
       ...displayOptions,
     })
 
-    // Ignore "m". We draw measure lines with a simple border.
     // Ignore "e". Not needed for now.
+    if (measurebeatend === "m") {
+      guideLineDatas.push({
+        type: "measure",
+        y: newY,
+        timestamp: newTs,
+      })
+
+      prevBeatY = newY
+      prevBeatTs = newTs
+    }
     if (measurebeatend === "b") {
       guideLineDatas.push({
         type: "beat",
@@ -124,16 +133,14 @@ function getGuideLineDatas(
         timestamp: newTs,
       })
 
-      if (index !== 0) {
-        guideLineDatas.push({
-          type: "half",
-          y: (prevBeatY + newY) / 2.0,
-          timestamp: Math.floor((prevBeatTs + newTs) / 2.0),
-        })
+      guideLineDatas.push({
+        type: "half",
+        y: (prevBeatY + newY) / 2.0,
+        timestamp: Math.floor((prevBeatTs + newTs) / 2.0),
+      })
 
-        prevBeatY = newY
-        prevBeatTs = newTs
-      }
+      prevBeatY = newY
+      prevBeatTs = newTs
     }
 
     prevY = newY
