@@ -860,10 +860,6 @@ export default function Measure({
             <span
               className={styles.timestamp}
               onClick={(event) => {
-                if (!event.metaKey) {
-                  return
-                }
-
                 const textarea = document.getElementById(
                   "chartEditorTextarea",
                 ) as HTMLTextAreaElement

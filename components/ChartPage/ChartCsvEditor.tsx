@@ -52,11 +52,9 @@ function workingTextToRows(workingText: string): ChartCsvRow[] {
 export default function ChartCsvEditor({
   rows,
   onApply,
-  onRowSpecialClick,
 }: {
   rows: ChartCsvRow[]
   onApply(newRows: ChartCsvRow[]): void
-  onRowSpecialClick(measureIndex: number): void
 }) {
   const [workingText, setWorkingText] = useState<string>(
     rowsToWorkingText(rows),
@@ -72,7 +70,6 @@ export default function ChartCsvEditor({
       .substring(prevNewline)
       .split(/\s*,\s*/)[0]
       ?.trim()
-    console.log(`on timestamp ${timestamp}`)
     if (timestamp) {
       const lineElement = document.getElementById(`line${timestamp}`)
       if (lineElement) {
@@ -97,17 +94,7 @@ export default function ChartCsvEditor({
         className={styles.textarea}
         value={workingText}
         onChange={(event) => setWorkingText(event.target.value)}
-        onClick={(event) => {
-          highlightChartBasedOnTextareaPosition(event)
-          if (!event.metaKey) {
-            return
-          }
-          const textarea = event.currentTarget
-          const measureIndex =
-            textarea.value.substring(textarea.selectionStart).split(/\s*m\s*/)
-              .length - 1
-          onRowSpecialClick(measureIndex)
-        }}
+        onClick={highlightChartBasedOnTextareaPosition}
         onKeyDown={(event) => {
           if (event.metaKey && event.key === "Enter") {
             onApply(workingTextToRows(workingText))
