@@ -120,13 +120,14 @@ function getGuideLineDatas(
       guideLineDatas.push({
         type: "beat",
         y: newY,
-        timestamp,
+        timestamp: newTs,
       })
 
       if (index !== 0) {
         guideLineDatas.push({
           type: "half",
           y: (prevBeatY + newY) / 2.0,
+          timestamp: Math.floor((prevTs + newTs) / 2.0),
         })
 
         prevBeatY = newY
@@ -151,6 +152,7 @@ function getGuideLineDatas(
   guideLineDatas.push({
     type: "half",
     y: (prevBeatY + endY) / 2.0,
+    timestamp: Math.floor((prevTs + endTs) / 2.0),
   })
 
   return guideLineDatas
@@ -161,7 +163,11 @@ function GuideLine({ type, y, timestamp }: GuideLineData) {
     top: y,
   }
   return (
-    <div className={cx(styles.GuideLine, styles[type])} style={style}>
+    <div
+      id={timestamp === undefined ? undefined : `line${timestamp}`}
+      className={cx(styles.GuideLine, styles[type])}
+      style={style}
+    >
       <div className={styles.timestamp}>{timestamp}</div>
     </div>
   )
