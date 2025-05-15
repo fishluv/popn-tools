@@ -76,7 +76,11 @@ export default function ChartCsvEditor({
     if (timestamp) {
       const lineElement = document.getElementById(`line${timestamp}`)
       if (lineElement) {
-        lineElement.scrollIntoView({ block: "center" })
+        const lineY = lineElement.getBoundingClientRect().y
+        // Only scroll to it if not visible.
+        if (lineY < 0 || lineY >= window.innerHeight) {
+          lineElement.scrollIntoView({ block: "center" })
+        }
         lineElement.classList.add(styles.highlight)
         window.setTimeout(
           () => lineElement.classList.remove(styles.highlight),
