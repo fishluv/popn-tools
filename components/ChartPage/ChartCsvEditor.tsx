@@ -61,6 +61,31 @@ export default function ChartCsvEditor({
   const [workingText, setWorkingText] = useState<string>(
     rowsToWorkingText(rows),
   )
+
+  function highlightChartBasedOnTextareaPosition(event: {
+    currentTarget: HTMLTextAreaElement
+  }) {
+    const textarea = event.currentTarget
+    const cursor = textarea.selectionStart
+    const prevNewline = textarea.value.lastIndexOf("\n", cursor - 1)
+    const timestamp = textarea.value
+      .substring(prevNewline)
+      .split(/\s*,\s*/)[0]
+      ?.trim()
+    console.log(`on timestamp ${timestamp}`)
+    if (timestamp) {
+      const lineElement = document.getElementById(`line${timestamp}`)
+      if (lineElement) {
+        lineElement.scrollIntoView({ block: "center" })
+        lineElement.classList.add(styles.highlight)
+        window.setTimeout(
+          () => lineElement.classList.remove(styles.highlight),
+          2000,
+        )
+      }
+    }
+  }
+
   return (
     <div className={styles.ChartCsvEditor}>
       <textarea
@@ -69,6 +94,7 @@ export default function ChartCsvEditor({
         value={workingText}
         onChange={(event) => setWorkingText(event.target.value)}
         onClick={(event) => {
+          highlightChartBasedOnTextareaPosition(event)
           if (!event.metaKey) {
             return
           }
@@ -83,6 +109,7 @@ export default function ChartCsvEditor({
             onApply(workingTextToRows(workingText))
           }
         }}
+        onKeyUp={highlightChartBasedOnTextareaPosition}
       />
 
       <div className={styles.buttons}>
