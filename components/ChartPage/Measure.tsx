@@ -100,7 +100,8 @@ function getGuideLineDatas(
   let prevY = noteAreaHeight - 1
   let prevTs = measure.startTimestamp
   let prevBpm = measure.startBpm
-  let prevBeatY = noteAreaHeight - 1
+  let prevBeatY = prevY
+  let prevBeatTs = prevTs
 
   const guideLineDatas: GuideLineData[] = []
 
@@ -127,10 +128,11 @@ function getGuideLineDatas(
         guideLineDatas.push({
           type: "half",
           y: (prevBeatY + newY) / 2.0,
-          timestamp: Math.floor((prevTs + newTs) / 2.0),
+          timestamp: Math.floor((prevBeatTs + newTs) / 2.0),
         })
 
         prevBeatY = newY
+        prevBeatTs = newTs
       }
     }
 
@@ -152,7 +154,7 @@ function getGuideLineDatas(
   guideLineDatas.push({
     type: "half",
     y: (prevBeatY + endY) / 2.0,
-    timestamp: Math.floor((prevTs + endTs) / 2.0),
+    timestamp: Math.floor((prevBeatTs + endTs) / 2.0),
   })
 
   return guideLineDatas
