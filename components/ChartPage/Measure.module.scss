@@ -156,8 +156,10 @@ $red-lane: rgba(246, 175, 176, 0.2);
     .GuideLine {
       position: absolute;
       width: 100%;
+      border-color: transparent;
       border-style: solid;
       border-width: 2px 0 0 0;
+      transition: border-color 250ms;
 
       &.measure {
         // Measure itself already has a bottom border so don't show another line.

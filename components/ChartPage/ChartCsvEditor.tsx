@@ -84,7 +84,7 @@ export default function ChartCsvEditor({
         lineElement.classList.add(styles.highlight)
         window.setTimeout(
           () => lineElement.classList.remove(styles.highlight),
-          2000,
+          1000,
         )
       }
     }
