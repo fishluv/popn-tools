@@ -49,6 +49,62 @@ function workingTextToRows(workingText: string): ChartCsvRow[] {
     .toReversed()
 }
 
+function highlightChartBasedOnTextareaPosition(event: {
+  currentTarget: HTMLTextAreaElement
+}) {
+  const textarea = event.currentTarget
+  const cursor = textarea.selectionStart
+  const prevNewline = textarea.value.lastIndexOf("\n", cursor - 1)
+  const timestamp = textarea.value
+    .substring(prevNewline)
+    .split(/\s*,\s*/)[0]
+    ?.trim()
+  if (timestamp) {
+    const lineElement = document.getElementById(`line${timestamp}`)
+    if (lineElement) {
+      const lineY = lineElement.getBoundingClientRect().y
+      // Only scroll to it if not visible.
+      if (lineY < 0 || lineY >= window.innerHeight) {
+        lineElement.scrollIntoView({ block: "center" })
+      }
+      lineElement.classList.add(styles.highlight)
+      window.setTimeout(
+        () => lineElement.classList.remove(styles.highlight),
+        1000,
+      )
+    }
+  }
+}
+
+function insertEventInBetween(event: { currentTarget: HTMLTextAreaElement }) {
+  const textarea = event.currentTarget
+  const cursor = textarea.selectionStart
+  const prevNewline = textarea.value.lastIndexOf("\n", cursor - 1)
+  const prevTs = textarea.value
+    .substring(prevNewline)
+    .split(/\s*,\s*/)[0]
+    ?.trim()
+  const nextNewline = textarea.value.indexOf("\n", cursor)
+  const nextTs = textarea.value
+    .substring(nextNewline)
+    .split(/\s*,\s*/)[0]
+    ?.trim()
+
+  // False on last event.
+  if (prevTs && nextTs && Number(prevTs) > Number(nextTs)) {
+    const newTs = Math.round((Number(prevTs) + Number(nextTs)) / 2).toString()
+    const newEventStr = `${newTs}, , ,\n`
+    // Insert new event after current line.
+    textarea.value =
+      textarea.value.slice(0, nextNewline + 1) +
+      newEventStr +
+      textarea.value.slice(nextNewline + 1)
+    // Move cursor to the note column for convenience.
+    textarea.selectionStart = textarea.selectionEnd =
+      nextNewline + 1 + newTs.length + 2
+  }
+}
+
 export default function ChartCsvEditor({
   rows,
   onApply,
@@ -59,33 +115,6 @@ export default function ChartCsvEditor({
   const [workingText, setWorkingText] = useState<string>(
     rowsToWorkingText(rows),
   )
-
-  function highlightChartBasedOnTextareaPosition(event: {
-    currentTarget: HTMLTextAreaElement
-  }) {
-    const textarea = event.currentTarget
-    const cursor = textarea.selectionStart
-    const prevNewline = textarea.value.lastIndexOf("\n", cursor - 1)
-    const timestamp = textarea.value
-      .substring(prevNewline)
-      .split(/\s*,\s*/)[0]
-      ?.trim()
-    if (timestamp) {
-      const lineElement = document.getElementById(`line${timestamp}`)
-      if (lineElement) {
-        const lineY = lineElement.getBoundingClientRect().y
-        // Only scroll to it if not visible.
-        if (lineY < 0 || lineY >= window.innerHeight) {
-          lineElement.scrollIntoView({ block: "center" })
-        }
-        lineElement.classList.add(styles.highlight)
-        window.setTimeout(
-          () => lineElement.classList.remove(styles.highlight),
-          1000,
-        )
-      }
-    }
-  }
 
   return (
     <div className={styles.ChartCsvEditor}>
@@ -99,6 +128,10 @@ export default function ChartCsvEditor({
           if (event.metaKey && event.key === "Enter") {
             onApply(workingTextToRows(workingText))
           }
+          if (event.altKey && event.key === "Enter") {
+            insertEventInBetween(event)
+          }
+          // TODO manually handle enter to prevent scrolling issue
         }}
         onKeyUp={highlightChartBasedOnTextareaPosition}
       />
