@@ -105,6 +105,14 @@ function insertEventInBetween(event: { currentTarget: HTMLTextAreaElement }) {
   }
 }
 
+function handleEnter(event: { currentTarget: HTMLTextAreaElement }) {
+  const textarea = event.currentTarget
+  const cursor = textarea.selectionStart
+  textarea.value =
+    textarea.value.slice(0, cursor) + "\n" + textarea.value.slice(cursor)
+  textarea.selectionStart = textarea.selectionEnd = cursor + 1
+}
+
 export default function ChartCsvEditor({
   rows,
   onApply,
@@ -127,11 +135,13 @@ export default function ChartCsvEditor({
         onKeyDown={(event) => {
           if (event.metaKey && event.key === "Enter") {
             onApply(workingTextToRows(workingText))
-          }
-          if (event.altKey && event.key === "Enter") {
+          } else if (event.altKey && event.key === "Enter") {
             insertEventInBetween(event)
+          } else if (event.key === "Enter") {
+            // Manually handle enter to prevent scrolling issue. So weird we have to do this.
+            handleEnter(event)
+            event.preventDefault()
           }
-          // TODO manually handle enter to prevent scrolling issue
         }}
         onKeyUp={highlightChartBasedOnTextareaPosition}
       />
