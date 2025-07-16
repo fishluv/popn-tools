@@ -60,12 +60,29 @@ export function parseSort(s: string | undefined | null): Sort | null {
   }
 }
 
+export type IncludeOption = "include" | "exclude" | "only"
+
+export function parseIncludeOption(
+  s: string | undefined | null,
+): IncludeOption | null {
+  const snorm = s?.toLowerCase()
+  switch (snorm) {
+    case "include":
+    case "exclude":
+    case "only":
+      return snorm
+    default:
+      return null
+  }
+}
+
 export interface ListParams {
   // Common
   folder?: VersionFolder | BemaniFolder | null
   level?: string | null
   debut?: Debut | null
   query?: string | null
+  omnimix?: IncludeOption | null
   sorts?: Sort[] | null
   page?: string | null
 
@@ -114,6 +131,7 @@ export function useListSongs({
   folder,
   level,
   query,
+  omnimix,
   sorts,
   page,
 }: ListParams) {
@@ -129,6 +147,9 @@ export function useListSongs({
   }
   if (query) {
     params.push(["q", query])
+  }
+  if (omnimix && ["exclude", "only"].includes(omnimix)) {
+    params.push(["omni", omnimix])
   }
   if (sorts) {
     sorts.forEach((o) => params.push(["sort[]", o]))
@@ -163,6 +184,7 @@ export function useListCharts({
   folder,
   level,
   query,
+  omnimix,
   sorts,
   page,
   diffs,
@@ -187,6 +209,9 @@ export function useListCharts({
   }
   if (query) {
     params.push(["q", query])
+  }
+  if (omnimix && ["exclude", "only"].includes(omnimix)) {
+    params.push(["omni", omnimix])
   }
   if (sorts) {
     sorts.forEach((o) => params.push(["sort[]", o]))

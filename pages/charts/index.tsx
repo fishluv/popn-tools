@@ -4,13 +4,14 @@ import ListPage from "../../components/ListPage/ListPage"
 import { parseDebut } from "../../models/Debut"
 import { parseVersionFolder } from "../../models/VersionFolder"
 import { parseBemaniFolder } from "../../models/BemaniFolder"
-import { ListParams, Sort, parseSort } from "../../lib/list"
+import { ListParams, Sort, parseIncludeOption, parseSort } from "../../lib/list"
 import Difficulty, { parseDifficulty } from "../../models/Difficulty"
 
 export default function Search() {
   const searchParams = useSearchParams()
   const debut = searchParams.get("debut")
   const folder = searchParams.get("folder")
+  const omnimix = searchParams.get("omni")
   const sorts = searchParams.get("sort")
   const diffs = searchParams.get("diff")
   const params: ListParams = {
@@ -18,6 +19,7 @@ export default function Search() {
     folder: parseVersionFolder(folder) || parseBemaniFolder(folder),
     level: searchParams.get("level"),
     query: searchParams.get("q"),
+    omnimix: parseIncludeOption(omnimix),
     sorts: sorts
       ? (sorts.split(",").map(parseSort).filter(Boolean) as Sort[])
       : null,

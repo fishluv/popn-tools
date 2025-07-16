@@ -1,7 +1,7 @@
 import cx from "classnames"
 import React, { useEffect, useState } from "react"
 import styles from "./ListPage.module.scss"
-import { ListParams, Sort, SortField } from "../../lib/list"
+import { IncludeOption, ListParams, Sort, SortField } from "../../lib/list"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import Select from "../common/Select"
@@ -30,105 +30,105 @@ const FOLDER_OPTIONS: {
   label?: string
   disabled?: boolean
 }[] = [
-  { id: "dummy1", label: "-- Version folders --", disabled: true },
-  { id: "28", label: "jam&fizz" },
-  { id: "27", label: "unilab" },
-  { id: "26", label: "kaimei riddles" },
-  { id: "25", label: "peace" },
-  { id: "24", label: "usaneko" },
-  { id: "23", label: "eclale" },
-  { id: "22", label: "lapistoria" },
-  { id: "21", label: "sunny park" },
-  { id: "20", label: "fantasia" },
-  { id: "19", label: "tune street" },
-  { id: "18", label: "sengoku retsuden" },
-  { id: "17", label: "the movie" },
-  { id: "16", label: "party" },
-  { id: "15", label: "adventure" },
-  { id: "14", label: "fever" },
-  { id: "13", label: "carnival" },
-  { id: "12", label: "iroha" },
-  { id: "11" },
-  { id: "10" },
-  { id: "9" },
-  { id: "8" },
-  { id: "7" },
-  { id: "6" },
-  { id: "5" },
-  { id: "4" },
-  { id: "3" },
-  { id: "2" },
-  { id: "1" },
-  { id: "cs" },
-  { id: "dummy2", label: "-- Bemani folders --", disabled: true },
-  { id: "iidx" },
-  { id: "ddr" },
-  { id: "gitadora" },
-  { id: "jubeat" },
-  { id: "reflec" },
-  { id: "sdvx" },
-  { id: "beatstream" },
-  { id: "museca" },
-  { id: "nostalgia" },
-  { id: "bemani" },
-]
+    { id: "dummy1", label: "-- Version folders --", disabled: true },
+    { id: "28", label: "jam&fizz" },
+    { id: "27", label: "unilab" },
+    { id: "26", label: "kaimei riddles" },
+    { id: "25", label: "peace" },
+    { id: "24", label: "usaneko" },
+    { id: "23", label: "eclale" },
+    { id: "22", label: "lapistoria" },
+    { id: "21", label: "sunny park" },
+    { id: "20", label: "fantasia" },
+    { id: "19", label: "tune street" },
+    { id: "18", label: "sengoku retsuden" },
+    { id: "17", label: "the movie" },
+    { id: "16", label: "party" },
+    { id: "15", label: "adventure" },
+    { id: "14", label: "fever" },
+    { id: "13", label: "carnival" },
+    { id: "12", label: "iroha" },
+    { id: "11" },
+    { id: "10" },
+    { id: "9" },
+    { id: "8" },
+    { id: "7" },
+    { id: "6" },
+    { id: "5" },
+    { id: "4" },
+    { id: "3" },
+    { id: "2" },
+    { id: "1" },
+    { id: "cs" },
+    { id: "dummy2", label: "-- Bemani folders --", disabled: true },
+    { id: "iidx" },
+    { id: "ddr" },
+    { id: "gitadora" },
+    { id: "jubeat" },
+    { id: "reflec" },
+    { id: "sdvx" },
+    { id: "beatstream" },
+    { id: "museca" },
+    { id: "nostalgia" },
+    { id: "bemani" },
+  ]
 
 const DEBUT_OPTIONS: {
   id: Debut | "dummy1" | "dummy2"
   label?: string
   disabled?: boolean
 }[] = [
-  { id: "dummy1", label: "-- AC --", disabled: true },
-  { id: "28", label: "jam&fizz" },
-  { id: "27", label: "unilab" },
-  { id: "26", label: "kaimei riddles" },
-  { id: "25", label: "peace" },
-  { id: "24", label: "usaneko" },
-  { id: "23", label: "eclale" },
-  { id: "22", label: "lapistoria" },
-  { id: "21", label: "sunny park" },
-  { id: "20", label: "fantasia" },
-  { id: "19", label: "tune street" },
-  { id: "18", label: "sengoku retsuden" },
-  { id: "17", label: "the movie" },
-  { id: "16", label: "party" },
-  { id: "15", label: "adventure" },
-  { id: "14", label: "fever" },
-  { id: "13", label: "carnival" },
-  { id: "12", label: "iroha" },
-  { id: "11" },
-  { id: "10" },
-  { id: "eemall" },
-  { id: "9" },
-  { id: "8" },
-  { id: "7" },
-  { id: "6" },
-  { id: "5" },
-  { id: "4" },
-  { id: "3" },
-  { id: "2" },
-  { id: "1" },
-  { id: "dummy2", label: "-- CS --", disabled: true },
-  { id: "cslively", label: "lively" },
-  { id: "cspmp2", label: "portable 2" },
-  { id: "csutacchi", label: "utacchi" },
-  { id: "cspmp", label: "portable" },
-  { id: "cs14", label: "fever CS" },
-  { id: "cs13", label: "carnival CS" },
-  { id: "cs12", label: "iroha CS" },
-  { id: "cs11", label: "11 CS" },
-  { id: "cs10", label: "10 CS" },
-  { id: "cs9", label: "9 CS" },
-  { id: "cs8", label: "8 CS" },
-  { id: "csbest", label: "best hits" },
-  { id: "cs7", label: "7 CS" },
-  { id: "cs6", label: "6 CS" },
-  { id: "cs5", label: "5 CS" },
-  { id: "cs4", label: "4 CS" },
-  { id: "cs3", label: "3 CS" },
-  { id: "cs2", label: "2 CS" },
-  { id: "cs1", label: "1 CS" },
-]
+    { id: "dummy1", label: "-- AC --", disabled: true },
+    { id: "28", label: "jam&fizz" },
+    { id: "27", label: "unilab" },
+    { id: "26", label: "kaimei riddles" },
+    { id: "25", label: "peace" },
+    { id: "24", label: "usaneko" },
+    { id: "23", label: "eclale" },
+    { id: "22", label: "lapistoria" },
+    { id: "21", label: "sunny park" },
+    { id: "20", label: "fantasia" },
+    { id: "19", label: "tune street" },
+    { id: "18", label: "sengoku retsuden" },
+    { id: "17", label: "the movie" },
+    { id: "16", label: "party" },
+    { id: "15", label: "adventure" },
+    { id: "14", label: "fever" },
+    { id: "13", label: "carnival" },
+    { id: "12", label: "iroha" },
+    { id: "11" },
+    { id: "10" },
+    { id: "eemall" },
+    { id: "9" },
+    { id: "8" },
+    { id: "7" },
+    { id: "6" },
+    { id: "5" },
+    { id: "4" },
+    { id: "3" },
+    { id: "2" },
+    { id: "1" },
+    { id: "dummy2", label: "-- CS --", disabled: true },
+    { id: "cslively", label: "lively" },
+    { id: "cspmp2", label: "portable 2" },
+    { id: "csutacchi", label: "utacchi" },
+    { id: "cspmp", label: "portable" },
+    { id: "cs14", label: "fever CS" },
+    { id: "cs13", label: "carnival CS" },
+    { id: "cs12", label: "iroha CS" },
+    { id: "cs11", label: "11 CS" },
+    { id: "cs10", label: "10 CS" },
+    { id: "cs9", label: "9 CS" },
+    { id: "cs8", label: "8 CS" },
+    { id: "csbest", label: "best hits" },
+    { id: "cs7", label: "7 CS" },
+    { id: "cs6", label: "6 CS" },
+    { id: "cs5", label: "5 CS" },
+    { id: "cs4", label: "4 CS" },
+    { id: "cs3", label: "3 CS" },
+    { id: "cs2", label: "2 CS" },
+    { id: "cs1", label: "1 CS" },
+  ]
 
 function SortMultiSelect({
   className,
@@ -277,6 +277,7 @@ function Options({
   const [levelAdv, setLevelAdv] = useState<string | undefined | null>(null)
   const [debut, setDebut] = useState<string | undefined | null>(null)
   const [query, setQuery] = useState<string | undefined | null>(null)
+  const [omnimix, setOmnimix] = useState<IncludeOption | undefined | null>(null)
   const [diffs, setDiffs] = useState<Difficulty[]>(["e", "n", "h", "ex"])
   const [onlyHardest, setOnlyHardest] = useState<boolean | undefined | null>(
     false,
@@ -306,6 +307,7 @@ function Options({
     setLevelAdv(useLevel ? null : initialLevel)
     setDebut(initialOptions.debut)
     setQuery(initialOptions.query)
+    setOmnimix(initialOptions.omnimix || "include")
     setDiffs(initialOptions.diffs || ["e", "n", "h", "ex"])
     setOnlyHardest(initialOptions.onlyHardest)
     setBpm(initialOptions.bpm)
@@ -383,6 +385,7 @@ function Options({
       sranLevelAdv || sranLevel ? `srlevel=${sranLevelAdv || sranLevel}` : "",
       debut ? `debut=${debut}` : "",
       query ? `q=${query}` : "",
+      omnimix && ["exclude", "only"].includes(omnimix) ? `omni=${omnimix}` : "",
       diffs.length === 4 ? "" : `diff=${diffs.join(",")}`,
       onlyHardest ? "hardest=1" : "",
       bpm ? `bpm=${bpm}` : "",
@@ -404,6 +407,7 @@ function Options({
     setSranLevelAdv(null)
     setDebut(null)
     setQuery(null)
+    setOmnimix("include")
     setDiffs(["e", "n", "h", "ex"])
     setBpm(null)
     setBpmType(null)
@@ -513,6 +517,25 @@ function Options({
               }}
             />
           </div>
+
+          <Select
+            className={cx(
+              styles.filterControl,
+              styles.omnimix,
+              omnimix !== "include" ? styles.changed : "",
+            )}
+            id="omnimixSelect"
+            label="Omni"
+            options={[
+              { id: "include", label: "Include" },
+              { id: "exclude", label: "Exclude" },
+              { id: "only", label: "Only" },
+            ]}
+            selectedOption={omnimix || "include"}
+            setOption={(id: IncludeOption) => {
+              setOmnimix(id)
+            }}
+          />
 
           {mode === "chart" && (
             <>
