@@ -2,8 +2,31 @@
 
 .BrowsePage {
   font-family: "M PLUS 1", "Arial", sans-serif;
-  text-align: center;
   margin: 0 auto;
   padding: 1rem;
   max-width: 800px;
+
+  h2 {
+    margin-top: 24px;
+  }
+
+  .songRow {
+    font-size: 0.75rem;
+
+    span {
+      display: inline-block;
+
+      &.title {
+        width: 240px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      &.level {
+        width: 32px;
+        text-align: right;
+      }
+    }
+  }
 }

@@ -30,6 +30,26 @@ const DEBUTS: { id: string; name: string }[] = [
   { id: "3", name: "3" },
   { id: "2", name: "2" },
   { id: "1", name: "1" },
+  { id: "eemall", name: "eeMALL" },
+  { id: "cslively", name: "Lively" },
+  { id: "csutacchi", name: "うたっち (Utacchi)" },
+  { id: "cspmp2", name: "portable 2" },
+  { id: "cspmp", name: "portable" },
+  { id: "cs14", name: "14 FEVER! CS" },
+  { id: "cs13", name: "13 カーニバル (Carnival) CS" },
+  { id: "cs12", name: "12 いろは (Iroha) CS" },
+  { id: "cs11", name: "11 CS" },
+  { id: "cs10", name: "10 CS" },
+  { id: "cs9", name: "9 CS" },
+  { id: "cs8", name: "8 CS" },
+  { id: "cs7", name: "7 CS" },
+  { id: "csbest", name: "Best Hits!" },
+  { id: "cs6", name: "6 CS" },
+  { id: "cs5", name: "5 CS" },
+  { id: "cs4", name: "4 CS" },
+  { id: "cs3", name: "3 CS" },
+  { id: "cs2", name: "2 CS" },
+  { id: "cs1", name: "1 CS" },
 ]
 
 export default function BrowsePage({
@@ -40,12 +60,23 @@ export default function BrowsePage({
   return (
     <div id="app" className={styles.BrowsePage}>
       {DEBUTS.map(({ id: debutId, name: debutName }) => {
-        const sortedSongs = songsByDebut[debutId] ?? []
+        const sortedSongs = (songsByDebut[debutId] ?? []).sort((a, b) =>
+          a.fwTitle.localeCompare(b.fwTitle),
+        )
+
         return (
           <section key={debutId}>
             <h2>{debutName}</h2>
-            {sortedSongs.map(({ slug, title }) => {
-              return <span key={slug}>{title}</span>
+            {sortedSongs.map(({ slug, title, e, n, h, ex }) => {
+              return (
+                <div key={slug} className={styles.songRow}>
+                  <span className={styles.title}>{title}</span>
+                  <span className={styles.level}>{e}</span>
+                  <span className={styles.level}>{n}</span>
+                  <span className={styles.level}>{h}</span>
+                  <span className={styles.level}>{ex}</span>
+                </div>
+              )
             })}
           </section>
         )
