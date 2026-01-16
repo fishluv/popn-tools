@@ -66,7 +66,9 @@ export default function BrowsePage({
 
         return (
           <section key={debutId}>
-            <h2>{debutName}</h2>
+            <a href={`#${debutId}`}>
+              <h2 id={debutId}>{debutName}</h2>
+            </a>
             {sortedSongs.map(({ slug, title, e, n, h, ex }) => {
               return (
                 <div key={slug} className={styles.songRow}>
