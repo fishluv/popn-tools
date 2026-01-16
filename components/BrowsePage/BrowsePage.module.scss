@@ -16,15 +16,19 @@
     flex-direction: column;
     gap: 2px;
 
-    .headerLink {
+    .header {
+      margin-top: 24px;
       position: sticky;
       top: 0;
-      margin-top: 24px;
-    }
 
-    h1 {
-      font-size: 1.5rem;
-      max-width: 340px;
+      .title {
+        font-size: 1.5rem;
+      }
+
+      .subtitle {
+        margin-left: 4px;
+        font-size: 1rem;
+      }
     }
 
     .songRow {

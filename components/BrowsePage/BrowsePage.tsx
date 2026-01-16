@@ -1,24 +1,24 @@
 import { RawSong } from "../../pages/browse"
 import styles from "./BrowsePage.module.scss"
 
-const DEBUTS: { id: string; name: string }[] = [
+const DEBUTS: { id: string; name: string; name2?: string }[] = [
   { id: "28", name: "Jam&Fizz" },
   { id: "27", name: "UniLab" },
-  { id: "26", name: "解明リドルズ (Kaimei Riddles)" },
+  { id: "26", name: "解明リドルズ", name2: "Kaimei Riddles" },
   { id: "25", name: "peace" },
-  { id: "24", name: "うさぎと猫と少年の夢 (Usaneko)" },
+  { id: "24", name: "うさぎと猫と少年の夢", name2: "Usaneko" },
   { id: "23", name: "éclale" },
-  { id: "22", name: "ラピストリア (Lapistoria)" },
+  { id: "22", name: "ラピストリア", name2: "Lapistoria" },
   { id: "21", name: "Sunny Park" },
   { id: "20", name: "20 fantasia" },
   { id: "19", name: "19 TUNE STREET" },
-  { id: "18", name: "18 せんごく列伝 (Sengoku Retsuden)" },
+  { id: "18", name: "18 せんごく列伝", name2: "Sengoku Retsuden" },
   { id: "17", name: "17 THE MOVIE" },
   { id: "16", name: "16 PARTY♪" },
   { id: "15", name: "15 ADVENTURE" },
   { id: "14", name: "14 FEVER!" },
-  { id: "13", name: "13 カーニバル (Carnival)" },
-  { id: "12", name: "12 いろは (Iroha)" },
+  { id: "13", name: "13 カーニバル", name2: "Carnival" },
+  { id: "12", name: "12 いろは", name2: "Iroha" },
   { id: "11", name: "11" },
   { id: "10", name: "10" },
   { id: "9", name: "9" },
@@ -32,12 +32,12 @@ const DEBUTS: { id: string; name: string }[] = [
   { id: "1", name: "1" },
   { id: "eemall", name: "eeMALL" },
   { id: "cslively", name: "Lively" },
-  { id: "csutacchi", name: "うたっち (Utacchi)" },
+  { id: "csutacchi", name: "うたっち", name2: "Utacchi" },
   { id: "cspmp2", name: "portable 2" },
   { id: "cspmp", name: "portable" },
   { id: "cs14", name: "14 FEVER! CS" },
-  { id: "cs13", name: "13 カーニバル (Carnival) CS" },
-  { id: "cs12", name: "12 いろは (Iroha) CS" },
+  { id: "cs13", name: "13 カーニバル CS", name2: "Carnival" },
+  { id: "cs12", name: "12 いろは CS", name2: "Iroha" },
   { id: "cs11", name: "11 CS" },
   { id: "cs10", name: "10 CS" },
   { id: "cs9", name: "9 CS" },
@@ -59,16 +59,23 @@ export default function BrowsePage({
 }) {
   return (
     <div id="app" className={styles.BrowsePage}>
-      {DEBUTS.map(({ id: debutId, name: debutName }) => {
+      {DEBUTS.map(({ id: debutId, name: debutName, name2: debutSubtitle }) => {
         const sortedSongs = (songsByDebut[debutId] ?? []).sort((a, b) =>
           a.fwTitle.localeCompare(b.fwTitle),
         )
 
         return (
           <section key={debutId} className={styles.section}>
-            <a className={styles.headerLink} href={`#${debutId}`}>
-              <h1 id={debutId}>{debutName}</h1>
-            </a>
+            <div className={styles.header}>
+              <a className={styles.title} href={`#${debutId}`}>
+                <span id={debutId}>{debutName}</span>
+              </a>
+
+              {debutSubtitle && (
+                <span className={styles.subtitle}>{`(${debutSubtitle})`}</span>
+              )}
+            </div>
+
             {sortedSongs.map(({ slug, title, e, n, h, ex }) => {
               return (
                 <div key={slug} className={styles.songRow}>
