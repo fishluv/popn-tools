@@ -36,6 +36,7 @@
     .songRow {
       font-size: 0.75rem;
       display: flex;
+      align-items: center;
       gap: 4px;
 
       span {
@@ -49,12 +50,14 @@
 
         &.level {
           width: 28px;
-          text-align: right;
+          text-align: center;
 
           .pill {
             @include pill;
             @include diff-bg-colors(light);
             @include diff-colors(dark);
+            width: 100%;
+            line-height: 20px;
           }
         }
       }
