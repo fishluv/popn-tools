@@ -54,6 +54,22 @@ const DEBUTS: { id: string; name: string; name2?: string }[] = [
   { id: "cs1", name: "1 CS" },
 ]
 
+function uniqueTitle(title: string, slug: string, debutId: string) {
+  if (slug.endsWith("-live") && debutId == "8") {
+    return `${title} (LIVE)`
+  }
+  if (slug.endsWith("-long")) {
+    return `${title} (LONG)`
+  }
+  if (slug.endsWith("-ura")) {
+    return `${title} (URA)`
+  }
+  if (slug.endsWith("-upper")) {
+    return `${title} (UPPER)`
+  }
+  return title
+}
+
 export default function BrowsePage({
   songsByDebut,
 }: {
@@ -81,7 +97,9 @@ export default function BrowsePage({
             {sortedSongs.map(({ slug, title, e, n, h, ex }) => {
               return (
                 <div key={slug} className={styles.songRow}>
-                  <span className={styles.title}>{title}</span>
+                  <span className={styles.title}>
+                    {uniqueTitle(title, slug, debutId)}
+                  </span>
 
                   <span className={styles.level}>
                     {e !== null && (
