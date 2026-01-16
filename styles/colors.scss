@@ -76,6 +76,14 @@ $diff-color-map: (
   @return map-get(map-get($diff-color-map, $shade), $diff);
 }
 
+@mixin diff-colors($shade) {
+  @each $diff in e, n, h, ex {
+    &.#{$diff} {
+      color: diff-color($diff, $shade);
+    }
+  }
+}
+
 @mixin diff-border-colors($shade) {
   @each $diff in e, n, h, ex {
     &.#{$diff} {

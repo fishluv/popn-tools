@@ -1,5 +1,7 @@
+import cx from "classnames"
 import { RawSong } from "../../pages/browse"
 import styles from "./BrowsePage.module.scss"
+import Link from "next/link"
 
 const DEBUTS: { id: string; name: string; name2?: string }[] = [
   { id: "28", name: "Jam&Fizz" },
@@ -80,10 +82,54 @@ export default function BrowsePage({
               return (
                 <div key={slug} className={styles.songRow}>
                   <span className={styles.title}>{title}</span>
-                  <span className={styles.level}>{e}</span>
-                  <span className={styles.level}>{n}</span>
-                  <span className={styles.level}>{h}</span>
-                  <span className={styles.level}>{ex}</span>
+
+                  <span className={styles.level}>
+                    {e !== null && (
+                      <Link href={`/chart/${slug}/e`} target="_blank">
+                        <span
+                          className={cx(styles.pill, styles.compact, styles.e)}
+                        >
+                          {e}
+                        </span>
+                      </Link>
+                    )}
+                  </span>
+
+                  <span className={styles.level}>
+                    {n !== null && (
+                      <Link href={`/chart/${slug}/n`} target="_blank">
+                        <span
+                          className={cx(styles.pill, styles.compact, styles.n)}
+                        >
+                          {n}
+                        </span>
+                      </Link>
+                    )}
+                  </span>
+
+                  <span className={styles.level}>
+                    {h !== null && (
+                      <Link href={`/chart/${slug}/h`} target="_blank">
+                        <span
+                          className={cx(styles.pill, styles.compact, styles.h)}
+                        >
+                          {h}
+                        </span>
+                      </Link>
+                    )}
+                  </span>
+
+                  <span className={styles.level}>
+                    {ex !== null && (
+                      <Link href={`/chart/${slug}/ex`} target="_blank">
+                        <span
+                          className={cx(styles.pill, styles.compact, styles.ex)}
+                        >
+                          {ex}
+                        </span>
+                      </Link>
+                    )}
+                  </span>
                 </div>
               )
             })}
