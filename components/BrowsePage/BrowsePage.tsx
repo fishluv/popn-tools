@@ -65,9 +65,9 @@ export default function BrowsePage({
         )
 
         return (
-          <section key={debutId}>
-            <a href={`#${debutId}`}>
-              <h2 id={debutId}>{debutName}</h2>
+          <section key={debutId} className={styles.section}>
+            <a className={styles.headerLink} href={`#${debutId}`}>
+              <h1 id={debutId}>{debutName}</h1>
             </a>
             {sortedSongs.map(({ slug, title, e, n, h, ex }) => {
               return (
