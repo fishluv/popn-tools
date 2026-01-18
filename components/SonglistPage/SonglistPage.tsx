@@ -1,6 +1,6 @@
 import cx from "classnames"
-import { RawSong } from "../../pages/browse"
-import styles from "./BrowsePage.module.scss"
+import { RawSong } from "../../pages/songlist"
+import styles from "./SongListPage.module.scss"
 import Link from "next/link"
 
 const DEBUTS: { id: string; name: string; name2?: string }[] = [
@@ -70,13 +70,13 @@ function uniqueTitle(title: string, slug: string, debutId: string) {
   return title
 }
 
-export default function BrowsePage({
+export default function SongListPage({
   songsByDebut,
 }: {
   songsByDebut: Partial<Record<string, RawSong[]>>
 }) {
   return (
-    <div id="app" className={styles.BrowsePage}>
+    <div id="app" className={styles.SongListPage}>
       {/* lol */}
       <style>{"body { background-image: none; }"}</style>
 

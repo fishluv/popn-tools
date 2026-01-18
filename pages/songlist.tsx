@@ -1,5 +1,5 @@
 import Head from "next/head"
-import BrowsePage from "../components/BrowsePage"
+import SongListPage from "../components/SongListPage"
 
 export interface RawSong {
   id: number
@@ -29,9 +29,9 @@ export default function Browse({ rawSongs }: { rawSongs: RawSong[] }) {
   return (
     <>
       <Head>
-        <title>{"Browse • Pop'n Tools"}</title>
+        <title>{"Song List • Pop'n Tools"}</title>
       </Head>
-      <BrowsePage songsByDebut={songsByDebut} />
+      <SongListPage songsByDebut={songsByDebut} />
     </>
   )
 }
