@@ -68,6 +68,7 @@
           @include diff-colors(dark);
           width: 100%;
           line-height: 24px;
+          box-shadow: 1px 1px 2px #aaa;
         }
       }
     }
