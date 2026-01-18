@@ -12,16 +12,20 @@
   .section {
     min-width: 360px;
     max-width: 100%;
-    padding: 0.5rem;
     display: flex;
     flex-direction: column;
     gap: 4px;
+    margin-bottom: 24px;
+    padding: 0.5rem;
 
     .header {
-      margin-top: 24px;
+      margin: 0 -8px;
+      padding: 0 8px 4px;
+      width: fit-content;
+
       position: sticky;
       top: 0;
-      background: white;
+      background: #ddd;
 
       .title {
         font-size: 1.5rem;
