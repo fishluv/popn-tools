@@ -50,14 +50,19 @@
           border-color: $e-dark;
         }
 
-        &.songIndex {
+        &.songSearch {
+          background: $h-light;
+          border-color: $h-dark;
+        }
+
+        &.chartSearch {
           background: $ex-light;
           border-color: $ex-dark;
         }
 
-        &.chartIndex {
-          background: $h-light;
-          border-color: $h-dark;
+        &.songList {
+          background: $n-light;
+          border-color: $n-dark;
         }
 
         &.randomizer {

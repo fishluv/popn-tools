@@ -40,7 +40,7 @@ export default function Search() {
   return (
     <>
       <Head>
-        <title>{"Browse Charts • Pop'n Tools"}</title>
+        <title>{"Search Charts • Pop'n Tools"}</title>
       </Head>
       <ListPage mode="chart" params={params} />
     </>

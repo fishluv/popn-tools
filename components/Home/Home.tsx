@@ -29,24 +29,36 @@ export default function Home() {
         </Link>
 
         <Link className={styles.appCard} href="/songs">
-          <div className={cx(styles.container, styles.songIndex)}>
-            <div className={styles.title}>Song index</div>
+          <div className={cx(styles.container, styles.songSearch)}>
+            <div className={styles.title}>Full song search</div>
 
             <span className={styles.description}>
               {
-                "Browse the entire pop'n song library. Filter and sort by song metadata."
+                "Search the entire pop'n song library. Filter and sort by song metadata."
               }
             </span>
           </div>
         </Link>
 
         <Link className={styles.appCard} href="/charts">
-          <div className={cx(styles.container, styles.chartIndex)}>
-            <div className={styles.title}>Chart index</div>
+          <div className={cx(styles.container, styles.chartSearch)}>
+            <div className={styles.title}>Full chart search</div>
 
             <span className={styles.description}>
               {
-                "Browse the entire pop'n chart library. Filter and sort by song metadata, as well as chart-specific data like bpm, note count, and duration."
+                "Search the entire pop'n chart library. Filter and sort by song metadata, as well as chart-specific data like bpm, note count, and duration."
+              }
+            </span>
+          </div>
+        </Link>
+
+        <Link className={styles.appCard} href="/songlist">
+          <div className={cx(styles.container, styles.songList)}>
+            <div className={styles.title}>Song list</div>
+
+            <span className={styles.description}>
+              {
+                "A big fat list of every song in the game. Includes removed songs and songs from CS releases."
               }
             </span>
           </div>
