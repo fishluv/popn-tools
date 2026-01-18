@@ -23,7 +23,7 @@ export async function getStaticProps() {
   return { props: { rawSongs } }
 }
 
-export default function Browse({ rawSongs }: { rawSongs: RawSong[] }) {
+export default function SongList({ rawSongs }: { rawSongs: RawSong[] }) {
   const songsByDebut = Object.groupBy(rawSongs, ({ debut }) => debut)
 
   return (
