@@ -41,12 +41,21 @@
       width: 100%;
       max-width: 400px;
 
-      .title {
+      .titleGenre {
         flex-grow: 1;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
         max-width: calc(100% - 128px);
+
+        .title {
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+
+        .genre {
+          color: #444;
+          font-size: 0.625rem;
+          font-style: italic;
+        }
       }
 
       .level {

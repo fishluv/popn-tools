@@ -94,12 +94,19 @@ export default function BrowsePage({
               )}
             </div>
 
-            {sortedSongs.map(({ slug, title, e, n, h, ex }) => {
+            {sortedSongs.map(({ slug, title, genre, rGenre, e, n, h, ex }) => {
               return (
                 <div key={slug} className={styles.songRow}>
-                  <span className={styles.title}>
-                    {uniqueTitle(title, slug, debutId)}
-                  </span>
+                  <div className={styles.titleGenre}>
+                    <p className={styles.title}>
+                      {uniqueTitle(title, slug, debutId)}
+                    </p>
+                    {title !== genre && (
+                      <p className={styles.genre}>
+                        &nbsp;&nbsp;&nbsp;&nbsp;{rGenre}
+                      </p>
+                    )}
+                  </div>
 
                   <span className={styles.level}>
                     {e !== null && (
