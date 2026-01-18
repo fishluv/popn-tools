@@ -77,6 +77,9 @@ export default function BrowsePage({
 }) {
   return (
     <div id="app" className={styles.BrowsePage}>
+      {/* lol */}
+      <style>{"body { background-image: none; }"}</style>
+
       {DEBUTS.map(({ id: debutId, name: debutName, name2: debutSubtitle }) => {
         const sortedSongs = (songsByDebut[debutId] ?? []).sort((a, b) =>
           a.fwTitle.localeCompare(b.fwTitle),
