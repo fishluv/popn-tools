@@ -1,0 +1,72 @@
+@import "styles/colors";
+
+.ChartSet {
+  position: relative;
+  padding: 0.5rem 1rem 0.5rem 0.5rem;
+  border-color: grey;
+  border-style: solid;
+  border-width: 0.375rem 0 0 0.375rem;
+  min-width: 320px;
+
+  &.cycle0 {
+    border-color: $ex-light;
+
+    .triangle {
+      border-right-color: $ex-light;
+    }
+  }
+
+  &.cycle1 {
+    border-color: $h-light;
+
+    .triangle {
+      border-right-color: $h-light;
+    }
+  }
+
+  &.cycle2 {
+    border-color: $n-light;
+
+    .triangle {
+      border-right-color: $n-light;
+    }
+  }
+
+  &.cycle3 {
+    border-color: $e-light;
+
+    .triangle {
+      border-right-color: $e-light;
+    }
+  }
+
+  .triangle {
+    position: absolute;
+    top: -1rem;
+    left: -1rem;
+    border: 1rem solid grey;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    transform: rotate(45deg);
+  }
+
+  .cardsContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .card {
+      vertical-align: top;
+      margin: 0.5rem;
+    }
+  }
+
+  .info {
+    color: grey;
+    font-size: 0.75rem;
+    font-style: italic;
+    text-align: right;
+  }
+}

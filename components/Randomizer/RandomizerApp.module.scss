@@ -1,0 +1,16 @@
+.App {
+  background: #fdfdfd;
+  background-image: linear-gradient(#f0f0f0, #ededed);
+}
+
+.body {
+  margin: 0 auto;
+  max-width: 1080px;
+  min-height: 100vh;
+  box-shadow: 0 0 50px 50px #fdfdfd;
+  background: #fdfdfd;
+}
+
+.controlPanel {
+  padding: 1rem;
+}

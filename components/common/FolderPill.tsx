@@ -35,6 +35,8 @@ export default class FolderPill extends React.Component<FolderPillProps> {
           return "lively"
         case "csutacchi":
           return "utacchi"
+        case "29":
+          return "high cheers"
         case "28":
           return "jam&fizz"
         case "27":
@@ -86,6 +88,8 @@ export default class FolderPill extends React.Component<FolderPillProps> {
           return "bem"
         case "gitadora":
           return "gd"
+        case "29":
+          return "hc"
         case "28":
           return "j&f"
         case "27":

@@ -99,3 +99,13 @@ $diff-color-map: (
     }
   }
 }
+
+@mixin diff-color-vars {
+  @each $diff in e, n, h, ex {
+    &.#{$diff} {
+      @each $shade, $colors in $diff-color-map {
+        --diff-color-#{$shade}: #{map-get($colors, $diff)};
+      }
+    }
+  }
+}

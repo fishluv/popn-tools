@@ -8,13 +8,4 @@ module.exports = {
   env: {
     GIT_SHA: gitSha,
   },
-  async redirects() {
-    return [
-      {
-        source: "/randomizer",
-        destination: "https://popn-randomizer.vercel.app",
-        permanent: true,
-      },
-    ]
-  },
 }

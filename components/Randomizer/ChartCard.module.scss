@@ -1,0 +1,216 @@
+@import "styles/colors";
+@import "styles/components";
+
+.diffLevel {
+  @include pill;
+  @include diff-bg-colors(bright);
+  @include diff-border-colors(dark);
+  color: white;
+}
+
+.sranLevel {
+  @include pill;
+}
+
+.holdsPill {
+  @include pill;
+  border-color: #2c8dd4;
+  background-color: #dd2200;
+  color: white;
+  padding: 0 0.25rem;
+  font-size: 0.5rem;
+  vertical-align: top;
+}
+
+.ChartCard.normal {
+  width: 300px;
+  font-family: "M PLUS 1", "Arial", sans-serif;
+  transition: scale 0.1s;
+
+  &.vetoed {
+    filter: grayscale(0.85);
+    scale: 0.8;
+  }
+
+  &.protected {
+    position: relative;
+    scale: 1.04 1.08;
+    @include diff-color-vars;
+
+    &::after {
+      content: "";
+      position: absolute;
+      z-index: 10;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--diff-color-bright) 200%
+      );
+      mix-blend-mode: color;
+      box-shadow: 0 0 12px 4px var(--diff-color-light);
+      pointer-events: none;
+    }
+
+    .protectedStar {
+      position: absolute;
+      z-index: 5;
+      top: 0.25rem;
+      right: 0.125rem;
+      color: var(--diff-color-bright);
+      filter: drop-shadow(0 0 2px var(--diff-color-bright));
+    }
+  }
+
+  .topInfoContainer {
+    .topInfo {
+      display: inline-block;
+      @include diff-bg-colors(light);
+
+      font-size: 0.875rem;
+      font-weight: bold;
+
+      border: 0 solid black;
+      border-width: 0.25rem 0 0;
+      @include diff-border-colors(bright);
+      border-top-left-radius: 0.25rem;
+      border-top-right-radius: 0.25rem;
+
+      padding: 0.25rem 0.5rem;
+      width: 100%;
+
+      white-space: nowrap;
+
+      .titleGenre {
+        display: inline-block;
+        vertical-align: text-bottom;
+        padding-right: 2px;
+        font-style: italic;
+
+        max-width: calc(90% - 2rem);
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &.withSranLevel {
+          max-width: calc(90% - 5rem);
+        }
+      }
+
+      :not(:first-child) {
+        margin-left: 0.375rem;
+      }
+    }
+  }
+
+  .bottomContainer {
+    position: relative;
+    width: 100%;
+    @include diff-bg-colors(x-light);
+
+    .bannerContainer {
+      position: relative;
+      height: 84px;
+      padding: 0.5rem;
+      padding: 6px 6px 6px 4px;
+
+      .bannerImage {
+        clip-path: rect(2px 288px 70px 4px round 4px);
+      }
+    }
+
+    .folderPill {
+      z-index: 5;
+      position: absolute;
+      right: 0.25rem;
+      bottom: 0.25rem;
+    }
+  }
+
+  .details {
+    @include diff-bg-colors(light);
+
+    font-size: 0.75rem;
+
+    border: 0 solid black;
+    border-width: 0 0 0.25rem;
+    @include diff-border-colors(bright);
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+
+    padding: 0.125rem 0.5rem;
+    vertical-align: top;
+
+    display: flex;
+    justify-content: space-between;
+
+    .item {
+      display: flex;
+      column-gap: 0.125rem;
+      align-items: center;
+
+      svg {
+        vertical-align: text-bottom;
+      }
+    }
+  }
+}
+
+.ChartCard.compact {
+  width: 160px;
+  height: 40px;
+  font-family: "M PLUS 1", "Arial", sans-serif;
+  position: relative;
+
+  @include diff-bg-colors(light);
+
+  .titleGenre {
+    position: absolute;
+    font-size: 0.75rem;
+    font-weight: bold;
+    display: inline-block;
+    vertical-align: top;
+    padding: 0.125rem 2px 0 0.375rem;
+
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .banner {
+    overflow: hidden;
+
+    .bannerImage {
+      scale: 1.02 1.06;
+    }
+
+    &.vetoed {
+      display: none;
+    }
+  }
+
+  .diffStripe {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 4px;
+    @include diff-border-colors(bright);
+  }
+
+  .levels {
+    position: absolute;
+    z-index: 5;
+    left: 0;
+    bottom: 0;
+  }
+
+  .folderPill {
+    position: absolute;
+    z-index: 5;
+    bottom: 0;
+    right: 0;
+  }
+}
