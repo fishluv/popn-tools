@@ -53,6 +53,7 @@ const MAX_DRAWN_CHARTS = 1000
 
 function deserializeChartSets(chartSetsJson: string): ChartDataSet[] {
   try {
+    // TODO: Better typing
     const parsed = JSON.parse(chartSetsJson)
     if (!Array.isArray(parsed)) {
       return []
@@ -70,15 +71,9 @@ function deserializeChartSets(chartSetsJson: string): ChartDataSet[] {
         break
       }
 
-      let chartIds: string[]
-      let drawnAt: number | null
-      let gameVersion: string | null
-
-      // TODO: Better typing of nextItem
-      chartIds = nextItem.charts
-      // TODO: Better parsing
-      drawnAt = nextItem.drawnAt
-      gameVersion = nextItem.gameVersion
+      const chartIds: string[] = nextItem.charts
+      const drawnAt: number | null = nextItem.drawnAt
+      const gameVersion: string | null = nextItem.gameVersion
 
       if (deserializedChartCount + chartIds.length > MAX_DRAWN_CHARTS) {
         break
