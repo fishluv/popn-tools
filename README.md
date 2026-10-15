@@ -1,6 +1,8 @@
 # Pop'n Tools
 
-Suite of mobile-first, URL-friendly web apps for exploring [Pop'n Music](https://en.wikipedia.org/wiki/Pop%27n_Music) arcade game metadata, plus a randomizer for tournament matches (used at almost every major North American Pop'n Music event since 2018). Live at [popn.tools](https://popn.tools).
+Suite of mobile-first, URL-friendly web apps for exploring [Pop'n Music](https://en.wikipedia.org/wiki/Pop%27n_Music) arcade game metadata, plus a randomizer app for tournament matches (used at almost every major North American Pop'n Music event since 2018).
+
+Live at **[popn.tools](https://popn.tools)**.
 
 ## Quick search app
 
@@ -69,7 +71,7 @@ Fetch a random sample of songs — tailored for tournament matches but great for
 
 - **URL as the source of truth for state:** Search filters, sorting, and chart viewer options are all serialized into the URL, so any view can be shared or bookmarked, which matters for an online-first community that swaps links constantly.
 
-- **Multi-source data pipeline:** Pop'n Music has 2000+ songs and 8000+ charts; metadata is scattered across community wikis with differing notions of a song's "primary key" and inconsistent handling of casing, spacing, CJK/special characters, and so on. [popn-dbs](https://github.com/fishluv/popn-dbs) normalizes the data into a single SQLite + JSON release so all apps consume one canonical dataset.
+- **Multi-source data pipeline:** Pop'n Music has 2000+ songs and 8000+ charts; metadata is scattered across community wikis with differing notions of a song's "primary key" and inconsistent handling of casing, spacing, CJK/special characters, and so on. **[popn-dbs](https://github.com/fishluv/popn-dbs)** normalizes the data into a single SQLite + JSON release so all apps consume one canonical dataset.
 
 ## Development
 
