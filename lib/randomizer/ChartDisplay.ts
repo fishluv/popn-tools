@@ -1,12 +1,12 @@
 export type ChartDisplayStyle = "normal" | "compact"
 
 export function parseChartDisplayStyle(s: string): ChartDisplayStyle {
-  switch (s) {
-    case "normal":
+  const sl = s?.toLowerCase()
+  switch (sl) {
     case "compact":
-      return s
+      return "compact"
     default:
-      throw new Error(`Invalid chart display style: [${s}]`)
+      return "normal"
   }
 }
 
