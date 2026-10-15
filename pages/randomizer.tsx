@@ -1,5 +1,5 @@
 import Head from "next/head"
-import RandomizerApp from "../../components/Randomizer/RandomizerApp"
+import RandomizerApp from "../components/Randomizer/RandomizerApp"
 
 export default function Randomizer() {
   return (
